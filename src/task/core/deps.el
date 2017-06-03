@@ -1,6 +1,7 @@
 '(
   +editing
   +workflow
+  +interface
   +ide
   +writing
   +configuring
@@ -8,5 +9,4 @@
   +math
   +shell
   +media
-  +interface
 )
