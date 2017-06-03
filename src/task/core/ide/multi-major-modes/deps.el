@@ -1,0 +1,4 @@
+'(
+  +web-mode
+  +mmm-mode
+)

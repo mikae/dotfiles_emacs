@@ -1,0 +1,4 @@
+'(
+  +flycheck
+  +flycheck-cask
+)

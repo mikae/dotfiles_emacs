@@ -1,0 +1,12 @@
+'(
+  +editing
+  +workflow
+  +ide
+  +writing
+  +configuring
+  +organization
+  +math
+  +shell
+  +media
+  +interface
+)

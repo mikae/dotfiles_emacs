@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: require
+# key: req
+# --
+local ${1:module_name} = require("${2:module_path}")

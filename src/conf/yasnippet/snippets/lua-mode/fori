@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fori
+# key: fori
+# --
+for ${1:i}, ${2:v} in ipairs(${2:table}) do
+   ${3:code}
+end

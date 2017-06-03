@@ -1,0 +1,4 @@
+'(
+  +yasnippet
+  +emmet-mode
+)
