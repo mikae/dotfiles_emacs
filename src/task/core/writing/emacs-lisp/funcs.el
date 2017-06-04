@@ -32,13 +32,9 @@
 
 (defun serika/emacs-lisp/auto-completion ()
   "Configure auto completion for `emacs-lisp' mode."
-  (auto-complete-mode      +1)
+  (setq-local company-backends '(company-elisp))
 
-  (setq ac-sources '(
-                     ac-source-abbrev
-                     ac-source-dictionary
-                     ac-source-words-in-same-mode-buffers
-                     )))
+  (company-mode +1))
 
 (defun serika/emacs-lisp/interface ()
   "Configure interface for `emacs-lisp' mode."

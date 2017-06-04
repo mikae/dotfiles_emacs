@@ -34,10 +34,10 @@
 (serika-language-xdefaults-configure-keymap)
 
 ;; Hooks
-(add-hook 'conf-xdefaults-mode-map-hook 'serika-language-xdefaults-configure-buffer-local-variables)
-(add-hook 'conf-xdefaults-mode-map-hook 'serika-language-xdefaults-configure-buffer-local-mappings)
+(add-hook 'conf-xdefaults-mode-hook 'serika-language-xdefaults-configure-buffer-local-variables)
+(add-hook 'conf-xdefaults-mode-hook 'serika-language-xdefaults-configure-buffer-local-mappings)
 
-(add-hook 'conf-xdefaults-mode-map-hook 'serika-language-xdefaults-configure-interface)
+(add-hook 'conf-xdefaults-mode-hook 'serika-language-xdefaults-configure-interface)
 
 
 (provide 'serika-emacs-language-xdefaults)

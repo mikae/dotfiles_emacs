@@ -3,6 +3,7 @@
 ;;; Code:
 
 (require 'func-symbol)
+(require 'func-package)
 (require 'func-misc)
 (require 'func-path)
 
@@ -47,19 +48,25 @@ Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
          (vars-path (serika/path/join serika-task-directory
                                       task-subdir
                                       "vars.el"))
+         (packages-path (serika/path/join serika-task-directory
+                                      task-subdir
+                                      "packages.el"))
          )
-    (unless (numberp (cl-position true-task serika-executed-tasks))
+    (unless (numberp (cl-position true-task-name serika-executed-tasks :test 'equal))
       (progn
+        (add-to-list 'serika-executed-tasks true-task-name t)
         (when (file-exists-p deps-path)
           (dolist (dep (serika/misc/eval-file deps-path))
             (serika/task/execute dep true-task)))
+        (when (file-exists-p packages-path)
+          (dolist (package-name (serika/misc/eval-file packages-path))
+            (serika/package/make-sure-installed package-name)))
         (when (file-exists-p vars-path)
           (serika/misc/eval-file vars-path))
         (when (file-exists-p funcs-path)
           (serika/misc/eval-file funcs-path))
         (when (file-exists-p config-path)
-          (serika/misc/eval-file config-path))
-        (add-to-list 'serika-executed-tasks true-task)))))
+          (serika/misc/eval-file config-path))))))
 
 (defun serika/task/execute-all ()
   "Execute all task defined by `serika-tasks'."

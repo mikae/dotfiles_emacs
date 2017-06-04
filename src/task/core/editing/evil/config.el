@@ -52,6 +52,7 @@
 (define-key evil-normal-state-map (kbd "J") nil)
 
 (define-key evil-normal-state-map (kbd "a")   'evil-append)
+(define-key evil-normal-state-map (kbd "a")   'evil-append)
 (define-key evil-normal-state-map (kbd "A")   'evil-append-line)
 (define-key evil-normal-state-map (kbd "c")   'evil-change)
 (define-key evil-normal-state-map (kbd "C")   'evil-change-line)
@@ -88,6 +89,10 @@
 (define-key evil-normal-state-map (kbd "v" )  'evil-visual-char)
 (define-key evil-normal-state-map (kbd "V" )  'evil-visual-line)
 (define-key evil-normal-state-map (kbd "A-v") 'evil-visual-block)
+
+;; Macro
+(define-key evil-normal-state-map (kbd "q")   'kmacro-start-macro-or-insert-counter)
+(define-key evil-normal-state-map (kbd "A-q") 'kmacro-end-or-call-macro)
 
 (define-key evil-normal-state-map (kbd "<C-m> C-e") 'evil-emacs-state)
 
@@ -152,7 +157,7 @@
 
 (serika/misc/unbind-keys evil-insert-state-map)
 
-(define-key evil-insert-state-map (kbd "RET") 'evil-ret)
+(define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
 (define-key evil-insert-state-map (kbd "C-, C-j") 'evil-normal-state)
 

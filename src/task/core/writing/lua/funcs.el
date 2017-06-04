@@ -3,6 +3,7 @@
 ;;; Code:
 
 (require 'lua-mode)
+(require 'company-lua)
 
 ;; Functions
 (defun serika/lua/evil ()
@@ -37,12 +38,9 @@
 
 (defun serika/lua/auto-completion ()
   "Configure auto completion for `lua'."
-  (auto-complete-mode 1)
+  (setq-local company-backends '(company-lua))
 
-  (setq ac-sources '(
-                     ac-source-dictionary
-                     ac-source-words-in-same-mode-buffers
-                     )))
+  (company-mode +1))
 
 ;; Interface
 (defun serika/lua/interface ()

@@ -36,6 +36,7 @@ config_update_plugins () {
     SOURCE_HELP_FNSP=https://raw.githubusercontent.com/mikae/emacswiki.org/master/help-fns%2B.el
     SOURCE_LUA_MODE=https://github.com/mikae/lua-mode
     SOURCE_WEB_BEAUTIFY=https://github.com/mikae/web-beautify
+    SOURCE_COMPANY_LUA=https://github.com/ptrv/company-lua
 
     # yasnippet
     git clone $SOURCE_YASNIPPET $PREFIX_GIT/yasnippet
@@ -64,6 +65,10 @@ config_update_plugins () {
     # web-beautify
     git clone $SOURCE_WEB_BEAUTIFY $PREFIX_GIT/web-beautify
     cp -Rv $PREFIX_GIT/web-beautify $DESTINATION_PLUGINS/web-beautify
+
+    # company-lua
+    git clone $SOURCE_COMPANY_LUA $PREFIX_GIT/company-lua
+    cp -Rv $PREFIX_GIT/company-lua $DESTINATION_PLUGINS/company-lua
 }
 
 config_clean () {
