@@ -9,6 +9,7 @@
 
 (defun serika/init ()
   "Initialize `serika'."
+  (serika/task/add 'util)
   (serika/task/add 'base)
   (serika/task/add 'core)
   (serika/task/execute-all)

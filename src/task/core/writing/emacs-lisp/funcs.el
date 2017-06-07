@@ -36,6 +36,10 @@
 
   (company-mode +1))
 
+(defun serika/emacs-lisp/auto-pairing ()
+  "Configure auto completion for `emacs-lisp' mode."
+  (electric-pair-mode +1))
+
 (defun serika/emacs-lisp/interface ()
   "Configure interface for `emacs-lisp' mode."
 
