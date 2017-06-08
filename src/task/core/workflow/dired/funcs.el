@@ -108,3 +108,11 @@
   (evil-previous-visual-line (or count 1))
   (serika/dired/omit-header)
   (dired-move-to-filename))
+
+(defun serika/dired/shn-split ()
+  "Split selected files using `shntool' utility"
+  (interactive)
+  (let ((marked-files (dired-get-marked-files)))
+    (if (= 2 (length marked-files))
+        (serika/shn/split (first marked-files) (second marked-files))
+      (error "2 marked files are required for `shn-split'"))))

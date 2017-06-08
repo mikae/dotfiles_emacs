@@ -9,13 +9,13 @@
 
 
 ;; Configuration
-(serika/eshell/evil)
-(serika/eshell/variables)
-(serika/eshell/global-keymap)
+(serika/eshell//evil)
+(serika/eshell//variables)
+(serika/eshell//global-keymap)
 
 ;; Hooks
-(add-hook 'eshell-mode-hook 'serika/eshell/local-mappings)
-(add-hook 'eshell-mode-hook 'serika/eshell/kill-function)
+(add-hook 'eshell-mode-hook 'serika/eshell//local-mappings)
+(add-hook 'eshell-mode-hook 'serika/eshell//kill-function)
 
 (provide 'serika-emacs-mode-configuration-eshell)
 ;;; serika-emacs-mode-configuration-eshell.el ends here

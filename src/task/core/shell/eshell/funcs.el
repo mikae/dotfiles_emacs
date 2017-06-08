@@ -4,8 +4,8 @@
 
 (require 'func-path)
 
-;; Functions
-(defun serika/eshell/local-mappings ()
+;; Private
+(defun serika/eshell//local-mappings ()
   "Configure `eshell-mode-map'."
   (setq-local eshell-mode-map (make-sparse-keymap))
   (use-local-map eshell-mode-map)
@@ -16,19 +16,19 @@
   (define-key eshell-mode-map (kbd "A-C-s") 'eshell-previous-matching-input)
   (define-key eshell-mode-map (kbd "RET")   'eshell-send-input))
 
-(defun serika/eshell/kill-function ()
+(defun serika/eshell//kill-function ()
   "Configure `serika-buffer-kill-function'."
   (make-local-variable 'serika-buffer-kill-function)
   (setq serika-buffer-kill-function (lambda ()
                                       (previous-buffer))))
 
 ;; Configuration unctions
-(defun serika/eshell/evil ()
+(defun serika/eshell//evil ()
   "Configure `evil' for `eshell'."
   ;; For some reason without it evil's state is not emacs
   (evil-set-initial-state 'eshell-mode 'emacs))
 
-(defun serika/eshell/variables ()
+(defun serika/eshell//variables ()
   "Configure `eshell' variables."
   (setq eshell-visual-commands '(
                                  "screen" "top" "less" "more" "lynx"
@@ -72,6 +72,6 @@
 
   (setq eshell-prompt-regexp "^[^$#\n]* [#$] "))
 
-(defun serika/eshell/global-keymap ()
+(defun serika/eshell//global-keymap ()
   "Add mapping to invoke eshell."
   (global-set-key (kbd "<C-m> s h") 'eshell))

@@ -1,3 +1,4 @@
 '(
-  +cue
+  +eshell
+  +shn
   )
