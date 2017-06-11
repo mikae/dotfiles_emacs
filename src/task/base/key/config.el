@@ -81,7 +81,6 @@
   (global-set-key (kbd "C-x C-r") 'revert-buffer)
 
   (global-set-key (kbd "C-x C-q") 'save-buffers-kill-terminal)
-  (global-set-key (kbd "C-x C-f") 'find-file)
 
   (global-set-key (kbd "A-:")     'eval-expression)
 

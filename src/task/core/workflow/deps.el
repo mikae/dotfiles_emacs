@@ -1,7 +1,6 @@
 '(
   +bs
+  +helm
   +dired
-  +ido
-  +smex
   +help
 )
