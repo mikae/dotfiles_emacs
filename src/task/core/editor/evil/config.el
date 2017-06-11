@@ -141,12 +141,12 @@
 (define-key evil-motion-state-map (kbd "A-O")  'evil-jump-forward)
 (define-key evil-motion-state-map (kbd "A-o")  'evil-jump-backward)
 
-(define-key evil-motion-state-map (kbd "A-l")  'evil-end-of-visual-line)
 (define-key evil-motion-state-map (kbd "A-h")  'evil-beginning-of-visual-line)
-(define-key evil-motion-state-map (kbd "A-j")  'evil-beginning-of-visual-line)
-(define-key evil-motion-state-map (kbd "A-k")  'evil-window-top)
-(define-key evil-motion-state-map (kbd "A-m")  'evil-window-middle)
 (define-key evil-motion-state-map (kbd "A-j")  'evil-window-bottom)
+(define-key evil-motion-state-map (kbd "A-k")  'evil-window-top)
+(define-key evil-motion-state-map (kbd "A-l")  'evil-end-of-visual-line)
+(define-key evil-motion-state-map (kbd "A-m")  'evil-window-middle)
+
 (define-key evil-motion-state-map (kbd "A-n")  'evil-search-next)
 (define-key evil-motion-state-map (kbd "A-N")  'evil-search-previous)
 

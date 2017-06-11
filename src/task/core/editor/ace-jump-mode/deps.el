@@ -1,4 +1,6 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-'(core+editing+evil)
+'(
+  core+editor+evil
+  )

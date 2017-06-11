@@ -1,3 +1,3 @@
 '(
-  core+editing+evil
+  core+editor+evil
 )

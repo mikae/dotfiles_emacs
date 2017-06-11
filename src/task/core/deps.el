@@ -1,9 +1,9 @@
 '(
-  +editing
+  +editor
   +workflow
   +interface
   +ide
-  +writing
+  +programming
   +configuring
   +organization
   +math
