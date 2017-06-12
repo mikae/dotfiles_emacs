@@ -8,7 +8,9 @@
 ;; Functions
 (defun serika/lua/evil ()
   "Configure `evil' for `lua-mode'."
-  (evil-set-initial-state 'lua-mode 'normal))
+  (setq evil-shift-width 4)
+  (evil-local-mode +1)
+  (evil-normal-state))
 
 (defun serika/lua/keymap ()
   "Configure `lua-mode-map'."
@@ -17,7 +19,6 @@
 (defun serika/lua/buffer-local-variables()
   "Configure buffer-local variables for `lua'."
   (setq tab-width 4)
-  (setq evil-shift-width 4)
   (setq truncate-lines t))
 
 (defun serika/lua/buffer-local-mappings()

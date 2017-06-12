@@ -5,6 +5,12 @@
 (require 'web-beautify)
 
 ;; Functions
+(defun serika/html/evil ()
+  "Configure `evil' for `html'."
+  (setq evil-shift-width 2)
+  (evil-local-mode +1)
+  (evil-normal-state))
+
 (defun serika/html/buffer-local-variables ()
   "Configure buffer-local variables for `html' files."
   (setq evil-shift-width 2)

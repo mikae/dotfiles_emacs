@@ -9,7 +9,6 @@
 
 
 ;; Configuration
-(serika/eshell//evil)
 (serika/eshell//variables)
 (serika/eshell//global-keymap)
 

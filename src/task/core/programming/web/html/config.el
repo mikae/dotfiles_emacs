@@ -3,6 +3,7 @@
 ;;; Code:
 
 ;; Hooks
+(serika/html/hook 'serika/html/evil)
 (serika/html/hook 'serika/html/buffer-local-variables)
 (serika/html/hook 'serika/html/buffer-local-mappings)
 

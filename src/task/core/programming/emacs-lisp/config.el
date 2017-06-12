@@ -2,10 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Configuration
-(serika/emacs-lisp/evil)
-
 ;; Hooks
+(add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp/evil)
 (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp/buffer-local-variables)
 (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp/buffer-local-mappings)
 

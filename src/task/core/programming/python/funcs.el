@@ -8,12 +8,13 @@
 
 (defun serika/python/evil ()
   "Configure `evil' for `python-mode'."
-  (evil-set-initial-state 'python-mode 'normal))
+  (setq evil-shift-width 4)
+  (evil-local-mode +1)
+  (evil-normal-state))
 
 (defun serika/python/buffer-local-variables ()
   "Configure snippet engine for `python' mode."
   (setq tab-width 4)
-  (setq evil-shift-width 4)
   (setq truncate-lines t))
 
 (defun serika/python/buffer-local-mappings ()

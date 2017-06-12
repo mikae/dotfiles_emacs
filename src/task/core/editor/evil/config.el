@@ -7,8 +7,7 @@
 ;; Configure `evil'
 (require 'evil)
 
-(evil-mode 1)
-
+;; (evil-mode 1)
 (setq evil-default-state 'emacs)
 
 (setq evil-insert-state-cursor    '((bar . 2) "yellow")
@@ -17,7 +16,7 @@
       evil-motion-state-cursor    '((bar . 2) "orange")
       evil-replace-state-cursor   '(box       "red")
       evil-operator-state-cursor  '((bar . 2) "orange")
-      evil-emacs-state-cursor     '(box       "cyan"))
+      evil-emacs-state-cursor     '(box "cyan"))
 
 (global-set-key (kbd "C-, w k") 'evil-window-up)
 (global-set-key (kbd "C-, w l") 'evil-window-right)

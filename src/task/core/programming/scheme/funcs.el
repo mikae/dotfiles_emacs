@@ -5,7 +5,6 @@
 (defun serika/scheme/buffer-local-variables ()
   "Configure local variables for `scheme' mode."
   (setq tab-width 2)
-  (setq evil-shift-width 2)
   (setq truncate-lines t))
 
 (defun serika/scheme/buffer-local-mappings ()
@@ -15,6 +14,8 @@
 
 (defun serika/scheme/evil ()
   "Configure `evil' for `scheme-mode'."
+  (setq evil-shift-width 2)
+  (evil-local-mode +1)
   (evil-set-initial-state 'scheme-mode 'normal))
 
 (defun serika/scheme/snippet-engine ()

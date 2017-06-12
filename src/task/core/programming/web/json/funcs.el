@@ -8,6 +8,8 @@
 ;; Functions
 (defun serika/json/evil ()
   "Configure `evil' for `json-mode'."
+  (setq evil-shift-width 2)
+  (evil-local-mode +1)
   (evil-set-initial-state 'json-mode 'normal))
 
 (defun serika/json/keymap ()
@@ -17,7 +19,6 @@
 (defun serika/json/buffer-local-variables ()
   "Configure buffer-local variables for `json'."
   (setq tab-width 2)
-  (setq evil-shift-width 2)
   (setq truncate-lines t))
 
 (defun serika/json/buffer-local-mappings ()

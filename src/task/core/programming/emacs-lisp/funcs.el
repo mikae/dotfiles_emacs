@@ -4,7 +4,6 @@
 (defun serika/emacs-lisp/buffer-local-variables ()
   "Configure snippet engine for `emacs-lisp' mode."
   (setq tab-width 2)
-  (setq evil-shift-width 2)
   (setq truncate-lines t))
 
 (defun serika/emacs-lisp/buffer-local-mappings ()
@@ -14,7 +13,9 @@
 
 (defun serika/emacs-lisp/evil ()
   "Configure `evil' for `emacs-lisp-mode'."
-  (evil-set-initial-state 'emacs-lisp-mode 'normal))
+  (setq evil-shift-width 2)
+  (evil-local-mode +1)
+  (evil-normal-state))
 
 (defun serika/emacs-lisp/snippet-engine ()
   "Configure snippet engine for `emacs-lisp' mode."

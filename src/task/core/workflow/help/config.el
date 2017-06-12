@@ -3,5 +3,6 @@
 ;;; Code:
 
 ;; Configuration
-(serika/help/evil)
 (serika/help/keymap)
+
+(add-hook 'helm-mode-hook #'serika/helm/evil)

@@ -23,11 +23,6 @@
                                       (previous-buffer))))
 
 ;; Configuration unctions
-(defun serika/eshell//evil ()
-  "Configure `evil' for `eshell'."
-  ;; For some reason without it evil's state is not emacs
-  (evil-set-initial-state 'eshell-mode 'emacs))
-
 (defun serika/eshell//variables ()
   "Configure `eshell' variables."
   (setq eshell-visual-commands '(

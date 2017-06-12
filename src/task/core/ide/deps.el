@@ -3,5 +3,5 @@
   +syntax-checking
   +snippet-manager
   +scm-integration
-  +multi-major-modes
+  +multiple-major-modes
 )

@@ -49,12 +49,10 @@ config_update_plugins () {
     cp -Rv $PREFIX_GIT/pomidor $DESTINATION_PLUGINS/pomidor
 
     # run-assoc
-    mkdir $PREFIX_GIT/run-assoc
     wget $SOURCE_RUN_ASSOC -O $PREFIX_GIT/run-assoc/run-assoc.el
     cp -Rv $PREFIX_GIT/run-assoc $DESTINATION_PLUGINS
 
     # help-fns+
-    mkdir $PREFIX_GIT/help-fns+
     wget $SOURCE_HELP_FNSP -O $PREFIX_GIT/help-fns+.el
     cp -Rv $PREFIX_GIT/help-fns+.el $DESTINATION_PLUGINS
 

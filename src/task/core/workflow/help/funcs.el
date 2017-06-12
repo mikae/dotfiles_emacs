@@ -3,7 +3,8 @@
 ;;; Code:
 (defun serika/help/evil ()
   "Configure `evil' for `help-mode'."
-  (evil-set-initial-state 'help-mode 'motion))
+  (evil-local-mode +1)
+  (evil-motion-state))
 
 (defun serika/help/keymap ()
   "Configure `help-mode-map'."

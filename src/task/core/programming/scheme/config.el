@@ -6,10 +6,8 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Configuration
-(serika/scheme/evil)
-
 ;; Hooks
+(add-hook 'scheme-mode-hook 'serika/scheme/evil)
 (add-hook 'scheme-mode-hook 'serika/scheme/buffer-local-variables)
 (add-hook 'scheme-mode-hook 'serika/scheme/buffer-local-mappings)
 

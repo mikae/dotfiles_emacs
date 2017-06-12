@@ -2,10 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Configuration
-(serika/python/evil)
-
 ;; Hooks
+(add-hook 'python-mode-hook 'serika/python/evil)
 (add-hook 'python-mode-hook 'serika/python/buffer-local-variables)
 (add-hook 'python-mode-hook 'serika/python/buffer-local-mappings)
 (add-hook 'python-mode-hook 'serika/python/minor-modes)

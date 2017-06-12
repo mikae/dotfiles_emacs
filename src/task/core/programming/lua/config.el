@@ -3,10 +3,10 @@
 ;;; Code:
 
 ;; Configuration
-(serika/lua/evil)
 (serika/lua/keymap)
 
 ;; Hooks
+(add-hook 'lua-mode-hook 'serika/lua/evil)
 (add-hook 'lua-mode-hook 'serika/lua/buffer-local-variables)
 (add-hook 'lua-mode-hook 'serika/lua/buffer-local-mappings)
 

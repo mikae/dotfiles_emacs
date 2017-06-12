@@ -3,10 +3,10 @@
 ;;; Code:
 
 ;; Configuration
-(serika/json/evil)
 (serika/json/keymap)
 
 ;; Hooks
+(add-hook 'json-mode-hook 'serika/json/evil)
 (add-hook 'json-mode-hook 'serika/json/buffer-local-variables)
 (add-hook 'json-mode-hook 'serika/json/buffer-local-mappings)
 
