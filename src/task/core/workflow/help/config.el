@@ -5,4 +5,4 @@
 ;; Configuration
 (serika/help/keymap)
 
-(add-hook 'helm-mode-hook #'serika/helm/evil)
+(add-hook 'help-mode-hook #'serika/help/evil)

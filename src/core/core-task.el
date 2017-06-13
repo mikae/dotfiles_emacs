@@ -64,7 +64,12 @@ Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
         (when (file-exists-p vars-path)
           (serika/misc/eval-file vars-path))
         (when (file-exists-p funcs-path)
-          (serika/misc/eval-file funcs-path))
+          ;; todo: save old init, if one
+          (serika/misc/eval-file funcs-path)
+          (when (fboundp 'init)
+            (progn
+              (init)
+              (fmakunbound 'init))))
         (when (file-exists-p config-path)
           (serika/misc/eval-file config-path))))))
 

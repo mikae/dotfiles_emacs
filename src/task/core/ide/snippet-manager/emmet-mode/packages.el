@@ -2,4 +2,5 @@
 ;;; Commentary:
 ;;; Code:
 
-(serika/settings//configure)
+'(
+  emmet-mode)

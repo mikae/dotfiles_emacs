@@ -1,9 +1,16 @@
-(defun serika/company/variables ()
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+(require 'func-package)
+
+(require 'company)
+
+(defun serika/company//settings ()
   "Configure `company-mode'."
   (setq company-minimum-prefix-length 2)
   (setq company-mode/enable-yas t))
 
-(defun serika/company/keymap ()
+(defun serika/company//keymap ()
   "Configure `company-active-map'."
   (setq company-active-map (make-sparse-keymap))
 

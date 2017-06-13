@@ -38,7 +38,7 @@
   (define-key dired-mode-map (kbd "* u")   'dired-unmark)
 
   (define-key dired-mode-map (kbd "n d")   'dired-create-directory)
-  (define-key dired-mode-map (kbd "n f")   'find-file)
+  (define-key dired-mode-map (kbd "n f")   'helm-find-files)
   (define-key dired-mode-map (kbd "n h")   'dired-do-hardlink)
   (define-key dired-mode-map (kbd "n s")   'dired-do-symlink)
 
