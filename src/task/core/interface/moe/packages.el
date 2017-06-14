@@ -1,5 +1,5 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-
-(serika/run-assoc//variables)
+'(
+  moe-theme)

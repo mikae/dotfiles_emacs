@@ -12,7 +12,7 @@
   ;; Disable preview
   (setq emmet-preview-default nil))
 
-(defun serika/emmet-mode//ini ()
+(defun init ()
   "Configure `emmet-mode'."
   (serika/emmet-mode//keymap)
   (require 'emmet-mode)

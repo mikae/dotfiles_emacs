@@ -35,7 +35,7 @@
      (interactive)
      (serika-buffer-kill-by-major-mode 'flycheck-error-list-mode))))
 
-(defun serika/flycheck//ini ()
+(defun init ()
   "Configure `flycheck'."
   (serika/flycheck//settings)
   (serika/flycheck//keymap)

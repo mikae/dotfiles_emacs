@@ -29,3 +29,8 @@
   (define-key ac-completing-map (kbd "A-k") 'ac-previous)
   (define-key ac-completing-map (kbd "A-l") 'ac-complete)
   (define-key ac-completing-map (kbd "A-h") 'ac-stop))
+
+(defun init ()
+  "Configure `auto-complete'."
+  (serika/auto-complete//settings)
+  (serika/auto-complete//keymap))

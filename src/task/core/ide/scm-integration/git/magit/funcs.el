@@ -40,3 +40,7 @@
          ))
     (setq magit-status-mode-map (make-sparse-keymap))
     (funcall keybinding-lambda magit-status-mode-map)))
+
+(defun init ()
+  "Configure `magit'."
+  (serika/magit//keymap))

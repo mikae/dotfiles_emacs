@@ -1,5 +1,4 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-
-(serika/yasnippet//ini)
+(require 'rainbow-delimiters)

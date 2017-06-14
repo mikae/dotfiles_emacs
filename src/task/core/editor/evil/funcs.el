@@ -189,3 +189,18 @@
   (serika/misc/unbind-keys evil-emacs-state-map)
 
   (define-key evil-emacs-state-map (kbd "<C-m> C-v") 'evil-normal-state))
+
+(defun init ()
+  "Configure `evil'."
+  ;; Configuration
+  (serika/evil//variables)
+  (serika/evil//global-keymap)
+  (serika/evil//disable-mouse)
+
+  ;; Keymaps
+  (serika/evil//normal-keymap)
+  (serika/evil//motion-keymap)
+  (serika/evil//insert-keymap)
+  (serika/evil//visual-keymap)
+  (serika/evil//replace-keymap)
+  (serika/evil//emacs-keymap))

@@ -2,10 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'func-package)
-
 (require 'ace-window)
-
 
 (defun serika/ace-window//settings ()
   "Configure `ace-window' settings."
@@ -15,3 +12,8 @@
 (defun serika/ace-window//global-keymap ()
   "Configure global keymap to use`ace-window'."
   (global-set-key (kbd "C-, w s") 'ace-window))
+
+(defun init ()
+  "Configure ace-window."
+  (serika/ace-window//settings)
+  (serika/ace-window//global-keymap))

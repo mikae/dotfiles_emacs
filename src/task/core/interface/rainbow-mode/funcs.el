@@ -1,5 +1,4 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-
-(serika/emmet-mode//ini)
+(require 'rainbow-mode)

@@ -2,4 +2,5 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'evil-nerd-commenter)
+'(
+  mingus)

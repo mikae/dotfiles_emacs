@@ -70,3 +70,11 @@
 (defun serika/eshell//global-keymap ()
   "Add mapping to invoke eshell."
   (global-set-key (kbd "<C-m> s h") 'eshell))
+
+(defun init ()
+  "Configure `eshell'."
+  (serika/eshell//variables)
+  (serika/eshell//global-keymap)
+
+  (add-hook 'eshell-mode-hook 'serika/eshell//local-mappings)
+  (add-hook 'eshell-mode-hook 'serika/eshell//kill-function))

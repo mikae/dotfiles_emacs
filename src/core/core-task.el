@@ -64,12 +64,19 @@ Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
         (when (file-exists-p vars-path)
           (serika/misc/eval-file vars-path))
         (when (file-exists-p funcs-path)
-          ;; todo: save old init, if one
+          ;; save `init' function to `--temp-init' variable if any
+          (when (fboundp 'init)
+            (fset '--temp-init 'init)
+            (fmakunbound 'init))
           (serika/misc/eval-file funcs-path)
           (when (fboundp 'init)
             (progn
               (init)
-              (fmakunbound 'init))))
+              (fmakunbound 'init)))
+          ;; restore `init' function
+          (when (fboundp '--temp-init)
+            (fset 'init '--temp-init)
+            (fmakunbound '--temp-init)))
         (when (file-exists-p config-path)
           (serika/misc/eval-file config-path))))))
 

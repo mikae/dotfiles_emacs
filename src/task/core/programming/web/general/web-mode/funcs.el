@@ -4,17 +4,17 @@
 
 (require 'web-mode)
 
-(defun serika-web-mode-top-language ()
+(defun serika/web/top-language ()
   "Return the main language of `web-mode' buffer."
   (save-excursion
     (goto-char (point-min))
     (web-mode-language-at-pos)))
 
-(defun serika-web-mode-buffer-is-html-p ()
+(defun serika/web/buffer-is-html-p ()
   "Return t if `web-mode' buffer type is html."
-  (string= (serika-web-mode-top-language) "html"))
+  (string= (serika/web/top-language) "html"))
 
-(defun serika/web/variables ()
+(defun serika/web//settings ()
   "Configure `web-mode' variables."
 ;; Configure `auto-mode-alist'
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
@@ -38,3 +38,7 @@
 
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight t))
+
+(defun init ()
+  "Configure `web-mode'."
+  (serika/web//settings))

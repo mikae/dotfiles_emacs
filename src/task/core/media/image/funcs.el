@@ -27,3 +27,7 @@
   (define-key image-mode-map (kbd "RET") (lambda ()
                                            (interactive)
                                            (run-associated-program buffer-file-name))))
+
+(defun init ()
+  "Configure `image-mode'."
+  (serika/image/keymap))

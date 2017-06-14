@@ -19,3 +19,8 @@
     (define-key company-active-map (kbd "A-k") 'company-select-previous)
     (define-key company-active-map (kbd "A-j") 'company-select-next)
     (define-key company-active-map (kbd "A-h") 'company-abort)))
+
+(defun init ()
+  "Configure `company'."
+  (serika/company//settings)
+  (serika/company//keymap))

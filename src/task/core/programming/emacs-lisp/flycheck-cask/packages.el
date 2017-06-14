@@ -1,5 +1,5 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-
-(serika/flycheck//ini)
+'(
+  flycheck-cask)

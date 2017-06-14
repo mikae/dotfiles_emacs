@@ -46,3 +46,11 @@
 
     (setq helm-buffer-map (make-sparse-keymap))
     ()))
+
+(defun init ()
+  "Configure `helm'."
+  (serika/helm//variables)
+  (serika/helm//keymap)
+  (serika/helm//global-keymap)
+
+  (helm-mode +1))

@@ -1,5 +1,4 @@
 '(
-  +font
   +powerline
   +moe
   +rainbow-mode

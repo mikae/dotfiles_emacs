@@ -9,3 +9,8 @@
 (defun serika/calc/global-keymap ()
   "Add global bindings to invoke calc-mode."
   (global-set-key (kbd "<C-m> c a l c") 'calc))
+
+(defun init ()
+  "Configure `calc-mode'."
+  (serika/calc/keymap)
+  (serika/calc/global-keymap))

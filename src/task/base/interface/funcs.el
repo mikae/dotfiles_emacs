@@ -34,3 +34,19 @@
   "Configure cursor."
   ;; (add-hook 'post-command-hook #'serika/interface//update-cursor-color)
   )
+
+(defun serika/interface//font ()
+  "Configure font."
+  (set-face-attribute 'default nil
+                      :font (concat serika-interface-font-default
+                                    " "
+                                    (number-to-string serika-interface-font-power)))
+  (set-frame-font (concat serika-interface-font-default
+                          " "
+                          (number-to-string serika-interface-font-power)) nil t))
+
+(defun init ()
+  "Configure interface."
+  (serika/interface//hide-gui)
+  (serika/interface//configure-cursor)
+  (serika/interface//font))

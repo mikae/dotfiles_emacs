@@ -27,3 +27,14 @@
 
   (rainbow-mode +1)
   (linum-mode   +1))
+
+(defun init ()
+  "Configure `xdefaults'."
+  (serika/xdefaults//evil)
+  (serika/xdefaults//keymap)
+
+  ;; Hooks
+  (add-hook 'conf-xdefaults-mode-hook 'serika/xdefaults//buffer-local-variables)
+  (add-hook 'conf-xdefaults-mode-hook 'serika/xdefaults//buffer-local-mappings)
+
+  (add-hook 'conf-xdefaults-mode-hook 'serika/xdefaults//interface))

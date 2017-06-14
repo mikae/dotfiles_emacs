@@ -9,7 +9,7 @@
   (evil-local-mode +1)
   (evil-normal-state))
 
-(defun serika/yasnippet//ini ()
+(defun init ()
   "Configure `yasnippet'."
   (setq yas-minor-mode-map (make-sparse-keymap))
 

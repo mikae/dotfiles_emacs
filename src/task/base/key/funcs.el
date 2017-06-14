@@ -87,3 +87,10 @@
   (global-set-key (kbd "C-h v")   'describe-variable)
   (global-set-key (kbd "C-h f")   'describe-function)
   (global-set-key (kbd "C-h k")   'describe-key))
+
+(defun init ()
+  "Configure keys."
+  (serika/key//unset-bindings)
+  (serika/key//disable-arrows)
+  (serika/key//configure-input-decode-map)
+  (serika/key//create-bindings))

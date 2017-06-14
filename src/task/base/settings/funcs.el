@@ -28,3 +28,7 @@
 
   (electric-pair-mode -1)
   (auto-revert-mode -1))
+
+(defun init ()
+  "Configure Emacs settings."
+  (serika/settings//configure))

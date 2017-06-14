@@ -18,3 +18,8 @@
   (global-set-key (kbd "C-, w L") 'buf-move-right)
   (global-set-key (kbd "C-, w J") 'buf-move-down)
   (global-set-key (kbd "C-, w H") 'buf-move-left))
+
+(defun init ()
+  "Configure `buffer-move'."
+  (serika/buffer-move/settings)
+  (serika/buffer-move/global-keymap))
