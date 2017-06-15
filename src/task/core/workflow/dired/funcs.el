@@ -165,8 +165,8 @@
   (define-key dired-mode-map (kbd "j")    'serika/dired/next-visual-line)
   (define-key dired-mode-map (kbd "k")    'serika/dired/previous-visual-line)
 
-  (define-key dired-mode-map (kbd "g")    'serika/dired/move-to-beginning)
-  (define-key dired-mode-map (kbd "G")    'serika/dired/move-to-end)
+  (define-key dired-mode-map (kbd "A-g")    'serika/dired/move-to-beginning)
+  (define-key dired-mode-map (kbd "A-G")    'serika/dired/move-to-end)
 
   (define-key dired-mode-map (kbd "A-k")  'serika/dired/move-to-window-top)
   (define-key dired-mode-map (kbd "A-m")  'serika/dired/move-to-window-middle)

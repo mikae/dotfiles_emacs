@@ -18,8 +18,8 @@
            (define-key target-map (kbd "k")    'evil-previous-visual-line)
            (define-key target-map (kbd "l")    'evil-forward-char)
 
-           (define-key target-map (kbd "g")    'evil-goto-first-line)
-           (define-key target-map (kbd "G")    'evil-goto-line)
+           (define-key target-map (kbd "A-g")    'evil-goto-first-line)
+           (define-key target-map (kbd "A-G")    'evil-goto-line)
 
            (define-key target-map (kbd "A-k")  'evil-window-top)
            (define-key target-map (kbd "A-m")  'evil-window-middle)

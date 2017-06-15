@@ -57,7 +57,6 @@
   (define-key evil-normal-state-map (kbd "J") nil)
 
   (define-key evil-normal-state-map (kbd "a")   'evil-append)
-  (define-key evil-normal-state-map (kbd "a")   'evil-append)
   (define-key evil-normal-state-map (kbd "A")   'evil-append-line)
   (define-key evil-normal-state-map (kbd "c")   'evil-change)
   (define-key evil-normal-state-map (kbd "C")   'evil-change-line)
@@ -87,7 +86,6 @@
   (define-key evil-normal-state-map (kbd "u")   'undo)
   (define-key evil-normal-state-map (kbd "U")   'redo)
   (define-key evil-normal-state-map (kbd "\"")  'evil-use-register)
-  (define-key evil-normal-state-map (kbd "\"")  'evil-use-register)
 
   (define-key evil-normal-state-map (kbd "A-w") 'delete-trailing-whitespace)
 
@@ -110,18 +108,10 @@
   (define-key evil-motion-state-map [down] nil)
   (define-key evil-motion-state-map [left] nil)
 
-  (define-key evil-motion-state-map (kbd "0")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "1")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "2")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "3")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "4")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "5")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "6")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "7")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "8")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "9")   'digit-argument)
-  (define-key evil-motion-state-map (kbd "g")   'evil-goto-first-line)
-  (define-key evil-motion-state-map (kbd "G")   'evil-goto-line)
+  ;; Bind digits to `digit-argument'
+  (dolist (elem '("0" "1" "2" "3" "4" "5" "6" "7" "8" "9"))
+    (define-key evil-motion-state-map (kbd elem) 'digit-argument))
+
   (define-key evil-motion-state-map (kbd "b")   'evil-backward-word-begin)
   (define-key evil-motion-state-map (kbd "B")   'evil-backward-WORD-begin)
   (define-key evil-motion-state-map (kbd "e")   'evil-forward-word-end)
@@ -139,11 +129,15 @@
   (define-key evil-motion-state-map (kbd "{")   'evil-backward-paragraph)
   (define-key evil-motion-state-map (kbd "}")   'evil-forward-paragraph)
   (define-key evil-motion-state-map (kbd "%")   'evil-jump-item)
-  (define-key evil-motion-state-map (kbd "C-'") 'evil-goto-mark)
-  (define-key evil-motion-state-map (kbd "'")   'evil-goto-mark-line)
   (define-key evil-motion-state-map (kbd "*")   'evil-search-word-forward)
   (define-key evil-motion-state-map (kbd "/")   'evil-search-forward)
   (define-key evil-motion-state-map (kbd "?")   'evil-search-backward)
+
+  (define-key evil-motion-state-map (kbd "A-g") 'evil-goto-first-line)
+  (define-key evil-motion-state-map (kbd "A-G") 'evil-goto-line)
+
+  (define-key evil-motion-state-map (kbd "A-'") 'evil-goto-mark)
+  (define-key evil-motion-state-map (kbd "'")   'evil-goto-mark-line)
 
   (define-key evil-motion-state-map (kbd "A-O")  'evil-jump-forward)
   (define-key evil-motion-state-map (kbd "A-o")  'evil-jump-backward)
