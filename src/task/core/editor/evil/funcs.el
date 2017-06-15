@@ -102,6 +102,7 @@
 (defun serika/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
   (serika/misc/unbind-keys evil-motion-state-map)
+  (define-key evil-motion-state-map (kbd "G") nil)
 
   (define-key evil-motion-state-map [up] nil)
   (define-key evil-motion-state-map [right] nil)
