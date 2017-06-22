@@ -40,4 +40,5 @@
 
 (defun init ()
   "Configure `magit'."
-  (serika/magit//status-mode-keymap))
+  ;; (serika/magit//status-mode-keymap)
+  )
