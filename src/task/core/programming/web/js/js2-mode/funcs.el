@@ -1,5 +1,5 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-'(
-  +js2-mode)
+
+(require 'js2-mode)
