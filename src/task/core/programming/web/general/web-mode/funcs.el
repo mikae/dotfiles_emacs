@@ -14,10 +14,12 @@
   "Return t if `web-mode' buffer type is html."
   (string= (serika/web/top-language) "html"))
 
+(defun serika/web//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
 (defun serika/web//settings ()
   "Configure `web-mode' variables."
-;; Configure `auto-mode-alist'
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
   ;; Configure indentation
   (setq web-mode-markup-indent-offset 2)
@@ -41,4 +43,5 @@
 
 (defun init ()
   "Configure `web-mode'."
+  (serika/web//auto-mode-alist)
   (serika/web//settings))

@@ -2,7 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Functions
+(defun serika/text//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode)))
+
 (defun serika/text//evil ()
   "Configure `evil' for `text-mode'."
   (setq evil-shift-width 4)
@@ -19,6 +22,8 @@
 
 (defun init ()
   "Configure `text-mode'."
+  (serika/text//auto-mode-alist)
+
   (add-hook 'text-mode-hook 'serika/text//evil)
   (add-hook 'text-mode-hook 'serika/text//buffer-local-variables)
   (add-hook 'text-mode-hook 'serika/text//interface))

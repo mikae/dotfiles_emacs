@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+(defun serika/xdefaults//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("$\\.Xresources\\'" . conf-xdefaults-mode)))
+
 (defun serika/xdefaults//evil ()
   "Configure `evil' for `xdefaults'."
   (evil-set-initial-state 'conf-xdefaults-mode 'normal))

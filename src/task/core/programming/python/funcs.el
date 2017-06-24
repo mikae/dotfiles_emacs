@@ -6,6 +6,10 @@
 (require 'company-anaconda)
 (require 'pyenv-mode)
 
+(defun serika/python//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode)))
+
 (defun serika/python//evil ()
   "Configure `evil' for `python-mode'."
   (setq evil-shift-width 4)
@@ -58,6 +62,7 @@
 
 (defun init ()
   "Configure `python-mode'."
+  (serika/python//auto-mode-alist)
 
   (add-hook 'python-mode-hook 'serika/python//evil)
   (add-hook 'python-mode-hook 'serika/python//buffer-local-variables)

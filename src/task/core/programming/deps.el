@@ -6,4 +6,6 @@
   +web
 
   +text
+
+  +linux
   )

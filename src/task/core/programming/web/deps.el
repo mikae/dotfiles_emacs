@@ -2,4 +2,5 @@
   +general
   +html
   +json
+  +js
 )

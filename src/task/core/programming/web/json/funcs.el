@@ -5,16 +5,18 @@
 (require 'json-mode)
 (require 'web-beautify)
 
-;; Functions
+(defun serika/json//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
+(defun serika/json//keymap ()
+  "Configure `json-mode-map'."
+  (setq json-mode-map (make-sparse-keymap)))
+
 (defun serika/json//evil ()
   "Configure `evil' for `json-mode'."
   (setq evil-shift-width 2)
   (evil-local-mode +1)
   (evil-set-initial-state 'json-mode 'normal))
-
-(defun serika/json//keymap ()
-  "Configure `json-mode-map'."
-  (setq json-mode-map (make-sparse-keymap)))
 
 (defun serika/json//buffer-local-variables ()
   "Configure buffer-local variables for `json'."
@@ -58,6 +60,7 @@
 
 (defun init ()
   "Configure `json-mode'."
+  (serika/json//auto-mode-alist)
   (serika/json//keymap)
 
   (add-hook 'json-mode-hook 'serika/json//evil)

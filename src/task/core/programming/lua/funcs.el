@@ -5,7 +5,10 @@
 (require 'lua-mode)
 (require 'company-lua)
 
-;; Functions
+(defun serika/lua//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode)))
+
 (defun serika/lua//evil ()
   "Configure `evil' for `lua-mode'."
   (setq evil-shift-width 4)
@@ -59,6 +62,7 @@
 
 (defun init ()
   "Configure `lua-mode'."
+  (serika/lua//auto-mode-alist)
   (serika/lua//keymap)
 
   (add-hook 'lua-mode-hook 'serika/lua//evil)

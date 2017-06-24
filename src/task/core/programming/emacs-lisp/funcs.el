@@ -3,6 +3,10 @@
 ;;; Code:
 (require 'flycheck-cask)
 
+(defun serika/emacs-lisp//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
+
 (defun serika/emacs-lisp//buffer-local-variables ()
   "Configure snippet engine for `emacs-lisp' mode."
   (setq tab-width 2)
@@ -63,6 +67,8 @@
 
 (defun init ()
   "Configure `emacs-lisp-mode'."
+  (serika/emacs-lisp//auto-mode-alist)
+
   (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//evil)
   (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//buffer-local-variables)
   (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//buffer-local-mappings)

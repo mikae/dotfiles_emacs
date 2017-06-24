@@ -20,6 +20,9 @@
                           "auto-save-list"
                           ".saves-"))
 
+  ;; Disable all default mode selection.
+  (setq auto-mode-alist ())
+
   ;; Use spaces instead of tabs
   (setq-default indent-tabs-mode nil
                 tab-width        4)

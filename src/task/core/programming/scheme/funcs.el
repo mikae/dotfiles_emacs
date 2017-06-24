@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+(defun serika/scheme//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.scm\\'" . scheme-mode)))
+
 (defun serika/scheme//buffer-local-variables ()
   "Configure local variables for `scheme' mode."
   (setq tab-width 2)
@@ -57,6 +61,8 @@
 
 (defun init ()
   "Configure `scheme-mode'."
+  (serika/scheme//auto-mode-alist)
+
   (add-hook 'scheme-mode-hook 'serika/scheme//evil)
   (add-hook 'scheme-mode-hook 'serika/scheme//buffer-local-variables)
   (add-hook 'scheme-mode-hook 'serika/scheme//buffer-local-mappings)
