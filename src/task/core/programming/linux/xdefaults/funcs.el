@@ -4,7 +4,7 @@
 
 (defun serika/xdefaults//auto-mode-alist ()
   "Configure `auto-mode-alist'."
-  (add-to-list 'auto-mode-alist '("$\\.Xresources\\'" . conf-xdefaults-mode)))
+  (add-to-list 'auto-mode-alist '("\\.Xresources\\'" . conf-xdefaults-mode)))
 
 (defun serika/xdefaults//evil ()
   "Configure `evil' for `xdefaults'."
@@ -34,6 +34,7 @@
 
 (defun init ()
   "Configure `xdefaults'."
+  (serika/xdefaults//auto-mode-alist)
   (serika/xdefaults//evil)
   (serika/xdefaults//keymap)
 

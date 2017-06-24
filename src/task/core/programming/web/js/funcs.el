@@ -20,12 +20,14 @@
 (defun serika/js//buffer-local-variables ()
   "Configure snippet engine for `js' mode."
   (setq tab-width 2)
+  (setq js-indent-level 2)
   (setq truncate-lines t))
 
 (defun serika/js//buffer-local-mappings ()
   "Configure keymap for `js' mode."
-  (evil-local-set-key 'normal (kbd "=")   'evil-indent)
-  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines))
+  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines)
+  (evil-local-set-key 'normal (kbd "A-=") 'web-beautify-js)
+  (evil-local-set-key 'normal (kbd "=")   'evil-indent))
 
 (defun serika/js//syntax-checking ()
   "Configure syntax checking for `js' mode."

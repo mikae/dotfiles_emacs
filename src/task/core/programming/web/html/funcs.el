@@ -18,7 +18,7 @@
 
 (defun serika/html//buffer-local-mappings ()
   "Configure buffer-local mappings for `html' files."
-  (evil-local-set-key 'normal (kbd "=") 'indent-for-tab-command)
+  (evil-local-set-key 'normal (kbd "=")   'indent-for-tab-command)
   (evil-local-set-key 'normal (kbd "A-=") 'web-beautify-html))
 
 (defun serika/html//snippet-engine ()
