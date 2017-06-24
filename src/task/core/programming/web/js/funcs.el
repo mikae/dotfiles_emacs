@@ -2,6 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'js2-mode)
+(require 'ac-js2)
+
 ;; Global
 (defun serika/js//auto-mode-alist ()
   "Configure `auto-mode-alist'."
@@ -37,9 +40,11 @@
 
 (defun serika/js//auto-completion ()
   "Configure auto completion for `js' mode."
-  (setq-local company-backends '())
-
-  (company-mode +1))
+  (setq ac-sources '(
+                      ac-source-filename
+                      ac-source-dictionary
+                      ac-source-files-in-current-dir))
+  (ac-js2-mode))
 
 (defun serika/js//auto-pairing ()
   "Configure auto completion for `js' mode."
