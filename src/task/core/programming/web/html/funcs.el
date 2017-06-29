@@ -4,7 +4,19 @@
 
 (require 'web-beautify)
 
-;; Functions
+;; Global
+(defun serika/html//auto-mode-alist ()
+  "Configure `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode)))
+
+(defun serika/html//mmm-mode ()
+  "Add support in `mmm-mode'."
+  (serika/mmm-mode/add 'html-mode
+                       'js2-mode
+                       "<script[ a-zA-Z=]*type=\"text\/javascript\"[ a-zA-Z=]*>"
+                       "<\/script>"))
+
+;; Local
 (defun serika/html//evil ()
   "Configure `evil' for `html'."
   (setq evil-shift-width 2)
@@ -23,7 +35,11 @@
 
 (defun serika/html//snippet-engine ()
   "Configure snippet engine for `web-mode' buffers with `html' engine."
-  (emmet-mode              +1))
+  (emmet-mode      +1)
+
+  (yas-minor-mode  +1)
+  (yas-recompile-all)
+  (yas-reload-all))
 
 (defun serika/html//auto-completion ()
   "Configure auto completion for `web-mode' buffers with `html' engine."
@@ -55,24 +71,23 @@
 
   (setq prettify-symbols-alist ()))
 
-(defun serika/html//hook (f)
-  "Add hook that invokes F only if `web-mode' engine is `html'."
-  (lexical-let ((f f))
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (when (serika/web/buffer-is-html-p)
-                  (funcall f)
-                  )))))
-
+;; Init
 (defun init ()
   "Configure `html'."
-  (serika/html//hook 'serika/html//evil)
-  (serika/html//hook 'serika/html//buffer-local-variables)
-  (serika/html//hook 'serika/html//buffer-local-mappings)
+  (serika/html//auto-mode-alist)
+  (serika/html//mmm-mode)
 
-  (serika/html//hook 'serika/html//snippet-engine)
-  (serika/html//hook 'serika/html//auto-completion)
-  (serika/html//hook 'serika/html//syntax-checking)
+  ;; Clear hooks
+  (setq html-mode-hook nil)
 
-  (serika/html//hook 'serika/html//interface)
-  (serika/html//hook 'serika/html//prettify-symbols))
+  ;; Add hooks
+  (add-hook 'html-mode-hook 'serika/html//evil)
+  (add-hook 'html-mode-hook 'serika/html//buffer-local-variables)
+  (add-hook 'html-mode-hook 'serika/html//buffer-local-mappings)
+
+  (add-hook 'html-mode-hook 'serika/html//snippet-engine)
+  (add-hook 'html-mode-hook 'serika/html//auto-completion)
+  (add-hook 'html-mode-hook 'serika/html//syntax-checking)
+
+  (add-hook 'html-mode-hook 'serika/html//interface)
+  (add-hook 'html-mode-hook 'serika/html//prettify-symbols))
