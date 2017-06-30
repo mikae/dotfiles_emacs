@@ -11,10 +11,11 @@
 
 (defun serika/html//mmm-mode ()
   "Add support in `mmm-mode'."
-  (serika/mmm-mode/add 'html-mode
-                       'js2-mode
-                       "<script[ a-zA-Z=]*type=\"text\/javascript\"[ a-zA-Z=]*>"
-                       "<\/script>"))
+  (mmm-add-classes '((html-js-1
+                      :submode js-mode
+                      :front   "<script[^>]*>[ \t]*\n?"
+                      :back    "[ \t]*</script>")))
+  (mmm-add-mode-ext-class 'html-mode nil 'html-js-1))
 
 ;; Local
 (defun serika/html//evil ()
@@ -88,6 +89,7 @@
   (add-hook 'html-mode-hook 'serika/html//snippet-engine)
   (add-hook 'html-mode-hook 'serika/html//auto-completion)
   (add-hook 'html-mode-hook 'serika/html//syntax-checking)
+  (add-hook 'html-mode-hook 'serika/mmm-mode//activate)
 
   (add-hook 'html-mode-hook 'serika/html//interface)
   (add-hook 'html-mode-hook 'serika/html//prettify-symbols))
