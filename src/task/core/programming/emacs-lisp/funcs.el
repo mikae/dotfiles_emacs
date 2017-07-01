@@ -49,7 +49,6 @@
 
 (defun serika/emacs-lisp//interface ()
   "Configure interface for `emacs-lisp' mode."
-
   (setq show-trailing-whitespace +1)
 
   (rainbow-delimiters-mode       +1)

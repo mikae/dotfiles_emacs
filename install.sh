@@ -30,43 +30,47 @@ DESTINATION_SAVE=$DESTINATION_DIR/.save
 DESTINATION_INIT=$DESTINATION_DIR/init.el
 
 config_update_plugins () {
-    SOURCE_YASNIPPET=https://github.com/joaotavora/yasnippet
-    SOURCE_POMIDOR=https://github.com/TatriX/pomidor
-    SOURCE_RUN_ASSOC=https://raw.githubusercontent.com/mikae/emacswiki.org/master/run-assoc.el
-    SOURCE_HELP_FNSP=https://raw.githubusercontent.com/mikae/emacswiki.org/master/help-fns%2B.el
-    SOURCE_LUA_MODE=https://github.com/mikae/lua-mode
-    SOURCE_WEB_BEAUTIFY=https://github.com/mikae/web-beautify
-    SOURCE_COMPANY_LUA=https://github.com/ptrv/company-lua
-
     # yasnippet
+    SOURCE_YASNIPPET=https://github.com/joaotavora/yasnippet
     git clone $SOURCE_YASNIPPET $PREFIX_GIT/yasnippet
     cp -Rv $PREFIX_GIT/yasnippet $DESTINATION_PLUGINS/yasnippet
     cd $DESTINATION_PLUGINS/yasnippet
     rake
 
     # pomidor
+    SOURCE_POMIDOR=https://github.com/TatriX/pomidor
     git clone $SOURCE_POMIDOR $PREFIX_GIT/pomidor
     cp -Rv $PREFIX_GIT/pomidor $DESTINATION_PLUGINS/pomidor
 
     # run-assoc
+    SOURCE_RUN_ASSOC=https://raw.githubusercontent.com/mikae/emacswiki.org/master/run-assoc.el
     wget $SOURCE_RUN_ASSOC -O $PREFIX_GIT/run-assoc.el
     cp -Rv $PREFIX_GIT/run-assoc.el $DESTINATION_PLUGINS
 
     # help-fns+
+    SOURCE_HELP_FNSP=https://raw.githubusercontent.com/mikae/emacswiki.org/master/help-fns%2B.el
     wget $SOURCE_HELP_FNSP -O $PREFIX_GIT/help-fns+.el
     cp -Rv $PREFIX_GIT/help-fns+.el $DESTINATION_PLUGINS
 
     # lua-mode
+    SOURCE_LUA_MODE=https://github.com/mikae/lua-mode
     git clone $SOURCE_LUA_MODE $PREFIX_GIT/lua-mode
     cp -Rv $PREFIX_GIT/lua-mode $DESTINATION_PLUGINS/lua-mode
 
     # web-beautify
+    SOURCE_WEB_BEAUTIFY=https://github.com/mikae/web-beautify
     git clone $SOURCE_WEB_BEAUTIFY $PREFIX_GIT/web-beautify
     cp -Rv $PREFIX_GIT/web-beautify $DESTINATION_PLUGINS/web-beautify
 
     # company-lua
+    SOURCE_COMPANY_LUA=https://github.com/ptrv/company-lua
     git clone $SOURCE_COMPANY_LUA $PREFIX_GIT/company-lua
     cp -Rv $PREFIX_GIT/company-lua $DESTINATION_PLUGINS/company-lua
+
+    # vimperator mode
+    SOURCE_VIMPERATOR_MODE=https://raw.githubusercontent.com/mikae/vimperator-mode/master/vimperator-mode.el
+    wget $SOURCE_VIMPERATOR_MODE -O $PREFIX_GIT/vimperator-mode.el
+    cp -Rv $PREFIX_GIT/vimperator-mode.el $DESTINATION_PLUGINS
 }
 
 config_clean () {
