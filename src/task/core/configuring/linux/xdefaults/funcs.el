@@ -2,17 +2,20 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Global
 (defun serika/xdefaults//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.Xresources\\'" . conf-xdefaults-mode)))
 
-(defun serika/xdefaults//evil ()
-  "Configure `evil' for `xdefaults'."
-  (evil-set-initial-state 'conf-xdefaults-mode 'normal))
-
 (defun serika/xdefaults//keymap ()
   "Configure `conf-xdefaults-mode-map'."
   (setq conf-xdefaults-mode-map (make-sparse-keymap)))
+
+;; Local
+(defun serika/xdefaults//evil ()
+  "Configure `evil' for `xdefaults'."
+  (evil-local-mode)
+  (evil-normal-state))
 
 (defun serika/xdefaults//buffer-local-variables ()
   "Configure interface for `xdefaults' buffers."
@@ -35,10 +38,10 @@
 (defun init ()
   "Configure `xdefaults'."
   (serika/xdefaults//auto-mode-alist)
-  (serika/xdefaults//evil)
   (serika/xdefaults//keymap)
 
   ;; Hooks
+  (add-hook 'conf-xdefaults-mode-hook 'serika/xdefaults//evil)
   (add-hook 'conf-xdefaults-mode-hook 'serika/xdefaults//buffer-local-variables)
   (add-hook 'conf-xdefaults-mode-hook 'serika/xdefaults//buffer-local-mappings)
 
