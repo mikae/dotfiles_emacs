@@ -2,5 +2,4 @@
 ;;; Commentary:
 ;;; Code:
 '(
-  +js2-mode
-  +ac-js2)
+  +js2-mode)
