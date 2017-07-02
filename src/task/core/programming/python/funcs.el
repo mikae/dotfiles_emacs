@@ -6,10 +6,12 @@
 (require 'company-anaconda)
 (require 'pyenv-mode)
 
+;; Global
 (defun serika/python//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode)))
 
+;; Local
 (defun serika/python//evil ()
   "Configure `evil' for `python-mode'."
   (setq evil-shift-width 4)
@@ -36,10 +38,7 @@
 
 (defun serika/python//snippet-engine ()
   "Configure snippet engine for `python' mode."
-  (yas-minor-mode          +1)
-
-  (yas-recompile-all)
-  (yas-reload-all))
+  (serika/yasnippet/activate))
 
 (defun serika/python//syntax-checking ()
   "Configure syntax checking for `python' mode."
@@ -64,13 +63,13 @@
   "Configure `python-mode'."
   (serika/python//auto-mode-alist)
 
-  (add-hook 'python-mode-hook 'serika/python//evil)
-  (add-hook 'python-mode-hook 'serika/python//buffer-local-variables)
-  (add-hook 'python-mode-hook 'serika/python//buffer-local-mappings)
-  (add-hook 'python-mode-hook 'serika/python//minor-modes)
+  (add-hook 'python-mode-hook #'serika/python//evil)
+  (add-hook 'python-mode-hook #'serika/python//buffer-local-variables)
+  (add-hook 'python-mode-hook #'serika/python//buffer-local-mappings)
+  (add-hook 'python-mode-hook #'serika/python//minor-modes)
 
-  (add-hook 'python-mode-hook 'serika/python//snippet-engine)
-  (add-hook 'python-mode-hook 'serika/python//syntax-checking)
-  (add-hook 'python-mode-hook 'serika/python//auto-completion)
+  (add-hook 'python-mode-hook #'serika/python//snippet-engine)
+  (add-hook 'python-mode-hook #'serika/python//syntax-checking)
+  (add-hook 'python-mode-hook #'serika/python//auto-completion)
 
-  (add-hook 'python-mode-hook 'serika/python//interface))
+  (add-hook 'python-mode-hook #'serika/python//interface))

@@ -35,10 +35,7 @@
 
 (defun serika/js2//snippet-engine ()
   "Configure snippet engine for `js' mode."
-  (yas-minor-mode          +1)
-
-  (yas-recompile-all)
-  (yas-reload-all))
+  (serika/yasnippet/activate))
 
 (defun serika/js2//auto-completion ()
   "Configure auto completion for `js' mode."

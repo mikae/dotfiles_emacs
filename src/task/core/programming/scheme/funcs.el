@@ -24,10 +24,7 @@
 
 (defun serika/scheme//snippet-engine ()
   "Configure snippet engine for `scheme' mode."
-  (yas-minor-mode          +1)
-
-  (yas-recompile-all)
-  (yas-reload-all))
+  (serika/yasnippet/activate))
 
 (defun serika/scheme//syntax-checking ()
   "Configure syntax checking for `scheme' mode."

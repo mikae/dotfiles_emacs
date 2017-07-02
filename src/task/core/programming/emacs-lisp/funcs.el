@@ -25,10 +25,7 @@
 
 (defun serika/emacs-lisp//snippet-engine ()
   "Configure snippet engine for `emacs-lisp' mode."
-  (yas-minor-mode          +1)
-
-  (yas-recompile-all)
-  (yas-reload-all))
+  (serika/yasnippet/activate))
 
 (defun serika/emacs-lisp//syntax-checking ()
   "Configure syntax checking for `emacs-lisp' mode."

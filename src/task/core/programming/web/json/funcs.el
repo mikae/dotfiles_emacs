@@ -29,9 +29,7 @@
 
 (defun serika/json//snippet-engine ()
   "Configure snippet engine for `json'."
-  (yas-minor-mode +1)
-  (yas-recompile-all)
-  (yas-reload-all))
+  (serika/yasnippet/activate))
 
 (defun serika/json//syntax-checking ()
   "Configure syntax checking engine for `json'."

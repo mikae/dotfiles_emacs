@@ -38,9 +38,7 @@
   "Configure snippet engine for `web-mode' buffers with `html' engine."
   (emmet-mode      +1)
 
-  (yas-minor-mode  +1)
-  (yas-recompile-all)
-  (yas-reload-all))
+  (serika/yasnippet/activate))
 
 (defun serika/html//auto-completion ()
   "Configure auto completion for `web-mode' buffers with `html' engine."
