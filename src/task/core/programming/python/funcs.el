@@ -33,8 +33,7 @@
   (eldoc-mode          +1)
 
   (anaconda-mode       +1)
-  (anaconda-eldoc-mode +1)
-  (pyenv-mode          +1))
+  (anaconda-eldoc-mode +1))
 
 (defun serika/python//snippet-engine ()
   "Configure snippet engine for `python' mode."

@@ -1,3 +1,4 @@
 '(
   +anaconda-mode
+  +virtualenvwrapper
 )
