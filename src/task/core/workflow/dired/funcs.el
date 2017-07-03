@@ -1,7 +1,8 @@
-;; Load dired
-(require 'dired)
-(require 'evil)
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
 
+;; Public functions
 (defun serika/dired/open-this-directory ()
   "Opens dired in this directory."
   (interactive)
@@ -120,6 +121,12 @@
           (revert-buffer t t))
       (error "2 marked files are required for `shn-split'"))))
 
+;; Global
+(defun serika/dired//require ()
+  "Require modules for `dired'."
+  (require 'dired)
+  (require 'evil))
+
 (defun serika/dired//settings ()
   "Configure `dired-mode' settings."
   (setq dired-recursive-deletes 'always
@@ -193,10 +200,11 @@
 
   ;; Disable attempt to save dired buffer
   (make-local-variable 'serika-buffer-save-function)
-  (setq serika-buffer-save-function 'serika-misc-silence))
+  (setq serika-buffer-save-function 'ignore))
 
 (defun init ()
   "Configure `dired'."
+  (serika/dired//require)
   (serika/dired//settings)
   (serika/dired//keymap)
   (serika/dired//global-keymap)

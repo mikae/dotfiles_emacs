@@ -11,6 +11,19 @@
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode)))
 
+(defun serika/python//keymap ()
+  "Configure `python-mode-map'."
+  (setq python-mode-map (make-sparse-keymap))
+
+  ;; virtualenvwrapper
+  (define-key python-mode-map (kbd "C-c v w") #'venv-workon)
+  (define-key python-mode-map (kbd "C-c v d") #'venv-deactivate)
+  (define-key python-mode-map (kbd "C-c v m") #'venv-mkvirtualenv)
+  (define-key python-mode-map (kbd "C-c v r") #'venv-rmvirtualenv)
+  (define-key python-mode-map (kbd "C-c v l") #'venv-lsvirtualenv)
+  (define-key python-mode-map (kbd "C-c v c") #'venv-cdvirtualenv)
+  (define-key python-mode-map (kbd "C-c v y") #'venv-cpvirtualenv))
+
 ;; Local
 (defun serika/python//evil ()
   "Configure `evil' for `python-mode'."
@@ -61,6 +74,7 @@
 (defun init ()
   "Configure `python-mode'."
   (serika/python//auto-mode-alist)
+  (serika/python//keymap)
 
   (add-hook 'python-mode-hook #'serika/python//evil)
   (add-hook 'python-mode-hook #'serika/python//buffer-local-variables)

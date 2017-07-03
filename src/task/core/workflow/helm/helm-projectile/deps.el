@@ -2,5 +2,4 @@
 ;;; Commentary:
 ;;; Code:
 '(
-  helm
-  helm-projectile)
+  core+ide+project-management+projectile)
