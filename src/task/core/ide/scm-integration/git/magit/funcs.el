@@ -2,43 +2,38 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'magit)
+;; Private functions
 
-(defun serika/magit//keybinding-lambda (target-map)
-  "Bind keybinding lambda."
-  (dolist (key '("1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ))
-    (define-key target-map (kbd key) 'digit-argument))
+(defun serika/magit//toggle-all ()
+  "Toggle -all switch in popup mode."
+  (setf ))
 
-  (define-key target-map (kbd "h")    'evil-backward-char)
-  (define-key target-map (kbd "j")    'evil-next-visual-line)
-  (define-key target-map (kbd "k")    'evil-previous-visual-line)
-  (define-key target-map (kbd "l")    'evil-forward-char)
-
-  (define-key target-map (kbd "A-g")  'evil-goto-first-line)
-  (define-key target-map (kbd "A-G")  'evil-goto-line)
-
-  (define-key target-map (kbd "A-k")  'evil-window-top)
-  (define-key target-map (kbd "A-m")  'evil-window-middle)
-  (define-key target-map (kbd "A-j")  'evil-window-bottom)
-  (define-key target-map (kbd "A-h")  'evil-beginning-of-visual-line)
-  (define-key target-map (kbd "A-l")  'evil-end-of-visual-line)
-
-  (define-key target-map (kbd "A-f")  'evil-scroll-page-down)
-  (define-key target-map (kbd "A-b")  'evil-scroll-page-up)
-  (define-key target-map (kbd "A-d")  'evil-scroll-down)
-  (define-key target-map (kbd "A-u")  'evil-scroll-up)
-
-  (define-key target-map (kbd "/")    'evil-search-forward)
-  (define-key target-map (kbd "?")    'evil-search-backward)
-  (define-key target-map (kbd "A-n")  'evil-search-next)
-  (define-key target-map (kbd "A-N")  'evil-search-previous))
+;; Global
+(defun serika/magit//require ()
+  "Require modules for `magit'."
+  (require 'magit))
 
 (defun serika/magit//status-mode-keymap ()
-  "Configure keymaps for `magit'."
+  "Configure `magit-status-mode-map'."
   (setq magit-status-mode-map (make-sparse-keymap))
-  (serika/magit//keybinding-lambda magit-status-mode-map))
+  (define-key magit-status-mode-map (kbd "s") 'magit-stage-file)
+  (define-key magit-status-mode-map (kbd "c") 'magit-commit-popup)
+  )
+
+(defun serika/magit//popup-mode-map ()
+  "Configure `magit-popup-mode-map'."
+  (setq magit-popup-mode-map (make-sparse-keymap))
+  (define-key magit-popup-mode-map (kbd "-") 'magit-invoke-popup-switch)
+  (define-key magit-popup-mode-map (kbd "=") 'magit-invoke-popup-option)
+  )
+
+(defun serika/magit//global-keymap ()
+  "Configure global keymap."
+  (global-set-key (kbd "C-x <C-m> C-i") 'magit-init)
+  (global-set-key (kbd "C-x <C-m> C-s") 'magit-status))
 
 (defun init ()
   "Configure `magit'."
   ;; (serika/magit//status-mode-keymap)
-  )
+  ;; (serika/magit//popup-mode-map)
+  (serika/magit//global-keymap))
