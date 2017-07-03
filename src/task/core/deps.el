@@ -5,6 +5,7 @@
   +ide
   +programming
   +configuring
+  +writing
   +organization
   +math
   +shell

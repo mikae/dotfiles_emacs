@@ -4,6 +4,4 @@
   +python
   +scheme
   +web
-
-  +text
   )
