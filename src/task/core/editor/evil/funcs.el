@@ -87,8 +87,6 @@
   (define-key evil-normal-state-map (kbd "U")   'redo)
   (define-key evil-normal-state-map (kbd "\"")  'evil-use-register)
 
-  (define-key evil-normal-state-map (kbd "A-w") 'delete-trailing-whitespace)
-
   (define-key evil-normal-state-map (kbd "v" )  'evil-visual-char)
   (define-key evil-normal-state-map (kbd "V" )  'evil-visual-line)
   (define-key evil-normal-state-map (kbd "A-v") 'evil-visual-block)

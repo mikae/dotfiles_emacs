@@ -75,18 +75,20 @@
 
 (defun serika/key//create-bindings ()
   "Create global bindings."
-  (global-set-key (kbd "C-x C-s") 'serika/buffer/save)
-  (global-set-key (kbd "C-x C-c") 'serika/buffer/kill)
-  (global-set-key (kbd "C-x C-h") 'serika/buffer/hide)
-  (global-set-key (kbd "C-x C-r") 'revert-buffer)
+  (global-set-key (kbd "C-x C-s") #'serika/buffer/save)
+  (global-set-key (kbd "C-x C-c") #'serika/buffer/kill)
+  (global-set-key (kbd "C-x C-h") #'serika/buffer/hide)
+  (global-set-key (kbd "C-x C-r") #'revert-buffer)
 
-  (global-set-key (kbd "C-x C-q") 'save-buffers-kill-terminal)
+  (global-set-key (kbd "C-x C-q") #'save-buffers-kill-terminal)
 
-  (global-set-key (kbd "A-:")     'eval-expression)
+  (global-set-key (kbd "A-:")     #'eval-expression)
 
-  (global-set-key (kbd "C-h v")   'describe-variable)
-  (global-set-key (kbd "C-h f")   'describe-function)
-  (global-set-key (kbd "C-h k")   'describe-key))
+  (global-set-key (kbd "C-h v")   #'describe-variable)
+  (global-set-key (kbd "C-h f")   #'describe-function)
+  (global-set-key (kbd "C-h k")   #'describe-key)
+
+  (global-set-key (kbd "C-t C-w") #'delete-trailing-whitespace))
 
 (defun init ()
   "Configure keys."
