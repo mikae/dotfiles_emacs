@@ -2,15 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'mingus)
-
 ;; Public
-(defun serika/mingus/seek-forward (count)
+(defun serika/mingus/seek-forward (&optional count)
   "Seek forward `COUNT' seconds."
   (interactive)
   (mingus-seek (or count 10)))
 
-(defun serika/mingus/seek-backward (count)
+(defun serika/mingus/seek-backward (&optional count)
   "Seek backward `COUNT' seconds."
   (interactive)
   (mingus-seek (- (or count 10))))
@@ -21,6 +19,11 @@
   (mingus-clear t))
 
 ;; Global
+
+(defun serika/mingus//require ()
+  "Require modules for `mingus'."
+  (require 'mingus))
+
 (defun serika/mingus//settings ()
   "Configure `mingus' settings."
   (mingus-set-host 'mingus-mpd-host "localhost")
@@ -95,6 +98,7 @@
 
 (defun init ()
   "Configure `mingus'."
+  (serika/mingus//require)
   (serika/mingus//settings)
   (serika/mingus//keymap)
   (serika/mingus//global-keymap)
