@@ -74,7 +74,13 @@
     ;; `kill'
     (define-key map (kbd "C-c k")      #'markdown-kill-thing-at-point)
 
-    (setq markdown-mode-map map))
+    ;; Backup old keymaps
+    (setq --serika-markdown-mode-map markdown-mode-map
+          --serika-gfm-mode-map      gfm-mode-map)
+
+    ;; Use new keymaps
+    (setq markdown-mode-map map
+          gfm-mode-map      map))
   )
 
 ;; Local
