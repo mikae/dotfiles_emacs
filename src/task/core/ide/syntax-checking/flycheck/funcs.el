@@ -2,7 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'flycheck)
+(defun serika/flycheck//require ()
+  "Require modules for `flycheck'."
+  (require 'func-buffer)
+  (require 'flycheck))
 
 (defun serika/flycheck//settings ()
   "Configure `flycheck' settings."
@@ -33,10 +36,11 @@
    (kbd "C-, f h")
    (lambda ()
      (interactive)
-     (serika-buffer-kill-by-major-mode 'flycheck-error-list-mode))))
+     (serika/buffer/kill-by-major-mode 'flycheck-error-list-mode))))
 
 (defun init ()
   "Configure `flycheck'."
+  (serika/flycheck//require)
   (serika/flycheck//settings)
   (serika/flycheck//keymap)
   (serika/flycheck//global-keymap))
