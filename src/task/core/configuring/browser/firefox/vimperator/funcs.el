@@ -8,7 +8,9 @@
 (defun serika/vimperator//auto-mode-alist ()
   "Configure `auto-mode-alist' for `vimperator'."
   (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\'" . vimperator-mode))
-  (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\.after\\'" . vimperator-mode)))
+  (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\.after\\'" . vimperator-mode))
+  (add-to-list 'auto-mode-alist '("\\.vimp\\'" . vimperator-mode))
+  (add-to-list 'auto-mode-alist '("\\.vimp\\.after\\'" . vimperator-mode)))
 
 ;; Local
 (defun serika/vimperator//evil ()

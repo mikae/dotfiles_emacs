@@ -21,5 +21,4 @@
   "Configure `sh-mode'."
   (serika/sh//keymap)
 
-  (add-hook 'sh-mode-hook 'serika/sh//evil)
-  (add-hook 'sh-mode-hook (lambda () (message sh-shell))))
+  (add-hook 'sh-mode-hook 'serika/sh//evil))

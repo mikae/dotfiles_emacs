@@ -4,4 +4,5 @@
   +python
   +scheme
   +web
+  +shell
   )
