@@ -1,4 +1,5 @@
 '(
   +mpd
   +image
+  +epub
 )

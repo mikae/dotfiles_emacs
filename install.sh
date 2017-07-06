@@ -62,6 +62,11 @@ config_update_plugins () {
     git clone $SOURCE_WEB_BEAUTIFY $PREFIX_GIT/web-beautify
     cp -Rv $PREFIX_GIT/web-beautify $DESTINATION_PLUGINS/web-beautify
 
+    # ereader(ebook reader mode)
+    SOURCE_EREADER=https://github.com/mikae/emacs-ereader
+    git clone $SOURCE_EREADER $PREFIX_GIT/emacs-ereader
+    cp -Rv $PREFIX_GIT/emacs-ereader $DESTINATION_PLUGINS/emacs-ereader
+
     # company-lua
     SOURCE_COMPANY_LUA=https://github.com/ptrv/company-lua
     git clone $SOURCE_COMPANY_LUA $PREFIX_GIT/company-lua
