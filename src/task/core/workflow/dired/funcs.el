@@ -8,9 +8,9 @@
   (interactive)
   (dired default-directory))
 
-(defun serika/dired/create-directory (dir-name)
-  (interactive "bDirectory name:")
-  (dired-create-directory dir-name)
+(defun serika/dired/create-directory ()
+  (interactive)
+  (call-interactively 'dired-create-directory)
   (revert-buffer))
 
 (defun serika/dired/header-length ()
