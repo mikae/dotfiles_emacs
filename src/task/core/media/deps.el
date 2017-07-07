@@ -2,4 +2,5 @@
   +mpd
   +image
   +epub
+  +pdf
 )

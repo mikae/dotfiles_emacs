@@ -36,22 +36,18 @@ Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
                       task))
          (true-task-name (serika/symbol/name true-task))
          (task-subdir (serika/task/parse-dir true-task-name))
-         (config-path (serika/path/join serika-task-directory
-                                        task-subdir
-                                        "config.el"))
          (deps-path (serika/path/join serika-task-directory
                                       task-subdir
                                       "deps.el"))
-         (funcs-path (serika/path/join serika-task-directory
-                                       task-subdir
-                                       "funcs.el"))
+         (packages-path (serika/path/join serika-task-directory
+                                          task-subdir
+                                          "packages.el"))
          (vars-path (serika/path/join serika-task-directory
                                       task-subdir
                                       "vars.el"))
-         (packages-path (serika/path/join serika-task-directory
-                                      task-subdir
-                                      "packages.el"))
-         )
+         (funcs-path (serika/path/join serika-task-directory
+                                       task-subdir
+                                       "funcs.el")))
     (unless (numberp (cl-position true-task-name serika-executed-tasks :test 'equal))
       (progn
         (add-to-list 'serika-executed-tasks true-task-name t)
@@ -76,9 +72,7 @@ Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
           ;; restore `init' function
           (when (fboundp '--temp-init)
             (fset 'init '--temp-init)
-            (fmakunbound '--temp-init)))
-        (when (file-exists-p config-path)
-          (serika/misc/eval-file config-path))))))
+            (fmakunbound '--temp-init)))))))
 
 (defun serika/task/execute-all ()
   "Execute all task defined by `serika-tasks'."
