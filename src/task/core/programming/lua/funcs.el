@@ -26,8 +26,9 @@
 
 (defun serika/lua//buffer-local-mappings()
   "Configure buffer-local mappings for `lua'."
-  (evil-local-set-key 'normal (kbd "=")   'evil-indent)
-  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines))
+  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
+  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
+  (evil-local-set-key 'normal (kbd "C-t e") 'yas-expand))
 
 ;; IDE-like
 (defun serika/lua//snippet-engine ()

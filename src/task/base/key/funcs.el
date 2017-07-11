@@ -75,6 +75,9 @@
 
 (defun serika/key//create-bindings ()
   "Create global bindings."
+  (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
+    (global-set-key (kbd elem) 'digit-argument))
+
   (global-set-key (kbd "C-x C-s") #'serika/buffer/save)
   (global-set-key (kbd "C-x C-c") #'serika/buffer/kill)
   (global-set-key (kbd "C-x C-h") #'serika/buffer/hide)
@@ -82,13 +85,13 @@
 
   (global-set-key (kbd "C-x C-q") #'save-buffers-kill-terminal)
 
-  (global-set-key (kbd "A-:")     #'eval-expression)
+  (global-set-key (kbd "C-:")     #'eval-expression)
 
   (global-set-key (kbd "C-h v")   #'describe-variable)
   (global-set-key (kbd "C-h f")   #'describe-function)
   (global-set-key (kbd "C-h k")   #'describe-key)
 
-  (global-set-key (kbd "C-t C-w") #'delete-trailing-whitespace))
+  (global-set-key (kbd "C-t w")   #'delete-trailing-whitespace))
 
 (defun init ()
   "Configure keys."

@@ -4,6 +4,9 @@
 
 (require 'func-system)
 
+;; Functions
+
+;; Global
 (defun serika/interface//preferred-cursor-color ()
   "Return preferred cursor color."
   "white")
@@ -45,6 +48,7 @@
                           " "
                           (number-to-string serika-interface-font-power)) nil t))
 
+;; Init
 (defun init ()
   "Configure interface."
   (serika/interface//hide-gui)

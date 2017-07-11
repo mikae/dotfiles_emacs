@@ -38,8 +38,9 @@
 
 (defun serika/python//buffer-local-mappings ()
   "Configure keymap for `python' mode."
-  (evil-local-set-key 'normal (kbd "=")   'evil-indent)
-  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines))
+  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
+  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
+  (evil-local-set-key 'normal (kbd "C-t e") 'yas-expand))
 
 (defun serika/python//minor-modes ()
   "Configure minor modes for `python' mode."

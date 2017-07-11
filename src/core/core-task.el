@@ -4,8 +4,8 @@
 
 (require 'func-symbol)
 (require 'func-package)
-(require 'func-misc)
 (require 'func-path)
+(require 'func-eval)
 
 (defvar serika-tasks '()
   "List of tasks.
@@ -52,19 +52,19 @@ Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
       (progn
         (add-to-list 'serika-executed-tasks true-task-name t)
         (when (file-exists-p packages-path)
-          (dolist (package-name (serika/misc/eval-file packages-path))
+          (dolist (package-name (serika/eval/file packages-path))
             (serika/package/make-sure-installed package-name)))
         (when (file-exists-p deps-path)
-          (dolist (dep (serika/misc/eval-file deps-path))
+          (dolist (dep (serika/eval/file deps-path))
             (serika/task/execute dep true-task)))
         (when (file-exists-p vars-path)
-          (serika/misc/eval-file vars-path))
+          (serika/eval/file vars-path))
         (when (file-exists-p funcs-path)
           ;; save `init' function to `--temp-init' variable if any
           (when (fboundp 'init)
             (fset '--temp-init 'init)
             (fmakunbound 'init))
-          (serika/misc/eval-file funcs-path)
+          (serika/eval/file funcs-path)
           (when (fboundp 'init)
             (progn
               (init)

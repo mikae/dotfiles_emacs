@@ -2,16 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'json-mode)
-(require 'web-beautify)
+;; Global
+(defun serika/json//require ()
+  "Require modules for `json'."
+  (require 'json-mode)
+  (require 'web-beautify))
 
 (defun serika/json//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
+
 (defun serika/json//keymap ()
   "Configure `json-mode-map'."
   (setq json-mode-map (make-sparse-keymap)))
 
+;; Local
 (defun serika/json//evil ()
   "Configure `evil' for `json-mode'."
   (setq evil-shift-width 2)
@@ -37,7 +42,7 @@
 
 (defun serika/json//auto-completion ()
   "Configure auto completion engine for `json'."
-  (auto-complete-mode      +1)
+  (auto-complete-mode +1)
 
   (setq ac-sources '(
                      ac-source-words-in-same-mode-buffers
@@ -56,8 +61,10 @@
   (prettify-symbols-mode +1)
   (setq prettify-symbols-alist ()))
 
+;; Init
 (defun init ()
   "Configure `json-mode'."
+  (serika/json//require)
   (serika/json//auto-mode-alist)
   (serika/json//keymap)
 

@@ -129,11 +129,11 @@ CLEAN=false
 INSTALL_PLUGINS=false
 INSTALL=false
 
-if [[ $# -eq 0 ]]; then
+if [ $# -eq 0 ]; then
     usage
 fi
 
-while [[ $# -gt 0 ]]
+while [ $# -gt 0 ]
 do
     key="$1"
     case $key in

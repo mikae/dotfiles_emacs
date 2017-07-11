@@ -13,8 +13,9 @@
 
 (defun serika/scheme//buffer-local-mappings ()
   "Configure local mappings for `scheme' mode."
-  (evil-local-set-key 'normal (kbd "=")   'evil-indent)
-  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines))
+  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
+  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
+  (evil-local-set-key 'normal (kbd "C-t e") 'yas-expand))
 
 (defun serika/scheme//evil ()
   "Configure `evil' for `scheme-mode'."

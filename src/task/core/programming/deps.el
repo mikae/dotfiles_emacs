@@ -1,8 +1,7 @@
 '(
-  +emacs-lisp
+  +lisp
   +lua
   +python
-  +scheme
   +web
   +shell
   )

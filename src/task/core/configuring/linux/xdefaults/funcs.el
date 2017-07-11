@@ -25,8 +25,8 @@
 
 (defun serika/xdefaults//buffer-local-mappings ()
   "Configure interface for `xdefaults' buffers."
-  (evil-local-set-key 'normal (kbd "=") 'evil-indent)
-  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines))
+  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
+  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines))
 
 (defun serika/xdefaults//interface ()
   "Configure interface for `xdefaults' buffers."

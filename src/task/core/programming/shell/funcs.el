@@ -17,6 +17,10 @@
   (evil-local-mode +1)
   (evil-normal-state))
 
+(defun serika/sh//local-keymap ()
+  "Configure local keymap"
+  )
+
 (defun init ()
   "Configure `sh-mode'."
   (serika/sh//keymap)

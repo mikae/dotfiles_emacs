@@ -2,12 +2,26 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'web-beautify)
-
 ;; Global
+(defun serika/html//require ()
+  "Require modules for `html'."
+  (require 'web-beautify)
+  (require 'sgml-mode))
+
 (defun serika/html//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode)))
+
+(defun serika/html//keymap ()
+  "Configure buffer-local mappings for `html' files."
+  (setq --serika-html-mode-map html-mode-map)
+  (setq html-mode-map (let ((map (make-sparse-keymap)))
+                        (define-key map (kbd "C-t e") #'yas-expand)
+                        (define-key map (kbd "C-t E") #'serika/emmet/expand)
+                        (define-key map (kbd "C-t =") #'evil-indent)
+                        (define-key map (kbd "C-t +") #'web-beautify-html)
+                        (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
+                        map)))
 
 (defun serika/html//mmm-mode ()
   "Add support in `mmm-mode'."
@@ -29,15 +43,9 @@
   (setq evil-shift-width 2)
   (setq truncate-lines t))
 
-(defun serika/html//buffer-local-mappings ()
-  "Configure buffer-local mappings for `html' files."
-  (evil-local-set-key 'normal (kbd "=")   'indent-for-tab-command)
-  (evil-local-set-key 'normal (kbd "A-=") 'web-beautify-html))
-
 (defun serika/html//snippet-engine ()
   "Configure snippet engine for `web-mode' buffers with `html' engine."
-  (emmet-mode      +1)
-
+  (serika/emmet/activate)
   (serika/yasnippet/activate))
 
 (defun serika/html//auto-completion ()
@@ -62,10 +70,8 @@
 
   (rainbow-delimiters-mode       +1)
   (rainbow-mode                  +1)
-  (linum-mode                    +1))
+  (linum-mode                    +1)
 
-(defun serika/html//prettify-symbols ()
-  "Configure prettify-symbols for `web-mode' buffers with `html' engine."
   (prettify-symbols-mode   +1)
 
   (setq prettify-symbols-alist ()))
@@ -73,21 +79,18 @@
 ;; Init
 (defun init ()
   "Configure `html'."
+  (serika/html//require)
   (serika/html//auto-mode-alist)
+  (serika/html//keymap)
   (serika/html//mmm-mode)
-
-  ;; Clear hooks
-  (setq html-mode-hook nil)
 
   ;; Add hooks
   (add-hook 'html-mode-hook 'serika/html//evil)
   (add-hook 'html-mode-hook 'serika/html//buffer-local-variables)
-  (add-hook 'html-mode-hook 'serika/html//buffer-local-mappings)
 
   (add-hook 'html-mode-hook 'serika/html//snippet-engine)
   (add-hook 'html-mode-hook 'serika/html//auto-completion)
   (add-hook 'html-mode-hook 'serika/html//syntax-checking)
   (add-hook 'html-mode-hook 'serika/mmm-mode//activate)
 
-  (add-hook 'html-mode-hook 'serika/html//interface)
-  (add-hook 'html-mode-hook 'serika/html//prettify-symbols))
+  (add-hook 'html-mode-hook 'serika/html//interface))

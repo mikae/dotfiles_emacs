@@ -2,10 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'js2-mode)
-(require 'ac-js2)
-
 ;; Global
+(defun serika/js2//require ()
+  "Require modules for `js'."
+  (require 'js2-mode)
+  (require 'ac-js2))
+
 (defun serika/js2//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
@@ -25,9 +27,11 @@
 
 (defun serika/js2//buffer-local-mappings ()
   "Configure keymap for `js' mode."
-  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines)
-  (evil-local-set-key 'normal (kbd "A-=") 'web-beautify-js)
-  (evil-local-set-key 'normal (kbd "=")   'evil-indent))
+  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
+  (evil-local-set-key 'normal (kbd "C-t +") 'web-beautify-js)
+  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
+  (evil-local-set-key 'normal (kbd "C-t e") 'yas-expand)
+  (evil-local-set-key 'normal (kbd "C-t E") 'serika/emmet/expand))
 
 (defun serika/js2//syntax-checking ()
   "Configure syntax checking for `js' mode."
@@ -35,7 +39,8 @@
 
 (defun serika/js2//snippet-engine ()
   "Configure snippet engine for `js' mode."
-  (serika/yasnippet/activate))
+  (serika/yasnippet/activate)
+  (serika/emmet/activate))
 
 (defun serika/js2//auto-completion ()
   "Configure auto completion for `js' mode."
@@ -64,6 +69,7 @@
 
 (defun init ()
   "Configure Emacs for `js'-programming."
+  (serika/js2//require)
   (serika/js2//auto-mode-alist)
 
   (add-hook 'js2-mode-hook 'serika/js2//evil)

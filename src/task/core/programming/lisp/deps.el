@@ -2,4 +2,5 @@
 ;;; Commentary:
 ;;; Code:
 '(
-  +js2-mode)
+  +emacs-lisp
+  +scheme)

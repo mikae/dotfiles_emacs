@@ -1,21 +1,31 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'flycheck-cask)
+
+;; Global
+(defun serika/emacs-lisp//require ()
+  "Require modules for `emacs-lisp'."
+  (require 'flycheck-cask))
 
 (defun serika/emacs-lisp//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
 
+(defun serika/emacs-lisp//keymap ()
+  "Configure keymap for `emacs-lisp' mode."
+  (setq --serika-emacs-lisp-mode-map emacs-lisp-mode-map)
+  (setq emacs-lisp-mode-map (let ((map (make-sparse-keymap)))
+                              (define-key map (kbd "C-t =") #'evil-indent)
+                              (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
+                              (define-key map (kbd "C-t e") #'yas-expand)
+                              map)))
+
+;; Local
 (defun serika/emacs-lisp//buffer-local-variables ()
   "Configure snippet engine for `emacs-lisp' mode."
   (setq tab-width 2)
   (setq truncate-lines t))
 
-(defun serika/emacs-lisp//buffer-local-mappings ()
-  "Configure keymap for `emacs-lisp' mode."
-  (evil-local-set-key 'normal (kbd "=")   'evil-indent)
-  (evil-local-set-key 'normal (kbd "A-/") 'evilnc-comment-or-uncomment-lines))
 
 (defun serika/emacs-lisp//evil ()
   "Configure `evil' for `emacs-lisp-mode'."
@@ -63,11 +73,12 @@
 
 (defun init ()
   "Configure `emacs-lisp-mode'."
+  (serika/emacs-lisp//require)
   (serika/emacs-lisp//auto-mode-alist)
+  (serika/emacs-lisp//keymap)
 
   (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//evil)
   (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//buffer-local-variables)
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//buffer-local-mappings)
 
   (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//snippet-engine)
   (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//syntax-checking)
