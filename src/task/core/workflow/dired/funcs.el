@@ -169,25 +169,25 @@
                                              (serika/buffer/kill-by-major-mode 'dired-mode)))
 
   ;; Add search functions
-  (define-key dired-mode-map (kbd "/")     #'evil-search-forward)
-  (define-key dired-mode-map (kbd "?")     #'evil-search-backward)
+  (define-key dired-mode-map (kbd "A-/")     #'evil-search-forward)
+  (define-key dired-mode-map (kbd "A-?")     #'evil-search-backward)
   (define-key dired-mode-map (kbd "A-n")   #'evil-search-next)
   (define-key dired-mode-map (kbd "A-N")   #'evil-search-previous)
 
-  (define-key dired-mode-map (kbd "j")     #'serika/dired/next-visual-line)
-  (define-key dired-mode-map (kbd "k")     #'serika/dired/previous-visual-line)
+  (define-key dired-mode-map (kbd "A-j")     #'serika/dired/next-visual-line)
+  (define-key dired-mode-map (kbd "A-k")     #'serika/dired/previous-visual-line)
 
   (define-key dired-mode-map (kbd "A-g")   #'serika/dired/move-to-beginning)
   (define-key dired-mode-map (kbd "A-G")   #'serika/dired/move-to-end)
 
-  (define-key dired-mode-map (kbd "A-k")   #'serika/dired/move-to-window-top)
-  (define-key dired-mode-map (kbd "A-m")   #'serika/dired/move-to-window-middle)
-  (define-key dired-mode-map (kbd "A-j")   #'serika/dired/move-to-window-bottom)
+  (define-key dired-mode-map (kbd "A-K")   #'serika/dired/move-to-window-top)
+  (define-key dired-mode-map (kbd "A-M")   #'serika/dired/move-to-window-middle)
+  (define-key dired-mode-map (kbd "A-J")   #'serika/dired/move-to-window-bottom)
 
-  (define-key dired-mode-map (kbd "A-f")   #'serika/dired/scroll-page-down)
-  (define-key dired-mode-map (kbd "A-b")   #'serika/dired/scroll-page-up)
-  (define-key dired-mode-map (kbd "A-d")   #'serika/dired/scroll-half-page-down)
-  (define-key dired-mode-map (kbd "A-u")   #'serika/dired/scroll-half-page-up)
+  (define-key dired-mode-map (kbd "A-H-f")   #'serika/dired/scroll-page-down)
+  (define-key dired-mode-map (kbd "A-H-b")   #'serika/dired/scroll-page-up)
+  (define-key dired-mode-map (kbd "A-H-d")   #'serika/dired/scroll-half-page-down)
+  (define-key dired-mode-map (kbd "A-H-u")   #'serika/dired/scroll-half-page-up)
 
   (define-key dired-mode-map (kbd "RET")   #'dired-run-associated-program))
 

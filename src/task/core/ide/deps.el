@@ -5,4 +5,5 @@
   +scm-integration
   +multiple-major-modes
   +project-management
+  +multi-compile
 )
