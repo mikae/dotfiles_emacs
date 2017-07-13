@@ -25,12 +25,12 @@
                             (define-key map (kbd "q")     #'serika/buffer/kill-current)
 
                             ;; Move
-                            (define-key map (kbd "j")     #'pdf-view-next-line-or-next-page)
-                            (define-key map (kbd "k")     #'pdf-view-previous-line-or-previous-page)
-                            (define-key map (kbd "A-j")   #'pdf-view-scroll-up-or-next-page)
-                            (define-key map (kbd "A-k")   #'pdf-view-scroll-down-or-previous-page)
-                            (define-key map (kbd "A-J")   #'pdf-view-next-page)
-                            (define-key map (kbd "A-K")   #'pdf-view-previous-page)
+                            (define-key map (kbd "A-j")   #'pdf-view-next-line-or-next-page)
+                            (define-key map (kbd "A-k")   #'pdf-view-previous-line-or-previous-page)
+                            (define-key map (kbd "A-J")   #'pdf-view-scroll-up-or-next-page)
+                            (define-key map (kbd "A-K")   #'pdf-view-scroll-down-or-previous-page)
+                            (define-key map (kbd "A-H-j") #'pdf-view-next-page)
+                            (define-key map (kbd "A-H-k") #'pdf-view-previous-page)
                             (define-key map (kbd "A-g")   #'pdf-view-first-page)
                             (define-key map (kbd "A-G")   #'pdf-view-last-page)
                             (define-key map (kbd "C-c p") #'pdf-view-goto-page)
