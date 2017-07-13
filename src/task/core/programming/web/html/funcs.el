@@ -16,6 +16,7 @@
   "Configure buffer-local mappings for `html' files."
   (setq --serika-html-mode-map html-mode-map)
   (setq html-mode-map (let ((map (make-sparse-keymap)))
+                        (define-key map (kbd "C-c c") #'multi-compile-run)
                         (define-key map (kbd "C-t e") #'yas-expand)
                         (define-key map (kbd "C-t E") #'serika/emmet/expand)
                         (define-key map (kbd "C-t =") #'evil-indent)
@@ -30,6 +31,12 @@
                       :front   "<script[^>]*>[ \t]*\n?"
                       :back    "[ \t]*</script>")))
   (mmm-add-mode-ext-class 'html-mode nil 'html-js-1))
+
+(defun serika/html//multi-compile ()
+  "Configure `multi-compile'."
+  (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
+                                                   ("Firefox-esr" . "firefox-esr %path")
+                                                   ("Chromium"    . "chromium    %path")))))
 
 ;; Local
 (defun serika/html//evil ()
@@ -83,6 +90,7 @@
   (serika/html//auto-mode-alist)
   (serika/html//keymap)
   (serika/html//mmm-mode)
+  (serika/html//multi-compile)
 
   ;; Add hooks
   (add-hook 'html-mode-hook 'serika/html//evil)
