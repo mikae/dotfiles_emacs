@@ -6,10 +6,10 @@
 
 (defun serika/helm//global-keymap ()
   "Configure global keymap for using `helm'."
-  (global-set-key (kbd "A-x")     #'helm-M-x)
+  (global-set-key (kbd "A-x")   #'helm-M-x)
 
-  (global-set-key (kbd "C-x C-f") #'helm-find-files)
-  (global-set-key (kbd "C-x C-y") #'helm-show-kill-ring))
+  (global-set-key (kbd "C-x f") #'helm-find-files)
+  (global-set-key (kbd "C-x y") #'helm-show-kill-ring))
 
 (defun serika/helm//variables ()
   "Configure `helm' variables."

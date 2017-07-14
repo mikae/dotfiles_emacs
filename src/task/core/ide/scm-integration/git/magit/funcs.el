@@ -2,12 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Private functions
-
-(defun serika/magit//toggle-all ()
-  "Toggle -all switch in popup mode."
-  (setf ))
-
 ;; Global
 (defun serika/magit//require ()
   "Require modules for `magit'."
@@ -29,8 +23,8 @@
 
 (defun serika/magit//global-keymap ()
   "Configure global keymap."
-  (global-set-key (kbd "C-x <C-m> C-i") 'magit-init)
-  (global-set-key (kbd "C-x <C-m> C-s") 'magit-status))
+  (global-set-key (kbd "C-x m i") 'magit-init)
+  (global-set-key (kbd "C-x m s") 'magit-status))
 
 (defun init ()
   "Configure `magit'."

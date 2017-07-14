@@ -2,7 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'func-buffer)
+;; Global
+(defun serika/key//require ()
+  "Require modules for `dired'."
+  (require 'func-buffer)
+  (require 'func-tramp))
 
 (defun serika/key//unset-bindings ()
   "Clear default bindings."
@@ -78,23 +82,29 @@
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
     (global-set-key (kbd elem) 'digit-argument))
 
-  (global-set-key (kbd "C-x C-s") #'serika/buffer/save)
-  (global-set-key (kbd "C-x C-c") #'serika/buffer/kill)
-  (global-set-key (kbd "C-x C-h") #'serika/buffer/hide)
-  (global-set-key (kbd "C-x C-r") #'revert-buffer)
+  (global-set-key (kbd "C-x s") #'serika/buffer/save)
+  (global-set-key (kbd "C-x S") #'serika/tramp/sudo-write)
+  (global-set-key (kbd "C-x c") #'serika/buffer/kill)
+  (global-set-key (kbd "C-x h") #'serika/buffer/hide)
+  (global-set-key (kbd "C-x r") #'revert-buffer)
 
-  (global-set-key (kbd "C-x C-q") #'save-buffers-kill-terminal)
+  (global-set-key (kbd "C-x q") #'save-buffers-kill-terminal)
 
-  (global-set-key (kbd "C-:")     #'eval-expression)
+  (global-set-key (kbd "C-:")   #'eval-expression)
 
-  (global-set-key (kbd "C-h v")   #'describe-variable)
-  (global-set-key (kbd "C-h f")   #'describe-function)
-  (global-set-key (kbd "C-h k")   #'describe-key)
+  (global-set-key (kbd "C-h v") #'describe-variable)
+  (global-set-key (kbd "C-h f") #'describe-function)
+  (global-set-key (kbd "C-h k") #'describe-key)
 
-  (global-set-key (kbd "C-t w")   #'delete-trailing-whitespace))
+  ;; Transform
+  (global-set-key (kbd "C-t w") #'delete-trailing-whitespace)
+
+  ;; Toggle
+  (global-set-key (kbd "C-T r") #'read-only-mode))
 
 (defun init ()
   "Configure keys."
+  (serika/key//require)
   (serika/key//unset-bindings)
   (serika/key//disable-arrows)
   (serika/key//configure-input-decode-map)

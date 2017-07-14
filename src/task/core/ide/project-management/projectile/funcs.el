@@ -36,7 +36,7 @@
 
 (defun serika/projectile//global-keymap ()
   "Configure global bindings for projectile"
-  (global-set-key (kbd "C-x C-p") #'serika/projectile/ini))
+  (global-set-key (kbd "C-x p") #'serika/projectile/ini))
 
 ;; Init
 (defun init ()

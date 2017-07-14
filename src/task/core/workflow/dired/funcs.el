@@ -194,7 +194,7 @@
 
 (defun serika/dired//global-keymap ()
   "Configure global keymap to use `dired-mode'."
-  (global-set-key (kbd "C-x C-d") #'serika/dired/open-this-directory))
+  (global-set-key (kbd "C-x d") #'serika/dired/open-this-directory))
 
 (defun serika/dired//hook ()
   "Configure `dired-mode' buffers."
