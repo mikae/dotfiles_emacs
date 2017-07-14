@@ -34,9 +34,6 @@
 (defun serika/image//keymap ()
   "Configure `image-mode-map'."
   (setq image-mode-map (let ((map (make-sparse-keymap)))
-                         ;; Save old keymap
-                         (setq --serika-image-mode-map)
-
                          ;; Quit from image viewing
                          (define-key map (kbd "q")     #'serika/buffer/kill-current)
 

@@ -1,6 +1,13 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
+
+;; Private
+(defun serika/helm/activate ()
+  "Activate `helm'."
+  (helm-mode +1))
+
+;; Global
 (require 'helm-lib)
 (require 'helm-config)
 
@@ -47,10 +54,11 @@
     (setq helm-buffer-map (make-sparse-keymap))
     ()))
 
+;; Init
 (defun init ()
   "Configure `helm'."
   (serika/helm//variables)
   (serika/helm//keymap)
   (serika/helm//global-keymap)
 
-  (helm-mode +1))
+  (serika/helm/activate))
