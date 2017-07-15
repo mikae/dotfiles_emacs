@@ -1,16 +1,19 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'func-package)
 
-(require 'company)
+;; Global
+(defun serika-g/company//require ()
+  "Require modules for `company'."
+  (require 'func-package)
+  (require 'company))
 
-(defun serika/company//settings ()
+(defun serika-g/company//settings ()
   "Configure `company-mode'."
   (setq company-minimum-prefix-length 2)
   (setq company-mode/enable-yas t))
 
-(defun serika/company//keymap ()
+(defun serika-g/company//keymap ()
   "Configure `company-active-map'."
   (setq company-active-map (make-sparse-keymap))
 
@@ -22,5 +25,6 @@
 
 (defun init ()
   "Configure `company'."
-  (serika/company//settings)
-  (serika/company//keymap))
+  (serika-g/company//require)
+  (serika-g/company//settings)
+  (serika-g/company//keymap))

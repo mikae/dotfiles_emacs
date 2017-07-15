@@ -13,7 +13,7 @@
                        (file-name-as-directory "core")
                        "core-load-path.el"))
     (require 'core-serika)
-    (serika/init)))
+    (serika-c/init)))
 
 (provide 'init)
 ;;; init.el ends here

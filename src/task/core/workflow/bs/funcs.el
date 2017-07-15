@@ -2,14 +2,17 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'bs)
+;; Global
+(defun serika-g/bs//require ()
+  "Require modules for `bs'."
+  (require 'bs))
 
-(defun serika/bs//settings ()
+(defun serika-g/bs//settings ()
   "Configure `bs'."
   (setq bs-configurations
         '(("files" "^*scratch\\*" nil nil bs-visits-non-file bs-sort-buffer-interns-are-last))))
 
-(defun serika/bs//keymap ()
+(defun serika-g/bs//keymap ()
   "Configure `bs' keymap."
   (setq bs-mode-map (make-sparse-keymap))
 
@@ -21,12 +24,13 @@
   (define-key bs-mode-map (kbd "k")     'previous-line)
   (define-key bs-mode-map (kbd "l")     'bs-select))
 
-(defun serika/bs//global-keymap ()
+(defun serika-g/bs//global-keymap ()
   "Configure global keymap to use `bs'."
   (global-set-key (kbd "C-, b l")       'bs-show))
 
 (defun init ()
   "Configure `bs'."
-  (serika/bs//settings)
-  (serika/bs//keymap)
-  (serika/bs//global-keymap))
+  (serika-g/bs//require)
+  (serika-g/bs//settings)
+  (serika-g/bs//keymap)
+  (serika-g/bs//global-keymap))

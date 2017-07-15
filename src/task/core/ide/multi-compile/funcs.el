@@ -3,16 +3,17 @@
 ;;; Code:
 
 ;; Global
-(defun serika/multi-compile//require ()
+(defun serika-g/multi-compile//require ()
   "Require modules for `multi-compile'."
   (require 'multi-compile))
 
-(defun serika/multi-compile//variables ()
+(defun serika-g/multi-compile//variables ()
   "Configure variables."
   (setq multi-compile-alist ())
   (setq multi-compile-completion-system 'helm))
 
+;; Init
 (defun init ()
   "Configure `multi-compile'."
-  (serika/multi-compile//require)
-  (serika/multi-compile//variables))
+  (serika-g/multi-compile//require)
+  (serika-g/multi-compile//variables))

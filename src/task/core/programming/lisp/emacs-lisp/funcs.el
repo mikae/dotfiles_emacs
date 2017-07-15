@@ -3,15 +3,15 @@
 ;;; Code:
 
 ;; Global
-(defun serika/emacs-lisp//require ()
+(defun serika-g/emacs-lisp//require ()
   "Require modules for `emacs-lisp'."
   (require 'flycheck-cask))
 
-(defun serika/emacs-lisp//auto-mode-alist ()
+(defun serika-g/emacs-lisp//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
 
-(defun serika/emacs-lisp//keymap ()
+(defun serika-g/emacs-lisp//keymap ()
   "Configure keymap for `emacs-lisp' mode."
   (setq --serika-emacs-lisp-mode-map emacs-lisp-mode-map)
   (setq emacs-lisp-mode-map (let ((map (make-sparse-keymap)))
@@ -21,47 +21,47 @@
                               map)))
 
 ;; Local
-(defun serika/emacs-lisp//buffer-local-variables ()
+(defun serika-l/emacs-lisp//buffer-local-variables ()
   "Configure snippet engine for `emacs-lisp' mode."
   (setq tab-width 2)
   (setq truncate-lines t))
 
 
-(defun serika/emacs-lisp//evil ()
+(defun serika-l/emacs-lisp//evil ()
   "Configure `evil' for `emacs-lisp-mode'."
   (setq evil-shift-width 2)
   (evil-local-mode +1)
   (evil-normal-state))
 
-(defun serika/emacs-lisp//snippet-engine ()
+(defun serika-l/emacs-lisp//snippet-engine ()
   "Configure snippet engine for `emacs-lisp' mode."
-  (serika/yasnippet/activate))
+  (serika-f/yasnippet/activate))
 
-(defun serika/emacs-lisp//syntax-checking ()
+(defun serika-l/emacs-lisp//syntax-checking ()
   "Configure syntax checking for `emacs-lisp' mode."
   (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (flycheck-mode           +1)
 
   (flycheck-cask-setup))
 
-(defun serika/emacs-lisp//auto-completion ()
+(defun serika-l/emacs-lisp//auto-completion ()
   "Configure auto completion for `emacs-lisp' mode."
   (setq-local company-backends '(company-elisp))
 
   (company-mode +1))
 
-(defun serika/emacs-lisp//auto-pairing ()
+(defun serika-l/emacs-lisp//auto-pairing ()
   "Configure auto completion for `emacs-lisp' mode."
   (electric-pair-mode +1))
 
-(defun serika/emacs-lisp//interface ()
+(defun serika-l/emacs-lisp//interface ()
   "Configure interface for `emacs-lisp' mode."
   (setq show-trailing-whitespace +1)
 
   (rainbow-delimiters-mode       +1)
   (linum-mode                    +1))
 
-(defun serika/emacs-lisp//prettify-symbols ()
+(defun serika-l/emacs-lisp//prettify-symbols ()
   "Configure prettify symbols for `emacs-lisp' mode."
   (prettify-symbols-mode +1)
 
@@ -73,17 +73,17 @@
 
 (defun init ()
   "Configure `emacs-lisp-mode'."
-  (serika/emacs-lisp//require)
-  (serika/emacs-lisp//auto-mode-alist)
-  (serika/emacs-lisp//keymap)
+  (serika-g/emacs-lisp//require)
+  (serika-g/emacs-lisp//auto-mode-alist)
+  (serika-g/emacs-lisp//keymap)
 
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//evil)
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//buffer-local-variables)
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//evil)
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//buffer-local-variables)
 
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//snippet-engine)
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//syntax-checking)
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//auto-completion)
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//auto-pairing)
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//snippet-engine)
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//syntax-checking)
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-completion)
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-pairing)
 
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//interface)
-  (add-hook 'emacs-lisp-mode-hook 'serika/emacs-lisp//prettify-symbols))
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//interface)
+  (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//prettify-symbols))

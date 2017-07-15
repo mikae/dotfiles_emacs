@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Path variables
 (defvar serika-start-directory
   user-emacs-directory
   "Serika start directory.")
@@ -42,6 +43,7 @@
                             (file-name-as-directory "images")))
   "Directory for asset files.")
 
+;; Mutating load-path
 (let ((add-to-load-path (lambda (dir)
                           (add-to-list 'load-path dir))))
   (mapc add-to-load-path

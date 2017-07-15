@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika/input//reverse-method (input-method)
+(defun serika-f/input//reverse-method (input-method)
   "Build the reverse mapping of single letters from INPUT-METHOD."
   (interactive
    (list (read-input-method-name "Use input method (default current): ")))

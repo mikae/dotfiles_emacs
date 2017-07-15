@@ -3,30 +3,30 @@
 ;;; Code:
 
 ;; Global
-(defun serika/text//auto-mode-alist ()
+(defun serika-g/text//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode)))
 
 ;; Local
-(defun serika/text//evil ()
+(defun serika-l/text//evil ()
   "Configure `evil' for `text-mode'."
   (setq evil-shift-width 4)
   (evil-local-mode +1)
   (evil-normal-state))
 
-(defun serika/text//interface ()
+(defun serika-l/text//interface ()
   "Configure interface for `text-mode'."
   (linum-mode  1))
 
-(defun serika/text//buffer-local-variables ()
+(defun serika-l/text//buffer-local-variables ()
   "Configure buffer-local variables for `text-mode'."
   (setq tab-width 4))
 
 ;; Init
 (defun init ()
   "Configure `text-mode'."
-  (serika/text//auto-mode-alist)
+  (serika-g/text//auto-mode-alist)
 
-  (add-hook 'text-mode-hook 'serika/text//evil)
-  (add-hook 'text-mode-hook 'serika/text//buffer-local-variables)
-  (add-hook 'text-mode-hook 'serika/text//interface))
+  (add-hook 'text-mode-hook 'serika-l/text//evil)
+  (add-hook 'text-mode-hook 'serika-l/text//buffer-local-variables)
+  (add-hook 'text-mode-hook 'serika-l/text//interface))

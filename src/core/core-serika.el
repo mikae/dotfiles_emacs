@@ -7,13 +7,13 @@
 (require 'core-task)
 (require 'core-splash)
 
-(defun serika/init ()
+(defun serika-c/init ()
   "Initialize `serika'."
-  (serika/task/add 'util)
-  (serika/task/add 'base)
-  (serika/task/add 'core)
-  (serika/task/execute-all)
-  (serika/splash/configure)
+  (serika-c/task/add 'util)
+  (serika-c/task/add 'base)
+  (serika-c/task/add 'core)
+  (serika-c/task/execute-all)
+  (serika-c/splash/configure)
 )
 
 (provide 'core-serika)

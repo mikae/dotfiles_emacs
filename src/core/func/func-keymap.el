@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika/keymap/unbind (target-keymap)
+(defun serika-f/keymap/unbind (target-keymap)
   "Unbind all keymappings from TARGET-KEYMAP."
   (dolist (k '("return" "tab" "escape"))
     (define-key target-keymap (kbd (concat "<C-" k ">")) nil)

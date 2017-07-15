@@ -3,7 +3,7 @@
 ;;; Code:
 
 ;; Public
-(defun serika/emmet/expand ()
+(defun serika-f/emmet/expand ()
   "Custom expand line. It ensures that `emmet-expand-line' will be invoked correctly in `evil-mode'."
   (interactive)
   (if (or evil-mode evil-local-mode)
@@ -16,23 +16,23 @@
                                      (evil-normal-state))))
     (call-interactively 'emmet-expand-line)))
 
-(defun serika/emmet/activate ()
+(defun serika-f/emmet/activate ()
   "Activate `emmet-mode'."
   (emmet-mode +1))
 
 ;; Global
-(defun serika/emmet//keymap ()
+(defun serika-g/emmet//keymap ()
   "Configure `emmet-mode-keymap'."
-  (defvar emmet-mode-keymap (make-sparse-keymap)))
+  (defvar emmet-mode-keymap (make-sparse-keymap))
+  ;; Because `emmet' uses keymap as local variable
+  (require 'emmet-mode))
 
-(defun serika/emmet//settings ()
+(defun serika-g/emmet//settings ()
   "Configure `emmet-mode' variables."
-  ;; Disable preview
   (setq emmet-preview-default nil))
 
 ;; Init
 (defun init ()
   "Configure `emmet-mode'."
-  (serika/emmet//keymap)
-  (require 'emmet-mode)
-  (serika/emmet//settings))
+  (serika-g/emmet//keymap)
+  (serika-g/emmet//settings))

@@ -2,22 +2,22 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Public
-(defun serika/evil/replace-buffer ()
+;; Functions
+(defun serika-f/evil/replace-buffer ()
   "Replace all text in current buffer with text from clipboard."
   (interactive)
   (erase-buffer)
   (x-clipboard-yank))
 
 ;; Global
-(defun serika/evil//require ()
+(defun serika-g/evil//require ()
   "Require modules for `evil'."
   (require 'func-package)
   (require 'func-keymap)
 
   (require 'evil))
 
-(defun serika/evil//settings ()
+(defun serika-g/evil//settings ()
   "Configure `evil' variables."
   (setq evil-default-state 'emacs)
 
@@ -29,11 +29,11 @@
         evil-operator-state-cursor  '((bar . 2) "orange")
         evil-emacs-state-cursor     '(box       "cyan")))
 
-(defun serika/evil//global-keymap ()
+(defun serika-g/evil//global-keymap ()
   "Configure global keymap."
 )
 
-(defun serika/evil//disable-mouse ()
+(defun serika-g/evil//disable-mouse ()
   "Disable mouse in `evil'."
   (define-key evil-motion-state-map [down-mouse-1] 'ignore)
   (define-key evil-motion-state-map [drag-mouse-1] 'ignore)
@@ -55,9 +55,9 @@
   (define-key evil-visual-state-map [drag-mouse-3] 'ignore)
   (define-key evil-visual-state-map [mouse-3]      'ignore))
 
-(defun serika/evil//normal-keymap ()
+(defun serika-g/evil//normal-keymap ()
   "Configure `evil-normal-state-map'."
-  (serika/keymap/unbind evil-normal-state-map)
+  (serika-f/keymap/unbind evil-normal-state-map)
 
   (define-key evil-normal-state-map (kbd "J") nil)
 
@@ -92,7 +92,7 @@
 
   ;; Hyper-actions
   (define-key evil-normal-state-map (kbd "H-d") 'erase-buffer)
-  (define-key evil-normal-state-map (kbd "H-s") 'serika/evil/replace-buffer)
+  (define-key evil-normal-state-map (kbd "H-s") 'serika-f/evil/replace-buffer)
 
   ;; Undo-redo
   (define-key evil-normal-state-map (kbd "u")   'undo)
@@ -110,9 +110,9 @@
   ;; Go to emacs state
   (define-key evil-normal-state-map (kbd "<C-m> C-e") 'evil-emacs-state))
 
-(defun serika/evil//motion-keymap ()
+(defun serika-g/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
-  (serika/keymap/unbind evil-motion-state-map)
+  (serika-f/keymap/unbind evil-motion-state-map)
   (define-key evil-motion-state-map (kbd "G") nil)
 
   (define-key evil-motion-state-map [up] nil)
@@ -125,9 +125,9 @@
   ;; Bind digits to `digit-argument'
   )
 
-(defun serika/evil//insert-keymap ()
+(defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
-  (serika/keymap/unbind evil-insert-state-map)
+  (serika-f/keymap/unbind evil-insert-state-map)
 
   ;; Redefine motions in `insert' state, because other state
   ;; expects `evil' motions
@@ -140,28 +140,28 @@
   ;; Exit insert state
   (define-key evil-insert-state-map (kbd "C-, C-j") 'evil-normal-state))
 
-(defun serika/evil//visual-keymap ()
+(defun serika-g/evil//visual-keymap ()
   "Configure `evil-visual-state-map'."
-  (serika/keymap/unbind evil-visual-state-map)
+  (serika-f/keymap/unbind evil-visual-state-map)
 
   (define-key evil-visual-state-map "a" evil-outer-text-objects-map)
   (define-key evil-visual-state-map "i" evil-inner-text-objects-map)
 
   (define-key evil-visual-state-map (kbd "C-, C-j") 'evil-exit-visual-state))
 
-(defun serika/evil//replace-keymap ()
+(defun serika-g/evil//replace-keymap ()
   "Configure `evil-replace-state-map'."
-  (serika/keymap/unbind evil-replace-state-map)
+  (serika-f/keymap/unbind evil-replace-state-map)
 
   (define-key evil-replace-state-map (kbd "C-, C-j") 'evil-normal-state))
 
-(defun serika/evil//emacs-keymap ()
+(defun serika-g/evil//emacs-keymap ()
   "Configure `evil-emacs-state-map'."
-  (serika/keymap/unbind evil-emacs-state-map)
+  (serika-f/keymap/unbind evil-emacs-state-map)
 
   (define-key evil-emacs-state-map (kbd "<C-m> C-v") 'evil-normal-state))
 
-(defun serika/evil//global-keymap ()
+(defun serika-g/evil//global-keymap ()
   "Add movements into Emacs global keymap."
 
   ;; Window open functions
@@ -230,15 +230,15 @@
 (defun init ()
   "Configure `evil'."
   ;; Configuration
-  (serika/evil//require)
-  (serika/evil//settings)
-  (serika/evil//global-keymap)
-  (serika/evil//disable-mouse)
+  (serika-g/evil//require)
+  (serika-g/evil//settings)
+  (serika-g/evil//global-keymap)
+  (serika-g/evil//disable-mouse)
 
   ;; Keymaps
-  (serika/evil//normal-keymap)
-  (serika/evil//motion-keymap)
-  (serika/evil//insert-keymap)
-  (serika/evil//visual-keymap)
-  (serika/evil//replace-keymap)
-  (serika/evil//emacs-keymap))
+  (serika-g/evil//normal-keymap)
+  (serika-g/evil//motion-keymap)
+  (serika-g/evil//insert-keymap)
+  (serika-g/evil//visual-keymap)
+  (serika-g/evil//replace-keymap)
+  (serika-g/evil//emacs-keymap))

@@ -5,15 +5,15 @@
 ;;; - setup org-mode integration
 
 ;; Global
-(defun serika/epub//require ()
+(defun serika-g/epub//require ()
   "Require modules for `epub'."
   (require 'ereader))
 
-(defun serika/epub//auto-mode-alist ()
+(defun serika-g/epub//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . ereader-mode)))
 
-(defun serika/epub//keymap ()
+(defun serika-g/epub//keymap ()
   "Configure `ereader-mode-map'."
   (setq --serika-ereader-mode-map ereader-mode-map)
   (setq ereader-mode-map (let ((map (make-sparse-keymap)))
@@ -47,6 +47,6 @@
 ;; Init
 (defun init ()
   "Configure `epub'."
-  (serika/epub//require)
-  (serika/epub//auto-mode-alist)
-  (serika/epub//keymap))
+  (serika-g/epub//require)
+  (serika-g/epub//auto-mode-alist)
+  (serika-g/epub//keymap))

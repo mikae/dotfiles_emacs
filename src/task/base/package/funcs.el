@@ -1,15 +1,21 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'func-package)
 
+;; Global
+(defun serika-g/package//require ()
+  "Require modules."
+  (require 'func-package))
+
+;; Init
 (defun init ()
   "Configure package manager."
-  (serika/package/repository-clear)
+  (serika-g/package//require)
+  (serika-f/package/repository-clear)
 
-  (serika/package/repository-add "gnu"          "http://elpa.gnu.org/packages/")
-  (serika/package/repository-add "melpa-stable" "https://stable.melpa.org/packages/")
-  (serika/package/repository-add "melpa"        "http://melpa.org/packages/")
+  (serika-f/package/repository-add "gnu"          "http://elpa.gnu.org/packages/")
+  (serika-f/package/repository-add "melpa-stable" "https://stable.melpa.org/packages/")
+  (serika-f/package/repository-add "melpa"        "http://melpa.org/packages/")
 
-  (serika/package/initialize)
-  (serika/package/list-update))
+  (serika-f/package/initialize)
+  (serika-f/package/list-update))

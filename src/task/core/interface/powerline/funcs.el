@@ -1,4 +1,11 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'powerline)
+
+(defun serika-g/powerline//require ()
+  "Require modules for `powerline'."
+  (require 'powerline))
+
+(defun init ()
+  "Configure `powerline'."
+  (serika-g/powerline//require))

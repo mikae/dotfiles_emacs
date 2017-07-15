@@ -3,17 +3,17 @@
 ;;; Code:
 
 ;; Global
-(defun serika/markdown//require ()
+(defun serika-g/markdown//require ()
   "Require modules for `markdown'."
   (require 'markdown-mode))
 
-(defun serika/markdown//auto-mode-alist ()
+(defun serika-g/markdown//auto-mode-alist ()
   "Configure `auto-mode-alist' for `markdown'."
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'"       . markdown-mode))
   (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
 
-(defun serika/markdown//keymap ()
+(defun serika-g/markdown//keymap ()
   "Configure `markdown-mode-map'."
   ;; Links
   (let ((map (make-sparse-keymap)))
@@ -84,28 +84,28 @@
   )
 
 ;; Local
-(defun serika/markdown//evil ()
+(defun serika-l/markdown//evil ()
   "Configure `evil' for `markdown-mode'."
   (setq evil-shift-width 4)
   (evil-local-mode +1)
   (evil-normal-state))
 
-(defun serika/markdown//interface ()
+(defun serika-l/markdown//interface ()
   "Configure interface for `markdown-mode'."
   (setq show-trailing-whitespace t)
   (linum-mode  1))
 
-(defun serika/markdown//buffer-local-variables ()
+(defun serika-l/markdown//buffer-local-variables ()
   "Configure buffer-local variables for `markdown-mode'."
   (setq tab-width 4))
 
 ;; Init
 (defun init ()
   "Configure `markdown'."
-  (serika/markdown//require)
-  (serika/markdown//auto-mode-alist)
-  (serika/markdown//keymap)
+  (serika-g/markdown//require)
+  (serika-g/markdown//auto-mode-alist)
+  (serika-g/markdown//keymap)
 
-  (add-hook 'markdown-mode-hook #'serika/markdown//evil)
-  (add-hook 'markdown-mode-hook #'serika/markdown//buffer-local-variables)
-  (add-hook 'markdown-mode-hook #'serika/markdown//interface))
+  (add-hook 'markdown-mode-hook #'serika-l/markdown//evil)
+  (add-hook 'markdown-mode-hook #'serika-l/markdown//buffer-local-variables)
+  (add-hook 'markdown-mode-hook #'serika-l/markdown//interface))

@@ -2,9 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'run-assoc)
+(defun serika-g/run-assoc//require ()
+  "Require modules for `run-assoc'."
+  (require 'run-assoc))
 
-(defun serika/run-assoc//variables ()
+(defun serika-g/run-assoc//variables ()
   "Configure `run-assoc' variables."
   (setq associated-program-alist
         '(("animate" "\\.gif$")
@@ -12,4 +14,5 @@
 
 (defun init ()
   "Configure `run-assoc'."
-  (serika/run-assoc//variables))
+  (serika-g/run-assoc//require)
+  (serika-g/run-assoc//variables))

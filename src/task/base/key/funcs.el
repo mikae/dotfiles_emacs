@@ -3,12 +3,12 @@
 ;;; Code:
 
 ;; Global
-(defun serika/key//require ()
+(defun serika-g/key//require ()
   "Require modules for `dired'."
   (require 'func-buffer)
   (require 'func-tramp))
 
-(defun serika/key//unset-bindings ()
+(defun serika-g/key//unset-bindings ()
   "Clear default bindings."
   (message "lol")
   (dolist (k '(
@@ -66,46 +66,46 @@
 
     (global-unset-key (kbd (concat "A-C-H-M-" k)))))
 
-(defun serika/key//disable-arrows ()
+(defun serika-g/key//disable-arrows ()
   "Disable arrows."
   (global-unset-key [up])
   (global-unset-key [right])
   (global-unset-key [down])
   (global-unset-key [left]))
 
-(defun serika/key//configure-input-decode-map ()
+(defun serika-g/key//configure-input-decode-map ()
   "Configure `input-decode-map'."
   (define-key input-decode-map [?\C-m] [C-m]))
 
-(defun serika/key//create-bindings ()
+(defun serika-g/key//create-bindings ()
   "Create global bindings."
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
     (global-set-key (kbd elem) 'digit-argument))
 
-  (global-set-key (kbd "C-x s") #'serika/buffer/save)
-  (global-set-key (kbd "C-x S") #'serika/tramp/sudo-write)
-  (global-set-key (kbd "C-x c") #'serika/buffer/kill)
-  (global-set-key (kbd "C-x h") #'serika/buffer/hide)
-  (global-set-key (kbd "C-x r") #'revert-buffer)
+  (global-set-key (kbd "C-x s")   #'serika-f/buffer/save)
+  (global-set-key (kbd "C-x S")   #'serika-f/tramp/sudo-write)
+  (global-set-key (kbd "C-x C-c") #'serika-f/buffer/kill)
+  (global-set-key (kbd "C-x h")   #'serika-f/buffer/hide)
+  (global-set-key (kbd "C-x r")   #'revert-buffer)
 
-  (global-set-key (kbd "C-x q") #'save-buffers-kill-terminal)
+  (global-set-key (kbd "C-x q")   #'save-buffers-kill-terminal)
 
-  (global-set-key (kbd "C-:")   #'eval-expression)
+  (global-set-key (kbd "C-:")     #'eval-expression)
 
-  (global-set-key (kbd "C-h v") #'describe-variable)
-  (global-set-key (kbd "C-h f") #'describe-function)
-  (global-set-key (kbd "C-h k") #'describe-key)
+  (global-set-key (kbd "C-h v")   #'describe-variable)
+  (global-set-key (kbd "C-h f")   #'describe-function)
+  (global-set-key (kbd "C-h k")   #'describe-key)
 
   ;; Transform
-  (global-set-key (kbd "C-t w") #'delete-trailing-whitespace)
+  (global-set-key (kbd "C-t w")   #'delete-trailing-whitespace)
 
   ;; Toggle
-  (global-set-key (kbd "C-T r") #'read-only-mode))
+  (global-set-key (kbd "C-T r")   #'read-only-mode))
 
 (defun init ()
   "Configure keys."
-  (serika/key//require)
-  (serika/key//unset-bindings)
-  (serika/key//disable-arrows)
-  (serika/key//configure-input-decode-map)
-  (serika/key//create-bindings))
+  (serika-g/key//require)
+  (serika-g/key//unset-bindings)
+  (serika-g/key//disable-arrows)
+  (serika-g/key//configure-input-decode-map)
+  (serika-g/key//create-bindings))

@@ -2,10 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'vimperator-mode)
-
 ;; Global
-(defun serika/vimperator//auto-mode-alist ()
+(defun serika-g/vimperator//require ()
+  "Require modules for `vimperator'."
+  (require 'vimperator-mode))
+
+(defun serika-g/vimperator//auto-mode-alist ()
   "Configure `auto-mode-alist' for `vimperator'."
   (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\'" . vimperator-mode))
   (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\.after\\'" . vimperator-mode))
@@ -13,18 +15,18 @@
   (add-to-list 'auto-mode-alist '("\\.vimp\\.after\\'" . vimperator-mode)))
 
 ;; Local
-(defun serika/vimperator//evil ()
+(defun serika-l/vimperator//evil ()
   "Configure `auto-mode-alist' for `vimperator'."
   (setq evil-shift-width 2)
   (evil-local-mode)
   (evil-normal-state))
 
-(defun serika/vimperator//buffer-local-variables ()
+(defun serika-l/vimperator//buffer-local-variables ()
   "Configure buffer-local variables for `vimperator'."
   (setq tab-width 2)
   (setq truncate-lines t))
 
-(defun serika/vimperator//interface ()
+(defun serika-l/vimperator//interface ()
   "Configure interface for `emacs-lisp' mode."
   (setq show-trailing-whitespace +1)
 
@@ -33,8 +35,8 @@
 
 (defun init ()
   "Configure `vimperator'."
-  (serika/vimperator//auto-mode-alist)
+  (serika-g/vimperator//auto-mode-alist)
 
-  (add-hook 'vimperator-mode-hook #'serika/vimperator//evil)
-  (add-hook 'vimperator-mode-hook #'serika/vimperator//buffer-local-variables)
-  (add-hook 'vimperator-mode-hook #'serika/vimperator//interface))
+  (add-hook 'vimperator-mode-hook #'serika-l/vimperator//evil)
+  (add-hook 'vimperator-mode-hook #'serika-l/vimperator//buffer-local-variables)
+  (add-hook 'vimperator-mode-hook #'serika-l/vimperator//interface))

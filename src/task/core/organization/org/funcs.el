@@ -1,18 +1,20 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'func-path)
-
-(require 'org)
 
 ;; Global
-(defun serika/org//auto-mode-alist ()
+(defun serika-g/org//require ()
+  "Require modules for `org'."
+  (require 'func-path)
+  (require 'org))
+
+(defun serika-g/org//auto-mode-alist ()
   "Configure `auto-mode-alist' for `org-mode' buffers."
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode)))
 
-(defun serika/org//settings ()
+(defun serika-g/org//settings ()
   "Configure `org-mode' settings."
-  (setq org-id-locations-file (serika/path/join serika-tmp-directory
+  (setq org-id-locations-file (serika-f/path/join serika-tmp-directory
                                                 ".org-id-locations"))
 
   (setq org-log-done               t)
@@ -34,7 +36,7 @@
   (add-to-list 'org-structure-template-alist '("s"  "#+BEGIN_SRC ?\n\n#+END_SRC" "<src lang=\"?\">\n\n</src>"))
   (add-to-list 'org-structure-template-alist '("se" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC" "<src lang=\"emacs-lisp\">\n\n</src>")))
 
-(defun serika/org//keymap ()
+(defun serika-g/org//keymap ()
   "Configure `org-mode' keymap."
   (setq org-mode-map (make-sparse-keymap))
 
@@ -44,11 +46,11 @@
   (define-key org-mode-map (kbd "<C-S-return>") 'org-insert-todo-subheading))
 
 ;; Local
-(defun serika/org//buffer-local-settings ()
+(defun serika-l/org//buffer-local-settings ()
   "Configure buffer-local settings for `org-mode' buffers."
   (setq truncate-lines nil))
 
-(defun serika/org//interface ()
+(defun serika-l/org//interface ()
   "Configure interface for `org-mode' buffers."
   (linum-mode              +1)
 
@@ -57,17 +59,17 @@
 
   (setq show-trailing-whitespace t))
 
-(defun serika/org//evil ()
+(defun serika-l/org//evil ()
   "Configure `evil' for `org-mode' buffers."
   (evil-local-mode         +1)
   (evil-normal-state))
 
 (defun init ()
   "Configure `org-mode'."
-  (serika/org//auto-mode-alist)
-  (serika/org//settings)
-  (serika/org//keymap)
+  (serika-g/org//auto-mode-alist)
+  (serika-g/org//settings)
+  (serika-g/org//keymap)
 
-  (add-hook 'org-mode-hook #'serika/org//bufer-local-settings)
-  (add-hook 'org-mode-hook #'serika/org//interface)
-  (add-hook 'org-mode-hook #'serika/org//evil))
+  (add-hook 'org-mode-hook #'serika-l/org//bufer-local-settings)
+  (add-hook 'org-mode-hook #'serika-l/org//interface)
+  (add-hook 'org-mode-hook #'serika-l/org//evil))

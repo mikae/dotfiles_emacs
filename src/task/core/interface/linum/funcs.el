@@ -3,11 +3,11 @@
 ;;; Code:
 
 ;; Global
-(defun serika/linum//require ()
+(defun serika-g/linum//require ()
   "Require modules for linum"
   (require 'linum))
 
 ;; Init
 (defun init ()
   "Configure `linum'."
-  (serika/linum//require))
+  (serika-g/linum//require))

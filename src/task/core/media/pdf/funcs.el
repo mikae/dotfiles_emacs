@@ -3,26 +3,26 @@
 ;;; Code:
 
 ;; Global
-(defun serika/pdf//require ()
+(defun serika-g/pdf//require ()
   "Require modules for `pdf'."
   (require 'pdf-tools))
 
-(defun serika/pdf//install ()
+(defun serika-g/pdf//install ()
   "Extra configuration for `pdf-tools'."
   (pdf-tools-install))
 
-(defun serika/pdf//auto-mode-alist ()
+(defun serika-g/pdf//auto-mode-alist ()
   "Configure `auto-mode-alist' for `pdf-view-mode'."
   (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode)))
 
-(defun serika/pdf//keymap ()
+(defun serika-g/pdf//keymap ()
   "Configure `pdf-view-mode-map'."
   (setq pdf-view-mode-map (let ((map (make-sparse-keymap)))
                             ;; Save old keymap
                             (setq --serika-pdf-view-mode-map pdf-view-mode-map)
 
                             ;; Kill
-                            (define-key map (kbd "q")     #'serika/buffer/kill-current)
+                            (define-key map (kbd "q")     #'serika-f/buffer/kill-current)
 
                             ;; Move
                             (define-key map (kbd "A-j")   #'pdf-view-next-line-or-next-page)
@@ -47,8 +47,7 @@
 ;; Init
 (defun init ()
   "Configure `pdf'."
-  (serika/pdf//require)
-  (serika/pdf//install)
-  (serika/pdf//auto-mode-alist)
-  (serika/pdf//keymap)
-  )
+  (serika-g/pdf//require)
+  (serika-g/pdf//install)
+  (serika-g/pdf//auto-mode-alist)
+  (serika-g/pdf//keymap))

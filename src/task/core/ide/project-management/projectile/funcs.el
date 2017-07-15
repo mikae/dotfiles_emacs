@@ -2,21 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Local functions
-(defun serika/projectile/ini ()
+;; Functions
+(defun serika-f/projectile/ini ()
   "Ini `projectile' project in current directory."
   (interactive)
-  (serika/file/create ".projectile")
+  (serika-f/file/create ".projectile")
   (when (equal major-mode 'dired-mode)
     (revert-buffer)))
 
-;; Global configuration
-(defun serika/projectile//require ()
+;; Global
+(defun serika-g/projectile//require ()
   "Require modules for `projectile'."
   (require 'func-file)
   (require 'projectile))
 
-(defun serika/projectile//keymap ()
+(defun serika-g/projectile//keymap ()
   "Configure `projectile-map'."
   (setq projectile-mode-map (make-sparse-keymap))
 
@@ -34,13 +34,13 @@
   (define-key projectile-mode-map (kbd "C-p T") 'projectile-test-project)
   (define-key projectile-mode-map (kbd "C-p S") 'projectile-save-project-buffers))
 
-(defun serika/projectile//global-keymap ()
+(defun serika-g/projectile//global-keymap ()
   "Configure global bindings for projectile"
-  (global-set-key (kbd "C-x p") #'serika/projectile/ini))
+  (global-set-key (kbd "C-x p") #'serika-g/projectile/ini))
 
 ;; Init
 (defun init ()
   "Configure `projectile'."
-  (serika/projectile//require)
-  (serika/projectile//keymap)
-  (serika/projectile//global-keymap))
+  (serika-g/projectile//require)
+  (serika-g/projectile//keymap)
+  (serika-g/projectile//global-keymap))

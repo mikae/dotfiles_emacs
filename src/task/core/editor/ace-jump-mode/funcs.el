@@ -2,14 +2,19 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'ace-jump-mode)
+;; Global
+(defun serika-g/ace-jump-mode//require ()
+  "Require modules for `ace-jump-mode'."
+  (require 'ace-jump-mode))
 
-(defun serika/ace-jump-mode//evil ()
+(defun serika-g/ace-jump-mode//evil ()
   "Configure evil to use `ace-jump-mode'."
   (define-key evil-normal-state-map (kbd "w") 'ace-jump-word-mode)
   (define-key evil-normal-state-map (kbd "f") 'ace-jump-char-mode)
   (define-key evil-normal-state-map (kbd "L") 'ace-jump-line-mode))
 
+;; Init
 (defun init ()
   "Configure `ace-jump-mode'."
-  (serika/ace-jump-mode//evil))
+  (serika-g/ace-jump-mode//require)
+  (serika-g/ace-jump-mode//evil))

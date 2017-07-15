@@ -3,11 +3,11 @@
 ;;; Code:
 
 ;; Global
-(defun serika/helm/projectile//require ()
+(defun serika-g/helm/projectile//require ()
   "Require modules for `projectile'."
   (require 'helm-projectile))
 
-(defun serika/helm/projectile//add-projectile-bindings ()
+(defun serika-g/helm/projectile//add-projectile-bindings ()
   "Add bindings to `projectile-mode-map'."
   (define-key projectile-mode-map (kbd "C-p h") 'helm-projectile)
   (define-key projectile-mode-map (kbd "C-p f") 'helm-projectile-find-file-dwim)
@@ -18,5 +18,5 @@
 ;; Init
 (defun init ()
   "Configure `helm-projectile'."
-  (serika/helm/projectile//require)
-  (serika/helm/projectile//add-projectile-bindings))
+  (serika-g/helm/projectile//require)
+  (serika-g/helm/projectile//add-projectile-bindings))

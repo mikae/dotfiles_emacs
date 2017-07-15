@@ -3,28 +3,28 @@
 ;;; Code:
 
 ;; Global
-(defun serika/html//require ()
+(defun serika-g/html//require ()
   "Require modules for `html'."
   (require 'web-beautify)
   (require 'sgml-mode))
 
-(defun serika/html//auto-mode-alist ()
+(defun serika-g/html//auto-mode-alist ()
   "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode)))
 
-(defun serika/html//keymap ()
+(defun serika-g/html//keymap ()
   "Configure buffer-local mappings for `html' files."
   (setq --serika-html-mode-map html-mode-map)
   (setq html-mode-map (let ((map (make-sparse-keymap)))
                         (define-key map (kbd "C-c c") #'multi-compile-run)
                         (define-key map (kbd "C-t e") #'yas-expand)
-                        (define-key map (kbd "C-t E") #'serika/emmet/expand)
+                        (define-key map (kbd "C-t E") #'serika-f/emmet/expand)
                         (define-key map (kbd "C-t =") #'evil-indent)
                         (define-key map (kbd "C-t +") #'web-beautify-html)
                         (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
                         map)))
 
-(defun serika/html//mmm-mode ()
+(defun serika-g/html//mmm-mode ()
   "Add support in `mmm-mode'."
   (mmm-add-classes '((html-js-1
                       :submode js-mode
@@ -32,30 +32,30 @@
                       :back    "[ \t]*</script>")))
   (mmm-add-mode-ext-class 'html-mode nil 'html-js-1))
 
-(defun serika/html//multi-compile ()
+(defun serika-g/html//multi-compile ()
   "Configure `multi-compile'."
   (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
                                                    ("Firefox-esr" . "firefox-esr %path")
                                                    ("Chromium"    . "chromium    %path")))))
 
 ;; Local
-(defun serika/html//evil ()
+(defun serika-l/html//evil ()
   "Configure `evil' for `html'."
   (setq evil-shift-width 2)
   (evil-local-mode +1)
   (evil-normal-state))
 
-(defun serika/html//buffer-local-variables ()
+(defun serika-l/html//buffer-local-variables ()
   "Configure buffer-local variables for `html' files."
   (setq evil-shift-width 2)
   (setq truncate-lines t))
 
-(defun serika/html//snippet-engine ()
+(defun serika-l/html//snippet-engine ()
   "Configure snippet engine for `web-mode' buffers with `html' engine."
-  (serika/emmet/activate)
-  (serika/yasnippet/activate))
+  (serika-f/emmet/activate)
+  (serika-f/yasnippet/activate))
 
-(defun serika/html//auto-completion ()
+(defun serika-l/html//auto-completion ()
   "Configure auto completion for `web-mode' buffers with `html' engine."
   (auto-complete-mode      +1)
 
@@ -65,13 +65,13 @@
                      ac-source-words-in-same-mode-buffers
                      )))
 
-(defun serika/html//syntax-checking ()
+(defun serika-l/html//syntax-checking ()
   "Configure syntax checking for `web-mode' buffers with `html' engine."
   ;; (flycheck-mode +1)
   ())
 
 
-(defun serika/html//interface ()
+(defun serika-l/html//interface ()
   "Configure interface for `web-mode' buffers with `html' engine."
   (setq show-trailing-whitespace +1)
 
@@ -86,19 +86,19 @@
 ;; Init
 (defun init ()
   "Configure `html'."
-  (serika/html//require)
-  (serika/html//auto-mode-alist)
-  (serika/html//keymap)
-  (serika/html//mmm-mode)
-  (serika/html//multi-compile)
+  (serika-g/html//require)
+  (serika-g/html//auto-mode-alist)
+  (serika-g/html//keymap)
+  (serika-g/html//mmm-mode)
+  (serika-g/html//multi-compile)
 
   ;; Add hooks
-  (add-hook 'html-mode-hook 'serika/html//evil)
-  (add-hook 'html-mode-hook 'serika/html//buffer-local-variables)
+  (add-hook 'html-mode-hook 'serika-l/html//evil)
+  (add-hook 'html-mode-hook 'serika-l/html//buffer-local-variables)
 
-  (add-hook 'html-mode-hook 'serika/html//snippet-engine)
-  (add-hook 'html-mode-hook 'serika/html//auto-completion)
-  (add-hook 'html-mode-hook 'serika/html//syntax-checking)
-  (add-hook 'html-mode-hook 'serika/mmm-mode//activate)
+  (add-hook 'html-mode-hook 'serika-l/html//snippet-engine)
+  (add-hook 'html-mode-hook 'serika-l/html//auto-completion)
+  (add-hook 'html-mode-hook 'serika-l/html//syntax-checking)
+  (add-hook 'html-mode-hook 'serika-l/mmm-mode//activate)
 
-  (add-hook 'html-mode-hook 'serika/html//interface))
+  (add-hook 'html-mode-hook 'serika-l/html//interface))

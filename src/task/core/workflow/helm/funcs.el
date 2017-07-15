@@ -2,23 +2,24 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Private
-(defun serika/helm/activate ()
+;; Global
+(defun serika-g/helm//require ()
+  "Require modules for `helm'."
+  (require 'helm-lib)
+  (require 'helm-config))
+
+(defun serika-g/helm/activate ()
   "Activate `helm'."
   (helm-mode +1))
 
-;; Global
-(require 'helm-lib)
-(require 'helm-config)
-
-(defun serika/helm//global-keymap ()
+(defun serika-g/helm//global-keymap ()
   "Configure global keymap for using `helm'."
   (global-set-key (kbd "A-x")   #'helm-M-x)
 
   (global-set-key (kbd "C-x f") #'helm-find-files)
   (global-set-key (kbd "C-x y") #'helm-show-kill-ring))
 
-(defun serika/helm//variables ()
+(defun serika-g/helm//variables ()
   "Configure `helm' variables."
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
@@ -29,7 +30,7 @@
   (setq helm-ff-search-library-in-sexp        t)
   (setq helm-ff-file-name-history-use-recentf t))
 
-(defun serika/helm//keymap ()
+(defun serika-g/helm//keymap ()
   "Configure `helm' keymaps."
   (flet ((cl (ind)
              ;; Create lambda => cl
@@ -57,8 +58,8 @@
 ;; Init
 (defun init ()
   "Configure `helm'."
-  (serika/helm//variables)
-  (serika/helm//keymap)
-  (serika/helm//global-keymap)
+  (serika-g/helm//variables)
+  (serika-g/helm//keymap)
+  (serika-g/helm//global-keymap)
 
-  (serika/helm/activate))
+  (serika-g/helm/activate))

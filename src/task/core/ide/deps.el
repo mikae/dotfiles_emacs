@@ -3,7 +3,7 @@
   +syntax-checking
   +snippet-manager
   +scm-integration
-  +multiple-major-modes
+  +mmm-mode
   +project-management
   +multi-compile
 )

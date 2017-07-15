@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika/shn/split (file-1 file-2 &optional output-format)
+(defun serika-f/shn/split (file-1 file-2 &optional output-format)
   "Split MUSIC-FILE to files with PLAYLIST-FILE."
   (when serika-shn--executable
     (let* ((music-file (if (string-match ".cue$" file-1) file-2 file-1))
@@ -14,4 +14,4 @@
                         serika-shn--file-format
                         playlist-file
                         music-file))
-      (serika/eshell/execute cmd t))))
+      (serika-f/eshell/execute cmd t))))

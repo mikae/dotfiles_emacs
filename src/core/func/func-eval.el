@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika/eval/file (file)
+(defun serika-f/eval/file (file)
   "Execute FILE and return the result of the last expression."
   (load-file file)
   (with-temp-buffer

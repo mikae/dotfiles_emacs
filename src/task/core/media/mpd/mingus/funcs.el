@@ -3,35 +3,34 @@
 ;;; Code:
 
 ;; Public
-(defun serika/mingus/seek-forward (&optional count)
+(defun serika-f/mingus/seek-forward (&optional count)
   "Seek forward `COUNT' seconds."
   (interactive)
   (mingus-seek (or count 10)))
 
-(defun serika/mingus/seek-backward (&optional count)
+(defun serika-f/mingus/seek-backward (&optional count)
   "Seek backward `COUNT' seconds."
   (interactive)
   (mingus-seek (- (or count 10))))
 
-(defun serika/mingus/clear ()
+(defun serika-f/mingus/clear ()
   "Clear playlist."
   (interactive)
   (mingus-clear t))
 
 ;; Global
-
-(defun serika/mingus//require ()
+(defun serika-g/mingus//require ()
   "Require modules for `mingus'."
   (require 'mingus))
 
-(defun serika/mingus//settings ()
+(defun serika-g/mingus//settings ()
   "Configure `mingus' settings."
   (mingus-set-host 'mingus-mpd-host "localhost")
   (mingus-set-port 'mingus-mpd-port 7701)
 
   (setq mingus-set-amount 10))
 
-(defun serika/mingus//keymap ()
+(defun serika-g/mingus//keymap ()
   "Configure `mingus' keymaps."
   (cl-flet ((configure-keymap (map)
                 (define-key map (kbd "1") 'mingus-help)
@@ -44,13 +43,13 @@
 
                 (define-key map (kbd "p") 'mingus-pause)
 
-                (define-key map (kbd ",") 'serika/mingus/seek-backward)
-                (define-key map (kbd ".") 'serika/mingus/seek-forward)
+                (define-key map (kbd ",") 'serika-f/mingus/seek-backward)
+                (define-key map (kbd ".") 'serika-f/mingus/seek-forward)
 
                 (define-key map (kbd "j") 'evil-next-visual-line)
                 (define-key map (kbd "k") 'evil-previous-visual-line)
 
-                (define-key map (kbd "c") 'serika/mingus/clear)
+                (define-key map (kbd "c") 'serika-f/mingus/clear)
                 (define-key map (kbd "q") 'mingus-git-out)
 
                 (define-key map (kbd "u") 'mingus-update)
@@ -87,19 +86,19 @@
 
     (setq mingus-global-map (make-sparse-keymap))))
 
-(defun serika/mingus//global-keymap ()
+(defun serika-g/mingus//global-keymap ()
   "Configure global keymap to invoke `mingus'."
   (global-set-key (kbd "<C-m> m") 'mingus))
 
-(defun serika/mingus//hook ()
+(defun serika-g/mingus//hook ()
   "Configure `mingus' hooks."
   (add-hook 'mingus-playlist-hooks (lambda ()
                                      (auto-revert-mode 1))))
 
 (defun init ()
   "Configure `mingus'."
-  (serika/mingus//require)
-  (serika/mingus//settings)
-  (serika/mingus//keymap)
-  (serika/mingus//global-keymap)
-  (serika/mingus//hook))
+  (serika-g/mingus//require)
+  (serika-g/mingus//settings)
+  (serika-g/mingus//keymap)
+  (serika-g/mingus//global-keymap)
+  (serika-g/mingus//hook))

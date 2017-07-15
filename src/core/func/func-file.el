@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika/file/create (filepath &optional create-directory)
+(defun serika-f/file/create (filepath &optional create-directory)
   "Create file with path FILEPATH"
   (let* ((expanded (expand-file-name filepath))
          (dir (directory-file-name (file-name-directory expanded))))

@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika/tramp/sudo-write (&optional filepath)
+(defun serika-f/tramp/sudo-write (&optional filepath)
   (interactive)
   (let ((result-filepath (or filepath buffer-file-name)))
     (when result-filepath

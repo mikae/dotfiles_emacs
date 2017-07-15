@@ -3,7 +3,7 @@
 ;;; Code:
 
 ;; Public
-(defun serika/yasnippet/activate ()
+(defun serika-f/yasnippet/activate ()
   "Activate `yasnippet' in current buffer."
   (yas-minor-mode          +1)
 
@@ -11,17 +11,17 @@
   (yas-reload-all))
 
 ;; Local
-(defun serika/yasnippet/snippet-mode//evil ()
+(defun serika-l/yasnippet/snippet-mode//evil ()
   "Configure `evil' for `snippet-mode'."
   (evil-local-mode +1)
   (evil-normal-state))
 
 ;; Global
-(defun serika/yasnippet//require ()
+(defun serika-g/yasnippet//require ()
   "Require modules for `yasnippet'."
   (require 'func-path))
 
-(defun serika/yasnippet//yasnippet ()
+(defun serika-g/yasnippet//yasnippet ()
   "Configure `yasnippet'."
   ;; `yas-minor-mode-map'
   (setq yas-minor-mode-map (let ((map (make-sparse-keymap)))
@@ -34,21 +34,21 @@
   (require 'yasnippet)
 
   (setq yas-snippet-dirs
-        (serika/path/join serika-conf-directory
+        (serika-f/path/join serika-conf-directory
                           "yasnippet"
                           "snippets")))
 
-(defun serika/yasnippet//snippet-mode ()
+(defun serika-g/yasnippet//snippet-mode ()
   "Configure `snippet-mode'."
   ;; `snippet-mode-map'
   (setq snippet-mode-map (let ((map (make-sparse-keymap)))
                            map))
 
-  (add-hook 'snippet-mode-hook #'serika/yasnippet/snippet-mode//evil))
+  (add-hook 'snippet-mode-hook #'serika-l/yasnippet/snippet-mode//evil))
 
 ;; Init
 (defun init ()
   "Configure `yasnippet'."
-  (serika/yasnippet//require)
-  (serika/yasnippet//yasnippet)
-  (serika/yasnippet//snippet-mode))
+  (serika-g/yasnippet//require)
+  (serika-g/yasnippet//yasnippet)
+  (serika-g/yasnippet//snippet-mode))

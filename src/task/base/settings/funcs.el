@@ -2,9 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'func-path)
+(defun serika-g/settings//require ()
+  "Require modules."
+  (require 'func-path))
 
-(defun serika/settings//configure ()
+(defun serika-g/settings//configure ()
   "Configure Emacs settings."
   ;; Configure garbage collector
   (setq gc-cons-threshold 50000000)
@@ -16,9 +18,9 @@
         auto-save-default        nil)
 
   (setq auto-save-list-file-prefix
-        (serika/path/join serika-tmp-directory
-                          "auto-save-list"
-                          ".saves-"))
+        (serika-f/path/join serika-tmp-directory
+                            "auto-save-list"
+                            ".saves-"))
 
   ;; Disable all default mode selection.
   (setq auto-mode-alist ())
@@ -34,4 +36,5 @@
 
 (defun init ()
   "Configure Emacs settings."
-  (serika/settings//configure))
+  (serika-g/settings//require)
+  (serika-g/settings//configure))

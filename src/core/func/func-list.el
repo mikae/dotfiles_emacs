@@ -1,7 +1,7 @@
 ;;; package --- list functions -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(defun serika/list/random (target-list)
+(defun serika-f/list/random (target-list)
   "Take random  atom from TARGET-LIST."
   (when (= (length target-list) 0)
     (error "Attempt to get random value from nil"))
