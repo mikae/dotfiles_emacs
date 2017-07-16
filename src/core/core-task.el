@@ -3,19 +3,11 @@
 ;;; Code:
 
 (require 'func-symbol)
-(require 'func-package)
 (require 'func-path)
 (require 'func-eval)
 
-(defvar serika-tasks '()
-  "List of tasks.
-Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
-
-(defvar serika-executed-tasks '()
-  "List of executed task.")
-
-(defconst serika-task-delimiter "+"
-  "Task delimiter.")
+(defvar serika-tasks (list)
+  "List of tasks that will be executed.")
 
 (defun serika-c/task/exists (task)
   "Return t if TASK is exists."
@@ -29,54 +21,45 @@ Task format is `foo+bar'. Actual task dir is `serika-task-directory'/foo/bar.")
   "Get path to directory of TASK."
   (cl-reduce 'serika-f/path/join (split-string task serika-task-delimiter)))
 
-(defun serika-c/task/execute (task &optional parent-task)
+(defun serika-c/task/execute (task)
   "Execute subtask TASK of PARENT-TASK."
-  (let* ((true-task (if (string= "+" (substring (serika-f/symbol/name task) 0 1))
-                        (serika-f/symbol/concat parent-task task)
-                      task))
-         (true-task-name (serika-f/symbol/name true-task))
-         (task-subdir (serika-c/task/parse-dir true-task-name))
-         (deps-path (serika-f/path/join serika-task-directory
-                                      task-subdir
-                                      "deps.el"))
-         (packages-path (serika-f/path/join serika-task-directory
-                                          task-subdir
-                                          "packages.el"))
-         (vars-path (serika-f/path/join serika-task-directory
-                                      task-subdir
-                                      "vars.el"))
+  (let* ((vars-path  (serika-f/path/join serika-task-directory
+                                         task
+                                         "vars.el"))
          (funcs-path (serika-f/path/join serika-task-directory
-                                       task-subdir
-                                       "funcs.el")))
-    (unless (numberp (cl-position true-task-name serika-executed-tasks :test 'equal))
-      (progn
-        (add-to-list 'serika-executed-tasks true-task-name t)
-        (when (file-exists-p packages-path)
-          (dolist (package-name (serika-f/eval/file packages-path))
-            (serika-f/package/make-sure-installed package-name)))
-        (when (file-exists-p deps-path)
-          (dolist (dep (serika-f/eval/file deps-path))
-            (serika-c/task/execute dep true-task)))
-        (when (file-exists-p vars-path)
-          (serika-f/eval/file vars-path))
-        (when (file-exists-p funcs-path)
-          ;; save `init' function to `--temp-init' variable if any
-          (when (fboundp 'init)
-            (fset '--temp-init 'init)
-            (fmakunbound 'init))
-          (serika-f/eval/file funcs-path)
-          (when (fboundp 'init)
-            (progn
-              (init)
-              (fmakunbound 'init)))
-          ;; restore `init' function
-          (when (fboundp '--temp-init)
-            (fset 'init '--temp-init)
-            (fmakunbound '--temp-init)))))))
+                                         task
+                                         "funcs.el")))
+    (when (file-exists-p vars-path)
+      (message "vars-path")
+      (serika-f/eval/file vars-path))
+    (when (file-exists-p funcs-path)
+      (message "funcs-path")
+      (when (fboundp 'init)
+        (fset '--temp-init 'init)
+        (fmakunbound 'init))
+      (serika-f/eval/file funcs-path)
+      (when (fboundp 'init)
+        (progn
+          (init)
+          (fmakunbound 'init)))
+      ;; restore `init' function
+      (when (fboundp '--temp-init)
+        (fset 'init '--temp-init)
+        (fmakunbound '--temp-init)))
+    (dolist (dir (directory-files (serika-f/path/join serika-task-directory
+                                                      task)
+                                  t))
+      (when (and (file-directory-p dir)
+                 (not (string-match "\/\.$" dir))
+                 (not (string-match "\/\.\.$" dir)))
+        (add-to-list 'serika-tasks (serika-f/path/join task
+                                                       (file-name-nondirectory (directory-file-name dir))))
+        ))))
 
 (defun serika-c/task/execute-all ()
   "Execute all task defined by `serika-tasks'."
-  (mapcar 'serika-c/task/execute serika-tasks))
+  (while (> (length serika-tasks) 0)
+    (serika-c/task/execute (pop serika-tasks))))
 
 (provide 'core-task)
 ;;; core-task.el ends here

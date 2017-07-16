@@ -1,7 +1,7 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'core-execution)
+(require 'func-execution)
 (require 'ert)
 (require 'cl)
 
@@ -226,6 +226,19 @@
     (should (string= (en/name node)
                      'test))))
 
+(ert-deftest en|func ()
+  (let* ((func-1 (lambda () ()))
+         (func-2 (lambda () ()))
+         (node   (en/create :name 'test
+                            :func func-1)))
+    ;; It gets func
+    (should (eq (en/func node)
+                func-1))
+    (en/func node func-2)
+    ;; It sets new func
+    (should (eq (en/func node)
+                func-2))))
+
 ;; ;; execute
 (ert-deftest en|execute-1 ()
   (let ((counter 0)
@@ -312,7 +325,55 @@
             :parents nil)
     (should (eq (eg/get graph
                         "root")
-                root))))
+                root))
+    ))
+
+(ert-deftest eg|dai_mne_im9_hoz9in-1 ()
+  (let ((graph (eg/create))
+        (node  (en/create)))
+    (eg/add graph
+            :parents '("a b c" "d e f")
+            :node node)
+    (should (en/p (eg/get graph "a")))
+    (should (en/p (eg/get graph "a b")))
+    (should (en/p (eg/get graph "a b c")))
+
+    (should (en/p (eg/get graph "d")))
+    (should (en/p (eg/get graph "d e")))
+    (should (en/p (eg/get graph "d e f")))
+    ))
+
+(ert-deftest ag|add_to_existing ()
+  (let ((graph     (eg/create))
+        (temp-func (lambda () ())))
+    (eg/create-path graph
+                    "root nya")
+    ;; When add node to existing if new node contains a func, and older doesn't
+    ;; set the func of new node to old
+    (eg/add graph
+            :parents '("root")
+            :name 'nya
+            :func temp-func)
+    (should (eq (en/func (eg/get graph "root nya"))
+                temp-func))
+    ))
+
+(ert-deftest eg|get_empty ()
+  (let ((graph (eg/create)))
+    (should-not (eg/get graph "root"))
+    (should-not (eg/get graph "root nyan"))))
+
+(ert-deftest eg|create_path ()
+  (let ((graph (eg/create)))
+    (eg/create-path graph
+                    "root nya")
+    (should (en/p (eg/get graph "root")))
+    (should (en/p (eg/get graph "root nya")))
+    (should (eq (en/child (eg/get graph "root") :index 0)
+                (eg/get graph "root nya")))
+    (should (eq (en/parent (eg/get graph "root nya") :index 0)
+      (eg/get graph "root")))))
+
 
 (ert-deftest eg|execute-1 ()
   (let ((graph (eg/create))
