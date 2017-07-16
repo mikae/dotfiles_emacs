@@ -177,8 +177,7 @@ PARENTS is list of paths to parent nodes."
                                 --parent)
                 (setq --parent-node (eg/get graph --parent)))
               (en/link --parent-node --node))))
-        (puthash (symbol-name (en/name --node)) --node (nth 2 graph))))
-    ))
+        (puthash (symbol-name (en/name --node)) --node (nth 2 graph))))))
 
 (cl-defun eg/event-node (graph
                          &key name (last '__event_node__)

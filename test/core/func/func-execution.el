@@ -325,8 +325,7 @@
             :parents nil)
     (should (eq (eg/get graph
                         "root")
-                root))
-    ))
+                root))))
 
 (ert-deftest eg|dai_mne_im9_hoz9in-1 ()
   (let ((graph (eg/create))
@@ -334,14 +333,14 @@
     (eg/add graph
             :parents '("a b c" "d e f")
             :node node)
+    ;; Addition to unexisting parents should create them
     (should (en/p (eg/get graph "a")))
     (should (en/p (eg/get graph "a b")))
     (should (en/p (eg/get graph "a b c")))
 
     (should (en/p (eg/get graph "d")))
     (should (en/p (eg/get graph "d e")))
-    (should (en/p (eg/get graph "d e f")))
-    ))
+    (should (en/p (eg/get graph "d e f")))))
 
 (ert-deftest ag|add_to_existing ()
   (let ((graph     (eg/create))
@@ -355,8 +354,7 @@
             :name 'nya
             :func temp-func)
     (should (eq (en/func (eg/get graph "root nya"))
-                temp-func))
-    ))
+                temp-func))))
 
 (ert-deftest eg|get_empty ()
   (let ((graph (eg/create)))
