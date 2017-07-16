@@ -23,6 +23,24 @@
   "Get name of the NODE."
   (nth 1 node))
 
+(defun en/children (node &optional value)
+  "Get/set children of the NODE."
+  (when value
+    (setf (nth 2 node) value))
+  (nth 2 node))
+
+(defun en/parents (node &optional value)
+  "Get/set children of the NODE."
+  (when value
+    (setf (nth 3 node) value))
+  (nth 3 node))
+
+(defun en/executed (node &optional value)
+  "Return t if NODE is executed"
+  (when value
+    (setf (nth 4 node) value))
+  (nth 4 node))
+
 (defun en/func (node &optional value)
   "Get func of the node"
   (when value
@@ -31,67 +49,63 @@
 
 (defun en/link (parent child)
   "Get or set NEW parent of the NODE with INDEX."
-  (setf (nth 2 parent) (cons child  (nth 2 parent)))
-  (setf (nth 3 child)  (cons parent (nth 3 child))))
+  (en/children parent (cons child  (en/children parent)))
+  (en/parents  child  (cons parent (en/parents  child))))
 
 (defun en/unlink (parent child)
   "Remove link between PARENT and CHILD."
   (setf (nth 3 child) (cl-remove-if (lambda (node)
                                       (eq node
                                           parent))
-                                    (nth 3 child)))
+                                    (en/parents child)))
   (setf (nth 2 parent) (cl-remove-if (lambda (node)
                                        (eq node
                                            child))
-                                     (nth 2 parent)))
+                                     (en/children parent)))
   )
 
 (cl-defun en/parent (node &key index (last nil)
                           &key name  (last nil))
   "Get or set NEW parent of the NODE with INDEX."
-  (cond ((numberp index) (nth index (nth 3 node)))
+  (cond ((numberp index) (nth index (en/parents node)))
         ((symbolp name)  (and (not (null name))
                               (cl-find-if (lambda (item) (string= name
-                                                             (nth 1 item)))
-                                          (nth 3 node))))
+                                                             (en/name item)))
+                                          (en/parents node))))
         (t nil)))
 
 (cl-defun en/child (node &key index (last nil)
                          &key name  (last nil))
   "Get or set NEW child of the NODE with INDEX."
-  (cond ((numberp index) (nth index (nth 2 node)))
+  (cond ((numberp index) (nth index (en/children node)))
         ((symbolp name)  (and (not (null name))
                               (cl-find-if (lambda (item) (string= name
-                                                             (nth 1 item)))
-                                          (nth 2 node))))
+                                                             (en/name item)))
+                                          (en/children node))))
         (t nil)))
 
 (defun en/child-count (node)
   "Return child count of NODE."
-  (length (nth 2 node)))
+  (length (en/children node)))
 
 (defun en/parent-count (node)
   "Return parent count of NODE."
-  (length (nth 3 node)))
-
-(defun en/executedp (node)
-  "Return t if NODE is executed"
-  (nth 4 node))
+  (length (en/parents node)))
 
 (defun en/executablep (node)
   "Return t if NODE is executed"
-  (and (not (en/executedp node))
-       (if (> (length (nth 3 node)) 0)
-           (cl-reduce #'--and (mapcar #'en/executedp (nth 3 node)))
+  (and (not (en/executed node))
+       (if (> (en/parent-count node) 0)
+           (cl-reduce #'--and (mapcar #'en/executed (en/parents node)))
          t)))
 
 (defun en/execute (node)
   "Execute node."
   (when (en/executablep node)
-    (when (nth 5 node)
-      (funcall (nth 5 node)))
-    (setf (nth 4 node) t)
-    (mapcar #'en/execute (nth 2 node))))
+    (when (en/func node)
+      (funcall (en/func node)))
+    (en/executed node t)
+    (mapcar #'en/execute (en/children node))))
 
 ;; Graph
 (defun eg/create ()
@@ -100,6 +114,12 @@
                      ()
                      (make-hash-table :test 'equal))))
     graph))
+
+(defun eg/roots (graph &optional value)
+  "Get roots of GRAPH."
+  (when value
+    (setf (nth 1 graph) value))
+  (nth 1 graph))
 
 (defun eg/p (graph)
   "Return t if GRAPH is execution graph."
@@ -169,7 +189,7 @@ PARENTS is list of paths to parent nodes."
         (en/func --old-node (en/func --node))
       (progn
         (if (not parents)
-            (setf (nth 1 graph) (cons --node (nth 1 graph)))
+            (eg/roots graph (cons --node (eg/roots graph)))
           (dolist (--parent parents)
             (let ((--parent-node (eg/get graph --parent)))
               (unless --parent-node
@@ -192,7 +212,7 @@ PARENTS is list of paths to parent nodes."
 
 (defun eg/execute (graph)
   "Execute "
-  (dolist (elem (nth 1 graph))
+  (dolist (elem (eg/roots graph))
     (en/execute elem)))
 
 (provide 'func-execution)

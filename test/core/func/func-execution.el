@@ -31,7 +31,7 @@
     ;; If linked to executed parent execute new node after
     (en/execute   root)
     (en/link      root node)
-    (should-not (en/executedp node))
+    (should-not (en/executed node))
     ))
 
 ;; unlink
@@ -46,10 +46,6 @@
                            :index 0))
     (should-not (en/child  root
                            :index 0))
-
-    ;; When 2 unexecuted nodes are unlinked, they shouldn't be executed
-    (should-not (en/executedp node))
-    (should-not (en/executedp root))
     ))
 
 ;; parent
@@ -148,39 +144,39 @@
     (should (= (en/parent-count node)
                3))))
 
-;; executedp
-(ert-deftest en|executedp-1 ()
+;; executed
+(ert-deftest en|executed-1 ()
   (let ((node (en/create)))
     ;; New node is not executed
-    (should-not (en/executedp node))))
+    (should-not (en/executed node))))
 
-(ert-deftest en|executedp-2 ()
+(ert-deftest en|executed-2 ()
   (let ((root-1  (en/create))
         (root-2  (en/create))
         (node-1 (en/create)))
     ;; New nodes are not executed yet
-    (should-not (en/executedp root-1))
-    (should-not (en/executedp root-2))
-    (should-not (en/executedp node-1))
+    (should-not (en/executed root-1))
+    (should-not (en/executed root-2))
+    (should-not (en/executed node-1))
 
     ;; Creation of links between nodes doesn't make some executed
     (en/link root-1 node-1)
     (en/link root-2 node-1)
-    (should-not (en/executedp root-1))
-    (should-not (en/executedp root-2))
-    (should-not (en/executedp node-1))
+    (should-not (en/executed root-1))
+    (should-not (en/executed root-2))
+    (should-not (en/executed node-1))
 
     ;; When some parents are not executed, appropriate children must not be executed
     (en/execute root-1)
-    (should     (en/executedp root-1))
-    (should-not (en/executedp root-2))
-    (should-not (en/executedp node-1))
+    (should     (en/executed root-1))
+    (should-not (en/executed root-2))
+    (should-not (en/executed node-1))
 
     ;; When all parents are executed, appropriate children must be executed
     (en/execute root-2)
-    (should (en/executedp root-1))
-    (should (en/executedp root-2))
-    (should (en/executedp node-1))))
+    (should (en/executed root-1))
+    (should (en/executed root-2))
+    (should (en/executed node-1))))
 
 ;; Executablep
 (ert-deftest en|executablep-1 ()
@@ -245,7 +241,7 @@
         (node    (en/create :func (lambda ()
                                     (setq counter (1+ counter))))))
     ;; New node is not executed
-    (should-not (en/executedp node))
+    (should-not (en/executed node))
 
     ;; Callback function should be invoked when the node become executed
     (en/execute node)
@@ -256,7 +252,7 @@
     (should (= 1 counter))
 
     ;; Finally, node should become executed
-    (should (en/executedp node))))
+    (should (en/executed node))))
 
 (ert-deftest en|execute-2 ()
   (let* ((root     (en/create))
@@ -275,7 +271,7 @@
                          node-2-2)))
     ;; No nodes should be executed when they are created
     (should-not (cl-reduce (lambda (a b) (or a b))
-                           (mapcar #'en/executedp
+                           (mapcar #'en/executed
                                    --list)))
 
     (en/link root   node-1)
@@ -288,7 +284,7 @@
     ;; After root's execution other nodes must become executed
     (en/execute root)
     (should (cl-reduce (lambda (a b) (and a b))
-                       (mapcar #'en/executedp
+                       (mapcar #'en/executed
                                --list)))))
 
 (ert-deftest en|execute-3 ()
@@ -300,16 +296,16 @@
     (en/link root-2 node)
     (en/link root-3 node)
 
-    (should-not (en/executedp node))
+    (should-not (en/executed node))
 
     (en/execute root-1)
-    (should-not (en/executedp node))
+    (should-not (en/executed node))
 
     (en/execute root-2)
-    (should-not (en/executedp node))
+    (should-not (en/executed node))
 
     (en/execute root-3)
-    (should     (en/executedp node))))
+    (should     (en/executed node))))
 
 ;; Graph
 (ert-deftest eg|create ()
@@ -435,17 +431,17 @@
 
     (eg/execute graph)
 
-    (should (en/executedp (eg/get graph "root-1")))
-    (should (en/executedp (eg/get graph "root-1 test-1-1")))
-    (should (en/executedp (eg/get graph "root-1 test-1-2")))
-    (should (en/executedp (eg/get graph "root-2")))
-    (should (en/executedp (eg/get graph "root-2 test-2-1")))
-    (should (en/executedp (eg/get graph "root-2 test-2-2")))
-    (should (en/executedp (eg/get graph "root-3")))
-    (should (en/executedp (eg/get graph "root-3 test-3-1")))
-    (should (en/executedp (eg/get graph "root-3 test-3-2")))
+    (should (en/executed (eg/get graph "root-1")))
+    (should (en/executed (eg/get graph "root-1 test-1-1")))
+    (should (en/executed (eg/get graph "root-1 test-1-2")))
+    (should (en/executed (eg/get graph "root-2")))
+    (should (en/executed (eg/get graph "root-2 test-2-1")))
+    (should (en/executed (eg/get graph "root-2 test-2-2")))
+    (should (en/executed (eg/get graph "root-3")))
+    (should (en/executed (eg/get graph "root-3 test-3-1")))
+    (should (en/executed (eg/get graph "root-3 test-3-2")))
 
-    (should (en/executedp (eg/get graph "root-1 multi-child")))
+    (should (en/executed (eg/get graph "root-1 multi-child")))
     (should (eq (eg/get graph "root-1 multi-child")
                 (eg/get graph "root-2 multi-child")))
     (should (eq (eg/get graph "root-1 multi-child")
@@ -475,11 +471,11 @@
 
     (funcall emit-event)
 
-    (should (en/executedp (eg/get graph
+    (should (en/executed (eg/get graph
                                   "nya")))
-    (should (en/executedp (eg/get graph
+    (should (en/executed (eg/get graph
                                   "nya nyan-1")))
-    (should (en/executedp (eg/get graph
+    (should (en/executed (eg/get graph
                                   "nya nyan-2")))
-    (should (en/executedp (eg/get graph
+    (should (en/executed (eg/get graph
                                   "nya nyan-1 nyan-1-1")))))
