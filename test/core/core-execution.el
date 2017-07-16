@@ -278,6 +278,26 @@
                        (mapcar #'en/executedp
                                --list)))))
 
+(ert-deftest en|execute-3 ()
+  (let ((root-1 (en/create))
+        (root-2 (en/create))
+        (root-3 (en/create))
+        (node   (en/create)))
+    (en/link root-1 node)
+    (en/link root-2 node)
+    (en/link root-3 node)
+
+    (should-not (en/executedp node))
+
+    (en/execute root-1)
+    (should-not (en/executedp node))
+
+    (en/execute root-2)
+    (should-not (en/executedp node))
+
+    (en/execute root-3)
+    (should     (en/executedp node))))
+
 ;; Graph
 (ert-deftest eg|create ()
   (let ((graph (eg/create)))
@@ -403,5 +423,4 @@
     (should (en/executedp (eg/get graph
                                   "nya nyan-2")))
     (should (en/executedp (eg/get graph
-                                  "nya nyan-1 nyan-1-1")))
-    ))
+                                  "nya nyan-1 nyan-1-1")))))

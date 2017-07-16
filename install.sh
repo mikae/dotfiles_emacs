@@ -128,6 +128,7 @@ usage() {
 CLEAN=false
 INSTALL_PLUGINS=false
 INSTALL=false
+TEST=false
 
 if [ $# -eq 0 ]; then
     usage
@@ -146,6 +147,9 @@ do
         --install)
             INSTALL=true
         ;;
+        --test)
+            TEST=true
+        ;;
         --all)
             CLEAN=true
             INSTALL_PLUGINS=true
@@ -158,6 +162,11 @@ do
 
     shift
 done
+
+if $TEST; then
+    emacs -batch -l ert -l $CONFIG_DIR/src/core/core-execution.el -l $CONFIG_DIR/test/core/core-execution.el -f ert-run-tests-batch-and-exit
+    exit 0
+fi
 
 if $CLEAN; then
     config_clean
