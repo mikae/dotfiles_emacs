@@ -84,7 +84,7 @@
 
   (global-set-key (kbd "C-x s")   #'serika-f/buffer/save)
   (global-set-key (kbd "C-x S")   #'serika-f/tramp/sudo-write)
-  (global-set-key (kbd "C-x C-c") #'serika-f/buffer/kill)
+  (global-set-key (kbd "C-x c") #'serika-f/buffer/kill)
   (global-set-key (kbd "C-x h")   #'serika-f/buffer/hide)
   (global-set-key (kbd "C-x r")   #'revert-buffer)
 

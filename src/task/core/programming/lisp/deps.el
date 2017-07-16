@@ -3,4 +3,6 @@
 ;;; Code:
 '(
   +emacs-lisp
-  +scheme)
+  +scheme
+  +lisp-interaction
+  )
