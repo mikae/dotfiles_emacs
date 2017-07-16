@@ -111,8 +111,7 @@
 (defun eg/create ()
   "Create execution graph."
   (let ((graph (list 'serika|execution-graph
-                     ()
-                     (make-hash-table :test 'equal))))
+                     ())))
     graph))
 
 (defun eg/roots (graph &optional value)
@@ -169,9 +168,14 @@
 (defun eg/get (graph path)
   "Return node in graph by path."
   (let* ((path-elements (split-string path))
-         (node (gethash (car path-elements) (nth 2 graph))))
-    (dolist (pe (cdr path-elements))
-      (setq node (en/child node :name (make-symbol pe))))
+         (node))
+    (dolist (root (eg/roots graph))
+      (when (string= (en/name root)
+                     (car path-elements))
+        (setq node root)))
+    (when node
+      (dolist (pe (cdr path-elements))
+        (setq node (en/child node :name (make-symbol pe)))))
     node))
 
 (cl-defun eg/add (graph &key name (last '__unnamed__)
@@ -196,8 +200,7 @@ PARENTS is list of paths to parent nodes."
                 (eg/create-path graph
                                 --parent)
                 (setq --parent-node (eg/get graph --parent)))
-              (en/link --parent-node --node))))
-        (puthash (symbol-name (en/name --node)) --node (nth 2 graph))))))
+              (en/link --parent-node --node))))))))
 
 (cl-defun eg/event-node (graph
                          &key name (last '__event_node__)
