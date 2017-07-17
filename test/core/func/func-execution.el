@@ -307,6 +307,25 @@
     (en/execute root-3)
     (should     (en/executed node))))
 
+(ert-deftest en|execute-order ()
+  (let ((value  "")
+        (root   (en/create :func (lambda ()
+                                   (setq value (concat value "r")))))
+        (node-1 (en/create :func (lambda ()
+                                   (setq value (concat value "1")))))
+        (node-2 (en/create :func (lambda ()
+                                   (setq value (concat value "2")))))
+        (node-3 (en/create :func (lambda ()
+                                   (setq value (concat value "3"))))))
+    (en/link root node-1)
+    (en/link root node-2)
+    (en/link root node-3)
+
+    (en/execute root)
+    (should (string= value
+                     "r123"))
+    ))
+
 ;; Graph
 (ert-deftest eg|create ()
   (let ((graph (eg/create)))
@@ -448,6 +467,70 @@
                 (eg/get graph "root-3 multi-child")))
     (should (eq (eg/get graph "root-2 multi-child")
                 (eg/get graph "root-3 multi-child")))))
+
+(ert-deftest eg|execute-order ()
+  (let ((graph (eg/create))
+        (test ""))
+    (eg/add graph
+            :parents '("test-a")
+            :name    'a
+            :func (lambda ()
+                    (setq test (concat test "a"))))
+    (eg/add graph
+            :parents '("test-b")
+            :name    'b
+            :func (lambda ()
+                    (setq test (concat test "b"))))
+    (eg/add graph
+            :parents '("test-c")
+            :name    'c
+            :func (lambda ()
+                    (setq test (concat test "c"))))
+    (eg/add graph
+            :parents '("test-d")
+            :name    'd
+            :func (lambda ()
+                    (setq test (concat test "d"))))
+    (eg/execute graph)
+    (should (string= test
+                     "abcd"))
+    ))
+
+(ert-deftest eg|execute-order-2 ()
+  (let ((graph (eg/create))
+        (test ""))
+    (eg/create-path graph
+                    "test-a")
+    (eg/create-path graph
+                    "test-b")
+    (eg/create-path graph
+                    "test-c")
+    (eg/create-path graph
+                    "test-d")
+    (eg/add graph
+            :parents '("test-b")
+            :name    'b
+            :func (lambda ()
+                    (setq test (concat test "b"))))
+    (eg/add graph
+            :parents '("test-a")
+            :name    'a
+            :func (lambda ()
+                    (setq test (concat test "a"))))
+    (eg/add graph
+            :parents '("test-d")
+            :name    'd
+            :func (lambda ()
+                    (setq test (concat test "d"))))
+    (eg/add graph
+            :parents '("test-c")
+            :name    'c
+            :func (lambda ()
+                    (setq test (concat test "c"))))
+    (eg/execute graph)
+    (should (string= test
+                     "abcd"))
+    ))
 
 (ert-deftest eg|event-node ()
   (let ((graph   (eg/create))

@@ -105,7 +105,14 @@
     (when (en/func node)
       (funcall (en/func node)))
     (en/executed node t)
-    (mapcar #'en/execute (en/children node))))
+    (mapcar #'en/execute (reverse (en/children node)))))
+
+(defun en/log (node &optional diff)
+  (message (concat (or diff "")
+                   "-> "
+                   (format "%s" (en/name node))))
+  (dolist (child (reverse (en/children node)))
+    (en/log child (concat (or diff "") "  "))))
 
 ;; Graph
 (defun eg/create ()
@@ -125,23 +132,6 @@
   (and (eq (car graph)
            'serika|execution-graph)))
 
-(defun eg/create_node (graph path)
-  "Create empty nodes with path."
-  )
-
-
-;; (when (and (not node) create)
-;;   (setq node (en/create :name (make-symbol (car path-elements))
-;;                         :func nil))
-;;   (eg/add graph
-;;           :parents nil
-;;           :node node))
-
-
-;; (setq node (en/create :name (make-symbol pe)))
-;; (eg/add graph
-;;         :parents (list (mapconcat 'identity (subseq path-elements 0 counter) " "))
-;;         :node node))
 (defun eg/create-path (graph path)
   "Create nodes with path. Doesn't override."
   (let* ((path-elements (split-string path))
@@ -159,7 +149,7 @@
       (unless node
         (setq node (en/create :name (make-symbol pe)))
         (eg/add graph
-                :parents (list (mapconcat 'identity (subseq path-elements 0 counter) " "))
+                :parents (list (mapconcat 'identity (cl-subseq path-elements 0 counter) " "))
                 :node node)
         )
       (setq counter (1+ counter))
@@ -215,8 +205,11 @@ PARENTS is list of paths to parent nodes."
 
 (defun eg/execute (graph)
   "Execute "
-  (dolist (elem (eg/roots graph))
-    (en/execute elem)))
+  (mapcar #'en/execute (reverse (eg/roots graph))))
+
+(defun eg/log (graph)
+  (mapcar #'en/log (reverse (eg/roots graph)))
+  (switch-to-buffer "*Messages*"))
 
 (provide 'func-execution)
 ;;; func-execution.el ends here

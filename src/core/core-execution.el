@@ -9,7 +9,14 @@
   "Execution graph for all tasks.")
 
 (defun serika-c/eg/create (&rest packages)
-  (setq --serika-execution-graph (eg/create)))
+  (setq --serika-execution-graph (eg/create))
+
+  (eg/create-path --serika-execution-graph "base require")
+  (eg/create-path --serika-execution-graph "base configure")
+  (eg/create-path --serika-execution-graph "base interface")
+  (eg/create-path --serika-execution-graph "require")
+  (eg/create-path --serika-execution-graph "global-keymap")
+  )
 
 (defun serika-c/eg/packages (&rest packages)
   "Install packages."
