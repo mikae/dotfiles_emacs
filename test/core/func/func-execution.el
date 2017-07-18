@@ -387,6 +387,23 @@
     (should (eq (en/parent (eg/get graph "root nya") :index 0)
       (eg/get graph "root")))))
 
+(ert-deftest eg|create_path-2 ()
+  (let ((graph (eg/create))
+        (node  (en/create :name 'ishouldexist)))
+    (eg/create-path graph
+                    "test")
+    (eg/add graph
+            :parents '("test test-2")
+            :node node)
+    (should (eq (en/parent node
+                           :index 0)
+                (en/child (car (eg/roots graph))
+                          :index 0)))
+    (should (eq node
+                (en/child (en/child (car (eg/roots graph))
+                                    :index 0)
+                          :index 0)))
+    ))
 
 (ert-deftest eg|execute-1 ()
   (let ((graph (eg/create))
@@ -534,12 +551,9 @@
 
 (ert-deftest eg|event-node ()
   (let ((graph   (eg/create))
-        (counter 0)
-        (func    (lambda () (setq counter (1+ counter))))
         (emit-event))
     (setq emit-event (eg/event-node graph
-                                    :name 'nya
-                                    :func  func))
+                                    :name 'nya))
     (eg/add graph
             :name 'nyan-1
             :parents '("nya"))
@@ -561,4 +575,67 @@
     (should (en/executed (eg/get graph
                                   "nya nyan-2")))
     (should (en/executed (eg/get graph
-                                  "nya nyan-1 nyan-1-1")))))
+                                 "nya nyan-1 nyan-1-1")))
+    ))
+
+(ert-deftest eg|event-node-2 ()
+  (let ((graph   (eg/create))
+        (emit-event))
+    (eg/add graph
+            :name    'nyak)
+
+    (eg/add graph
+            :name    'nyak-1
+            :parents '("nyak"))
+
+    (setq emit-event (eg/event-node graph
+                                    :name 'major-mode-c))
+    (eg/add graph
+            :name    'nyak-2
+            :parents '("nyak" "major-mode-c"))
+
+    (eg/add graph
+            :name 'nyan-1
+            :parents '("major-mode-c"))
+
+    (eg/add graph
+            :name 'nyan-2
+            :parents '("major-mode-c"))
+
+    (eg/add graph
+            :name 'nyan-1-1
+            :parents '("major-mode-c nyan-1"))
+
+    (eg/execute graph)
+
+    (should (en/executed (eg/get graph
+                                 "nyak")))
+    (should (en/executed (eg/get graph
+                                 "nyak nyak-1")))
+    (should-not (en/executed (eg/get graph
+                                     "nyak nyak-2")))
+    (should-not (en/executed (eg/get graph
+                                     "major-mode-c")))
+    (should-not (en/executed (eg/get graph
+                                     "major-mode-c nyan-1")))
+    (should-not (en/executed (eg/get graph
+                                     "major-mode-c nyan-2")))
+    (should-not (en/executed (eg/get graph
+                                     "major-mode-c nyan-1 nyan-1-1")))
+
+    (funcall emit-event)
+
+    (should (en/executed (eg/get graph
+                                 "nyak")))
+    (should (en/executed (eg/get graph
+                                 "nyak nyak-1")))
+    (should (en/executed (eg/get graph
+                                     "nyak nyak-2")))
+    (should (en/executed (eg/get graph
+                                 "major-mode-c")))
+    (should (en/executed (eg/get graph
+                                 "major-mode-c nyan-1")))
+    (should (en/executed (eg/get graph
+                                 "major-mode-c nyan-2")))
+    (should (en/executed (eg/get graph
+                                 "major-mode-c nyan-1 nyan-1-1")))))

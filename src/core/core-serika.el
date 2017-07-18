@@ -11,10 +11,12 @@
 (defun serika-c/init ()
   "Initialize `serika'."
   (serika-c/eg/create)
+
   (serika-c/task/add "util")
   (serika-c/task/add "base")
-  ;; (serika-c/task/add "core")
+  (serika-c/task/add "core")
   (serika-c/task/execute-all)
+
   (serika-c/eg/execute)
   (serika-c/splash/configure)
 )

@@ -1,6 +1,0 @@
-'(
-  +bs
-  +helm
-  +dired
-  +help
-)

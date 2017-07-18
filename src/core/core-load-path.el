@@ -55,7 +55,7 @@
 
   (let ((base serika-plugin-directory))
     (dolist (f (directory-files base))
-      (let ((name (concat base "/" f)))
+      (let ((name (concat base f)))
         (when (and (file-directory-p name)
                    (not (equal f ".."))
                    (not (equal f ".")))

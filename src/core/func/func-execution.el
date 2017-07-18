@@ -193,15 +193,16 @@ PARENTS is list of paths to parent nodes."
               (en/link --parent-node --node))))))))
 
 (cl-defun eg/event-node (graph
-                         &key name (last '__event_node__)
-                         &key func (last nil))
-  (lexical-let ((node (en/create :name name
-                         :func func)))
+                         &key name (last '__event_node__))
+  (lexical-let ((event-node (en/create :name (concat "event_node__"
+                                                     (symbol-name name))))
+                (root       (en/create :name name)))
+    (en/link event-node root)
     (eg/add graph
             :parents nil
-            :node node)
+            :node root)
     (lambda ()
-      (en/execute node))))
+      (en/execute event-node))))
 
 (defun eg/execute (graph)
   "Execute "
