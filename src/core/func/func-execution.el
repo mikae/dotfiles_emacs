@@ -1,4 +1,4 @@
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 (defun --and (a b)
@@ -110,7 +110,9 @@
 (defun en/log (node &optional diff)
   (message (concat (or diff "")
                    "-> "
-                   (format "%s" (en/name node))))
+                   (format "%s: %s" (en/name node) (if (en/executed node)
+																											 "t"
+																										 "nil"))))
   (dolist (child (reverse (en/children node)))
     (en/log child (concat (or diff "") "  "))))
 
@@ -194,7 +196,7 @@ PARENTS is list of paths to parent nodes."
 
 (cl-defun eg/event-node (graph
                          &key name (last '__event_node__))
-  (lexical-let ((event-node (en/create :name (concat "event_node__"
+  (let ((event-node (en/create :name (concat "event_node__"
                                                      (symbol-name name))))
                 (root       (en/create :name name)))
     (en/link event-node root)

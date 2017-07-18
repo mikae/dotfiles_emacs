@@ -5,12 +5,14 @@
 (require 'cl-lib)
 
 (require 'core-execution)
+(require 'core-lazy)
 (require 'core-task)
 (require 'core-splash)
 
 (defun serika-c/init ()
   "Initialize `serika'."
   (serika-c/eg/create)
+  (serika-c/lazy/configure)
 
   (serika-c/task/add "util")
   (serika-c/task/add "base")

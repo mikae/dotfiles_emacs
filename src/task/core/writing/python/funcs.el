@@ -93,30 +93,38 @@
 					   company-anaconda
 					   pyenv-mode
 					   virtualenvwrapper)
-                           :name         'python)
+                           :name         'python
+													 :parents      '("install"
+																					 "ft-python"))
 
-  (serika-c/eg/add :parents '("require")
+  (serika-c/eg/add :parents '("require"
+															"ft-python")
                    :name    'python
                    :func    #'serika-g/python//require)
 
-  (serika-c/eg/add :parents '("settings")
+  (serika-c/eg/add :parents '("settings"
+															"ft-python")
                    :name    'python
                    :func    #'serika-g/python//settings)
 
-  (serika-c/eg/add :parents '("settings python")
+  (serika-c/eg/add :parents '("settings python"
+															"ft-python")
                    :name    'auto-mode-alist
                    :func    #'serika-g/python//auto-mode-alist)
 
-  (serika-c/eg/add :parents '("settings python")
-                   :name    'virtualenvwrapper
+  (serika-c/eg/add :parents '("settings python"
+															"ft-python")
+									 :name    'virtualenvwrapper
                    :func    #'serika-g/python|virtualenvwrapper//settings)
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'python
+  (serika-c/eg/add :parents '("keymap"
+															"ft-python")
+									 :name    'python
                    :func    #'serika-g/python//keymap)
 
-  (serika-c/eg/add :parents '("hook")
-		   :name    'markdown
+  (serika-c/eg/add :parents '("hook"
+															"ft-python")
+			 :name    'markdown
 		   :func    (lambda ()
 			      (add-hook 'python-mode-hook #'serika-l/python//evil)
 			      (add-hook 'python-mode-hook #'serika-l/python//buffer-local-variables)

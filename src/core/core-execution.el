@@ -11,21 +11,22 @@
 (defun serika-c/eg/create (&rest packages)
   (setq --serika-execution-graph (eg/create))
 
-  (eg/create-path --serika-execution-graph "base require")
-  (eg/create-path --serika-execution-graph "base configure")
-  (eg/create-path --serika-execution-graph "base interface")
+	(dolist (task '(
+									;; base tasks
+									"base require"
+									"base configure"
+									"base interface"
 
-  (eg/create-path --serika-execution-graph "install")
-  (eg/create-path --serika-execution-graph "require")
-  (eg/create-path --serika-execution-graph "interface")
-  (eg/create-path --serika-execution-graph "settings")
-  (eg/create-path --serika-execution-graph "keymap")
-  (eg/create-path --serika-execution-graph "global-keymap")
-  (eg/create-path --serika-execution-graph "hook")
-  (eg/create-path --serika-execution-graph "post"))
-
-(defun serika-c/eg/event-nodes (&rest packages)
-  )
+									;; tasks
+									"install"
+									"require"
+									"interface"
+									"settings"
+									"keymap"
+									"global-keymap"
+									"hook"
+									"post"))
+		(eg/create-path --serika-execution-graph task)))
 
 (defun serika-c/eg/packages (&rest packages)
   "Install packages."
