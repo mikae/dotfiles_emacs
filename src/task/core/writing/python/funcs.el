@@ -94,36 +94,29 @@
 					   pyenv-mode
 					   virtualenvwrapper)
                            :name         'python
-													 :parents      '("install"
-																					 "ft-python"))
+													 :parents      '("install"))
 
-  (serika-c/eg/add :parents '("require"
-															"ft-python")
+  (serika-c/eg/add :parents '("require")
                    :name    'python
                    :func    #'serika-g/python//require)
 
-  (serika-c/eg/add :parents '("settings"
-															"ft-python")
+  (serika-c/eg/add :parents '("settings")
                    :name    'python
                    :func    #'serika-g/python//settings)
 
-  (serika-c/eg/add :parents '("settings python"
-															"ft-python")
+  (serika-c/eg/add :parents '("settings python")
                    :name    'auto-mode-alist
                    :func    #'serika-g/python//auto-mode-alist)
 
-  (serika-c/eg/add :parents '("settings python"
-															"ft-python")
+  (serika-c/eg/add :parents '("settings python")
 									 :name    'virtualenvwrapper
                    :func    #'serika-g/python|virtualenvwrapper//settings)
 
-  (serika-c/eg/add :parents '("keymap"
-															"ft-python")
+  (serika-c/eg/add :parents '("keymap")
 									 :name    'python
                    :func    #'serika-g/python//keymap)
 
-  (serika-c/eg/add :parents '("hook"
-															"ft-python")
+  (serika-c/eg/add :parents '("hook")
 			 :name    'markdown
 		   :func    (lambda ()
 			      (add-hook 'python-mode-hook #'serika-l/python//evil)
