@@ -41,5 +41,5 @@
                    :func #'serika-g/settings//require)
 
   (serika-c/eg/add :parents '("base configure")
-                   :name #'settings
+                   :name 'settings
                    :func #'serika-g/settings//require))
