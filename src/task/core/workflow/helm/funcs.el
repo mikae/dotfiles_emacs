@@ -77,6 +77,6 @@
                    :name    'helm
                    :func    #'serika-g/helm//global-keymap)
 
-  (serika-c/eg/add :parents '("post")
+  (serika-c/eg/add :parents '("post activate")
                    :name    'helm
                    :func    #'serika-g/helm//activate))

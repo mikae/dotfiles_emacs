@@ -10,11 +10,11 @@
 
 (defun serika-g/json//settings ()
   "Configure `json'."
-  nil)
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
 
 (defun serika-g/json//auto-mode-alist ()
   "Configure `auto-mode-alist'."
-  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
+  )
 
 (defun serika-g/json//keymap ()
   "Configure `json-mode-map'."
@@ -78,10 +78,6 @@
   (serika-c/eg/add :parents '("settings")
 		   :name    'json
 		   :func    #'serika-g/json//settings)
-
-  (serika-c/eg/add :parents '("settings json")
-		   :name    'auto-mode-alist
-		   :func    #'serika-g/json//auto-mode-alist)
 
   (serika-c/eg/add :parents '("keymap")
 		   :name    'json

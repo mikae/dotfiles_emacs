@@ -9,11 +9,11 @@
 
 (defun serika-g/css//settings ()
   "Configure `css'."
-  nil)
+  (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode)))
 
 (defun serika-g/css//auto-mode-alist ()
   "Configure `auto-mode-alist' for `css'."
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode)))
+  )
 
 (defun serika-g/css//keymap ()
   "Configure `css-mode-map'"

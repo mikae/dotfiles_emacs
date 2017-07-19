@@ -9,10 +9,6 @@
 
 (defun serika-g/emacs-lisp//settings ()
   "Configure `emacs-lisp'."
-  nil)
-
-(defun serika-g/emacs-lisp//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
 
 (defun serika-g/emacs-lisp//keymap ()
@@ -88,10 +84,6 @@
                    :name    'emacs-lisp
                    :func    #'serika-g/emacs-lisp//settings)
 
-  (serika-c/eg/add :parents '("settings emacs-lisp")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/emacs-lisp//auto-mode-alist)
-
   (serika-c/eg/add :parents '("keymap")
                    :name    'emacs-lisp
                    :func    #'serika-g/emacs-lisp//keymap)
@@ -101,11 +93,11 @@
                    :func    (lambda ()
                               (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//evil)
                                 (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//buffer-local-variables)
-                              
+
                                 (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//snippet-engine)
                                 (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//syntax-checking)
                                 (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-completion)
                                 (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-pairing)
-                              
+
                                 (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//interface)
                                 (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//prettify-symbols))))

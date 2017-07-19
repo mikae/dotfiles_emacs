@@ -5,10 +5,6 @@
 ;; Global
 (defun serika-g/text//settings ()
   "Configure `text-mode'."
-  nil)
-
-(defun serika-g/text//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode)))
 
 ;; Local
@@ -32,11 +28,7 @@
   (serika-c/eg/add :parents '("settings")
 		   :name    'text
 		   :func    #'serika-g/text//settings)
-  
-  (serika-c/eg/add :parents '("settings text")
-		   :name    'auto-mode-alist
-		   :func    #'serika-g/text//auto-mode-alist)
-  
+
   (serika-c/eg/add :parents '("hook")
 		   :name    'text
 		   :func    (lambda ()

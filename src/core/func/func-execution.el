@@ -186,13 +186,15 @@ PARENTS is list of paths to parent nodes."
       (progn
         (if (not parents)
             (eg/roots graph (cons --node (eg/roots graph)))
-          (dolist (--parent parents)
-            (let ((--parent-node (eg/get graph --parent)))
-              (unless --parent-node
-                (eg/create-path graph
-                                --parent)
-                (setq --parent-node (eg/get graph --parent)))
-              (en/link --parent-node --node))))))))
+          (progn
+            (dolist (--parent parents)
+              (let ((--parent-node (eg/get graph --parent)))
+                (unless --parent-node
+                  (eg/create-path graph
+                                  --parent)
+                  (setq --parent-node (eg/get graph --parent)))
+                (en/link --parent-node --node)))
+            (en/execute --node)))))))
 
 (cl-defun eg/event-node (graph
                          &key name (last '__event_node__))

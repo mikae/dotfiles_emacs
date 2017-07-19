@@ -63,7 +63,7 @@
                    :func    #'serika-g/epub//settings)
 
   (serika-c/eg/add :parents '("settings epub")
-                   :name    'epub
+                   :name    'auto-mode-alist
                    :func    #'serika-g/epub//auto-mode-alist)
 
   (serika-c/eg/add :parents '("keymap")

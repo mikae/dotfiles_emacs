@@ -5,10 +5,6 @@
 ;; Global
 (defun serika-g/scheme//settings ()
   "Configure `scheme'"
-  nil)
-
-(defun serika-g/scheme//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.scm\\'" . scheme-mode)))
 
 ;; Local
@@ -70,20 +66,16 @@
                    :name    'scheme
                    :func    #'serika-g/scheme//settings)
 
-  (serika-c/eg/add :parents '("settings scheme")
-                   :name    'scheme
-                   :func    #'serika-g/scheme//auto-mode-alist)
-
   (serika-c/eg/add :parents '("hook")
                    :name    'scheme
                    :func    (lambda ()
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//evil)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//buffer-local-variables)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//buffer-local-mappings)
-                            
+
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//snippet-engine)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//syntax-checking)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//auto-completion)
-                            
+
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//interface)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//prettify-symbols))))

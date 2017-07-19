@@ -342,6 +342,37 @@
                         "root")
                 root))))
 
+(ert-deftest eg|add_to_executed-1 ()
+  (let ((graph  (eg/create))
+        (root   (en/create :name 'root))
+        (node-1 (en/create :name 'node-1)))
+    (eg/add graph
+            :node root
+            :parents nil)
+    (eg/execute graph)
+    (eg/add graph
+            :node node-1
+            :parents '("root"))
+    (should (en/executed node-1))))
+
+(ert-deftest eg|add_to_executed-2 ()
+  (let ((graph  (eg/create))
+        (root-1   (en/create :name 'root-1))
+        (root-2   (en/create :name 'root-2))
+        (node-1 (en/create :name 'node-1)))
+    (eg/add graph
+            :node root-1
+            :parents nil)
+    (eg/execute graph)
+    (eg/add graph
+            :node root-2
+            :parents nil)
+
+    (eg/add graph
+            :node node-1
+            :parents '("root-1" "root-2"))
+    (should-not (en/executed node-1))))
+
 (ert-deftest eg|dai_mne_im9_hoz9in-1 ()
   (let ((graph (eg/create))
         (node  (en/create)))
@@ -362,8 +393,7 @@
         (temp-func (lambda () ())))
     (eg/create-path graph
                     "root nya")
-    ;; When add node to existing if new node contains a func, and older doesn't
-    ;; set the func of new node to old
+    ;; When collision between two nodes, replace old function with new.
     (eg/add graph
             :parents '("root")
             :name 'nya

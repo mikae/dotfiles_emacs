@@ -34,9 +34,9 @@
   (define-key projectile-mode-map (kbd "C-p T") 'projectile-test-project)
   (define-key projectile-mode-map (kbd "C-p S") 'projectile-save-project-buffers))
 
-(defun serika-g/projectile//global-keymap ()
-  "Configure global bindings for projectile"
-  (global-set-key (kbd "C-x p") #'serika-g/projectile/ini))
+(defun serika-g/projectile|dired//keymap ()
+  "Add binding to `dired-mode-map'."
+  (define-key dired-mode-map (kbd "n p") #'serika-f/projectile/ini))
 
 ;; Init
 (defun init ()
@@ -52,6 +52,7 @@
                    :name    'projectile
                    :func    #'serika-g/projectile//keymap)
 
-  (serika-c/eg/add :parents '("global-keymap")
+  (serika-c/eg/add :parents '("keymap dired")
                    :name    'projectile
-                   :func    #'serika-g/projectile//global-keymap))
+                   :func    #'serika-g/projectile//keymap)
+  )

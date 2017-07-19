@@ -12,17 +12,13 @@
 
 (defun serika-g/python//settings ()
   "Configure `python'."
-  nil)
+  (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode)))
 
 (defun serika-g/python|virtualenvwrapper//settings ()
   "Configure `virtualenwrapper'."
   (venv-initialize-interactive-shells)
   (venv-initialize-eshell)
   (setq venv-location "/home/data/tmp/.python-virtualenvs"))
-
-(defun serika-g/python//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
-  (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode)))
 
 (defun serika-g/python//keymap ()
   "Configure `python-mode-map'."
@@ -103,10 +99,6 @@
   (serika-c/eg/add :parents '("settings")
                    :name    'python
                    :func    #'serika-g/python//settings)
-
-  (serika-c/eg/add :parents '("settings python")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/python//auto-mode-alist)
 
   (serika-c/eg/add :parents '("settings python")
 									 :name    'virtualenvwrapper

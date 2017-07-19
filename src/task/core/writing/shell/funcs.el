@@ -9,10 +9,6 @@
 
 (defun serika-g/sh//settings ()
   "Configure `sh-mode'."
-  nil)
-
-(defun serika-g/sh//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.sh\\'" . sh-mode)))
 
 ;; Local
@@ -30,10 +26,6 @@
   (serika-c/eg/add :parents '("settings")
                    :name    'sh
                    :func    #'serika-g/sh//settings)
-
-  (serika-c/eg/add :parents '("settings sh")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/sh//auto-mode-alist)
 
   (serika-c/eg/add :parents '("hook")
                    :name    'sh

@@ -9,23 +9,19 @@
 
 (defun serika-g/lua//settings ()
   "Configure `lua'."
-  nil)
-
-(defun serika-g/lua//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode)))
-
-(defun serika-g/lua//evil ()
-  "Configure `evil' for `lua-mode'."
-  (setq evil-shift-width 4)
-  (evil-local-mode +1)
-  (evil-normal-state))
 
 (defun serika-g/lua//keymap ()
   "Configure `lua-mode-map'."
   (setq lua-mode-map (make-sparse-keymap)))
 
 ;; Local
+(defun serika-l/lua//evil ()
+  "Configure `evil' for `lua-mode'."
+  (setq evil-shift-width 4)
+  (evil-local-mode +1)
+  (evil-normal-state))
+
 (defun serika-l/lua//buffer-local-variables()
   "Configure buffer-local variables for `lua'."
   (setq tab-width 4)
@@ -77,10 +73,6 @@
 
   (serika-c/eg/add :parents '("settings")
                    :name    'lua
-                   :func    #'serika-g/lua//settings)
-
-  (serika-c/eg/add :parents '("settings lua")
-                   :name    'auto-mode-alist
                    :func    #'serika-g/lua//settings)
 
   (serika-c/eg/add :parents '("keymap")

@@ -49,12 +49,14 @@
     (dolist (dir (directory-files (serika-f/path/join serika-task-directory
                                                       task)
                                   t))
-      (when (and (file-directory-p dir)
-                 (not (string-match "\/\.$" dir))
-                 (not (string-match "\/\.\.$" dir)))
-        (add-to-list 'serika-tasks (serika-f/path/join task
-                                                       (file-name-nondirectory (directory-file-name dir))))
-        ))))
+      (if (and (file-directory-p dir)
+                 (not (string-match "\/\\.$" dir))
+                 (not (string-match "\/\\.\\.$" dir)))
+					(add-to-list 'serika-tasks (serika-f/path/join task
+																												 (file-name-nondirectory (directory-file-name dir))))
+				(when (file-directory-p dir)
+					(message dir))
+				))))
 
 (defun serika-c/task/execute-all ()
   "Execute all task defined by `serika-tasks'."

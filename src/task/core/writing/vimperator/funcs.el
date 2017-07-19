@@ -9,10 +9,6 @@
 
 (defun serika-g/vimperator//settings ()
   "Configure `vimperator'."
-  nil)
-
-(defun serika-g/vimperator//auto-mode-alist ()
-  "Configure `auto-mode-alist' for `vimperator'."
   (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\'" . vimperator-mode))
   (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\.after\\'" . vimperator-mode))
   (add-to-list 'auto-mode-alist '("\\.vimp\\'" . vimperator-mode))
@@ -46,10 +42,6 @@
   (serika-c/eg/add :parents '("settings")
                    :name    'vimperator
                    :func    #'serika-g/vimperator//settings)
-
-  (serika-c/eg/add :parents '("settings vimperator")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/vimperator//auto-mode-alist)
 
   (serika-c/eg/add :parents '("hook")
                    :name    'vimperator

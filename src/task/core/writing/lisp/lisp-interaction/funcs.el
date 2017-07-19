@@ -63,8 +63,8 @@
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//evil)
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//buffer-local-variables)
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//save-function)
-                              
+
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//auto-pairing)
-                              
+
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//interface)
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//prettify-symbols))))

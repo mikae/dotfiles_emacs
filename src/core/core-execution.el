@@ -25,7 +25,7 @@
 									"keymap"
 									"global-keymap"
 									"hook"
-									"post"))
+									"post activate"))
 		(eg/create-path --serika-execution-graph task)))
 
 (defun serika-c/eg/packages (&rest packages)

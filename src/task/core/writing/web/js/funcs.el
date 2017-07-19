@@ -10,10 +10,6 @@
 
 (defun serika-g/js2//settings ()
   "Configure `js2'."
-  nil)
-
-(defun serika-g/js2//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 
 (defun serika-g/js2//keymap ()
@@ -84,8 +80,10 @@
 
 (defun init ()
   "Configure Emacs for `js'-programming."
-  (serika-c/eg/add-install :package-list '(js2-mode skewer-mode ac-js2)
-                           :name         'markdown)
+  (serika-c/eg/add-install :package-list '(js2-mode
+																					 skewer-mode
+																					 ac-js2)
+                           :name         'js2)
 
   (serika-c/eg/add :parents '("require")
 		   :name    'js2
@@ -94,10 +92,6 @@
   (serika-c/eg/add :parents '("settings")
 		   :name    'js2
 		   :func    #'serika-g/js2//settings)
-
-  (serika-c/eg/add :parents '("settings js2")
-		   :name    'auto-mode-alist
-		   :func    #'serika-g/js2//auto-mode-alist)
 
   (serika-c/eg/add :parents '("keymap")
 		   :name    'js2

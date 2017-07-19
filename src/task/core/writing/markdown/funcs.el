@@ -9,10 +9,6 @@
 
 (defun serika-g/markdown//settings ()
   "Configure `markdown'."
-  nil)
-
-(defun serika-g/markdown//auto-mode-alist ()
-  "Configure `auto-mode-alist' for `markdown'."
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'"       . markdown-mode))
   (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
@@ -116,10 +112,6 @@
   (serika-c/eg/add :parents '("settings")
                    :name    'markdown
                    :func    #'serika-g/markdown//settings)
-
-  (serika-c/eg/add :parents '("settings markdown")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/markdown//auto-mode-alist)
 
   (serika-c/eg/add :parents '("keymap")
                    :name    'markdown

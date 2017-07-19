@@ -10,14 +10,23 @@
 
 (defun serika-g/html//settings ()
   "Configure `html'."
-  nil)
+  ;; `auto-mode-alist'
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
 
-(defun serika-g/html//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode)))
+  ;; `multi-compile'
+  (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
+                                                   ("Firefox-esr" . "firefox-esr %path")
+                                                   ("Chromium"    . "chromium    %path"))))
+  ;; `mmm-mode'
+  (mmm-add-classes '((html-js-1
+                      :submode js-mode
+                      :front   "<script[^>]*>[ \t]*\n?"
+                      :back    "[ \t]*</script>")))
+  (mmm-add-mode-ext-class 'html-mode nil 'html-js-1)
+  )
 
 (defun serika-g/html//keymap ()
-  "Configure buffer-local mappings for `html' files."
+  "Configure `html-mode-map'."
   (setq --serika-html-mode-map html-mode-map)
   (setq html-mode-map (let ((map (make-sparse-keymap)))
                         (define-key map (kbd "C-c c") #'multi-compile-run)
@@ -27,20 +36,6 @@
                         (define-key map (kbd "C-t +") #'web-beautify-html)
                         (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
                         map)))
-
-(defun serika-g/html//mmm-mode ()
-  "Add support in `mmm-mode'."
-  (mmm-add-classes '((html-js-1
-                      :submode js-mode
-                      :front   "<script[^>]*>[ \t]*\n?"
-                      :back    "[ \t]*</script>")))
-  (mmm-add-mode-ext-class 'html-mode nil 'html-js-1))
-
-(defun serika-g/html//multi-compile ()
-  "Configure `multi-compile'."
-  (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
-                                                   ("Firefox-esr" . "firefox-esr %path")
-                                                   ("Chromium"    . "chromium    %path")))))
 
 ;; Local
 (defun serika-l/html//evil ()
@@ -94,21 +89,11 @@
                    :name    'html
                    :func    #'serika-g/html//require)
 
-  (serika-c/eg/add :parents '("settings")
+  (serika-c/eg/add :parents '("settings"
+                              "settings mmm-mode"
+                              "settings multi-compile")
                    :name    'html
                    :func    #'serika-g/html//settings)
-
-  (serika-c/eg/add :parents '("settings html")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/html//auto-mode-alist)
-
-  (serika-c/eg/add :parents '("settings html")
-                   :name    'mmm-mode
-                   :func    #'serika-g/html//mmm-mode)
-
-  (serika-c/eg/add :parents '("settings html")
-                   :name    'multi-compile
-                   :func    #'serika-g/html//multi-compile)
 
   (serika-c/eg/add :parents '("keymap")
                    :name    'html
@@ -116,13 +101,13 @@
 
   (serika-c/eg/add :parents '("hook")
                    :name    'html
-		   :func    (lambda ()
-			      (add-hook 'html-mode-hook 'serika-l/html//evil)
-			      (add-hook 'html-mode-hook 'serika-l/html//buffer-local-variables)
+                   :func    (lambda ()
+                              (add-hook 'html-mode-hook 'serika-l/html//evil)
+                              (add-hook 'html-mode-hook 'serika-l/html//buffer-local-variables)
 
-			      (add-hook 'html-mode-hook 'serika-l/html//snippet-engine)
-			      (add-hook 'html-mode-hook 'serika-l/html//auto-completion)
-			      (add-hook 'html-mode-hook 'serika-l/html//syntax-checking)
-			      (add-hook 'html-mode-hook 'serika-l/mmm-mode//activate)
+                              (add-hook 'html-mode-hook 'serika-l/html//snippet-engine)
+                              (add-hook 'html-mode-hook 'serika-l/html//auto-completion)
+                              (add-hook 'html-mode-hook 'serika-l/html//syntax-checking)
+                              (add-hook 'html-mode-hook 'serika-l/mmm-mode//activate)
 
-			      (add-hook 'html-mode-hook 'serika-l/html//interface))))
+                              (add-hook 'html-mode-hook 'serika-l/html//interface))))
