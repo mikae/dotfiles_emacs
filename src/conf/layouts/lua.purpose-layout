@@ -1,0 +1,15 @@
+(nil
+ (0 0 100 100)
+ (t
+  (0 0 100 100)
+  (:purpose edit
+            :purpose-dedicated t
+            :width  1
+            :height 0.85
+            :edges  (0.0 0.0 0.975 0.825))
+  (:purpose check
+            :purpose-dedicated t
+            :width 1
+            :height 0.15
+            :edges (0.0 0.85 0.975 0.975)))
+ )

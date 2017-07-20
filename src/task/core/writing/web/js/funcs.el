@@ -10,13 +10,23 @@
 
 (defun serika-g/js2//settings ()
   "Configure `js2'."
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+  ;; `auto-mode-alist'
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+  ;; `multi-compile'
+  (add-to-list 'multi-compile-alist '(js2-mode . (("Execute" . "node %path")))))
 
 (defun serika-g/js2//keymap ()
   "Configure `js2-mode-map'."
   (setq --serika-js2-mode-map js2-mode-map)
   (setq js2-mode-map (let ((map (make-sparse-keymap)))
                        (define-key map (kbd "C-c c") 'multi-compile-run)
+                       (define-key map (kbd "C-t =") 'evil-indent)
+                       (define-key map (kbd "C-t +") 'web-beautify-js)
+                       (define-key map (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
+                       (define-key map (kbd "C-t e") 'yas-expand)
+                       (define-key map (kbd "C-t E") 'serika-f/emmet/expand)
+
                        map)))
 
 ;; Local
@@ -31,14 +41,6 @@
   (setq tab-width 2)
   (setq js-indent-level 2)
   (setq truncate-lines t))
-
-(defun serika-l/js2//buffer-local-mappings ()
-  "Configure keymap for `js' mode."
-  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
-  (evil-local-set-key 'normal (kbd "C-t +") 'web-beautify-js)
-  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
-  (evil-local-set-key 'normal (kbd "C-t e") 'yas-expand)
-  (evil-local-set-key 'normal (kbd "C-t E") 'serika-f/emmet/expand))
 
 (defun serika-l/js2//syntax-checking ()
   "Configure syntax checking for `js' mode."
@@ -61,10 +63,6 @@
   "Configure auto completion for `js' mode."
   (electric-pair-mode +1))
 
-(defun serika-l/js2//multi-compile ()
-  "Configure `multi-compile' for `js2-mode'."
-  (add-to-list 'multi-compile-alist '(js2-mode . (("Execute" . "node %path")))))
-
 (defun serika-l/js2//interface ()
   "Configure interface for `js' mode."
   (setq show-trailing-whitespace +1)
@@ -81,34 +79,32 @@
 (defun init ()
   "Configure Emacs for `js'-programming."
   (serika-c/eg/add-install :package-list '(js2-mode
-																					 skewer-mode
-																					 ac-js2)
+                                           skewer-mode
+                                           ac-js2)
                            :name         'js2)
 
   (serika-c/eg/add :parents '("require")
-		   :name    'js2
-		   :func    #'serika-g/js2//require)
+                   :name    'js2
+                   :func    #'serika-g/js2//require)
 
   (serika-c/eg/add :parents '("settings")
-		   :name    'js2
-		   :func    #'serika-g/js2//settings)
+                   :name    'js2
+                   :func    #'serika-g/js2//settings)
 
   (serika-c/eg/add :parents '("keymap")
-		   :name    'js2
-		   :func    #'serika-g/js2//keymap)
+                   :name    'js2
+                   :func    #'serika-g/js2//keymap)
 
   (serika-c/eg/add :parents '("hook")
-		   :name    'js2
-		   :func    (lambda ()
-			      (add-hook 'js2-mode-hook 'serika-l/js2//evil)
-			      (add-hook 'js2-mode-hook 'serika-l/js2//buffer-local-variables)
-			      (add-hook 'js2-mode-hook 'serika-l/js2//buffer-local-mappings)
+                   :name    'js2
+                   :func    (lambda ()
+                              (add-hook 'js2-mode-hook 'serika-l/js2//evil)
+                              (add-hook 'js2-mode-hook 'serika-l/js2//buffer-local-variables)
 
-			      (add-hook 'js2-mode-hook 'serika-l/js2//syntax-checking)
-			      (add-hook 'js2-mode-hook 'serika-l/js2//snippet-engine)
-			      (add-hook 'js2-mode-hook 'serika-l/js2//auto-completion)
-			      (add-hook 'js2-mode-hook 'serika-l/js2//auto-pairing)
-			      (add-hook 'js2-mode-hook 'serika-l/js2//multi-compile)
+                              (add-hook 'js2-mode-hook 'serika-l/js2//syntax-checking)
+                              (add-hook 'js2-mode-hook 'serika-l/js2//snippet-engine)
+                              (add-hook 'js2-mode-hook 'serika-l/js2//auto-completion)
+                              (add-hook 'js2-mode-hook 'serika-l/js2//auto-pairing)
 
-			      (add-hook 'js2-mode-hook 'serika-l/js2//interface)
-			      (add-hook 'js2-mode-hook 'serika-l/js2//prettify-symbols))))
+                              (add-hook 'js2-mode-hook 'serika-l/js2//interface)
+                              (add-hook 'js2-mode-hook 'serika-l/js2//prettify-symbols))))

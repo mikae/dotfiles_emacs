@@ -32,6 +32,11 @@
                             (file-name-as-directory "conf")))
   "Directory for various configuration files except `.el'.")
 
+(defconst serika-layouts-directory
+  (expand-file-name (concat serika-conf-directory
+                            (file-name-as-directory "layouts")))
+  "Directory for various configuration files except `.el'.")
+
 (defconst serika-extension-directory
   (expand-file-name (concat serika-start-directory
                             (file-name-as-directory "extension")))

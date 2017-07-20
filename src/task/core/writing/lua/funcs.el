@@ -9,11 +9,20 @@
 
 (defun serika-g/lua//settings ()
   "Configure `lua'."
-  (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode)))
+  ;; `auto-mode-alist'
+  (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
+
+  ;; `multi-compile'
+  (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
 
 (defun serika-g/lua//keymap ()
   "Configure `lua-mode-map'."
-  (setq lua-mode-map (make-sparse-keymap)))
+  (setq lua-mode-map (let ((map (make-sparse-keymap)))
+                       (define-key map (kbd "C-c c") 'multi-compile-run)
+                       (define-key map (kbd "C-t =") 'evil-indent)
+                       (define-key map (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
+                       (define-key map (kbd "C-t e") 'yas-expand)
+                       map)))
 
 ;; Local
 (defun serika-l/lua//evil ()
@@ -27,19 +36,14 @@
   (setq tab-width 4)
   (setq truncate-lines t))
 
-(defun serika-l/lua//buffer-local-mappings()
-  "Configure buffer-local mappings for `lua'."
-  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
-  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
-  (evil-local-set-key 'normal (kbd "C-t e") 'yas-expand))
-
 (defun serika-l/lua//snippet-engine ()
   "Configure snippet engine for `lua'."
   (serika-f/yasnippet/activate))
 
 (defun serika-l/lua//syntax-checking ()
   "Configure syntax checking for `lua'."
-  (flycheck-mode +1))
+  (flycheck-mode +1)
+  (flycheck-list-errors))
 
 (defun serika-l/lua//auto-completion ()
   "Configure auto completion for `lua'."
@@ -81,14 +85,14 @@
 
   (serika-c/eg/add :parents '("hook")
                    :name    'lua
-		   :func    (lambda ()
-			      (add-hook 'lua-mode-hook 'serika-l/lua//evil)
-			      (add-hook 'lua-mode-hook 'serika-l/lua//buffer-local-variables)
-			      (add-hook 'lua-mode-hook 'serika-l/lua//buffer-local-mappings)
+                   :func    (lambda ()
+                              (add-hook 'lua-mode-hook 'serika-l/lua//evil)
+                              (add-hook 'lua-mode-hook 'serika-l/lua//buffer-local-variables)
 
-			      (add-hook 'lua-mode-hook 'serika-l/lua//syntax-checking)
-			      (add-hook 'lua-mode-hook 'serika-l/lua//snippet-engine)
-			      (add-hook 'lua-mode-hook 'serika-l/lua//auto-completion)
+                              (add-hook 'lua-mode-hook 'serika-l/lua//syntax-checking)
+                              (add-hook 'lua-mode-hook 'serika-l/lua//snippet-engine)
+                              (add-hook 'lua-mode-hook 'serika-l/lua//auto-completion)
 
-			      (add-hook 'lua-mode-hook 'serika-l/lua//interface)
-			      (add-hook 'lua-mode-hook 'serika-l/lua//prettify-symbols))))
+                              (add-hook 'lua-mode-hook 'serika-l/lua//interface)
+                              (add-hook 'lua-mode-hook 'serika-l/lua//prettify-symbols)
+                              (add-hook 'lua-mode-hook (serika-f/purpose/use-layout "lua.purpose-layout")))))

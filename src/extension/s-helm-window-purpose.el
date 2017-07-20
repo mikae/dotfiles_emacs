@@ -18,13 +18,13 @@
 (defvar s-layout-fallback-source `((name   . "helm-window-purpose-layout fallback source")
                                    (dummy)
                                    (action . (("Nothing" . s//purpose-layout-default-action))))
-  "Return available layout candidates.")
+  "Fallback source.")
 
-(defun s//purpose-layout-change (layout-name)
+(defun s//purpose-layout-change (layout-data)
   "Load layout associated with LAYOUT-DATA."
-  (when (stringp layout-name)
-    (purpose-load-window-layout-file layout-name)
-    (purpose-compile-user-configuration)))
+  (when (and (listp layout-data)
+             (stringp (car layout-data)))
+    (purpose-load-window-layout-file (car layout-data))))
 
 (defun s//purpose-layout-default-action ()
   "Default action for changing window purpose layout."
@@ -38,9 +38,12 @@
     (dolist (dir s-purpose-layout-dirs)
       (setq files (nconc files
                          (mapcar (lambda (elem)
-                                   `(,(file-name-nondirectory elem) . ,elem))
+                                   `(,(let ((name (file-name-nondirectory elem)))
+                                        (substring name 0 (- (length name)
+                                                             15)))
+                                     ,elem))
                                  (cl-remove-if-not (lambda (elem)
-                                                     (string-match "\\.el$" elem))
+                                                     (string-match "\\.purpose-layout$" elem))
                                                    (directory-files dir t))))))
     files))
 
