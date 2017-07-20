@@ -16,7 +16,7 @@
 
 (defun serika-l/text//interface ()
   "Configure interface for `text-mode'."
-  (linum-mode  1))
+  (serika-f/linum-relative/activate))
 
 (defun serika-l/text//buffer-local-variables ()
   "Configure buffer-local variables for `text-mode'."

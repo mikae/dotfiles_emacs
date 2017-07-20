@@ -76,7 +76,7 @@
 
   (rainbow-delimiters-mode       +1)
   (rainbow-mode                  +1)
-  (linum-mode                    +1)
+  (serika-f/linum-relative/activate)
 
   (prettify-symbols-mode   +1)
 

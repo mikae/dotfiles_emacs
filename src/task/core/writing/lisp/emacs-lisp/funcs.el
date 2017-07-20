@@ -59,7 +59,7 @@
   (setq show-trailing-whitespace +1)
 
   (rainbow-delimiters-mode       +1)
-  (linum-mode                    +1))
+  (serika-f/linum-relative/activate))
 
 (defun serika-l/emacs-lisp//prettify-symbols ()
   "Configure prettify symbols for `emacs-lisp' mode."

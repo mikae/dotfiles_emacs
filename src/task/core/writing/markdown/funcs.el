@@ -93,7 +93,7 @@
 (defun serika-l/markdown//interface ()
   "Configure interface for `markdown-mode'."
   (setq show-trailing-whitespace t)
-  (linum-mode  1))
+  (serika-f/linum-relative/activate))
 
 (defun serika-l/markdown//buffer-local-variables ()
   "Configure buffer-local variables for `markdown-mode'."

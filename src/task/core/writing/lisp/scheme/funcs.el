@@ -46,7 +46,7 @@
 (defun serika-l/scheme//interface ()
   "Configure interface for `scheme' mode."
   (rainbow-delimiters-mode       +1)
-  (linum-mode                    +1)
+  (serika-f/linum-relative/activate)
 
   (setq show-trailing-whitespace +1))
 

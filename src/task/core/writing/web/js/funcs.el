@@ -68,7 +68,7 @@
   (setq show-trailing-whitespace +1)
 
   (rainbow-delimiters-mode       +1)
-  (linum-mode                    +1))
+  (serika-f/linum-relative/activate))
 
 (defun serika-l/js2//prettify-symbols ()
   "Configure prettify symbols for `js' mode."

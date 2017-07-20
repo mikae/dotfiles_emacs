@@ -31,7 +31,7 @@
   (setq show-trailing-whitespace +1)
 
   (rainbow-delimiters-mode       +1)
-  (linum-mode                    +1))
+  (serika-f/linum-relative/activate))
 
 (defun init ()
   "Configure `vimperator'."

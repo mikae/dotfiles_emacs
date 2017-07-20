@@ -52,7 +52,7 @@
 
 (defun serika-l/org//interface ()
   "Configure interface for `org-mode' buffers."
-  (linum-mode              +1)
+  (serika-f/linum-relative/activate)
 
   (prettify-symbols-mode   +1)
   (setq prettify-symbols-alist ())
