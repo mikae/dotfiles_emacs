@@ -12,11 +12,11 @@
   (setq pomidor-sound-tick nil)
   (setq pomidor-sound-tack nil)
   (setq pomidor-sound-overwork t)
-
-  (setq pomidor-mode-map (make-sparse-keymap)))
+  (setq pomidor-seconds 3000))
 
 (defun serika-g/pomidor//keymap ()
   "Configure `pomidor' keymap."
+  (setq pomidor-mode-map (make-sparse-keymap))
   (define-key pomidor-mode-map "n" 'pomidor-stop)
   (define-key pomidor-mode-map "b" 'pomidor-break)
   (define-key pomidor-mode-map "r" 'pomidor-reset)

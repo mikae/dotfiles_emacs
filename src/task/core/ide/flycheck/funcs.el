@@ -2,6 +2,23 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Functions
+(defun serika-f/flycheck/create ()
+  "Create `flycheck' buffer."
+  (flycheck-list-errors))
+
+(defun serika-f/flycheck/remove ()
+  "Remove `flycheck' buffers."
+  (serika-f/buffer/kill-by-major-mode 'flycheck-error-list-mode))
+
+(defun serika-f/flycheck/exists-p ()
+  "Return t if any flycheck buffer is created."
+  (serika-f/buffer/exists-p 'flycheck-error-list-mode))
+
+(defun serika-f/flycheck/not-exists-p ()
+  "Return t if any flycheck buffer is created."
+  (serika-f/buffer/not-exists-p 'flycheck-error-list-mode))
+
 ;; Global
 (defun serika-g/flycheck//require ()
   "Require modules for `flycheck'."
@@ -32,12 +49,8 @@
 
 (defun serika-g/flycheck//global-keymap ()
   "Configure global keymap for using `flycheck'."
-  (global-set-key (kbd "C-, f s") 'flycheck-list-errors)
-  (global-set-key
-   (kbd "C-, f h")
-   (lambda ()
-     (interactive)
-     (serika-f/buffer/kill-by-major-mode 'flycheck-error-list-mode))))
+  (global-set-key (kbd "C-, f s") 'serika-f/flycheck/create)
+  (global-set-key (kbd "C-, f h") 'serika-f/flycheck/remove))
 
 ;; Init
 (defun init ()

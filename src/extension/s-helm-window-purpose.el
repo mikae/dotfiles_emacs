@@ -24,7 +24,7 @@
   "Load layout associated with LAYOUT-DATA."
   (when (and (listp layout-data)
              (stringp (car layout-data)))
-    (purpose-load-window-layout-file (car layout-data))))
+    (purpose-load-frame-layout-file (car layout-data))))
 
 (defun s//purpose-layout-default-action ()
   "Default action for changing window purpose layout."

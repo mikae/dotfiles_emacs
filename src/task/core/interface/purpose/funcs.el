@@ -12,7 +12,7 @@
                                          layout-name)))
     (if (serika-f/purpose/layoutp layout-path)
         (lambda ()
-          (purpose-load-window-layout-file layout-path))
+          (purpose-load-frame-layout-file layout-path))
       (error "Invalid file path to window purpose layout."))))
 
 ;; Global
@@ -28,12 +28,19 @@
   ;; `auto-mode-alist'
   (add-to-list 'auto-mode-alist '("\\.purpose-layout\\'" . emacs-lisp-mode))
 
-  ;; `purpose'
   (setq purpose-preferred-prompt 'helm)
 
-  ;; Programming
-  (add-to-list 'purpose-user-mode-purposes '(lua-mode                 . edit))
+  ;; `edit' purpose
+  (add-to-list 'purpose-user-mode-purposes '(lua-mode . edit))
+  (add-to-list 'purpose-user-mode-purposes '(sh-mode  . edit))
+  (add-to-list 'purpose-user-mode-purposes '(js2-mode . edit))
+
+  ;; `check' purpose
   (add-to-list 'purpose-user-mode-purposes '(flycheck-error-list-mode . check))
+
+  ;; `neotree' purpose
+  (add-to-list 'purpose-user-mode-purposes '(neotree-mode . neotree))
+
   (purpose-compile-user-configuration)
 
   ;; `s-helm-window-purpose'
@@ -78,4 +85,9 @@
 
 	(serika-c/eg/add :parents '("post activate")
 									 :name    'w-purpose
-									 :func    #'serika-l/purpose//activate))
+									 :func    #'serika-l/purpose//activate)
+
+	(serika-c/eg/add :parents '("post activate w-purpose")
+									 :name    'layout
+									 :func    (serika-f/purpose/use-layout "default.purpose-layout"))
+  )

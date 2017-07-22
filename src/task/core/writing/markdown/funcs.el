@@ -120,9 +120,7 @@
   (serika-c/eg/add :parents '("hook")
                    :name    'markdown
                    :func    (lambda ()
-			      (add-hook 'markdown-mode-hook #'serika-l/markdown//evil)
+                              (add-hook 'markdown-mode-hook #'serika-l/markdown//evil)
                               (add-hook 'markdown-mode-hook #'serika-l/markdown//buffer-local-variables)
                               (add-hook 'markdown-mode-hook #'serika-l/markdown//interface
-			      ))
-
-  ))
+                                        ))))

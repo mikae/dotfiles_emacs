@@ -42,8 +42,7 @@
 
 (defun serika-l/lua//syntax-checking ()
   "Configure syntax checking for `lua'."
-  (flycheck-mode +1)
-  (flycheck-list-errors))
+  (flycheck-mode +1))
 
 (defun serika-l/lua//auto-completion ()
   "Configure auto completion for `lua'."
@@ -75,7 +74,9 @@
                    :name    'lua
                    :func    #'serika-g/lua//require)
 
-  (serika-c/eg/add :parents '("settings")
+  (serika-c/eg/add :parents '("settings"
+                              "settings w-purpose"
+                              "settings multi-compile")
                    :name    'lua
                    :func    #'serika-g/lua//settings)
 
@@ -95,4 +96,11 @@
 
                               (add-hook 'lua-mode-hook 'serika-l/lua//interface)
                               (add-hook 'lua-mode-hook 'serika-l/lua//prettify-symbols)
-                              (add-hook 'lua-mode-hook (serika-f/purpose/use-layout "lua.purpose-layout")))))
+                              (add-hook 'lua-mode-hook (serika-f/purpose/use-layout "lua.purpose-layout"))
+
+                              (serika-f/add-hook-predicated 'sh-mode-hook
+                                                            #'serika-f/flycheck/create
+                                                            #'serika-f/flycheck/not-exists-p)
+                              (serika-f/add-hook-predicated 'sh-mode-hook
+                                                            #'serika-f/neotree/create
+                                                            #'serika-f/neotree/not-exists-p))))

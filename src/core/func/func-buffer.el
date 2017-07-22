@@ -44,9 +44,23 @@ If nothing is here just hide buffer."
 (defun serika-f/buffer/kill-by-major-mode (mode)
   "Kill all buffer by major mode MODE."
   (mapc (lambda (buffer)
-          (when (eq mode (buffer-local-value 'major-mode buffer))
+          (when (eq mode
+                    (buffer-local-value 'major-mode buffer))
             (kill-buffer buffer)))
         (buffer-list)))
+
+(defun serika-f/buffer/exists-p (mode)
+  "Return t if any buffer with MODE exists."
+  (cl-reduce (lambda (a b)
+               (or a b))
+             (mapcar (lambda (buffer)
+                       (eq mode
+                           (buffer-local-value 'major-mode buffer)))
+                     (buffer-list))))
+
+(defun serika-f/buffer/not-exists-p (mode)
+  "Return t if any buffer with MODE exists."
+  (not (serika-f/buffer/exists-p mode)))
 
 (provide 'func-buffer)
 ;;; func-buffer.el ends here

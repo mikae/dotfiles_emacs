@@ -19,7 +19,7 @@
   (setq ac-use-fuzzy t)
 
   (setq ac-comphist-file (serika-f/path/join serika-tmp-directory
-                                           "ac-comphist.dat")))
+                                             "ac-comphist.dat")))
 
 (defun serika-g/auto-complete//keymap ()
   "Configure `auto-complete' keymaps."
