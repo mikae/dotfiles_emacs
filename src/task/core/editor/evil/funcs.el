@@ -34,34 +34,8 @@
   "Configure global keymap."
 )
 
-(defun serika-g/evil//disable-mouse ()
-  "Disable mouse in `evil'."
-  (define-key evil-motion-state-map [down-mouse-1] 'ignore)
-  (define-key evil-motion-state-map [drag-mouse-1] 'ignore)
-  (define-key evil-motion-state-map [mouse-1]      'ignore)
-  (define-key evil-normal-state-map [down-mouse-1] 'ignore)
-  (define-key evil-normal-state-map [drag-mouse-1] 'ignore)
-  (define-key evil-normal-state-map [mouse-1]      'ignore)
-  (define-key evil-visual-state-map [down-mouse-1] 'ignore)
-  (define-key evil-visual-state-map [drag-mouse-1] 'ignore)
-  (define-key evil-visual-state-map [mouse-1]      'ignore)
-
-  (define-key evil-motion-state-map [down-mouse-3] 'ignore)
-  (define-key evil-motion-state-map [drag-mouse-3] 'ignore)
-  (define-key evil-motion-state-map [mouse-3]      'ignore)
-  (define-key evil-normal-state-map [down-mouse-3] 'ignore)
-  (define-key evil-normal-state-map [drag-mouse-3] 'ignore)
-  (define-key evil-normal-state-map [mouse-3]      'ignore)
-  (define-key evil-visual-state-map [down-mouse-3] 'ignore)
-  (define-key evil-visual-state-map [drag-mouse-3] 'ignore)
-  (define-key evil-visual-state-map [mouse-3]      'ignore))
-
 (defun serika-g/evil//normal-keymap ()
   "Configure `evil-normal-state-map'."
-  (serika-f/keymap/unbind evil-normal-state-map)
-
-  (define-key evil-normal-state-map (kbd "J") nil)
-
   ;; Standard vim bindings
   (define-key evil-normal-state-map (kbd "a")   'evil-append)
   (define-key evil-normal-state-map (kbd "A")   'evil-append-line)
@@ -113,23 +87,10 @@
 
 (defun serika-g/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
-  (serika-f/keymap/unbind evil-motion-state-map)
-  (define-key evil-motion-state-map (kbd "G") nil)
-
-  (define-key evil-motion-state-map [up] nil)
-  (define-key evil-motion-state-map [right] nil)
-  (define-key evil-motion-state-map [down] nil)
-  (define-key evil-motion-state-map [left] nil)
-
-  (define-key evil-motion-state-map (kbd "A-'") 'evil-goto-mark)
-
-  ;; Bind digits to `digit-argument'
-  )
+  (define-key evil-motion-state-map (kbd "A-'") 'evil-goto-mark))
 
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
-  (serika-f/keymap/unbind evil-insert-state-map)
-
   ;; Redefine motions in `insert' state, because other state
   ;; expects `evil' motions
   (define-key evil-insert-state-map (kbd "A-h")   'evil-backward-char)
@@ -143,8 +104,6 @@
 
 (defun serika-g/evil//visual-keymap ()
   "Configure `evil-visual-state-map'."
-  (serika-f/keymap/unbind evil-visual-state-map)
-
   (define-key evil-visual-state-map "a" evil-outer-text-objects-map)
   (define-key evil-visual-state-map "i" evil-inner-text-objects-map)
 
@@ -152,19 +111,14 @@
 
 (defun serika-g/evil//replace-keymap ()
   "Configure `evil-replace-state-map'."
-  (serika-f/keymap/unbind evil-replace-state-map)
-
   (define-key evil-replace-state-map (kbd "C-, C-j") 'evil-normal-state))
 
 (defun serika-g/evil//emacs-keymap ()
   "Configure `evil-emacs-state-map'."
-  (serika-f/keymap/unbind evil-emacs-state-map)
-
   (define-key evil-emacs-state-map (kbd "<C-m> v") 'evil-normal-state))
 
 (defun serika-g/evil//global-keymap ()
   "Add movements into Emacs global keymap."
-
   ;; Window open functions
   (global-set-key (kbd "C-, w k") 'evil-window-up)
   (global-set-key (kbd "C-, w l") 'evil-window-right)
@@ -231,9 +185,6 @@
 (defun init ()
   "Configure `evil'."
   ;; Configuration
-  (serika-c/eg/add-install :package-list '(evil)
-                           :name 'evil)
-
   (serika-c/eg/add :parents '("require")
                    :name    'evil
                    :func    #'serika-g/evil//require)
@@ -247,10 +198,6 @@
                    :func    #'serika-g/evil//global-keymap)
 
   ;; Keymaps
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'disable-mouse
-                   :func    #'serika-g/evil//disable-mouse)
-
   (serika-c/eg/add :parents '("keymap evil")
                    :name    'normal
                    :func    #'serika-g/evil//normal-keymap)

@@ -30,6 +30,11 @@ DESTINATION_SAVE=$DESTINATION_DIR/.save
 DESTINATION_INIT=$DESTINATION_DIR/init.el
 
 config_update_plugins () {
+    # evil
+    SOURCE_EVIL=https://github.com/mikae/evil
+    git clone $SOURCE_EVIL $PREFIX_GIT/evil
+    cp -Rv $PREFIX_GIT/evil $DESTINATION_PLUGINS
+
     # yasnippet
     SOURCE_YASNIPPET=https://github.com/joaotavora/yasnippet
     git clone $SOURCE_YASNIPPET $PREFIX_GIT/yasnippet
