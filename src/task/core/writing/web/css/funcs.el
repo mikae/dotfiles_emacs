@@ -65,6 +65,10 @@
                    :name    'css
                    :func    #'serika-g/css//require)
 
+  (serika-c/eg/add :parents '("keymap")
+                   :name    'css
+                   :func    #'serika-g/css//keymap)
+
   (serika-c/eg/add :parents '("settings")
                    :name    'css
                    :func    #'serika-g/css//settings)
