@@ -87,10 +87,10 @@
 
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
-  ;; Redefine motions in `insert' state, because other state
-  ;; expects `evil' motions
-  (define-key evil-insert-state-map (kbd "A-h")   'evil-backward-char)
-  (define-key evil-insert-state-map (kbd "A-l")   'evil-forward-char)
+  ;; Redefine motions in `insert' state, because other states
+  ;; expect `evil' motions
+  (define-key evil-insert-state-map (kbd "A-h") 'backward-char)
+  (define-key evil-insert-state-map (kbd "A-l") 'forward-char)
 
   ;; Ret with proper indentation
   (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
@@ -118,13 +118,13 @@
   "Configure `evil-emacs-state-map'."
   (define-key evil-emacs-state-map (kbd "<C-m> v") 'evil-normal-state))
 
-(defun serika-g/evil//operator-state-map ()
+(defun serika-g/evil//operator-state-keymap ()
   "Configure `evil-operator-state-map'."
   (define-key evil-emacs-state-map (kbd "<C-m> v") 'evil-normal-state)
   (define-key evil-operator-state-map "a" evil-outer-text-objects-map)
   (define-key evil-operator-state-map "i" evil-inner-text-objects-map))
 
-(defun serika-g/evil//text-objects-map ()
+(defun serika-g/evil//text-objects-keymap ()
   "Configure `evil-operator-state-map'."
   (define-key evil-outer-text-objects-map "w" 'evil-a-word)
   (define-key evil-outer-text-objects-map "W" 'evil-a-WORD)
@@ -164,6 +164,11 @@
   (define-key evil-inner-text-objects-map "`" 'evil-inner-back-quote)
   (define-key evil-inner-text-objects-map "t" 'evil-inner-tag)
   (define-key evil-inner-text-objects-map "o" 'evil-inner-symbol))
+
+(defun serika-g/evil//ex-keymap ()
+  "Configure `evil-operator-state-map'."
+  (define-key evil-ex-completion-map [return] 'exit-minibuffer)
+  (define-key evil-ex-completion-map (kbd "RET") 'exit-minibuffer))
 
 (defun serika-g/evil//global-keymap ()
   "Add movements into Emacs global keymap."
@@ -220,10 +225,10 @@
   (global-set-key (kbd "A-G")     'evil-goto-line)
 
   ;; `evil' backward and forward `char' works not as expected in insert state
-  (global-set-key (kbd "A-h")     'backward-char)
+  (global-set-key (kbd "A-h")     'evil-backward-char)
   (global-set-key (kbd "A-j")     'evil-next-visual-line)
   (global-set-key (kbd "A-k")     'evil-previous-visual-line)
-  (global-set-key (kbd "A-l")     'forward-char)
+  (global-set-key (kbd "A-l")     'evil-forward-char)
 
   ;; Scrollings
   ;; Hyper because no more empty modifiers, except <Meta>
@@ -275,9 +280,12 @@
 
   (serika-c/eg/add :parents '("keymap evil")
                    :name    'operator-state
-                   :func    #'serika-g/evil//operator-state-map)
+                   :func    #'serika-g/evil//operator-state-keymap)
 
   (serika-c/eg/add :parents '("keymap evil")
                    :name    'text-objects
-                   :func    #'serika-g/evil//text-objects-map)
-  )
+                   :func    #'serika-g/evil//text-objects-keymap)
+
+  (serika-c/eg/add :parents '("keymap evil")
+                   :name    'text-objects
+                   :func    #'serika-g/evil//ex-keymap))
