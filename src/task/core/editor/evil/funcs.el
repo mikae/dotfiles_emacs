@@ -3,11 +3,22 @@
 ;;; Code:
 
 ;; Functions
+(defun evil-mode-p ()
+  "Return t if evil mode is active"
+  (or evil-mode evil-local-mode))
+
 (defun serika-f/evil/replace-buffer ()
   "Replace all text in current buffer with text from clipboard."
   (interactive)
   (erase-buffer)
   (x-clipboard-yank))
+
+(defun serika-f/evil/change-buffer ()
+  "Replace all text in current buffer with text from clipboard."
+  (interactive)
+  (erase-buffer)
+  (when (evil-mode-p)
+    (evil-insert-state)))
 
 ;; Global
 (defun serika-g/evil//require ()
@@ -15,8 +26,7 @@
   (require 'func-package)
   (require 'func-keymap)
 
-  (require 'evil)
-  )
+  (require 'evil))
 
 (defun serika-g/evil//settings ()
   "Configure `evil' variables."
@@ -64,6 +74,7 @@
   ;; Hyper-actions
   (define-key evil-normal-state-map (kbd "H-d") 'erase-buffer)
   (define-key evil-normal-state-map (kbd "H-s") 'serika-f/evil/replace-buffer)
+  (define-key evil-normal-state-map (kbd "H-c") 'serika-f/evil/change-buffer)
 
   ;; Undo-redo
   (define-key evil-normal-state-map (kbd "u")   'undo)
@@ -287,5 +298,5 @@
                    :func    #'serika-g/evil//text-objects-keymap)
 
   (serika-c/eg/add :parents '("keymap evil")
-                   :name    'text-objects
+                   :name    'ex-keymap
                    :func    #'serika-g/evil//ex-keymap))

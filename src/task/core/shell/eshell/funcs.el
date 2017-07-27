@@ -69,9 +69,9 @@
 
 (defun serika-l/eshell//kill-function ()
   "Configure `serika-buffer-kill-function'."
-  (make-local-variable 'serika-buffer-kill-function)
-  (setq serika-buffer-kill-function (lambda ()
-                                      (previous-buffer))))
+  (set (make-local-variable 'serika-buffer-kill-function)
+       (lambda ()
+         (previous-buffer))))
 
 (defun init ()
   "Configure `eshell'."

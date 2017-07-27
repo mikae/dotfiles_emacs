@@ -38,6 +38,8 @@
              ;; Configure map => cm
              (define-key map (kbd "A-j") 'helm-next-line)
              (define-key map (kbd "A-k") 'helm-previous-line)
+             (define-key map (kbd "A-J") 'helm-next-source)
+             (define-key map (kbd "A-K") 'helm-previous-source)
              (define-key map (kbd "RET") 'helm-maybe-exit-minibuffer)
              (define-key map (kbd "TAB") 'helm-select-action)
              (dolist (ind '(1 2 3 4 5 6 7 8 9))

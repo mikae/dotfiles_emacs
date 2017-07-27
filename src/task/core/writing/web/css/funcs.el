@@ -11,10 +11,6 @@
   "Configure `css'."
   (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode)))
 
-(defun serika-g/css//auto-mode-alist ()
-  "Configure `auto-mode-alist' for `css'."
-  )
-
 (defun serika-g/css//keymap ()
   "Configure `css-mode-map'"
   (setq --serika-css-mode-map css-mode-map)
@@ -39,13 +35,18 @@
   (setq truncate-lines t))
 
 (defun serika-l/css//snippet-engine ()
-  "Configure snippet engine for `web-mode' buffers with `css' engine."
+  "Snippet-engine for `css'."
   (serika-f/emmet/activate)
   (serika-f/yasnippet/activate))
 
 (defun serika-l/css//syntax-checking ()
   "Configure syntax checking for `web-mode' buffers with `css' engine."
   (flycheck-mode +1))
+
+(defun serika-l/css//auto-completion ()
+  "Configure syntax checking for `web-mode' buffers with `css' engine."
+  (setq-local company-backends '(company-css))
+  (company-mode +1))
 
 (defun serika-l/css//interface ()
   "Configure interface for `web-mode' buffers with `css' engine."
@@ -73,10 +74,6 @@
                    :name    'css
                    :func    #'serika-g/css//settings)
 
-  (serika-c/eg/add :parents '("settings css")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/css//auto-mode-alist)
-
   (serika-c/eg/add :parents '("hook")
                    :name    'css
                    :func    (lambda ()
@@ -84,4 +81,6 @@
 			      (add-hook 'css-mode-hook 'serika-l/css//buffer-local-variables)
 			      (add-hook 'css-mode-hook 'serika-l/css//snippet-engine)
 			      (add-hook 'css-mode-hook 'serika-l/css//syntax-checking)
+			      (add-hook 'css-mode-hook 'serika-l/css//auto-completion)
+			      (add-hook 'css-mode-hook 'serika-f/eldoc/activate)
 			      (add-hook 'css-mode-hook 'serika-l/css//interface))))

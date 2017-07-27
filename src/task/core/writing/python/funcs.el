@@ -119,5 +119,6 @@
 			      (add-hook 'python-mode-hook #'serika-l/python//snippet-engine)
 			      (add-hook 'python-mode-hook #'serika-l/python//syntax-checking)
 			      (add-hook 'python-mode-hook #'serika-l/python//auto-completion)
+			      (add-hook 'python-mode-hook #'serika-f/eldoc/activate)
 
 			      (add-hook 'python-mode-hook #'serika-l/python//interface))))

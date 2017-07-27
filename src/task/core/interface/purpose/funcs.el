@@ -12,7 +12,8 @@
                                          layout-name)))
     (if (serika-f/purpose/layoutp layout-path)
         (lambda ()
-          (purpose-load-frame-layout-file layout-path))
+          (purpose-x-code1-setup)
+          (purpose-load-window-layout-file layout-path))
       (error "Invalid file path to window purpose layout."))))
 
 ;; Global

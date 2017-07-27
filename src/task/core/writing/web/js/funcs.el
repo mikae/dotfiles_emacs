@@ -115,6 +115,7 @@
                               (add-hook 'js2-mode-hook #'serika-l/js2//syntax-checking)
                               (add-hook 'js2-mode-hook #'serika-l/js2//snippet-engine)
                               (add-hook 'js2-mode-hook #'serika-f/skewer/activate)
+                              (add-hook 'js2-mode-hook #'serika-f/eldoc/activate)
                               ;; bug:
                               ;; `https://github.com/ScottyB/ac-js2/issues/18'
                               ;; (add-hook 'js2-mode-hook #'serika-l/js2//auto-completion)

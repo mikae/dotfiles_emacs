@@ -76,6 +76,7 @@
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//snippet-engine)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//syntax-checking)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//auto-completion)
+                              (add-hook 'scheme-mode-hook 'serika-l/scheme//auto-completion)
 
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//interface)
                               (add-hook 'scheme-mode-hook 'serika-l/scheme//prettify-symbols))))

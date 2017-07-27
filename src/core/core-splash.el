@@ -56,9 +56,9 @@
               (let ((inhibit-read-only t))
                 (erase-buffer)
                 (setq default-directory command-line-default-directory)
-                (make-local-variable 'startup-screen-inhibit-startup-screen)
-                (if pure-space-overflow
-                    (insert pure-space-overflow-message))
+                (set (make-local-variable 'startup-screen-inhibit-startup-screen)
+                     (when pure-space-overflow
+                       (insert pure-space-overflow-message)))
 
                 (serika-c/splash/insert-header)
                 (serika-c/splash/insert-content)

@@ -108,6 +108,7 @@
                               (add-hook 'html-mode-hook 'serika-l/html//snippet-engine)
                               (add-hook 'html-mode-hook 'serika-l/html//auto-completion)
                               (add-hook 'html-mode-hook 'serika-l/html//syntax-checking)
+                              (add-hook 'html-mode-hook 'serika-f/eldoc/activate)
                               (add-hook 'html-mode-hook 'serika-l/mmm-mode//activate)
 
                               (add-hook 'html-mode-hook 'serika-l/html//interface))))

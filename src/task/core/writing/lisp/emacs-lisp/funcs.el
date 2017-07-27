@@ -92,12 +92,13 @@
                    :name    'emacs-lisp
                    :func    (lambda ()
                               (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//evil)
-                                (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//buffer-local-variables)
+                              (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//buffer-local-variables)
 
-                                (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//snippet-engine)
-                                (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//syntax-checking)
-                                (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-completion)
-                                (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-pairing)
+                              (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//snippet-engine)
+                              (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//syntax-checking)
+                              (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-completion)
+                              (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//auto-pairing)
+                              (add-hook 'emacs-lisp-mode-hook 'serika-f/eldoc/activate)
 
-                                (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//interface)
-                                (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//prettify-symbols))))
+                              (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//interface)
+                              (add-hook 'emacs-lisp-mode-hook 'serika-l/emacs-lisp//prettify-symbols))))

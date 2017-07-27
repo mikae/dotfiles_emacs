@@ -5,6 +5,7 @@
 ;; Functions
 (defun serika-f/flycheck/create ()
   "Create `flycheck' buffer."
+  (flycheck-mode +1)
   (flycheck-list-errors))
 
 (defun serika-f/flycheck/remove ()

@@ -206,8 +206,8 @@
   (setq truncate-lines t)
 
   ;; Disable attempt to save dired buffer
-  (make-local-variable 'serika-buffer-save-function)
-  (setq serika-buffer-save-function 'ignore))
+  (set (make-local-variable 'serika-buffer-save-function)
+       'ignore))
 
 ;; Init
 (defun init ()

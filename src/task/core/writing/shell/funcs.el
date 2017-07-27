@@ -37,10 +37,6 @@
   "Configure snippet engine for `sh'."
   (serika-f/yasnippet/activate))
 
-(defun serika-l/sh//syntax-checking ()
-  "Configure syntax checking for `sh'."
-  (flycheck-mode +1))
-
 (defun serika-l/sh//interface ()
   "Configure interface for `sh'."
   (rainbow-delimiters-mode +1)
@@ -77,9 +73,9 @@
                                 (serika-f/add-hook 'sh-mode-hook 'serika-l/sh//buffer-local-variables)
 
                                 (serika-f/add-hook 'sh-mode-hook 'serika-l/sh//snippet-engine)
-                                (serika-f/add-hook 'sh-mode-hook 'serika-l/sh//syntax-checking)
                                 (serika-f/add-hook 'sh-mode-hook 'serika-l/sh//interface)
                                 (serika-f/add-hook 'sh-mode-hook 'serika-l/sh//prettify-symbols)
+                                (serika-f/add-hook 'sh-mode-hook 'serika-f/eldoc/activate)
 
                                 (serika-f/add-hook 'sh-mode-hook (serika-f/purpose/use-layout "sh.purpose-layout"))
 

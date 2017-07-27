@@ -93,10 +93,12 @@
                               (add-hook 'lua-mode-hook 'serika-l/lua//syntax-checking)
                               (add-hook 'lua-mode-hook 'serika-l/lua//snippet-engine)
                               (add-hook 'lua-mode-hook 'serika-l/lua//auto-completion)
+                              (add-hook 'lua-mode-hook 'serika-f/eldoc/activate)
 
                               (add-hook 'lua-mode-hook 'serika-l/lua//interface)
                               (add-hook 'lua-mode-hook 'serika-l/lua//prettify-symbols)
                               (add-hook 'lua-mode-hook (serika-f/purpose/use-layout "lua.purpose-layout"))
+
 
                               (serika-f/add-hook-predicated 'sh-mode-hook
                                                             #'serika-f/flycheck/create

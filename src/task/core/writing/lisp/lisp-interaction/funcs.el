@@ -14,8 +14,8 @@
 ;; Local
 (defun serika-l/lisp-interaction//save-function ()
   "Ignore saving."
-  (make-local-variable 'serika-buffer-save-function)
-  (setq serika-buffer-save-function 'ignore))
+  (set (make-local-variable 'serika-buffer-save-function)
+       'ignore))
 
 (defun serika-l/lisp-interaction//buffer-local-variables ()
   "Configure snippet engine for `lisp-interaction' mode."
@@ -65,6 +65,7 @@
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//save-function)
 
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//auto-pairing)
+                              (add-hook 'lisp-interaction-mode-hook 'serika-f/eldoc/activate)
 
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//interface)
                               (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//prettify-symbols))))

@@ -24,7 +24,8 @@
   "Load layout associated with LAYOUT-DATA."
   (when (and (listp layout-data)
              (stringp (car layout-data)))
-    (purpose-load-frame-layout-file (car layout-data))))
+    (purpose-x-code1-setup)
+    (purpose-load-window-layout-file (car layout-data))))
 
 (defun s//purpose-layout-default-action ()
   "Default action for changing window purpose layout."
@@ -39,6 +40,7 @@
       (setq files (nconc files
                          (mapcar (lambda (elem)
                                    `(,(let ((name (file-name-nondirectory elem)))
+                                        ;; todo: rewrite
                                         (substring name 0 (- (length name)
                                                              15)))
                                      ,elem))
