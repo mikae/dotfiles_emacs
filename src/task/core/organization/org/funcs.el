@@ -14,27 +14,20 @@
 
 (defun serika-g/org//settings ()
   "Configure `org-mode' settings."
+  ;; `filepaths'
   (setq org-id-locations-file (serika-f/path/join serika-tmp-directory
                                                 ".org-id-locations"))
+  ;; `todo'
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "|" "DONE(d)")
+          (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+          (sequence "|" "CANCELED(c)")))
 
+  ;; `settings'
   (setq org-log-done               t)
-
-  (setq org-confirm-babel-evaluate nil)
-
-  (setq org-src-fontify-natively   t)
-
   (setq org-startup-folded         nil)
-
   (setq org-startup-truncated      nil)
-
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               '((emacs-lisp         . t)
-                                 (js                 . t)))
-
-  (setq org-structure-template-alist ())
-
-  (add-to-list 'org-structure-template-alist '("s"  "#+BEGIN_SRC ?\n\n#+END_SRC" "<src lang=\"?\">\n\n</src>"))
-  (add-to-list 'org-structure-template-alist '("se" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC" "<src lang=\"emacs-lisp\">\n\n</src>")))
+  (setq org-structure-template-alist ()))
 
 (defun serika-g/org//keymap ()
   "Configure `org-mode' keymap."
@@ -42,8 +35,12 @@
 
   (define-key org-mode-map (kbd "<C-tab>")  'org-cycle)
 
-  (define-key org-mode-map (kbd "<C-return>")   'org-insert-todo-heading)
-  (define-key org-mode-map (kbd "<C-S-return>") 'org-insert-todo-subheading))
+  ;; todos
+  (define-key org-mode-map (kbd "C-c t i") 'org-insert-todo-heading)
+  (define-key org-mode-map (kbd "C-c t I") 'org-insert-todo-subheading)
+  (define-key org-mode-map (kbd "C-c t t") 'org-todo)
+  (define-key org-mode-map (kbd "C-c t l") 'org-todo-list)
+  )
 
 ;; Local
 (defun serika-l/org//buffer-local-settings ()
