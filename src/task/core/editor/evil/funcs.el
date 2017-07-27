@@ -30,10 +30,6 @@
         evil-operator-state-cursor  '((bar . 2) "orange")
         evil-emacs-state-cursor     '(box       "cyan")))
 
-(defun serika-g/evil//global-keymap ()
-  "Configure global keymap."
-)
-
 (defun serika-g/evil//normal-keymap ()
   "Configure `evil-normal-state-map'."
   ;; Standard vim bindings
@@ -107,6 +103,11 @@
   (define-key evil-visual-state-map "a" evil-outer-text-objects-map)
   (define-key evil-visual-state-map "i" evil-inner-text-objects-map)
 
+  (define-key evil-visual-state-map "A" 'evil-append)
+  (define-key evil-visual-state-map "I" 'evil-insert)
+  (define-key evil-visual-state-map "u" 'evil-downcase)
+  (define-key evil-visual-state-map "U" 'evil-upcase)
+
   (define-key evil-visual-state-map (kbd "C-, C-j") 'evil-exit-visual-state))
 
 (defun serika-g/evil//replace-keymap ()
@@ -117,8 +118,58 @@
   "Configure `evil-emacs-state-map'."
   (define-key evil-emacs-state-map (kbd "<C-m> v") 'evil-normal-state))
 
+(defun serika-g/evil//operator-state-map ()
+  "Configure `evil-operator-state-map'."
+  (define-key evil-emacs-state-map (kbd "<C-m> v") 'evil-normal-state)
+  (define-key evil-operator-state-map "a" evil-outer-text-objects-map)
+  (define-key evil-operator-state-map "i" evil-inner-text-objects-map))
+
+(defun serika-g/evil//text-objects-map ()
+  "Configure `evil-operator-state-map'."
+  (define-key evil-outer-text-objects-map "w" 'evil-a-word)
+  (define-key evil-outer-text-objects-map "W" 'evil-a-WORD)
+  (define-key evil-outer-text-objects-map "s" 'evil-a-sentence)
+  (define-key evil-outer-text-objects-map "p" 'evil-a-paragraph)
+  (define-key evil-outer-text-objects-map "b" 'evil-a-paren)
+  (define-key evil-outer-text-objects-map "(" 'evil-a-paren)
+  (define-key evil-outer-text-objects-map ")" 'evil-a-paren)
+  (define-key evil-outer-text-objects-map "[" 'evil-a-bracket)
+  (define-key evil-outer-text-objects-map "]" 'evil-a-bracket)
+  (define-key evil-outer-text-objects-map "B" 'evil-a-curly)
+  (define-key evil-outer-text-objects-map "{" 'evil-a-curly)
+  (define-key evil-outer-text-objects-map "}" 'evil-a-curly)
+  (define-key evil-outer-text-objects-map "<" 'evil-an-angle)
+  (define-key evil-outer-text-objects-map ">" 'evil-an-angle)
+  (define-key evil-outer-text-objects-map "'" 'evil-a-single-quote)
+  (define-key evil-outer-text-objects-map "\"" 'evil-a-double-quote)
+  (define-key evil-outer-text-objects-map "`" 'evil-a-back-quote)
+  (define-key evil-outer-text-objects-map "t" 'evil-a-tag)
+  (define-key evil-outer-text-objects-map "o" 'evil-a-symbol)
+  (define-key evil-inner-text-objects-map "w" 'evil-inner-word)
+  (define-key evil-inner-text-objects-map "W" 'evil-inner-WORD)
+  (define-key evil-inner-text-objects-map "s" 'evil-inner-sentence)
+  (define-key evil-inner-text-objects-map "p" 'evil-inner-paragraph)
+  (define-key evil-inner-text-objects-map "b" 'evil-inner-paren)
+  (define-key evil-inner-text-objects-map "(" 'evil-inner-paren)
+  (define-key evil-inner-text-objects-map ")" 'evil-inner-paren)
+  (define-key evil-inner-text-objects-map "[" 'evil-inner-bracket)
+  (define-key evil-inner-text-objects-map "]" 'evil-inner-bracket)
+  (define-key evil-inner-text-objects-map "B" 'evil-inner-curly)
+  (define-key evil-inner-text-objects-map "{" 'evil-inner-curly)
+  (define-key evil-inner-text-objects-map "}" 'evil-inner-curly)
+  (define-key evil-inner-text-objects-map "<" 'evil-inner-angle)
+  (define-key evil-inner-text-objects-map ">" 'evil-inner-angle)
+  (define-key evil-inner-text-objects-map "'" 'evil-inner-single-quote)
+  (define-key evil-inner-text-objects-map "\"" 'evil-inner-double-quote)
+  (define-key evil-inner-text-objects-map "`" 'evil-inner-back-quote)
+  (define-key evil-inner-text-objects-map "t" 'evil-inner-tag)
+  (define-key evil-inner-text-objects-map "o" 'evil-inner-symbol))
+
 (defun serika-g/evil//global-keymap ()
   "Add movements into Emacs global keymap."
+  ;; `evil-ex'
+  (global-set-key (kbd "M-;") 'evil-ex)
+
   ;; Window open functions
   (global-set-key (kbd "C-, w k") 'evil-window-up)
   (global-set-key (kbd "C-, w l") 'evil-window-right)
@@ -221,4 +272,12 @@
   (serika-c/eg/add :parents '("keymap evil")
                    :name    'emacs
                    :func    #'serika-g/evil//emacs-keymap)
+
+  (serika-c/eg/add :parents '("keymap evil")
+                   :name    'operator-state
+                   :func    #'serika-g/evil//operator-state-map)
+
+  (serika-c/eg/add :parents '("keymap evil")
+                   :name    'text-objects
+                   :func    #'serika-g/evil//text-objects-map)
   )

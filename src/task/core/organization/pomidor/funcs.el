@@ -12,7 +12,7 @@
   (setq pomidor-sound-tick nil)
   (setq pomidor-sound-tack nil)
   (setq pomidor-sound-overwork t)
-  (setq pomidor-seconds 3000))
+  (setq pomidor-seconds 1500))
 
 (defun serika-g/pomidor//keymap ()
   "Configure `pomidor' keymap."

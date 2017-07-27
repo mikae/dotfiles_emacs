@@ -90,7 +90,7 @@
 
   (global-set-key (kbd "C-x q")   #'save-buffers-kill-terminal)
 
-  (global-set-key (kbd "C-:")     #'eval-expression)
+  (global-set-key (kbd "M-:")     #'eval-expression)
 
   (global-set-key (kbd "C-h v")   #'describe-variable)
   (global-set-key (kbd "C-h f")   #'describe-function)
