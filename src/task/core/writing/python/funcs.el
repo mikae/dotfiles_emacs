@@ -18,7 +18,7 @@
   "Configure `virtualenwrapper'."
   (venv-initialize-interactive-shells)
   (venv-initialize-eshell)
-  (setq venv-location "/home/data/tmp/.python-virtualenvs"))
+  (setq venv-location (serika-f/system/getenv "PATH_VIRTUALENVS")))
 
 (defun serika-g/python//keymap ()
   "Configure `python-mode-map'."

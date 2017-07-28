@@ -24,4 +24,4 @@
 
   (serika-c/eg/add :parents '("post activate")
                    :name    'undo-tree
-                   :func    #'serika-fg/undo-tree//activate))
+                   :func    #'serika-gf/undo-tree//activate))

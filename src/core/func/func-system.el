@@ -24,5 +24,15 @@
   (getenv
     (if (serika-f/system/windows-p) "HOMEPATH" "HOME")))
 
+(defun serika-f/system/getenv (env-variable &optional default-value)
+  "Return environment variable value of ENV-VARIABLE.
+If it's nil return DEFAULT-VALUE."
+  (if (stringp env-variable)
+      (or (getenv env-variable)
+          default-value
+          (error (format "Environment variable %s was not found"
+                         env-variable)))
+    (error "Can't get value of non-string key from environment")))
+
 (provide 'func-system)
 ;;; func-system.el ends here

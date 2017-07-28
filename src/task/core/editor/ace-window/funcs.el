@@ -32,5 +32,5 @@
 
   (serika-c/eg/add :parents '("global-keymap")
                    :name    'ace-window
-                   :func    #'serika-g/ace-window//settings)
+                   :func    #'serika-g/ace-window//global-keymap)
   )

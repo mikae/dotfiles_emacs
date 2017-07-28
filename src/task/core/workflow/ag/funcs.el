@@ -10,8 +10,9 @@
   (setq ag-highlight-search t)
   (setq ag-reuse-window t)
   (setq ag-reuse-buffers t)
+
   (setq ag-arguments ag-arguments)
-  )
+  (setq ag-executable (serika-f/system/getenv "PATH_EXECUTABLE_AG")))
 
 (defun serika-gc/ag//global-keymap ()
   "Configure global keyamps for `ag'."

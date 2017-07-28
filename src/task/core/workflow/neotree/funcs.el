@@ -26,6 +26,8 @@
 
 (defun serika-gc/neotree//keymap ()
   "Configure keymap for `neotree'."
+  (setq --serika-neotree-mode-map
+        neotree-mode-map)
   (setq neotree-mode-map
         (let ((map (make-sparse-keymap)))
           (serika-f/keymap/bind-digits map 'digit-argument)
@@ -38,6 +40,11 @@
           (define-key map (kbd "d d") 'neotree-delete-node)
           (define-key map (kbd "d c") 'neotree-copy-node)
           (define-key map (kbd "d r") 'neotree-copy-node)
+
+          (define-key map (kbd "t h") 'neotree-hidden-file-toggle)
+
+          (define-key map (kbd "q")   'neotree-hide)
+          (define-key map (kbd "RET") (lookup-key --serika-neotree-mode-map (kbd "RET")))
           map)))
 
 ;; Init
