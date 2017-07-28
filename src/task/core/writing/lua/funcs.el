@@ -100,9 +100,9 @@
                               (add-hook 'lua-mode-hook (serika-f/purpose/use-layout "lua.purpose-layout"))
 
 
-                              (serika-f/add-hook-predicated 'sh-mode-hook
+                              (serika-f/add-hook-predicated 'lua-mode-hook
                                                             #'serika-f/flycheck/create
                                                             #'serika-f/flycheck/not-exists-p)
-                              (serika-f/add-hook-predicated 'sh-mode-hook
+                              (serika-f/add-hook-predicated 'lua-mode-hook
                                                             #'serika-f/neotree/create
                                                             #'serika-f/neotree/not-exists-p))))

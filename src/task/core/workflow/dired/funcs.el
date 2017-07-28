@@ -127,17 +127,27 @@
       (error "2 marked files are required for `shn-split'"))))
 
 ;; Global
-(defun serika-g/dired//require ()
+(defun serika-gc/dired//require ()
   "Require modules for `dired'."
   (require 'dired)
+  (require 'dired-x)
   (require 'evil))
 
-(defun serika-g/dired//settings ()
+(defun serika-gc/dired//settings ()
   "Configure `dired-mode' settings."
+  ;; `dired'
   (setq dired-recursive-deletes 'always
-        dired-dwim-target       t))
+        dired-dwim-target       t)
 
-(defun serika-g/dired//keymap ()
+  ;; Omit some files with patterns
+  (setq dired-omit-files
+        (string-join (list "^\\.?#"
+                           "^\\.$"
+                           "^\\.\\.$"
+                           "^flycheck_\.+\\.el$")
+                     "\\|")))
+
+(defun serika-gc/dired//keymap ()
   "Configure `dired-mode' keymap."
   (setq dired-mode-map (make-sparse-keymap))
 
@@ -192,18 +202,21 @@
 
   (define-key dired-mode-map (kbd "RET")   #'dired-run-associated-program))
 
-(defun serika-g/dired//global-keymap ()
+(defun serika-gc/dired//global-keymap ()
   "Configure global keymap to use `dired-mode'."
   (global-set-key (kbd "C-x d") #'serika-f/dired/open-this-directory))
 
 ;; Local
-(defun serika-l/dired//hook ()
+(defun serika-l/dired//buffer-local-settings ()
   "Configure `dired-mode' buffers."
-  ;; Enable auto reverting
-  (auto-revert-mode 1)
-
   ;; Enable line truncations
   (setq truncate-lines t)
+
+  ;; Enable auto reverting
+  (auto-revert-mode +1)
+
+  ;; Omit some files
+  (dired-omit-mode  +1)
 
   ;; Disable attempt to save dired buffer
   (set (make-local-variable 'serika-buffer-save-function)
@@ -214,21 +227,21 @@
   "Configure `dired'."
   (serika-c/eg/add :parents '("require")
                    :name    'dired
-                   :func    #'serika-g/dired//require)
+                   :func    #'serika-gc/dired//require)
 
   (serika-c/eg/add :parents '("settings")
                    :name    'dired
-                   :func    #'serika-g/dired//settings)
+                   :func    #'serika-gc/dired//settings)
 
   (serika-c/eg/add :parents '("keymap")
                    :name    'dired
-                   :func    #'serika-g/dired//keymap)
+                   :func    #'serika-gc/dired//keymap)
 
   (serika-c/eg/add :parents '("global-keymap")
                    :name    'dired
-                   :func    #'serika-g/dired//global-keymap)
+                   :func    #'serika-gc/dired//global-keymap)
 
   (serika-c/eg/add :parents '("hook")
                    :name    'dired
                    :func    (lambda ()
-                              (add-hook 'dired-mode-hook #'serika-l/dired//hook))))
+                              (add-hook 'dired-mode-hook #'serika-l/dired//buffer-local-settings))))

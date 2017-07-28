@@ -8,7 +8,7 @@
   (turn-on-eldoc-mode))
 
 ;; Global
-(defun serika-g/eldoc//require ()
+(defun serika-gc/eldoc//require ()
   "Require modules for `eldoc'."
   (require 'eldoc))
 
@@ -16,4 +16,4 @@
   "Configure `eldoc'."
   (serika-c/eg/add :parents '("require")
                    :name    'eldoc
-                   :func    #'serika-g/eldoc//require))
+                   :func    #'serika-gc/eldoc//require))

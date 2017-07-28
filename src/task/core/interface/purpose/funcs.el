@@ -87,8 +87,4 @@
 	(serika-c/eg/add :parents '("post activate")
 									 :name    'w-purpose
 									 :func    #'serika-l/purpose//activate)
-
-	(serika-c/eg/add :parents '("post activate w-purpose")
-									 :name    'layout
-									 :func    (serika-f/purpose/use-layout "default.purpose-layout"))
   )

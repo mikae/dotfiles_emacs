@@ -23,16 +23,17 @@
 (defun serika-g/python//keymap ()
   "Configure `python-mode-map'."
   (setq python-mode-map (let ((map (make-sparse-keymap)))
-                          ;; virtualenvwrapper
-			  (define-key python-mode-map (kbd "C-c v w") #'venv-workon)
-			  (define-key python-mode-map (kbd "C-c v d") #'venv-deactivate)
-			  (define-key python-mode-map (kbd "C-c v m") #'venv-mkvirtualenv)
-			  (define-key python-mode-map (kbd "C-c v r") #'venv-rmvirtualenv)
-			  (define-key python-mode-map (kbd "C-c v l") #'venv-lsvirtualenv)
-			  (define-key python-mode-map (kbd "C-c v c") #'venv-cdvirtualenv)
-			  (define-key python-mode-map (kbd "C-c v y") #'venv-cpvirtualenv)))
-  (setq anaconda-mode-map (let ((map (make-sparse-keymap)))))
-  )
+                         ;; virtualenvwrapper
+			  (define-key map (kbd "C-c v w") #'venv-workon)
+			  (define-key map (kbd "C-c v d") #'venv-deactivate)
+			  (define-key map (kbd "C-c v m") #'venv-mkvirtualenv)
+			  (define-key map (kbd "C-c v r") #'venv-rmvirtualenv)
+			  (define-key map (kbd "C-c v l") #'venv-lsvirtualenv)
+			  (define-key map (kbd "C-c v c") #'venv-cdvirtualenv)
+			  (define-key map (kbd "C-c v y") #'venv-cpvirtualenv)
+        map))
+  (setq anaconda-mode-map (let ((map (make-sparse-keymap)))
+                            map)))
 
 ;; Local
 (defun serika-l/python//evil ()
@@ -86,11 +87,10 @@
 (defun init ()
   "Configure `python-mode'."
   (serika-c/eg/add-install :package-list '(anaconda-mode
-					   company-anaconda
-					   pyenv-mode
-					   virtualenvwrapper)
-                           :name         'python
-													 :parents      '("install"))
+                                           company-anaconda
+                                           pyenv-mode
+                                           virtualenvwrapper)
+                           :name         'python)
 
   (serika-c/eg/add :parents '("require")
                    :name    'python
@@ -101,24 +101,24 @@
                    :func    #'serika-g/python//settings)
 
   (serika-c/eg/add :parents '("settings python")
-									 :name    'virtualenvwrapper
+                   :name    'virtualenvwrapper
                    :func    #'serika-g/python|virtualenvwrapper//settings)
 
   (serika-c/eg/add :parents '("keymap")
-									 :name    'python
+                   :name    'python
                    :func    #'serika-g/python//keymap)
 
   (serika-c/eg/add :parents '("hook")
-			 :name    'markdown
-		   :func    (lambda ()
-			      (add-hook 'python-mode-hook #'serika-l/python//evil)
-			      (add-hook 'python-mode-hook #'serika-l/python//buffer-local-variables)
-			      (add-hook 'python-mode-hook #'serika-l/python//buffer-local-mappings)
-			      (add-hook 'python-mode-hook #'serika-l/python//minor-modes)
+                   :name    'python
+                   :func    (lambda ()
+                              (add-hook 'python-mode-hook #'serika-l/python//evil)
+                              (add-hook 'python-mode-hook #'serika-l/python//buffer-local-variables)
+                              (add-hook 'python-mode-hook #'serika-l/python//buffer-local-mappings)
+                              (add-hook 'python-mode-hook #'serika-l/python//minor-modes)
 
-			      (add-hook 'python-mode-hook #'serika-l/python//snippet-engine)
-			      (add-hook 'python-mode-hook #'serika-l/python//syntax-checking)
-			      (add-hook 'python-mode-hook #'serika-l/python//auto-completion)
-			      (add-hook 'python-mode-hook #'serika-f/eldoc/activate)
+                              (add-hook 'python-mode-hook #'serika-l/python//snippet-engine)
+                              (add-hook 'python-mode-hook #'serika-l/python//syntax-checking)
+                              (add-hook 'python-mode-hook #'serika-l/python//auto-completion)
+                              (add-hook 'python-mode-hook #'serika-f/eldoc/activate)
 
-			      (add-hook 'python-mode-hook #'serika-l/python//interface))))
+                              (add-hook 'python-mode-hook #'serika-l/python//interface))))
