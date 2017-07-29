@@ -32,9 +32,9 @@
         (let ((map (make-sparse-keymap)))
           (serika-f/keymap/bind-digits map 'digit-argument)
 
-          (define-key map (kbd "A-j") 'neotree-next-line)
-          (define-key map (kbd "A-k") 'neotree-previous-line)
-          (define-key map (kbd "A-l") 'neotree-change-root)
+          (define-key map (kbd "A-e") 'neotree-next-line)
+          (define-key map (kbd "A-i") 'neotree-previous-line)
+          (define-key map (kbd "A-o") 'neotree-change-root)
 
           (define-key map (kbd "d n") 'neotree-create-node)
           (define-key map (kbd "d d") 'neotree-delete-node)

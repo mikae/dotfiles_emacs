@@ -61,10 +61,10 @@
   (setq-local eshell-mode-map (make-sparse-keymap))
   (use-local-map eshell-mode-map)
 
-  (define-key eshell-mode-map (kbd "A-j")   'eshell-next-matching-input-from-input)
-  (define-key eshell-mode-map (kbd "A-k")   'eshell-previous-matching-input-from-input)
-  (define-key eshell-mode-map (kbd "A-s")   'eshell-next-matching-input)
-  (define-key eshell-mode-map (kbd "A-C-s") 'eshell-previous-matching-input)
+  (define-key eshell-mode-map (kbd "A-e")   'eshell-next-matching-input-from-input)
+  (define-key eshell-mode-map (kbd "A-i")   'eshell-previous-matching-input-from-input)
+  (define-key eshell-mode-map (kbd "A-E")   'eshell-next-matching-input)
+  (define-key eshell-mode-map (kbd "A-I") 'eshell-previous-matching-input)
   (define-key eshell-mode-map (kbd "RET")   'eshell-send-input))
 
 (defun serika-l/eshell//kill-function ()

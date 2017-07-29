@@ -26,10 +26,10 @@
   (setq ac-mode-map       (make-sparse-keymap))
   (setq ac-completing-map (make-sparse-keymap))
 
-  (define-key ac-completing-map (kbd "A-j") 'ac-next)
-  (define-key ac-completing-map (kbd "A-k") 'ac-previous)
-  (define-key ac-completing-map (kbd "A-l") 'ac-complete)
-  (define-key ac-completing-map (kbd "A-h") 'ac-stop))
+  (define-key ac-completing-map (kbd "A-n") 'ac-stop)
+  (define-key ac-completing-map (kbd "A-e") 'ac-next)
+  (define-key ac-completing-map (kbd "A-o") 'ac-complete)
+  (define-key ac-completing-map (kbd "A-i") 'ac-previous))
 
 (defun init ()
   "Configure `auto-complete'."

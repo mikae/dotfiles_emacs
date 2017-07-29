@@ -7,11 +7,11 @@
   "Require modules for `ace-jump-mode'."
   (require 'ace-jump-mode))
 
-(defun serika-g/ace-jump-mode//evil ()
+(defun serika-g/ace-jump-mode//global-keymap ()
   "Configure evil to use `ace-jump-mode'."
-  (define-key evil-normal-state-map (kbd "w") 'ace-jump-word-mode)
-  (define-key evil-normal-state-map (kbd "f") 'ace-jump-char-mode)
-  (define-key evil-normal-state-map (kbd "L") 'ace-jump-line-mode))
+  (global-set-key (kbd "A-c") 'ace-jump-word-mode)
+  (global-set-key (kbd "A-C") 'ace-jump-char-mode)
+  (global-set-key (kbd "A-v") 'ace-jump-line-mode))
 
 ;; Init
 (defun init ()
@@ -22,7 +22,7 @@
   (serika-c/eg/add :parents '("require")
                    :name    'ace-jump-mode
                    :func    #'serika-g/ace-jump-mode//require)
-  (serika-c/eg/add :parents '("keymap evil")
+  (serika-c/eg/add :parents '("global-keymap evil")
                    :name    'ace-jump-mode
-                   :func    #'serika-g/ace-jump-mode//evil)
+                   :func    #'serika-g/ace-jump-mode//global-keymap)
   )

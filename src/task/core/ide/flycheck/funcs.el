@@ -43,10 +43,10 @@
   "Configure `flycheck' keymaps."
   (setq flycheck-error-list-mode-map (make-sparse-keymap))
 
-  (define-key flycheck-error-list-mode-map "h" 'evil-backward-char)
-  (define-key flycheck-error-list-mode-map "j" 'evil-next-visual-line)
-  (define-key flycheck-error-list-mode-map "k" 'evil-previous-visual-line)
-  (define-key flycheck-error-list-mode-map "l" 'evil-forward-char))
+  (define-key flycheck-error-list-mode-map "n" 'evil-backward-char)
+  (define-key flycheck-error-list-mode-map "e" 'evil-next-visual-line)
+  (define-key flycheck-error-list-mode-map "i" 'evil-previous-visual-line)
+  (define-key flycheck-error-list-mode-map "o" 'evil-forward-char))
 
 (defun serika-g/flycheck//global-keymap ()
   "Configure global keymap for using `flycheck'."

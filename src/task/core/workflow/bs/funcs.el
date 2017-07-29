@@ -20,9 +20,9 @@
   (define-key bs-mode-map (kbd "d")     'bs-delete)
   (define-key bs-mode-map (kbd "s")     'bs-save)
   (define-key bs-mode-map (kbd "RET")   'bs-select)
-  (define-key bs-mode-map (kbd "j")     'next-line)
-  (define-key bs-mode-map (kbd "k")     'previous-line)
-  (define-key bs-mode-map (kbd "l")     'bs-select))
+  (define-key bs-mode-map (kbd "e")     'next-line)
+  (define-key bs-mode-map (kbd "i")     'previous-line)
+  (define-key bs-mode-map (kbd "o")     'bs-select))
 
 (defun serika-g/bs//global-keymap ()
   "Configure global keymap to use `bs'."

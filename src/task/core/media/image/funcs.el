@@ -41,13 +41,13 @@
                          ;; Quit from image viewing
                          (define-key map (kbd "q")     #'serika-f/buffer/kill-current)
 
-                         (define-key map (kbd "h")     #'serika-f/image/scroll-left)
-                         (define-key map (kbd "j")     #'serika-f/image/scroll-down)
-                         (define-key map (kbd "k")     #'serika-f/image/scroll-up)
-                         (define-key map (kbd "l")     #'serika-f/image/scroll-right)
+                         (define-key map (kbd "n")     #'serika-f/image/scroll-left)
+                         (define-key map (kbd "e")     #'serika-f/image/scroll-down)
+                         (define-key map (kbd "i")     #'serika-f/image/scroll-up)
+                         (define-key map (kbd "o")     #'serika-f/image/scroll-right)
 
-                         (define-key map (kbd "A-J")   #'image-next-file)
-                         (define-key map (kbd "A-K")   #'image-previous-file)
+                         (define-key map (kbd "A-E")   #'image-next-file)
+                         (define-key map (kbd "A-I")   #'image-previous-file)
 
                          (define-key map (kbd "C-c p") (lambda ()
                                                          (interactive)

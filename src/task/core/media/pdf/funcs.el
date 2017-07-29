@@ -29,14 +29,15 @@
                             (define-key map (kbd "q")     #'serika-f/buffer/kill-current)
 
                             ;; Move
-                            (define-key map (kbd "A-j")   #'pdf-view-next-line-or-next-page)
-                            (define-key map (kbd "A-k")   #'pdf-view-previous-line-or-previous-page)
-                            (define-key map (kbd "A-J")   #'pdf-view-scroll-up-or-next-page)
-                            (define-key map (kbd "A-K")   #'pdf-view-scroll-down-or-previous-page)
-                            (define-key map (kbd "A-H-j") #'pdf-view-next-page)
-                            (define-key map (kbd "A-H-k") #'pdf-view-previous-page)
-                            (define-key map (kbd "A-g")   #'pdf-view-first-page)
-                            (define-key map (kbd "A-G")   #'pdf-view-last-page)
+                            (define-key map (kbd "A-e")   #'pdf-view-next-line-or-next-page)
+                            (define-key map (kbd "A-i")   #'pdf-view-previous-line-or-previous-page)
+                            (define-key map (kbd "A-E")   #'pdf-view-scroll-up-or-next-page)
+                            (define-key map (kbd "A-I")   #'pdf-view-scroll-down-or-previous-page)
+                            (define-key map (kbd "A-p")   #'pdf-view-next-page)
+                            (define-key map (kbd "A-P")   #'pdf-view-previous-page)
+                            (define-key map (kbd "A-t")   #'pdf-view-first-page)
+                            (define-key map (kbd "A-T")   #'pdf-view-last-page)
+
                             (define-key map (kbd "C-c p") #'pdf-view-goto-page)
                             (define-key map (kbd "C-c l") #'pdf-view-goto-label)
 

@@ -22,18 +22,16 @@
   (setq --serika-ereader-mode-map ereader-mode-map)
   (setq ereader-mode-map (let ((map (make-sparse-keymap)))
                            ;; Searching
-                           (define-key map (kbd "A-/")   #'evil-search-forward)
-                           (define-key map (kbd "A-?")   #'evil-search-backward)
-                           (define-key map (kbd "A-n")   #'evil-search-next)
-                           (define-key map (kbd "A-N")   #'evil-search-previous)
+                           (define-key map (kbd "A-!")   #'evil-search-forward)
+                           (define-key map (kbd "A-@")   #'evil-search-backward)
+                           (define-key map (kbd "A-z")   #'evil-search-next)
+                           (define-key map (kbd "A-Z")   #'evil-search-previous)
 
                            ;; Scrolling
-                           (define-key map (kbd "A-j")   #'evil-scroll-down)
-                           (define-key map (kbd "A-k")   #'evil-scroll-up)
-                           (define-key map (kbd "A-d")   #'evil-scroll-down)
-                           (define-key map (kbd "A-u")   #'evil-scroll-up)
-                           (define-key map (kbd "A-H-f") #'evil-scroll-page-down)
-                           (define-key map (kbd "A-H-b") #'evil-scroll-page-up)
+                           (define-key map (kbd "A-e")   #'evil-scroll-down)
+                           (define-key map (kbd "A-i")   #'evil-scroll-up)
+                           (define-key map (kbd "A-p")   #'evil-scroll-page-down)
+                           (define-key map (kbd "A-P")   #'evil-scroll-page-up)
 
                            ;; Defaults
                            (define-key map (kbd "C-c A") #'ereader-hide-annotation)

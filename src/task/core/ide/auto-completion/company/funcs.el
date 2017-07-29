@@ -18,10 +18,10 @@
   (setq company-active-map (make-sparse-keymap))
 
   (let ((map company-active-map))
-    (define-key company-active-map (kbd "A-l") 'company-complete-selection)
-    (define-key company-active-map (kbd "A-k") 'company-select-previous)
-    (define-key company-active-map (kbd "A-j") 'company-select-next)
-    (define-key company-active-map (kbd "A-h") 'company-abort)))
+    (define-key company-active-map (kbd "A-n") 'company-abort)
+    (define-key company-active-map (kbd "A-e") 'company-select-next)
+    (define-key company-active-map (kbd "A-o") 'company-complete-selection)
+    (define-key company-active-map (kbd "A-i") 'company-select-previous)))
 
 (defun init ()
   "Configure `company'."

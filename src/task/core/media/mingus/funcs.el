@@ -46,18 +46,18 @@
                 (define-key map (kbd ",") 'serika-f/mingus/seek-backward)
                 (define-key map (kbd ".") 'serika-f/mingus/seek-forward)
 
-                (define-key map (kbd "j") 'evil-next-visual-line)
-                (define-key map (kbd "k") 'evil-previous-visual-line)
+                (define-key map (kbd "e") 'evil-next-visual-line)
+                (define-key map (kbd "i") 'evil-previous-visual-line)
 
                 (define-key map (kbd "c") 'serika-f/mingus/clear)
                 (define-key map (kbd "q") 'mingus-git-out)
 
                 (define-key map (kbd "u") 'mingus-update)
 
-                (define-key map (kbd "/") 'evil-search-forward)
-                (define-key map (kbd "?") 'evil-search-backward)
-                (define-key map (kbd "n") 'evil-search-next)
-                (define-key map (kbd "N") 'evil-search-previous)
+                (define-key map (kbd "A-!") 'evil-search-forward)
+                (define-key map (kbd "A-@") 'evil-search-backward)
+                (define-key map (kbd "A-z") 'evil-search-next)
+                (define-key map (kbd "A-Z") 'evil-search-previous)
                 ()))
     ;; `mingus-help-map'
     (setq mingus-help-map (make-sparse-keymap))

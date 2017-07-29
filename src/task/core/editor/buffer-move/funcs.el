@@ -16,9 +16,9 @@
 
 (defun serika-g/buffer-move/global-keymap ()
   "Configure `buffer-move' settings."
-  (global-set-key (kbd "C-, w K") 'buf-move-up)
-  (global-set-key (kbd "C-, w L") 'buf-move-right)
-  (global-set-key (kbd "C-, w J") 'buf-move-down)
+  (global-set-key (kbd "C-, w I") 'buf-move-up)
+  (global-set-key (kbd "C-, w O") 'buf-move-right)
+  (global-set-key (kbd "C-, w N") 'buf-move-down)
   (global-set-key (kbd "C-, w H") 'buf-move-left))
 
 ;; Init
