@@ -54,8 +54,8 @@
 
                 (define-key map (kbd "u") 'mingus-update)
 
-                (define-key map (kbd "A-!") 'evil-search-forward)
-                (define-key map (kbd "A-@") 'evil-search-backward)
+                (define-key map (kbd "A-1") 'evil-search-forward)
+                (define-key map (kbd "A-2") 'evil-search-backward)
                 (define-key map (kbd "A-z") 'evil-search-next)
                 (define-key map (kbd "A-Z") 'evil-search-previous)
                 ()))

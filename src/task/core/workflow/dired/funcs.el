@@ -131,7 +131,8 @@
   "Require modules for `dired'."
   (require 'dired)
   (require 'dired-x)
-  (require 'evil))
+  (require 'evil)
+  (require 'func-func))
 
 (defun serika-gc/dired//settings ()
   "Configure `dired-mode' settings."
@@ -145,7 +146,8 @@
                            "^\\.$"
                            "^\\.\\.$"
                            "^flycheck_\.+\\.el$")
-                     "\\|")))
+                     "\\|"))
+  (setq dired-omit-verbose nil))
 
 (defun serika-gc/dired//keymap ()
   "Configure `dired-mode' keymap."
@@ -170,6 +172,8 @@
   (define-key dired-mode-map (kbd "c o")   #'dired-do-chown)
   (define-key dired-mode-map (kbd "c g")   #'dired-do-chgrp)
 
+  (define-key dired-mode-map (kbd "t o")   (serika-m/func/create-minor-mode-toggler dired-omit-mode))
+
   ;; Kill all dired buffers mapping
   (define-key dired-mode-map (kbd "q")     (lambda ()
                                              (interactive)
@@ -182,15 +186,15 @@
   (define-key dired-mode-map (kbd "A-i")   #'serika-f/dired/previous-visual-line)
 
   ;; Add search functions
-  (define-key dired-mode-map (kbd "A-!")   #'evil-search-forward)
-  (define-key dired-mode-map (kbd "A-@")   #'evil-search-backward)
+  (define-key dired-mode-map (kbd "A-1")   #'evil-search-forward)
+  (define-key dired-mode-map (kbd "A-2")   #'evil-search-backward)
   (define-key dired-mode-map (kbd "A-z")   #'evil-search-next)
   (define-key dired-mode-map (kbd "A-Z")   #'evil-search-previous)
 
   (define-key dired-mode-map (kbd "A-t")   #'serika-f/dired/move-to-beginning)
   (define-key dired-mode-map (kbd "A-T")   #'serika-f/dired/move-to-end)
 
-  (define-key dired-mode-map (kbd "A-K")   #'serika-f/dired/move-to-window-top)
+  (define-key dired-mode-map (kbd "A-I")   #'serika-f/dired/move-to-window-top)
   (define-key dired-mode-map (kbd "A-E")   #'serika-f/dired/move-to-window-bottom)
   (define-key dired-mode-map (kbd "A-\"")  #'serika-f/dired/move-to-window-middle)
 

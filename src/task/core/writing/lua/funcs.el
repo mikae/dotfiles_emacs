@@ -99,10 +99,8 @@
                               (add-hook 'lua-mode-hook 'serika-l/lua//prettify-symbols)
                               (add-hook 'lua-mode-hook (serika-f/purpose/use-layout "lua.purpose-layout"))
 
+                              (add-hook 'lua-mode-hook #'serika-f/flycheck/create)
 
-                              (serika-f/add-hook-predicated 'lua-mode-hook
-                                                            #'serika-f/flycheck/create
-                                                            #'serika-f/flycheck/not-exists-p)
                               (serika-f/add-hook-predicated 'lua-mode-hook
                                                             #'serika-f/neotree/create
                                                             #'serika-f/neotree/not-exists-p))))

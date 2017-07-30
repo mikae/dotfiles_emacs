@@ -2,16 +2,20 @@
 ;;; Commentary:
 ;;; Code:
 
-(defmacro combine-and (&rest funcs)
+(defmacro serika-m/func/create-variable-toggler (var)
+  "Toggle VAR."
   `(lambda ()
-     (let ((--result t)
-           (--index  0)
-           (--length (length funcs)))
-       (while (and --result
-                   (< --index --length))
-         (setq --result (and --result
-                             (funcall (nth --index funcs))))
-         (setq --index (1+ --index))))))
+     (interactive)
+     (setq ,var (not ,var))))
+
+
+(defmacro serika-m/func/create-minor-mode-toggler (mmode)
+  "Toggle VAR."
+  `(lambda ()
+     (interactive)
+     (,mmode (if ,mmode
+                 -1
+               +1))))
 
 (provide 'func-func)
 ;;; func-func.el ends here

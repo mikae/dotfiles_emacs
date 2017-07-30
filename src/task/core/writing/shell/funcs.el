@@ -79,9 +79,7 @@
 
                                 (serika-f/add-hook hook (serika-f/purpose/use-layout "sh.purpose-layout"))
 
-                                (serika-f/add-hook-predicated hook
-                                                              #'serika-f/flycheck/create
-                                                              #'serika-f/flycheck/not-exists-p)
+                                (add-hook hook #'serika-f/flycheck/create)
                                 (serika-f/add-hook-predicated hook
                                                               #'serika-f/neotree/create
                                                               #'serika-f/neotree/not-exists-p)))))

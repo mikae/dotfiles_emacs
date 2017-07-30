@@ -125,9 +125,7 @@
                               (add-hook 'js2-mode-hook #'serika-l/js2//prettify-symbols)
                               (add-hook 'js2-mode-hook (serika-f/purpose/use-layout "js.purpose-layout"))
 
-                              (serika-f/add-hook-predicated 'js2-mode-hook
-                                                            #'serika-f/flycheck/create
-                                                            #'serika-f/flycheck/not-exists-p)
+                              (add-hook 'js2-mode-hook #'serika-f/flycheck/create)
                               (serika-f/add-hook-predicated 'js2-mode-hook
                                                             #'serika-f/neotree/create
                                                             #'serika-f/neotree/not-exists-p))))

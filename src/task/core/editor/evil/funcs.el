@@ -91,12 +91,17 @@
 
 (defun serika-g/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
-  )
+  (define-key evil-motion-state-map (kbd "deletechar") 'ignore)
+  (define-key evil-motion-state-map (kbd "DEL")        'ignore))
 
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
   (define-key evil-insert-state-map (kbd "A-n") 'backward-char)
   (define-key evil-insert-state-map (kbd "A-o") 'forward-char)
+
+  ;; hungry deletion
+  (define-key evil-insert-state-map (kbd "DEL") 'c-hungry-delete-backwards)
+  (define-key evil-insert-state-map (kbd "<deletechar>") 'c-hungry-delete-forward)
 
   ;; Ret with proper indentation
   (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
@@ -124,7 +129,7 @@
 
 (defun serika-g/evil//operator-state-keymap ()
   "Configure `evil-operator-state-map'."
-  (define-key evil-emacs-state-map    (kbd "C-, C-n") 'evil-normal-state)
+  (define-key evil-operator-state-map (kbd "C-, C-n") 'evil-normal-state)
 
   (define-key evil-operator-state-map (kbd "a")        evil-outer-text-objects-map)
   (define-key evil-operator-state-map (kbd "r")        evil-inner-text-objects-map))
@@ -206,8 +211,8 @@
 
   ;; <Tab>!@
   (global-set-key (kbd "<A-tab>") 'evil-jump-item)
-  (global-set-key (kbd "A-!")     'evil-search-forward)
-  (global-set-key (kbd "A-@")     'evil-search-backward)
+  (global-set-key (kbd "A-1")     'evil-search-forward)
+  (global-set-key (kbd "A-2")     'evil-search-backward)
 
   ;; neio'
   (global-set-key (kbd "A-n")     'evil-backward-char)
