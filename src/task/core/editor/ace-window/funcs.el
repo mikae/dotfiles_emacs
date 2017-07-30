@@ -9,7 +9,7 @@
 
 (defun serika-g/ace-window//settings ()
   "Configure `ace-window' settings."
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (setq aw-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o))
   (setq aw-dispatch-always t))
 
 (defun serika-g/ace-window//global-keymap ()

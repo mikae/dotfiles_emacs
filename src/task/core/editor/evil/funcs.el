@@ -26,7 +26,9 @@
   (require 'func-package)
   (require 'func-keymap)
 
-  (require 'evil))
+  (require 'evil)
+  (require 'evil-nerd-commenter)
+  (require 'ace-jump-mode))
 
 (defun serika-g/evil//settings ()
   "Configure `evil' variables."
@@ -208,6 +210,9 @@
   (global-set-key (kbd "A-Z")     'evil-search-previous)
   (global-set-key (kbd "A-x")     'evil-jump-forward)
   (global-set-key (kbd "A-X")     'evil-jump-backward)
+  (global-set-key (kbd "A-c")     'ace-jump-word-mode)
+  (global-set-key (kbd "A-C")     'ace-jump-char-mode)
+  (global-set-key (kbd "A-v")     'ace-jump-line-mode)
 
   ;; <Tab>!@
   (global-set-key (kbd "<A-tab>") 'evil-jump-item)
@@ -229,6 +234,10 @@
 (defun init ()
   "Configure `evil'."
   ;; Configuration
+  (serika-c/eg/add-install :package-list '(evil-nerd-commenter
+                                           ace-jump-mode)
+                           :name 'evil)
+
   (serika-c/eg/add :parents '("require")
                    :name    'evil
                    :func    #'serika-g/evil//require)
