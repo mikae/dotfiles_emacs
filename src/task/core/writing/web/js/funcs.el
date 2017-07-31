@@ -109,23 +109,28 @@
   (serika-c/eg/add :parents '("hook")
                    :name    'js2
                    :func    (lambda ()
-                              (add-hook 'js2-mode-hook #'serika-l/js2//evil)
-                              (add-hook 'js2-mode-hook #'serika-l/js2//buffer-local-variables)
+                              (dolist (callback (list
+                                                 #'serika-l/js2//evil
+                                                 #'serika-l/js2//buffer-local-variables
 
-                              (add-hook 'js2-mode-hook #'serika-l/js2//syntax-checking)
-                              (add-hook 'js2-mode-hook #'serika-l/js2//snippet-engine)
-                              (add-hook 'js2-mode-hook #'serika-f/skewer/activate)
-                              (add-hook 'js2-mode-hook #'serika-f/eldoc/activate)
-                              ;; bug:
-                              ;; `https://github.com/ScottyB/ac-js2/issues/18'
-                              ;; (add-hook 'js2-mode-hook #'serika-l/js2//auto-completion)
-                              (add-hook 'js2-mode-hook #'serika-l/js2//auto-pairing)
+                                                 #'serika-l/js2//syntax-checking
+                                                 #'serika-l/js2//snippet-engine
+                                                 #'serika-f/skewer/activate
+                                                 #'serika-f/eldoc/activate
+                                                 #'serika-f/flycheck/create
 
-                              (add-hook 'js2-mode-hook #'serika-l/js2//interface)
-                              (add-hook 'js2-mode-hook #'serika-l/js2//prettify-symbols)
-                              (add-hook 'js2-mode-hook (serika-f/purpose/use-layout "js.purpose-layout"))
+                                                 ;; bug:
+                                                 ;; `https://github.com/ScottyB/ac-js2/issues/18'
+                                                 ;; (add-hook 'js2-mode-hook #'serika-l/js2//auto-completion)
+                                                 #'serika-l/js2//auto-pairing
 
-                              (add-hook 'js2-mode-hook #'serika-f/flycheck/create)
-                              (serika-f/add-hook-predicated 'js2-mode-hook
+                                                 #'serika-l/js2//interface
+                                                 #'serika-l/js2//prettify-symbols
+                                                 (serika-f/purpose/use-layout "js.purpose-layout")
+
+                                                 #'serika-f/flycheck/create))
+                                (serika-f/hook/add 'js2-mode-hook callback))
+
+                              (serika-f/hook/add-predicated 'js2-mode-hook
                                                             #'serika-f/neotree/create
                                                             #'serika-f/neotree/not-exists-p))))

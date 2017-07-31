@@ -63,8 +63,8 @@
     (setq mingus-help-map (make-sparse-keymap))
     (configure-keymap mingus-help-map)
 
-    (define-key mingus-help-map (kbd "h") 'evil-backward-char)
-    (define-key mingus-help-map (kbd "l") 'evil-forward-char)
+    (define-key mingus-help-map (kbd "n") 'evil-backward-char)
+    (define-key mingus-help-map (kbd "o") 'evil-forward-char)
 
     ;; `mingus-playlist-map'
     (setq mingus-playlist-map (make-sparse-keymap))
@@ -80,8 +80,8 @@
 
     (define-key mingus-browse-map (kbd "a")   'mingus-insert)
 
-    (define-key mingus-browse-map (kbd "h")   'mingus-open-parent)
-    (define-key mingus-browse-map (kbd "l")   'mingus-down-dir-or-play-song)
+    (define-key mingus-browse-map (kbd "n")   'mingus-open-parent)
+    (define-key mingus-browse-map (kbd "o")   'mingus-down-dir-or-play-song)
     (define-key mingus-browse-map (kbd "RET") 'mingus-insert-and-play)
 
     (setq mingus-global-map (make-sparse-keymap))))

@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika-f/add-hook-oncely (hook func &optional to-beginning)
+(defun serika-f/hook/add-oncely (hook func &optional to-beginning)
   (let* ((--hook   hook)
          (--evaluated nil)
          (--func   func)
@@ -16,7 +16,7 @@
     (add-hook --hook --func-1 (and (not to-beginning) t))
     (add-hook --hook --func-2 (and (not to-beginning) t))))
 
-(defun serika-f/add-hook-predicated (hook func predicate &optional to-beginning)
+(defun serika-f/hook/add-predicated (hook func predicate &optional to-beginning)
   (let* ((--hook hook)
          (--fun  func)
          (--pred predicate)
@@ -25,7 +25,7 @@
                      (funcall --fun)))))
     (add-hook --hook --func (and (not to-beginning) t))))
 
-(defun serika-f/add-hook (hook func &optional to-beginning)
+(defun serika-f/hook/add (hook func &optional to-beginning)
   (add-hook hook func (and (not to-beginning) t)))
 
 

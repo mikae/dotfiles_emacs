@@ -3,9 +3,12 @@
 ;;; Code:
 
 ;; Functions
+(defun serika-f/flycheck/activate ()
+  "Enable flycheck in current buffer."
+  (flycheck-mode +1))
+
 (defun serika-f/flycheck/create ()
   "Create `flycheck' buffer."
-  (flycheck-mode +1)
   (flycheck-list-errors))
 
 (defun serika-f/flycheck/remove ()

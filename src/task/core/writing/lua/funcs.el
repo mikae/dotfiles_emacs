@@ -66,7 +66,6 @@
 
 (defun init ()
   "Configure `lua-mode'."
-
   (serika-c/eg/add-install :package-list '(f s)
                            :name         'lua)
 
@@ -87,20 +86,24 @@
   (serika-c/eg/add :parents '("hook")
                    :name    'lua
                    :func    (lambda ()
-                              (add-hook 'lua-mode-hook 'serika-l/lua//evil)
-                              (add-hook 'lua-mode-hook 'serika-l/lua//buffer-local-variables)
+                              (dolist (callback (list
+                                                 #'serika-l/lua//evil
+                                                 #'serika-l/lua//buffer-local-variables
 
-                              (add-hook 'lua-mode-hook 'serika-l/lua//syntax-checking)
-                              (add-hook 'lua-mode-hook 'serika-l/lua//snippet-engine)
-                              (add-hook 'lua-mode-hook 'serika-l/lua//auto-completion)
-                              (add-hook 'lua-mode-hook 'serika-f/eldoc/activate)
+                                                 #'serika-l/lua//syntax-checking
+                                                 #'serika-l/lua//snippet-engine
+                                                 #'serika-l/lua//auto-completion
+                                                 #'serika-f/eldoc/activate
+                                                 #'serika-f/flycheck/activate
 
-                              (add-hook 'lua-mode-hook 'serika-l/lua//interface)
-                              (add-hook 'lua-mode-hook 'serika-l/lua//prettify-symbols)
-                              (add-hook 'lua-mode-hook (serika-f/purpose/use-layout "lua.purpose-layout"))
+                                                 #'serika-l/lua//interface
+                                                 #'serika-l/lua//prettify-symbols
 
-                              (add-hook 'lua-mode-hook #'serika-f/flycheck/create)
+                                                 (serika-f/purpose/use-layout "lua.purpose-layout")
 
-                              (serika-f/add-hook-predicated 'lua-mode-hook
+                                                 #'serika-f/flycheck/create))
+                                (serika-f/hook/add 'lua-mode-hook callback))
+
+                              (serika-f/hook/add-predicated 'lua-mode-hook
                                                             #'serika-f/neotree/create
                                                             #'serika-f/neotree/not-exists-p))))

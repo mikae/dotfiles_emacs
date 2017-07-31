@@ -172,7 +172,7 @@
   (define-key dired-mode-map (kbd "c o")   #'dired-do-chown)
   (define-key dired-mode-map (kbd "c g")   #'dired-do-chgrp)
 
-  (define-key dired-mode-map (kbd "t o")   (serika-m/func/create-minor-mode-toggler dired-omit-mode))
+  (define-key dired-mode-map (kbd "t o")   (serika-f/func/create-minor-mode-toggler dired-omit-mode))
 
   ;; Kill all dired buffers mapping
   (define-key dired-mode-map (kbd "q")     (lambda ()

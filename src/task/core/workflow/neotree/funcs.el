@@ -19,6 +19,17 @@
   "Require modules for `neotree'."
   (serika-f/buffer/not-exists-p 'neotree-mode))
 
+(defun serika-f/neotree/p ()
+  "Return t if current buffer is neotree buffer."
+  (eq major-mode
+      'neotree-mode))
+
+(defun serika-f/neotree/parent-directory ()
+  "Go to parent directory."
+  (when (serika-f/neotree/p)
+    (goto-char (point-min))
+    (neotree-change-root)))
+
 ;; Global
 (defun serika-gc/neotree//require ()
   "Require modules for `neotree'."
@@ -32,6 +43,7 @@
         (let ((map (make-sparse-keymap)))
           (serika-f/keymap/bind-digits map 'digit-argument)
 
+          (define-key map (kbd "A-n") 'serika-f/neotree/parent-directory)
           (define-key map (kbd "A-e") 'neotree-next-line)
           (define-key map (kbd "A-i") 'neotree-previous-line)
           (define-key map (kbd "A-o") 'neotree-change-root)

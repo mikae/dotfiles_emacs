@@ -76,9 +76,9 @@
   (define-key evil-normal-state-map (kbd "C-v") 'evil-visual-block)
 
   ;; luy
-  (define-key evil-normal-state-map (kbd "l")   'erase-buffer)
-  (define-key evil-normal-state-map (kbd "u")   'serika-f/evil/replace-buffer)
-  (define-key evil-normal-state-map (kbd "y")   'serika-f/evil/change-buffer)
+  (define-key evil-normal-state-map (kbd "H-z") 'erase-buffer)
+  (define-key evil-normal-state-map (kbd "H-t") 'serika-f/evil/replace-buffer)
+  (define-key evil-normal-state-map (kbd "H-s") 'serika-f/evil/change-buffer)
 
   ;; m,./
   (define-key evil-normal-state-map (kbd "m")   'kmacro-start-macro-or-insert-counter)
@@ -93,8 +93,8 @@
 
 (defun serika-g/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
-  (define-key evil-motion-state-map (kbd "deletechar") 'ignore)
-  (define-key evil-motion-state-map (kbd "DEL")        'ignore))
+  (define-key evil-motion-state-map (kbd "<deletechar>") 'ignore)
+  (define-key evil-motion-state-map (kbd "DEL")          'ignore))
 
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
@@ -102,8 +102,8 @@
   (define-key evil-insert-state-map (kbd "A-o") 'forward-char)
 
   ;; hungry deletion
-  (define-key evil-insert-state-map (kbd "DEL") 'c-hungry-delete-backwards)
-  (define-key evil-insert-state-map (kbd "<deletechar>") 'c-hungry-delete-forward)
+  (define-key evil-insert-state-map (kbd "<S-backspace>") 'c-hungry-delete-backwards)
+  (define-key evil-insert-state-map (kbd "<S-delete>")    'c-hungry-delete-forward)
 
   ;; Ret with proper indentation
   (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)

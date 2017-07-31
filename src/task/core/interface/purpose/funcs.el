@@ -35,6 +35,7 @@
   (add-to-list 'purpose-user-mode-purposes '(lua-mode . edit))
   (add-to-list 'purpose-user-mode-purposes '(sh-mode  . edit))
   (add-to-list 'purpose-user-mode-purposes '(js2-mode . edit))
+  (add-to-list 'purpose-user-mode-purposes '(emacs-lisp-mode . edit))
 
   ;; `check' purpose
   (add-to-list 'purpose-user-mode-purposes '(flycheck-error-list-mode . check))
@@ -56,7 +57,8 @@
 
 (defun serika-g/purpose//global-keymap ()
   "Require modules for `purpose'."
-  (global-set-key (kbd "C-x p l") #'s/purpose-layout-helm))
+  (global-set-key (kbd "C-x p l") #'s/purpose-layout-helm)
+  (global-set-key (kbd "C-x p k") #'purpose-delete-non-dedicated-windows))
 
 (defun serika-l/purpose//activate ()
   "Require modules for `purpose'."

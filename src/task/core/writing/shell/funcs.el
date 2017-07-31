@@ -68,18 +68,21 @@
   (serika-c/eg/add :parents '("hook")
                    :name    'sh
                    :func    (lambda ()
-                              (let ((hook 'sh-mode-hook))
-                                (serika-f/add-hook hook 'serika-l/sh//evil)
-                                (serika-f/add-hook hook 'serika-l/sh//buffer-local-variables)
+                              (dolist (callback (list
+                                                 #'serika-l/sh//evil
+                                                 #'serika-l/sh//buffer-local-variables
 
-                                (serika-f/add-hook hook 'serika-l/sh//snippet-engine)
-                                (serika-f/add-hook hook 'serika-l/sh//interface)
-                                (serika-f/add-hook hook 'serika-l/sh//prettify-symbols)
-                                (serika-f/add-hook hook 'serika-f/eldoc/activate)
+                                                 #'serika-l/sh//snippet-engine
+                                                 #'serika-l/sh//interface
+                                                 #'serika-l/sh//prettify-symbols
+                                                 #'serika-f/eldoc/activate
+                                                 #'serika-f/flycheck/activate
 
-                                (serika-f/add-hook hook (serika-f/purpose/use-layout "sh.purpose-layout"))
+                                                 (serika-f/purpose/use-layout "sh.purpose-layout")
 
-                                (add-hook hook #'serika-f/flycheck/create)
-                                (serika-f/add-hook-predicated hook
-                                                              #'serika-f/neotree/create
-                                                              #'serika-f/neotree/not-exists-p)))))
+                                                 #'serika-f/flycheck/create))
+                                (serika-f/hook/add 'sh-mode-hook callback))
+
+                              (serika-f/hook/add-predicated 'sh-mode-hook
+                                                            #'serika-f/neotree/create
+                                                            #'serika-f/neotree/not-exists-p))))
