@@ -14,7 +14,7 @@
 
 (defun serika-g/ace-window//global-keymap ()
   "Configure global keymap to use`ace-window'."
-  (global-set-key (kbd "C-, w s") 'ace-window))
+  (global-set-key (kbd "C-w s") 'ace-window))
 
 ;; Init
 (defun init ()

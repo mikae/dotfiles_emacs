@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'func-list)
+
 (defun serika-f/buffer/save-current ()
   "Save current buffer."
   (interactive)
@@ -61,6 +63,17 @@ If nothing is here just hide buffer."
 (defun serika-f/buffer/not-exists-p (mode)
   "Return t if any buffer with MODE exists."
   (not (serika-f/buffer/exists-p mode)))
+
+(defun serika-f/buffer/focus-to (mode)
+  "Focus window with MAJOR-MODE."
+  ;; todo: use good lambda
+  (let ((item (serika-f/list/until-t (window-list)
+                                     (lambda (--window)
+                                       (eq mode
+                                           (buffer-local-value 'major-mode
+                                                               (window-buffer --window)))))))
+    (when item
+      (select-window item))))
 
 (provide 'func-buffer)
 ;;; func-buffer.el ends here

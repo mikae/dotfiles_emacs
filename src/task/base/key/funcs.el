@@ -105,8 +105,8 @@
   (global-set-key (kbd "C-x t r")   #'read-only-mode)
 
   ;; Windows
-  (global-set-key (kbd "C-, w f")   #'delete-other-windows)
-  (global-set-key (kbd "C-, w F")   #'serika-f/window/only-new-window))
+  (global-set-key (kbd "C-w f")   #'delete-other-windows)
+  (global-set-key (kbd "C-w F")   #'serika-f/window/only-new-window))
 
 (defun init ()
   "Configure keys."

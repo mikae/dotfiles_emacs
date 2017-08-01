@@ -25,6 +25,7 @@
   "Require modules for `evil'."
   (require 'func-package)
   (require 'func-keymap)
+  (require 'func-char)
 
   (require 'evil)
   (require 'evil-nerd-commenter)
@@ -45,191 +46,197 @@
 (defun serika-g/evil//normal-keymap ()
   "Configure `evil-normal-state-map'."
   ;; qwfp
-  (define-key evil-normal-state-map (kbd "q")   'evil-open-below)
-  (define-key evil-normal-state-map (kbd "Q")   'evil-open-above)
-  (define-key evil-normal-state-map (kbd "w")   'evil-replace)
-  (define-key evil-normal-state-map (kbd "W")   'evil-replace-state)
-  (define-key evil-normal-state-map (kbd "f")   'evil-delete-char)
-  (define-key evil-normal-state-map (kbd "F")   'evil-invert-char)
-  (define-key evil-normal-state-map (kbd "p")   'evil-shift-left)
-  (define-key evil-normal-state-map (kbd "P")   'evil-shift-right)
+  (serika-f/keymap/define evil-normal-state-map
+                          "q" 'evil-open-below
+                          "Q" 'evil-open-above
+                          "w" 'evil-replace
+                          "W" 'evil-replace-state
+                          "f" 'evil-delete-char
+                          "F" 'evil-invert-char
+                          "p" 'evil-shift-left
+                          "P" 'evil-shift-right
 
-  ;; arst
-  (define-key evil-normal-state-map (kbd "a")   'evil-append)
-  (define-key evil-normal-state-map (kbd "A")   'evil-append-line)
-  (define-key evil-normal-state-map (kbd "r")   'evil-insert)
-  (define-key evil-normal-state-map (kbd "R")   'evil-insert-line)
-  (define-key evil-normal-state-map (kbd "s")   'evil-change)
-  (define-key evil-normal-state-map (kbd "S")   'evil-change-line)
-  (define-key evil-normal-state-map (kbd "t")   'evil-substitute)
-  (define-key evil-normal-state-map (kbd "T")   'evil-change-whole-line)
+                          "a" 'evil-append
+                          "A" 'evil-append-line
+                          "r" 'evil-insert
+                          "R" 'evil-insert-line
+                          "s" 'evil-change
+                          "S" 'evil-change-line
+                          "t" 'evil-substitute
+                          "T" 'evil-change-whole-line
 
-  ;; zxcv
-  (define-key evil-normal-state-map (kbd "z")   'evil-delete)
-  (define-key evil-normal-state-map (kbd "Z")   'evil-delete-line)
-  (define-key evil-normal-state-map (kbd "x")   'evil-yank)
-  (define-key evil-normal-state-map (kbd "X")   'evil-yank-line)
-  (define-key evil-normal-state-map (kbd "c")   'evil-paste-after)
-  (define-key evil-normal-state-map (kbd "C")   'evil-paste-before)
-  (define-key evil-normal-state-map (kbd "v" )  'evil-visual-char)
-  (define-key evil-normal-state-map (kbd "V" )  'evil-visual-line)
-  (define-key evil-normal-state-map (kbd "C-v") 'evil-visual-block)
+                          "z" 'evil-delete
+                          "Z" 'evil-delete-line
+                          "x" 'evil-yank
+                          "X" 'evil-yank-line
+                          "c" 'evil-paste-after
+                          "C" 'evil-paste-before
+                          "v" 'evil-visual-char
+                          "V" 'evil-visual-line
 
-  ;; luy
-  (define-key evil-normal-state-map (kbd "H-z") 'erase-buffer)
-  (define-key evil-normal-state-map (kbd "H-t") 'serika-f/evil/replace-buffer)
-  (define-key evil-normal-state-map (kbd "H-s") 'serika-f/evil/change-buffer)
+                          "m" 'kmacro-start-macro-or-insert-counter
+                          "M" 'kmacro-end-or-call-macro
+                          "," 'evil-repeat
+                          "<" 'evil-use-register
+                          "." 'undo
+                          ">" 'redo
 
-  ;; m,./
-  (define-key evil-normal-state-map (kbd "m")   'kmacro-start-macro-or-insert-counter)
-  (define-key evil-normal-state-map (kbd "M")   'kmacro-end-or-call-macro)
-  (define-key evil-normal-state-map (kbd ",")   'evil-repeat)
-  (define-key evil-normal-state-map (kbd "<")   'evil-use-register)
-  (define-key evil-normal-state-map (kbd ".")   'undo)
-  (define-key evil-normal-state-map (kbd ">")   'redo)
+                          "C-v" 'evil-visual-block
 
-  ;; Go to emacs state
-  (define-key evil-normal-state-map (kbd "C-, C-n") 'evil-emacs-state))
+                          "H-z" 'erase-buffer
+                          "H-t" 'serika-f/evil/replace-buffer
+                          "H-s" 'serika-f/evil/change-buffer
+
+                          "C-, C-n" 'evil-emacs-state))
 
 (defun serika-g/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
-  (define-key evil-motion-state-map (kbd "<deletechar>") 'ignore)
-  (define-key evil-motion-state-map (kbd "DEL")          'ignore))
+  (serika-f/keymap/define evil-motion-state-map
+                          "<deletechar>" 'ignore
+                          "DEL"          'ignore))
 
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
-  (define-key evil-insert-state-map (kbd "A-n") 'backward-char)
-  (define-key evil-insert-state-map (kbd "A-o") 'forward-char)
+  (serika-f/keymap/define evil-insert-state-map
+                          "A-n" 'serika-f/char/backward
+                          "A-o" 'serika-f/char/forward
 
-  ;; hungry deletion
-  (define-key evil-insert-state-map (kbd "<S-backspace>") 'c-hungry-delete-backwards)
-  (define-key evil-insert-state-map (kbd "<S-delete>")    'c-hungry-delete-forward)
+                          ;; hungry deletion
+                          "<S-backspace>" 'c-hungry-delete-backwards
+                          "<S-delete>"    'c-hungry-delete-forward
 
-  ;; Ret with proper indentation
-  (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
+                          ;; Ret with proper indentation
+                          "RET" 'newline-and-indent
 
-  ;; Exit insert state
-  (define-key evil-insert-state-map (kbd "C-, C-n") 'evil-normal-state))
+                          ;; Exit insert state
+                          "C-, C-n" 'evil-normal-state))
 
 (defun serika-g/evil//visual-keymap ()
   "Configure `evil-visual-state-map'."
-  (define-key evil-visual-state-map (kbd "a") evil-outer-text-objects-map)
-  (define-key evil-visual-state-map (kbd "r") evil-inner-text-objects-map)
+  (serika-f/keymap/define evil-visual-state-map
+                          "a" evil-outer-text-objects-map
+                          "r" evil-inner-text-objects-map
 
-  (define-key evil-visual-state-map (kbd "a") 'evil-append)
-  (define-key evil-visual-state-map (kbd "r") 'evil-insert)
+                          "a" 'evil-append
+                          "r" 'evil-insert
 
-  (define-key evil-visual-state-map (kbd "C-, C-n") 'evil-exit-visual-state))
+                          "C-, C-n" 'evil-exit-visual-state))
 
 (defun serika-g/evil//replace-keymap ()
   "Configure `evil-replace-state-map'."
-  (define-key evil-replace-state-map (kbd "C-, C-n") 'evil-normal-state))
+  (serika-f/keymap/define evil-replace-state-map
+                          "C-, C-n" 'evil-normal-state))
 
 (defun serika-g/evil//emacs-keymap ()
   "Configure `evil-emacs-state-map'."
-  (define-key evil-emacs-state-map (kbd "C-, C-n") 'evil-normal-state))
+  (serika-f/keymap/define evil-emacs-state-map
+                          "C-, C-n" 'evil-normal-state))
 
 (defun serika-g/evil//operator-state-keymap ()
   "Configure `evil-operator-state-map'."
-  (define-key evil-operator-state-map (kbd "C-, C-n") 'evil-normal-state)
+  (serika-f/keymap/define evil-operator-state-map
+                          "C-, C-n" 'evil-normal-state
 
-  (define-key evil-operator-state-map (kbd "a")        evil-outer-text-objects-map)
-  (define-key evil-operator-state-map (kbd "r")        evil-inner-text-objects-map))
+                          "a"        evil-outer-text-objects-map
+                          "r"        evil-inner-text-objects-map))
 
 (defun serika-g/evil//text-objects-keymap ()
-  "Configure `evil-operator-state-map'."
-  (define-key evil-outer-text-objects-map "a" 'evil-a-word)
-  (define-key evil-outer-text-objects-map "A" 'evil-a-WORD)
-  (define-key evil-outer-text-objects-map "r" 'evil-a-paren)
-  (define-key evil-outer-text-objects-map "R" 'evil-a-curly)
-  (define-key evil-outer-text-objects-map "s" 'evil-a-bracket)
-  (define-key evil-outer-text-objects-map "S" 'evil-an-angle)
-  (define-key evil-outer-text-objects-map "t" 'evil-a-single-quote)
-  (define-key evil-outer-text-objects-map "T" 'evil-a-double-quote)
+  "Configure text objects map."
+  (serika-f/keymap/define evil-outer-text-objects-map
+                          "a" 'evil-a-word
+                          "A" 'evil-a-WORD
+                          "r" 'evil-a-paren
+                          "R" 'evil-a-curly
+                          "s" 'evil-a-bracket
+                          "S" 'evil-an-angle
+                          "t" 'evil-a-single-quote
+                          "T" 'evil-a-double-quote
 
-  (define-key evil-outer-text-objects-map "z" 'evil-a-back-quote)
-  (define-key evil-outer-text-objects-map "Z" 'evil-a-tag)
-  (define-key evil-outer-text-objects-map "x" 'evil-a-sentence)
-  (define-key evil-outer-text-objects-map "X" 'evil-a-paragraph)
+                          "z" 'evil-a-back-quote
+                          "Z" 'evil-a-tag
+                          "x" 'evil-a-sentence
+                          "X" 'evil-a-paragraph)
 
-  (define-key evil-inner-text-objects-map "a" 'evil-inner-word)
-  (define-key evil-inner-text-objects-map "A" 'evil-inner-WORD)
-  (define-key evil-inner-text-objects-map "r" 'evil-inner-paren)
-  (define-key evil-inner-text-objects-map "R" 'evil-inner-curly)
-  (define-key evil-inner-text-objects-map "s" 'evil-inner-bracket)
-  (define-key evil-inner-text-objects-map "S" 'evil-inner-angle)
-  (define-key evil-inner-text-objects-map "t" 'evil-inner-single-quote)
-  (define-key evil-inner-text-objects-map "T" 'evil-inner-double-quote)
+  (serika-f/keymap/define evil-inner-text-objects-map
+                          "a" 'evil-inner-word
+                          "A" 'evil-inner-WORD
+                          "r" 'evil-inner-paren
+                          "R" 'evil-inner-curly
+                          "s" 'evil-inner-bracket
+                          "S" 'evil-inner-angle
+                          "t" 'evil-inner-single-quote
+                          "T" 'evil-inner-double-quote
 
-  (define-key evil-inner-text-objects-map "z" 'evil-inner-back-quote)
-  (define-key evil-inner-text-objects-map "Z" 'evil-inner-tag)
-  (define-key evil-inner-text-objects-map "x" 'evil-inner-sentence)
-  (define-key evil-inner-text-objects-map "X" 'evil-inner-paragraph))
+                          "z" 'evil-inner-back-quote
+                          "Z" 'evil-inner-tag
+                          "x" 'evil-inner-sentence
+                          "X" 'evil-inner-paragraph))
 
 (defun serika-g/evil//ex-keymap ()
   "Configure evil-ex."
-  (define-key evil-ex-completion-map [return]    'exit-minibuffer)
-  (define-key evil-ex-completion-map (kbd "RET") 'exit-minibuffer))
+  (serika-f/keymap/define evil-ex-completion-map
+                          [return] 'exit-minibuffer
+                          "RET"    'exit-minibuffer))
 
 (defun serika-g/evil//global-keymap ()
   "Add movements into Emacs global keymap."
-  ;; `evil-ex'
-  (global-set-key (kbd "M-s")     'evil-ex)
+  (serika-f/keymap/define-global
+   ;; `evil-ex'
+   "M-s" 'evil-ex
 
-  ;; Window operations
-  (global-set-key (kbd "C-, w n") 'evil-window-left)
-  (global-set-key (kbd "C-, w e") 'evil-window-down)
-  (global-set-key (kbd "C-, w i") 'evil-window-up)
-  (global-set-key (kbd "C-, w o") 'evil-window-right)
-  (global-set-key (kbd "C-, w q") 'evil-window-delete)
-  (global-set-key (kbd "C-, w w") 'evil-window-vsplit)
-  (global-set-key (kbd "C-, w W") 'evil-window-split)
+   ;; Window operations
+   "C-w n" 'evil-window-left
+   "C-w e" 'evil-window-down
+   "C-w i" 'evil-window-up
+   "C-w o" 'evil-window-right
+   "C-w q" 'evil-window-delete
+   "C-w w" 'evil-window-vsplit
+   "C-w W" 'evil-window-split
 
-  ;; arst
-  (global-set-key (kbd "A-a")     'evil-backward-word-begin)
-  (global-set-key (kbd "A-A")     'evil-backward-WORD-begin)
-  (global-set-key (kbd "A-r")     'evil-forward-word-begin)
-  (global-set-key (kbd "A-R")     'evil-forward-WORD-begin)
-  (global-set-key (kbd "A-s")     'evil-forward-word-end)
-  (global-set-key (kbd "A-S")     'evil-forward-WORD-end)
-  (global-set-key (kbd "A-t")     'evil-goto-first-line)
-  (global-set-key (kbd "A-T")     'evil-goto-line)
+   ;; arst
+   "A-a" 'evil-backward-word-begin
+   "A-A" 'evil-backward-WORD-begin
+   "A-r" 'evil-forward-word-begin
+   "A-R" 'evil-forward-WORD-begin
+   "A-s" 'evil-forward-word-end
+   "A-S" 'evil-forward-WORD-end
+   "A-t" 'evil-goto-first-line
+   "A-T" 'evil-goto-line
 
-  ;; qwfp
-  (global-set-key (kbd "A-q")     'evil-find-char)
-  (global-set-key (kbd "A-Q")     'evil-find-char-backward)
-  (global-set-key (kbd "A-w")     'evil-find-char-to)
-  (global-set-key (kbd "A-W")     'evil-find-char-to-backward)
-  (global-set-key (kbd "A-f")     'evil-forward-paragraph)
-  (global-set-key (kbd "A-F")     'evil-backward-paragraph)
-  (global-set-key (kbd "A-p")     'evil-scroll-page-down)
-  (global-set-key (kbd "A-P")     'evil-scroll-page-up)
+   ;; qwfp
+   "A-q" 'evil-find-char
+   "A-Q" 'evil-find-char-backward
+   "A-w" 'evil-find-char-to
+   "A-W" 'evil-find-char-to-backward
+   "A-f" 'evil-forward-paragraph
+   "A-F" 'evil-backward-paragraph
+   "A-p" 'evil-scroll-page-down
+   "A-P" 'evil-scroll-page-up
 
-  ;; zxcv
-  (global-set-key (kbd "A-z")     'evil-search-next)
-  (global-set-key (kbd "A-Z")     'evil-search-previous)
-  (global-set-key (kbd "A-x")     'evil-jump-forward)
-  (global-set-key (kbd "A-X")     'evil-jump-backward)
-  (global-set-key (kbd "A-c")     'ace-jump-word-mode)
-  (global-set-key (kbd "A-C")     'ace-jump-char-mode)
-  (global-set-key (kbd "A-v")     'ace-jump-line-mode)
+   ;; zxcv
+   "A-z"  'evil-search-next
+   "A-Z"  'evil-search-previous
+   "A-x"  'evil-jump-forward
+   "A-X"  'evil-jump-backward
+   "A-c"  'ace-jump-word-mode
+   "A-C"  'ace-jump-char-mode
+   "A-v"  'ace-jump-line-mode
 
-  ;; <Tab>!@
-  (global-set-key (kbd "<A-tab>") 'evil-jump-item)
-  (global-set-key (kbd "A-1")     'evil-search-forward)
-  (global-set-key (kbd "A-2")     'evil-search-backward)
+   ;; <Tab>!@
+   "<A-tab>" 'evil-jump-item
+   "A-1"     'evil-search-forward
+   "A-2"     'evil-search-backward
 
-  ;; neio'
-  (global-set-key (kbd "A-n")     'evil-backward-char)
-  (global-set-key (kbd "A-N")     'evil-beginning-of-visual-line)
-  (global-set-key (kbd "A-e")     'evil-next-visual-line)
-  (global-set-key (kbd "A-E")     'evil-window-bottom)
-  (global-set-key (kbd "A-i")     'evil-previous-visual-line)
-  (global-set-key (kbd "A-I")     'evil-window-top)
-  (global-set-key (kbd "A-o")     'evil-forward-char)
-  (global-set-key (kbd "A-O")     'evil-end-of-visual-line)
-  (global-set-key (kbd "A-\"")    'evil-window-middle)
-  )
+   ;; neio'
+   "A-n"  'evil-backward-char
+   "A-N"  'evil-beginning-of-visual-line
+   "A-e"  'evil-next-visual-line
+   "A-E"  'evil-window-bottom
+   "A-i"  'evil-previous-visual-line
+   "A-I"  'evil-window-top
+   "A-o"  'evil-forward-char
+   "A-O"  'evil-end-of-visual-line
+   "A-\"" 'evil-window-middle))
 
 (defun init ()
   "Configure `evil'."

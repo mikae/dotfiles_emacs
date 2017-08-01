@@ -26,5 +26,10 @@
                funcs
                :initial-value t)))
 
+(defmacro serika-f/func/bind (func &rest body)
+  `(lambda ()
+     (funcall ,func ,@body)
+     ))
+
 (provide 'func-func)
 ;;; func-func.el ends here

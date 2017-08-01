@@ -5,6 +5,7 @@
 (require 'ert)
 (require 'func-func)
 
+;; `create-variable-toggler'
 (ert-deftest create-variable-toggler|simple ()
   (setq test-var nil)
   (let ((fun (serika-f/func/create-variable-toggler test-var)))
@@ -13,10 +14,9 @@
                 t))
     (funcall fun)
     (should (eq test-var
-                nil)))
-  )
+                nil))))
 
-
+;; `create-minor-mode-toggler'
 (ert-deftest create-minor-mode-toggler|simple ()
   (define-minor-mode test-mode "")
   (let ((fun (serika-f/func/create-minor-mode-toggler test-mode)))
@@ -28,6 +28,7 @@
                 nil))
   ))
 
+;; `ander'
 (ert-deftest create-ander|check-function-invocation ()
   (let* ((test-1)
          (test-2)
@@ -60,3 +61,17 @@
                 (funcall --10)))
     (should (eq t
                 (funcall --11)))))
+
+(ert-deftest bind|bind-lambda ()
+  (let* ((fun-1 (lambda (a b)
+                  (+ a b)))
+         (fun-2 (serika-f/func/bind fun-1
+                                    1 2)))
+    (should (eq (funcall fun-2)
+                3))))
+
+(ert-deftest bint|bind-func ()
+  (let ((fun (serika-f/func/bind '+
+                                 1 2 3)))
+    (should (eq (funcall fun)
+            6))))

@@ -11,6 +11,8 @@
 ;; Global
 (defun serika-g/emacs-lisp//require ()
   "Require modules for `emacs-lisp'."
+  (require 'func-keymap)
+  (require 'func-buffer)
   (require 'flycheck-cask))
 
 (defun serika-g/emacs-lisp//settings ()
@@ -20,18 +22,15 @@
 (defun serika-g/emacs-lisp//keymap ()
   "Configure keymap for `emacs-lisp' mode."
   (setq --serika-emacs-lisp-mode-map emacs-lisp-mode-map)
-  (setq emacs-lisp-mode-map (let ((map (make-sparse-keymap)))
-                              (define-key map (kbd "C-t =") #'evil-indent)
-                              (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
-                              (define-key map (kbd "C-t e") #'yas-expand)
-                              map)))
+  (setq emacs-lisp-mode-map (serika-f/keymap/create "C-t =" #'evil-indent
+                                                    "C-t /" #'evilnc-comment-or-uncomment-lines
+                                                    "C-t e" #'yas-expand)))
 
 ;; Local
 (defun serika-l/emacs-lisp//buffer-local-variables ()
   "Configure snippet engine for `emacs-lisp' mode."
   (setq tab-width 2)
   (setq truncate-lines t))
-
 
 (defun serika-l/emacs-lisp//evil ()
   "Configure `evil' for `emacs-lisp-mode'."
@@ -114,12 +113,20 @@
 
                                                  #'serika-f/flycheck/create))
                                 ;; `lisp-interaction-mode' is inherited from `emacs-lisp-mode',
-                                ;; so, presicate was added
+                                ;; so, predicate was added
                                 (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
                                                               callback
                                                               #'serika-f/emacs-lisp/p))
-
                               (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
                                                             #'serika-f/neotree/create
                                                             (serika-f/func/create-ander #'serika-f/neotree/not-exists-p
-                                                                                           #'serika-f/emacs-lisp/p)))))
+                                                                                        #'serika-f/emacs-lisp/p))
+                              (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
+                                                            (serika-f/func/bind 'serika-f/buffer/focus-to
+                                                                                'emacs-lisp-mode)
+                                                            (lambda ()
+                                                              (and (not (eq major-mode
+                                                                            'emacs-lisp-mode))
+                                                                   (not (eq major-mode
+                                                                            'lisp-interaction-mode)))))
+                              )))

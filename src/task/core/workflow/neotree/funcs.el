@@ -26,6 +26,7 @@
 
 (defun serika-f/neotree/parent-directory ()
   "Go to parent directory."
+  (interactive)
   (when (serika-f/neotree/p)
     (goto-char (point-min))
     (neotree-change-root)))
