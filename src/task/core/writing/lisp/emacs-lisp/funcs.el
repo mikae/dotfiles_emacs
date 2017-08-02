@@ -22,9 +22,10 @@
 (defun serika-g/emacs-lisp//keymap ()
   "Configure keymap for `emacs-lisp' mode."
   (setq --serika-emacs-lisp-mode-map emacs-lisp-mode-map)
-  (setq emacs-lisp-mode-map (serika-f/keymap/create "C-t =" #'evil-indent
-                                                    "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                    "C-t e" #'yas-expand)))
+  (serika-f/keymap/create emacs-lisp-mode-map
+                          "C-t =" #'evil-indent
+                          "C-t /" #'evilnc-comment-or-uncomment-lines
+                          "C-t e" #'yas-expand))
 
 ;; Local
 (defun serika-l/emacs-lisp//buffer-local-variables ()

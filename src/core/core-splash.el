@@ -5,6 +5,7 @@
 
 (require 'func-path)
 (require 'func-list)
+(require 'func-keymap)
 
 ;; Declare variables
 (defvar serika-splash-enable t
@@ -76,9 +77,9 @@
 
 (defun serika-c/splash/configure-keymap ()
   "Configure `splash-screen-keymap'."
-  (setq splash-screen-keymap (make-sparse-keymap))
-
-  (define-key splash-screen-keymap (kbd "q") 'exit-splash-screen))
+  (setq --serika-splash-screen-keymap splash-screen-keymap)
+  (serika-f/keymap/create splash-screen-keymap
+                          "q" #'exit-splash-screen))
 
 (defun serika-c/splash/configure ()
   "Configure splash screen."

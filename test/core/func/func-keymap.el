@@ -12,33 +12,40 @@
   (should-not (serika-f/keymap/p (list 1))))
 
 ;; `create'
-(ert-deftest create|throw-if-odd-args-1 ()
-  (should-error (serika-f/keymap/create "C-f")))
+(ert-deftest create|if-odd-args-1 ()
+  (serika-f/keymap/create test-keymap-1
+                          "C-f")
+  (should-not (boundp 'test-keymap-1))
+  )
 
-(ert-deftest create|throw-if-odd-args-2 ()
-  (should-error (serika-f/keymap/create "C-f" 'ignore
-                                        "C-e")))
+(ert-deftest create|if-odd-args-2 ()
+  (serika-f/keymap/create test-keymap-2
+                          "C-f" 'ignore
+                          "C-e")
+  (should-not (boundp 'test-keymap-2)))
 
 (ert-deftest create|keymap-is-created ()
-  (should (serika-f/keymap/p (serika-f/keymap/create))))
+  (serika-f/keymap/create test-keymap-3)
+  (should (serika-f/keymap/p test-keymap-3)))
 
 (ert-deftest create|bindings-are-created ()
-  (let ((map (serika-f/keymap/create "C-f" 'ignore
-                                     "C-n" 'ignore-2)))
-    (should (eq (lookup-key map (kbd "C-f"))
-                'ignore))
-    (should (eq (lookup-key map (kbd "C-n"))
-                'ignore-2))))
+  (serika-f/keymap/create test-keymap-4
+                          "C-f" 'ignore
+                          "C-n" 'ignore-2)
+  (should (eq (lookup-key test-keymap-4 (kbd "C-f"))
+              'ignore))
+  (should (eq (lookup-key test-keymap-4 (kbd "C-n"))
+              'ignore-2)))
 
 ;; `define'
 (ert-deftest define|same-keymap ()
-  (let* ((map   (serika-f/keymap/create))
+  (let* ((map   (make-sparse-keymap))
          (map-2 (serika-f/keymap/define map)))
     (should (eq map
                 map-2))))
 
 (ert-deftest define|add-bindings ()
-  (let ((map   (serika-f/keymap/create)))
+  (let ((map   (make-sparse-keymap)))
     (serika-f/keymap/define map
                             "C-f" 'ignore
                             "C-t" 'ignore-2)

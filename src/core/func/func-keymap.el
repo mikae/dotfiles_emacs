@@ -27,24 +27,21 @@ Otherwise, throw an error."
   "Bind FUNC to digits in MAP."
   (serika-f/keymap/bind map '("1" "2" "3" "4" "5" "6" "7" "8" "9" "0") func))
 
-(defun serika-f/keymap/create (&rest args)
-  "Create new keymap with bindings. Example:
-(serika-f/keymap/create kbd-1 func-1
-                        kbd-2 func-2)"
-  (when (= (% (length args)
-              2)
-           1)
-    (error "Invalid argument count"))
-  (let ((map     (make-sparse-keymap))
-        (counter 0)
-        (length  (length args)))
-    (while (< counter
-              length)
-      (serika-f/keymap/bind map
-                            (nth counter args)
-                            (nth (1+ counter) args))
-      (setq counter (+ counter 2)))
-      map))
+(defmacro serika-f/keymap/create (keymap-name &rest args)
+  "Create new KEYMAP-NAME."
+  `(when (= (% (length (list ,@args))
+               2)
+            0)
+     (setq ,keymap-name (make-sparse-keymap))
+     (let ((--counter 0)
+           (--length  (length (list ,@args))))
+       (while (< --counter
+                 --length)
+         (serika-f/keymap/bind ,keymap-name
+                               (nth --counter      (list ,@args))
+                               (nth (1+ --counter) (list ,@args)))
+         (setq --counter (+ --counter 2))))
+     ,keymap-name))
 
 (defun serika-f/keymap/define (map &rest args)
   "Add bindings to MAP. Example:
