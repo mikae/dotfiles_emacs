@@ -11,10 +11,12 @@
   "If t then greetings will be shown.")
 
 (defvar serika-splash-greeting-list (list "Hello there!"
-                                                       "Glad to see you here!"
-                                                       "Welcome!"))
+                                          "Glad to see you here!"
+                                          "Welcome!"))
 
-;; Declare functions
+(defvar serika-splash-buffer-name "*Welcome message :3*")
+
+;; Configuration functions
 (defun serika-c/splash/image-file ()
   "Return path to greetings file."
   (when (boundp 'serika-images-directory)
@@ -51,7 +53,7 @@
 
   (setq initial-buffer-choice
         (lambda ()
-          (let ((splash-buffer (get-buffer-create "*Serika's welcome message*")))
+          (let ((splash-buffer (get-buffer-create serika-splash-buffer-name)))
             (with-current-buffer splash-buffer
               (let ((inhibit-read-only t))
                 (erase-buffer)
@@ -84,6 +86,18 @@
     (progn
       (serika-c/splash/configure-splash-screen)
       (serika-c/splash/configure-keymap))))
+
+;; Functions
+(defun serika-f/splash/show ()
+  "Show splash screen."
+  (interactive)
+  (mapc (serika-f/func/lambda 'serika-f/splash/show
+                              (buffer)
+                              (with-current-buffer buffer
+                                (serika-f/buffer/kill)))
+        (buffer-list))
+  (switch-to-buffer (funcall initial-buffer-choice))
+  (delete-other-windows))
 
 (provide 'core-splash)
 ;;; core-splash.el ends here

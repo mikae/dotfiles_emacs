@@ -162,6 +162,7 @@ if $TEST; then
     emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-execution.el -l $CONFIG_DIR/test/core/func/func-execution.el -f ert-run-tests-batch-and-exit
     emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-func.el -l $CONFIG_DIR/test/core/func/func-func.el -f ert-run-tests-batch-and-exit
     emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-keymap.el -l $CONFIG_DIR/test/core/func/func-keymap.el -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-list.el -l $CONFIG_DIR/test/core/func/func-list.el -f ert-run-tests-batch-and-exit
     exit 0
 fi
 

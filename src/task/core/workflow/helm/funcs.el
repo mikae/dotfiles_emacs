@@ -10,7 +10,7 @@
 
 (defun serika-g/helm//global-keymap ()
   "Configure global keymap for using `helm'."
-  (global-set-key (kbd "M-x")   #'helm-M-x)
+  (global-set-key (kbd "M-a")   #'helm-M-x)
 
   (global-set-key (kbd "C-x f") #'helm-find-files)
   (global-set-key (kbd "C-x y") #'helm-show-kill-ring))

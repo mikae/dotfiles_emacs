@@ -91,7 +91,7 @@
 
   (global-set-key (kbd "C-x C-q")   #'save-buffers-kill-terminal)
 
-  (global-set-key (kbd "M-a")       #'eval-expression)
+  (global-set-key (kbd "M-r")       #'eval-expression)
 
   ;; Describe
   (global-set-key (kbd "C-x h v")   #'describe-variable)

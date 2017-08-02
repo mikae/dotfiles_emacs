@@ -28,7 +28,7 @@
                 nil))
   ))
 
-;; `ander'
+;; `create-ander'
 (ert-deftest create-ander|check-function-invocation ()
   (let* ((test-1)
          (test-2)
@@ -62,6 +62,7 @@
     (should (eq t
                 (funcall --11)))))
 
+;; `bind'
 (ert-deftest bind|bind-lambda ()
   (let* ((fun-1 (lambda (a b)
                   (+ a b)))
@@ -70,8 +71,32 @@
     (should (eq (funcall fun-2)
                 3))))
 
-(ert-deftest bint|bind-func ()
+(ert-deftest bind|bind-func ()
   (let ((fun (serika-f/func/bind '+
                                  1 2 3)))
     (should (eq (funcall fun)
             6))))
+
+;; `lambda'
+(ert-deftest lambda|creates-lambda ()
+  (let* ((value)
+         (fun (serika-f/func/lambda nil
+                                    ()
+                                    (setq value t))))
+    (should fun)
+    (funcall fun)
+    (should (eq value
+                t))
+    ))
+
+(ert-deftest lambda|saves-lambda ()
+  (let ((fun-1 (serika-f/func/lambda 'nya
+                                     ()
+                                     ()))
+        (fun-2 (serika-f/func/lambda 'nya
+                                     ()
+                                     ())))
+    (should fun-1)
+    (should fun-2)
+    (should (eq fun-1
+                fun-2))))

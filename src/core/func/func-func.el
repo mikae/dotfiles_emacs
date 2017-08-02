@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Variables
+(defvar --serika-lambda-hashtable (make-hash-table :test 'eq))
+
+;; Functions
 (defmacro serika-f/func/create-variable-toggler (var)
   "Toggle VAR."
   `(lambda ()
@@ -28,8 +32,22 @@
 
 (defmacro serika-f/func/bind (func &rest body)
   `(lambda ()
-     (funcall ,func ,@body)
-     ))
+     (funcall ,func ,@body)))
+
+
+(defmacro serika-f/func/lambda (name args &rest body)
+  "If saved lambda associated with NAME exists, return it.
+Otherwise, create it, associate it with NAME, save it, and return it.
+If name is nil, just create and return new lambda."
+  `(if ,name
+       (let ((--lambda (gethash ,name --serika-lambda-hashtable)))
+         (when (not --lambda)
+           (setq --lambda (lambda ,args
+                            (progn ,@body)))
+           (puthash ,name --lambda --serika-lambda-hashtable))
+         --lambda)
+     (lambda ,args
+       (progn ,@body))))
 
 (provide 'func-func)
 ;;; func-func.el ends here

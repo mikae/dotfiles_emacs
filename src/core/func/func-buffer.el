@@ -3,18 +3,19 @@
 ;;; Code:
 
 (require 'func-list)
+(require 'func-func)
 
-(defun serika-f/buffer/save-current ()
+(defun serika-f/buffer/just-save ()
   "Save current buffer."
   (interactive)
   (save-buffer))
 
-(defun serika-f/buffer/kill-current ()
+(defun serika-f/buffer/just-kill ()
   "Kill current buffer."
   (interactive)
   (kill-buffer (current-buffer)))
 
-(defun serika-f/buffer/hide-current ()
+(defun serika-f/buffer/just-hide ()
   "Hide current buffer."
   (interactive)
   (previous-buffer))
@@ -25,7 +26,7 @@ If nothing is here just save buffer."
   (interactive)
   (if (boundp 'serika-buffer-save-function)
       (funcall serika-buffer-save-function)
-      (serika-f/buffer/save-current)))
+      (serika-f/buffer/just-save)))
 
 (defun serika-f/buffer/kill ()
   "Invoke buffer-kill function for this buffer.
@@ -33,7 +34,7 @@ If nothing is here just kill buffer."
   (interactive)
   (if (boundp 'serika-buffer-kill-function)
       (funcall serika-buffer-kill-function)
-      (serika-f/buffer/kill-current)))
+      (serika-f/buffer/just-kill)))
 
 (defun serika-f/buffer/hide ()
   "Invoke buffer-hide function for this buffer.
@@ -41,7 +42,7 @@ If nothing is here just hide buffer."
   (interactive)
   (if (boundp 'serika-buffer-hide-function)
       (funcall serika-buffer-hide-function)
-      (serika-f/buffer/hide-current)))
+      (serika-f/buffer/just-hide)))
 
 (defun serika-f/buffer/kill-by-major-mode (mode)
   "Kill all buffer by major mode MODE."
@@ -66,12 +67,12 @@ If nothing is here just hide buffer."
 
 (defun serika-f/buffer/focus-to (mode)
   "Focus window with MAJOR-MODE."
-  ;; todo: use good lambda
   (let ((item (serika-f/list/until-t (window-list)
-                                     (lambda (--window)
-                                       (eq mode
-                                           (buffer-local-value 'major-mode
-                                                               (window-buffer --window)))))))
+                                     (serika-f/func/lambda 'serika-f/buffer/focus-to
+                                                           (--window)
+                                                           (eq mode
+                                                               (buffer-local-value 'major-mode
+                                                                                   (window-buffer --window)))))))
     (when item
       (select-window item))))
 

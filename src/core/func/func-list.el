@@ -14,7 +14,7 @@ Returns element where FUNC returned t, or nil if nobody was found."
         (--flag   t)
         (--result nil))
     (while (and --flag
-                (cdr --list))
+                (car --list))
       (when (funcall func (car --list))
         (setq --result (car --list)
               --flag   nil))
