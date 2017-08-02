@@ -56,6 +56,26 @@
                        (mapcar #'serika-f/package/make-sure-installed
                                package-list)))))
 
+(defmacro serika-c/eg/add-many (name &rest args)
+  "Add many execution nodes at once.
+Example: ."
+  `(let ((--length (length ',args))
+         (--args   ',args)
+         (--name   ,name))
+     (when (cl-evenp --length)
+       (while --args
+         (eg/add --serika-execution-graph
+                 :name    --name
+                 :parents (car --args)
+                 :func    (let* ((--elem (car (cdr --args)))
+                                 (--car  (car --elem)))
+                            (if (eq --car
+                                    'function)
+                                (car (cdr --elem))
+                              --elem)))
+         (setq --args
+               (nthcdr 2 --args))))))
+
 (defun serika-c/eg/execute ()
   "Execute execution graph."
   (eg/execute --serika-execution-graph))

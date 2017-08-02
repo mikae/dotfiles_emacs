@@ -56,10 +56,6 @@
 
   (company-mode +1))
 
-(defun serika-l/emacs-lisp//auto-pairing ()
-  "Configure auto completion for `emacs-lisp' mode."
-  (electric-pair-mode +1))
-
 (defun serika-l/emacs-lisp//interface ()
   "Configure interface for `emacs-lisp' mode."
   (setq show-trailing-whitespace +1)
@@ -82,52 +78,41 @@
   (serika-c/eg/add-install :package-list '(flycheck-cask)
                            :name         'emacs-lisp)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'emacs-lisp
-                   :func    #'serika-g/emacs-lisp//require)
+  (serika-c/eg/add-many 'emacs-lisp
+   ("require")  #'serika-g/emacs-lisp//require
+   ("settings") #'serika-g/emacs-lisp//settings
+   ("keymap")   #'serika-g/emacs-lisp//keymap
+   ("hook")
+   (lambda ()
+     (dolist (callback (list
+                        #'serika-l/emacs-lisp//evil
+                        #'serika-l/emacs-lisp//buffer-local-variables
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'emacs-lisp
-                   :func    #'serika-g/emacs-lisp//settings)
+                        #'serika-l/emacs-lisp//snippet-engine
+                        #'serika-l/emacs-lisp//syntax-checking
+                        #'serika-l/emacs-lisp//auto-completion
+                        #'serika-f/eldoc/activate
+                        #'serika-f/flycheck/activate
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'emacs-lisp
-                   :func    #'serika-g/emacs-lisp//keymap)
+                        #'serika-l/emacs-lisp//interface
+                        #'serika-l/emacs-lisp//prettify-symbols
+                        (serika-f/purpose/use-layout "emacs-lisp.purpose-layout")
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'emacs-lisp
-                   :func    (lambda ()
-                              (dolist (callback (list
-                                                 #'serika-l/emacs-lisp//evil
-                                                 #'serika-l/emacs-lisp//buffer-local-variables
-
-                                                 #'serika-l/emacs-lisp//snippet-engine
-                                                 #'serika-l/emacs-lisp//syntax-checking
-                                                 #'serika-l/emacs-lisp//auto-completion
-                                                 #'serika-l/emacs-lisp//auto-pairing
-                                                 #'serika-f/eldoc/activate
-                                                 #'serika-f/flycheck/activate
-
-                                                 #'serika-l/emacs-lisp//interface
-                                                 #'serika-l/emacs-lisp//prettify-symbols
-                                                 (serika-f/purpose/use-layout "emacs-lisp.purpose-layout")
-
-                                                 #'serika-f/flycheck/create))
-                                ;; `lisp-interaction-mode' is inherited from `emacs-lisp-mode',
-                                ;; so, predicate was added
-                                (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
-                                                              callback
-                                                              #'serika-f/emacs-lisp/p))
-                              (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
-                                                            #'serika-f/neotree/create
-                                                            (serika-f/func/create-ander #'serika-f/neotree/not-exists-p
-                                                                                        #'serika-f/emacs-lisp/p))
-                              (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
-                                                            (serika-f/func/bind 'serika-f/buffer/focus-to
-                                                                                'emacs-lisp-mode)
-                                                            (lambda ()
-                                                              (and (not (eq major-mode
-                                                                            'emacs-lisp-mode))
-                                                                   (not (eq major-mode
-                                                                            'lisp-interaction-mode)))))
-                              )))
+                        #'serika-f/flycheck/create))
+       ;; `lisp-interaction-mode' is inherited from `emacs-lisp-mode',
+       ;; so, predicate was added
+       (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
+                                     callback
+                                     #'serika-f/emacs-lisp/p))
+     (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
+                                   #'serika-f/neotree/create
+                                   (serika-f/func/create-ander #'serika-f/neotree/not-exists-p
+                                                               #'serika-f/emacs-lisp/p))
+     (serika-f/hook/add-predicated 'emacs-lisp-mode-hook
+                                   (serika-f/func/bind 'serika-f/buffer/focus-to
+                                                       'emacs-lisp-mode)
+                                   (lambda ()
+                                     (and (not (eq major-mode
+                                                   'emacs-lisp-mode))
+                                          (not (eq major-mode
+                                                   'lisp-interaction-mode))))))))

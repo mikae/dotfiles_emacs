@@ -101,10 +101,6 @@
                           "A-n" 'serika-f/char/backward
                           "A-o" 'serika-f/char/forward
 
-                          ;; hungry deletion
-                          "<S-backspace>" 'c-hungry-delete-backwards
-                          "<S-delete>"    'c-hungry-delete-forward
-
                           ;; Ret with proper indentation
                           "RET" 'newline-and-indent
 

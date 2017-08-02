@@ -15,8 +15,7 @@
 (defun init ()
   "Configure `undo-tree'."
   (serika-c/eg/add-install :package-list '(undo-tree)
-                           :name 'undo-tree
-                           :parents '("install"))
+                           :name 'undo-tree)
 
   (serika-c/eg/add :parents '("require")
                    :name    'undo-tree

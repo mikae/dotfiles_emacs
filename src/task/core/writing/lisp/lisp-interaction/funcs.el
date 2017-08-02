@@ -29,10 +29,6 @@
   (evil-local-mode +1)
   (evil-normal-state))
 
-(defun serika-l/lisp-interaction//auto-pairing ()
-  "Configure auto completion for `lisp-interaction' mode."
-  (electric-pair-mode +1))
-
 (defun serika-l/lisp-interaction//interface ()
   "Configure interface for `lisp-interaction' mode."
   (setq show-trailing-whitespace +1)
@@ -52,20 +48,16 @@
 
 (defun init ()
   "Configure `lisp-interaction-mode'."
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'lisp-interaction
-                   :func    #'serika-g/lisp-interaction//keymap)
+  (serika-c/eg/add-many 'lisp-interaction
+                        ("keymap") #'serika-g/lisp-interaction//keymap
+                        ("hook")   (lambda ()
+                                     (dolist (callback (list
+                                                        'serika-l/lisp-interaction//evil
+                                                        'serika-l/lisp-interaction//buffer-local-variables
+                                                        'serika-l/lisp-interaction//save-function
 
+                                                        'serika-f/eldoc/activate
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'lisp-interaction
-                   :func    (lambda ()
-                              (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//evil)
-                              (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//buffer-local-variables)
-                              (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//save-function)
-
-                              (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//auto-pairing)
-                              (add-hook 'lisp-interaction-mode-hook 'serika-f/eldoc/activate)
-
-                              (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//interface)
-                              (add-hook 'lisp-interaction-mode-hook 'serika-l/lisp-interaction//prettify-symbols))))
+                                                        'serika-l/lisp-interaction//interface
+                                                        'serika-l/lisp-interaction//prettify-symbols))
+                                       (serika-f/hook/add 'lisp-interaction-mode-hook callback)))))

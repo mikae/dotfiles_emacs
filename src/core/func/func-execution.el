@@ -213,6 +213,7 @@ PARENTS is list of paths to parent nodes."
   (mapcar #'en/execute (reverse (eg/roots graph))))
 
 (defun eg/log (graph)
+  "Log."
   (mapcar #'en/log (reverse (eg/roots graph)))
   (switch-to-buffer "*Messages*"))
 

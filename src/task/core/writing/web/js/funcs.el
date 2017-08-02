@@ -68,10 +68,6 @@
                       ac-source-files-in-current-dir))
   (ac-js2-mode))
 
-(defun serika-l/js2//auto-pairing ()
-  "Configure auto completion for `js' mode."
-  (electric-pair-mode +1))
-
 ;; Interface
 (defun serika-l/js2//interface ()
   "Configure interface for `js' mode."
@@ -122,7 +118,6 @@
                                                  ;; bug:
                                                  ;; `https://github.com/ScottyB/ac-js2/issues/18'
                                                  ;; (add-hook 'js2-mode-hook #'serika-l/js2//auto-completion)
-                                                 #'serika-l/js2//auto-pairing
 
                                                  #'serika-l/js2//interface
                                                  #'serika-l/js2//prettify-symbols
