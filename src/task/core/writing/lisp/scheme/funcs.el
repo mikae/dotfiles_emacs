@@ -2,11 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/scheme//settings ()
-  "Configure `scheme'"
-  (add-to-list 'auto-mode-alist '("\\.scm\\'" . scheme-mode)))
-
 ;; Local
 (defun serika-l/scheme//buffer-local-variables ()
   "Configure local variables for `scheme' mode."
@@ -15,23 +10,13 @@
 
 (defun serika-l/scheme//buffer-local-mappings ()
   "Configure local mappings for `scheme' mode."
-  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
-  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
-  (evil-local-set-key 'normal (kbd "C-t e") 'yas-expand))
+  )
 
 (defun serika-l/scheme//evil ()
   "Configure `evil' for `scheme-mode'."
   (setq evil-shift-width 2)
   (evil-local-mode +1)
-  (evil-set-initial-state 'scheme-mode 'normal))
-
-(defun serika-l/scheme//snippet-engine ()
-  "Configure snippet engine for `scheme' mode."
-  (serika-f/yasnippet/activate))
-
-(defun serika-l/scheme//syntax-checking ()
-  "Configure syntax checking for `scheme' mode."
-  (flycheck-mode           +1))
+  (evil-normal-state))
 
 (defun serika-l/scheme//auto-completion ()
   "Configure auto completion for `scheme' mode."
@@ -62,21 +47,33 @@
 ;; Init
 (defun init ()
   "Configure `scheme-mode'."
-  (serika-c/eg/add :parents '("settings")
-                   :name    'scheme
-                   :func    #'serika-g/scheme//settings)
+  (serika-c/eg/add-many 'scheme
+                        ("require")
+                        (lambda ()
+                          (require 'scheme))
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'scheme
-                   :func    (lambda ()
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//evil)
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//buffer-local-variables)
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//buffer-local-mappings)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.scm\\'" . scheme-mode)))
 
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//snippet-engine)
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//syntax-checking)
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//auto-completion)
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//auto-completion)
+                        ("keymap")
+                        (lambda ()
+                          (serika-f/keymap/create scheme-mode-map
+                                                  "C-t =" 'evil-indent
+                                                  "C-t /" 'evilnc-comment-or-uncomment-lines
+                                                  "C-t e" 'yas-expand))
 
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//interface)
-                              (add-hook 'scheme-mode-hook 'serika-l/scheme//prettify-symbols))))
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list
+                                             'serika-l/scheme//evil
+                                             'serika-l/scheme//buffer-local-variables
+                                             'serika-l/scheme//buffer-local-mappings
+
+                                             'serika-f/yasnippet/activate
+                                             'serika-f/flycheck/activate
+                                             'serika-l/scheme//auto-completion
+
+                                             'serika-l/scheme//interface
+                                             'serika-l/scheme//prettify-symbols))
+                            (serika-f/hook/add 'scheme-mode-hook callback)))))

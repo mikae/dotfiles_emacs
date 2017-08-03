@@ -2,24 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/json//require ()
-  "Require modules for `json'."
-  (require 'json-mode)
-  (require 'web-beautify))
-
-(defun serika-g/json//settings ()
-  "Configure `json'."
-  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
-
-(defun serika-g/json//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
-  )
-
-(defun serika-g/json//keymap ()
-  "Configure `json-mode-map'."
-  (setq json-mode-map (make-sparse-keymap)))
-
 ;; Local
 (defun serika-l/json//evil ()
   "Configure `evil' for `json-mode'."
@@ -71,28 +53,30 @@
   (serika-c/eg/add-install :package-list '(json-mode)
 			   :name         'json)
 
-  (serika-c/eg/add :parents '("require")
-		   :name    'json
-		   :func    #'serika-g/json//require)
+  (serika-c/eg/add-many 'json
+                        ("require")
+                        (lambda ()
+                          (require 'json-mode)
+                          (require 'web-beautify))
 
-  (serika-c/eg/add :parents '("settings")
-		   :name    'json
-		   :func    #'serika-g/json//settings)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
 
-  (serika-c/eg/add :parents '("keymap")
-		   :name    'json
-		   :func    #'serika-g/json//keymap)
+                        ("keymap")
+                        (lambda ()
+                          (setq --json-mode-map json-mode-map)
+                          (serika-f/keymap/create json-mode-map))
 
-  (serika-c/eg/add :parents '("hook")
-		   :name    'json
-		   :func    (lambda ()
-			      (add-hook 'json-mode-hook 'serika-l/json//evil)
-			      (add-hook 'json-mode-hook 'serika-l/json//buffer-local-variables)
-			      (add-hook 'json-mode-hook 'serika-l/json//buffer-local-mappings)
+                        ("hook")
+                        (lambda ()
+                          (add-hook 'json-mode-hook 'serika-l/json//evil)
+                          (add-hook 'json-mode-hook 'serika-l/json//buffer-local-variables)
+                          (add-hook 'json-mode-hook 'serika-l/json//buffer-local-mappings)
 
-			      (add-hook 'json-mode-hook 'serika-l/json//syntax-checking)
-			      (add-hook 'json-mode-hook 'serika-l/json//snippet-engine)
-			      (add-hook 'json-mode-hook 'serika-l/json//auto-completion)
+                          (add-hook 'json-mode-hook 'serika-l/json//syntax-checking)
+                          (add-hook 'json-mode-hook 'serika-l/json//snippet-engine)
+                          (add-hook 'json-mode-hook 'serika-l/json//auto-completion)
 
-			      (add-hook 'json-mode-hook 'serika-l/json//interface)
-			      (add-hook 'json-mode-hook 'serika-l/json//prettify-symbols))))
+                          (add-hook 'json-mode-hook 'serika-l/json//interface)
+                          (add-hook 'json-mode-hook 'serika-l/json//prettify-symbols))))

@@ -2,19 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/xdefaults//settings ()
-  "Configure `xdefaults'."
-  nil)
-
-(defun serika-g/xdefaults//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
-  (add-to-list 'auto-mode-alist '("\\.Xresources\\'" . conf-xdefaults-mode)))
-
-(defun serika-g/xdefaults//keymap ()
-  "Configure `conf-xdefaults-mode-map'."
-  (setq conf-xdefaults-mode-map (make-sparse-keymap)))
-
 ;; Local
 (defun serika-l/xdefaults//evil ()
   "Configure `evil' for `xdefaults'."
@@ -41,23 +28,18 @@
 
 (defun init ()
   "Configure `xdefaults'."
-  (serika-c/eg/add :parents '("settings")
-                   :name    'xdefaults
-                   :func    #'serika-g/xdefaults//settings)
+  (serika-c/eg/add-many 'xdefaults
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.Xresources\\'" . conf-xdefaults-mode)))
 
-  (serika-c/eg/add :parents '("settings xdefaults")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/xdefaults//auto-mode-alist)
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list
+                                             #'serika-l/xdefaults//evil
+                                             #'serika-l/xdefaults//buffer-local-variables
+                                             #'serika-l/xdefaults//buffer-local-mappings
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'xdefaults
-                   :func    #'serika-g/xdefaults//keymap)
-
-  (serika-c/eg/add :parents '("hook")
-                   :name    'xdefaults
-                   :func    (lambda ()
-                              (add-hook 'conf-xdefaults-mode-hook 'serika-l/xdefaults//evil)
-                              (add-hook 'conf-xdefaults-mode-hook 'serika-l/xdefaults//buffer-local-variables)
-                              (add-hook 'conf-xdefaults-mode-hook 'serika-l/xdefaults//buffer-local-mappings)
-
-                              (add-hook 'conf-xdefaults-mode-hook 'serika-l/xdefaults//interface))))
+                                             #'serika-l/xdefaults//interface))
+                            (serika-f/hook/add 'conf-xdefaults-mode-hook
+                                               callback)))))

@@ -2,40 +2,40 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/company//require ()
-  "Require modules for `company'."
-  (require 'func-package)
-  (require 'company))
+;; Functions
+(defun serika-f/company/activate ()
+  "Activate `company-mode' in current buffer."
+  (company-mode +1))
 
-(defun serika-g/company//settings ()
-  "Configure `company-mode'."
-  (setq company-minimum-prefix-length 2)
-  (setq company-mode/enable-yas t))
+(defmacro serika-f/company/create-activator (&rest forms)
+  "Return lambda that activater `company-mode' in current buffer.
+Executer FORMS after."
+  `(lambda ()
+     (company-mode +1)
 
-(defun serika-g/company//keymap ()
-  "Configure `company-active-map'."
-  (setq company-active-map (make-sparse-keymap))
+     (progn ,@forms)))
 
-  (let ((map company-active-map))
-    (define-key company-active-map (kbd "A-n") 'company-abort)
-    (define-key company-active-map (kbd "A-e") 'company-select-next)
-    (define-key company-active-map (kbd "A-o") 'company-complete-selection)
-    (define-key company-active-map (kbd "A-i") 'company-select-previous)))
-
+;; Init
 (defun init ()
   "Configure `company'."
   (serika-c/eg/add-install :package-list '(company)
                            :name         'company)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'company
-                   :func    #'serika-g/company//require)
+  (serika-c/eg/add-many 'company
+                        ("require")
+                        (lambda ()
+                          (require 'func-package)
+                          (require 'company))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'company
-                   :func    #'serika-g/company//settings)
+                        ("settings")
+                        (lambda ()
+                          (setq company-minimum-prefix-length 2)
+                          (setq company-mode/enable-yas t))
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'company
-                   :func    #'serika-g/company//keymap))
+                        ("keymap")
+                        (lambda ()
+                          (serika-f/keymap/create company-active-map
+                                                  "A-n" #'company-abort
+                                                  "A-e" #'company-select-next
+                                                  "A-o" #'company-complete-selection
+                                                  "A-i" #'company-select-previous))))

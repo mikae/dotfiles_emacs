@@ -3,24 +3,9 @@
 ;;; Code:
 
 ;; Global
-(defun serika-g/css//require ()
-  "Require modules for css"
-  (require 'css-mode))
-
-(defun serika-g/css//settings ()
-  "Configure `css'."
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode)))
-
 (defun serika-g/css//keymap ()
   "Configure `css-mode-map'"
-  (setq --serika-css-mode-map css-mode-map)
-  (setq css-mode-map (let ((map (make-sparse-keymap)))
-                       (define-key map (kbd "C-t e") #'yas-expand)
-                       (define-key map (kbd "C-t E") #'serika-f/emmet/expand)
-                       (define-key map (kbd "C-t =") #'evil-indent)
-                       (define-key map (kbd "C-t +") #'web-beautify-css)
-                       (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
-                       map)))
+  )
 
 ;; Local
 (defun serika-l/css//evil ()
@@ -62,25 +47,33 @@
 
 (defun init ()
   "Configure `css'."
-  (serika-c/eg/add :parents '("require")
-                   :name    'css
-                   :func    #'serika-g/css//require)
+  (serika-c/eg/add-many 'css
+                        ("require")
+                        (lambda ()
+                          (require 'css-mode))
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'css
-                   :func    #'serika-g/css//keymap)
+                        ("keymap")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode)))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'css
-                   :func    #'serika-g/css//settings)
+                        ("settings")
+                        (lambda ()
+                          (setq --serika-css-mode-map css-mode-map)
+                          (serika-f/keymap/create css-mode-map
+                                                  "C-t e" #'yas-expand
+                                                  "C-t E" #'serika-f/emmet/expand
+                                                  "C-t =" #'evil-indent
+                                                  "C-t +" #'web-beautify-css
+                                                  "C-t /" #'evilnc-comment-or-uncomment-lines))
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'css
-                   :func    (lambda ()
-			      (add-hook 'css-mode-hook 'serika-l/css//evil)
-			      (add-hook 'css-mode-hook 'serika-l/css//buffer-local-variables)
-			      (add-hook 'css-mode-hook 'serika-l/css//snippet-engine)
-			      (add-hook 'css-mode-hook 'serika-l/css//syntax-checking)
-			      (add-hook 'css-mode-hook 'serika-l/css//auto-completion)
-			      (add-hook 'css-mode-hook 'serika-f/eldoc/activate)
-			      (add-hook 'css-mode-hook 'serika-l/css//interface))))
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list #'serika-l/css//evil
+                                                  #'serika-l/css//buffer-local-variables
+                                                  #'serika-l/css//snippet-engine
+                                                  #'serika-l/css//syntax-checking
+                                                  #'serika-l/css//auto-completion
+                                                  #'serika-f/eldoc/activate
+                                                  #'serika-l/css//interface))
+                            (serika-f/hook/add 'css-mode-hook
+                                               callback)))))

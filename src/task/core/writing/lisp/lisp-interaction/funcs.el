@@ -2,20 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika-g/lisp-interaction//keymap ()
-  "Configure keymap for `lisp-interaction' mode."
-  (setq --serika-lisp-interaction-mode-map lisp-interaction-mode-map)
-  (setq lisp-interaction-mode-map (let ((map (make-sparse-keymap)))
-                              (define-key map (kbd "C-t =") #'evil-indent)
-                              (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
-                              (define-key map (kbd "C-c e") #'eval-last-sexp)
-                              map)))
-
 ;; Local
 (defun serika-l/lisp-interaction//save-function ()
   "Ignore saving."
   (set (make-local-variable 'serika-buffer-save-function)
-       'ignore))
+       #'ignore))
 
 (defun serika-l/lisp-interaction//buffer-local-variables ()
   "Configure snippet engine for `lisp-interaction' mode."
@@ -49,15 +40,22 @@
 (defun init ()
   "Configure `lisp-interaction-mode'."
   (serika-c/eg/add-many 'lisp-interaction
-                        ("keymap") #'serika-g/lisp-interaction//keymap
-                        ("hook")   (lambda ()
-                                     (dolist (callback (list
-                                                        'serika-l/lisp-interaction//evil
-                                                        'serika-l/lisp-interaction//buffer-local-variables
-                                                        'serika-l/lisp-interaction//save-function
+                        ("keymap")
+                        (lambda ()
+                          (setq --serika-lisp-interaction-mode-map lisp-interaction-mode-map)
+                          (serika-f/keymap/create lisp-interaction-mode-map
+                                                  "C-t =" #'evil-indent
+                                                  "C-t /" #'evilnc-comment-or-uncomment-lines
+                                                  "C-c e" #'eval-last-sexp))
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list
+                                             'serika-l/lisp-interaction//evil
+                                             'serika-l/lisp-interaction//buffer-local-variables
+                                             'serika-l/lisp-interaction//save-function
 
-                                                        'serika-f/eldoc/activate
+                                             'serika-f/eldoc/activate
 
-                                                        'serika-l/lisp-interaction//interface
-                                                        'serika-l/lisp-interaction//prettify-symbols))
-                                       (serika-f/hook/add 'lisp-interaction-mode-hook callback)))))
+                                             'serika-l/lisp-interaction//interface
+                                             'serika-l/lisp-interaction//prettify-symbols))
+                            (serika-f/hook/add 'lisp-interaction-mode-hook callback)))))

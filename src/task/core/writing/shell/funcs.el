@@ -2,25 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/sh//require ()
-  "Require modules for `sh'."
-  (require 'func-hook))
-
-(defun serika-g/sh//keymap ()
-  "Configure `sh-mode-map'."
-  (setq sh-mode-map (let ((map (make-sparse-keymap)))
-                      map)))
-
-(defun serika-g/sh//settings ()
-  "Configure `sh-mode'."
-  ;; `auto-mode-alist'
-  (add-to-list 'auto-mode-alist '("\\.sh\\'"  . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.zshenv\\'" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.zshprofile\\'" . sh-mode)))
-
 ;; Local
 (defun serika-l/sh//evil ()
   "Configure evil for `sh-mode'."
@@ -52,37 +33,36 @@
 
 (defun init ()
   "Configure `sh-mode'."
-  (serika-c/eg/add :parents '("require")
-                   :name    'sh
-                   :func    #'serika-g/sh//require)
+  (serika-c/eg/add-many 'sh
+                        ("require")
+                        (lambda ()
+                          (require 'func-hook))
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'sh
-                   :func    #'serika-g/sh//keymap)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.sh\\'"  . sh-mode))
+                          (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+                          (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
+                          (add-to-list 'auto-mode-alist '("\\.zshenv\\'" . sh-mode))
+                          (add-to-list 'auto-mode-alist '("\\.zshprofile\\'" . sh-mode)))
 
-  (serika-c/eg/add :parents '("settings"
-                              "settings w-purpose")
-                   :name    'sh
-                   :func    #'serika-g/sh//settings)
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list
+                                             #'serika-l/sh//evil
+                                             #'serika-l/sh//buffer-local-variables
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'sh
-                   :func    (lambda ()
-                              (dolist (callback (list
-                                                 #'serika-l/sh//evil
-                                                 #'serika-l/sh//buffer-local-variables
+                                             #'serika-l/sh//snippet-engine
+                                             #'serika-l/sh//interface
+                                             #'serika-l/sh//prettify-symbols
+                                             #'serika-f/eldoc/activate
+                                             #'serika-f/flycheck/activate
 
-                                                 #'serika-l/sh//snippet-engine
-                                                 #'serika-l/sh//interface
-                                                 #'serika-l/sh//prettify-symbols
-                                                 #'serika-f/eldoc/activate
-                                                 #'serika-f/flycheck/activate
+                                             (serika-f/purpose/use-layout "sh.purpose-layout")
 
-                                                 (serika-f/purpose/use-layout "sh.purpose-layout")
+                                             #'serika-f/flycheck/create))
+                            (serika-f/hook/add 'sh-mode-hook callback))
 
-                                                 #'serika-f/flycheck/create))
-                                (serika-f/hook/add 'sh-mode-hook callback))
-
-                              (serika-f/hook/add-predicated 'sh-mode-hook
-                                                            #'serika-f/neotree/create
-                                                            #'serika-f/neotree/not-exists-p))))
+                          (serika-f/hook/add-predicated 'sh-mode-hook
+                                                        #'serika-f/neotree/create
+                                                        #'serika-f/neotree/not-exists-p))))

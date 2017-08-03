@@ -7,6 +7,13 @@
   "Enable flycheck in current buffer."
   (flycheck-mode +1))
 
+(defmacro serika-f/flycheck/create-activator (&rest forms)
+  "Create lambda, that activates yasnippet in current buffer.
+Executes FORMS after."
+  `(lambda ()
+    (flycheck-mode +1)
+    (progn ,@forms)))
+
 (defun serika-f/flycheck/create ()
   "Create `flycheck' buffer."
   (flycheck-list-errors))

@@ -2,18 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/vimperator//require ()
-  "Require modules for `vimperator'."
-  (require 'vimperator-mode))
-
-(defun serika-g/vimperator//settings ()
-  "Configure `vimperator'."
-  (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\'" . vimperator-mode))
-  (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\.after\\'" . vimperator-mode))
-  (add-to-list 'auto-mode-alist '("\\.vimp\\'" . vimperator-mode))
-  (add-to-list 'auto-mode-alist '("\\.vimp\\.after\\'" . vimperator-mode)))
-
 ;; Local
 (defun serika-l/vimperator//evil ()
   "Configure `auto-mode-alist' for `vimperator'."
@@ -35,17 +23,22 @@
 
 (defun init ()
   "Configure `vimperator'."
-  (serika-c/eg/add :parents '("require")
-                   :name    'vimperator
-                   :func    #'serika-g/vimperator//require)
+  (serika-c/eg/add-many 'vimperator
+                        ("require")
+                        (lambda ()
+                          (require 'vimperator-mode))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'vimperator
-                   :func    #'serika-g/vimperator//settings)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\'" . vimperator-mode))
+                          (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\.after\\'" . vimperator-mode))
+                          (add-to-list 'auto-mode-alist '("\\.vimp\\'" . vimperator-mode))
+                          (add-to-list 'auto-mode-alist '("\\.vimp\\.after\\'" . vimperator-mode)))
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'vimperator
-                   :func    (lambda ()
-                              (add-hook 'vimperator-mode-hook #'serika-l/vimperator//evil)
-                              (add-hook 'vimperator-mode-hook #'serika-l/vimperator//buffer-local-variables)
-                              (add-hook 'vimperator-mode-hook #'serika-l/vimperator//interface))))
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list #'serika-l/vimperator//evil
+                                                  #'serika-l/vimperator//buffer-local-variables
+                                                  #'serika-l/vimperator//interface))
+                            (serika-f/hook/add 'vimperator-mode-hook
+                                               callback)))))

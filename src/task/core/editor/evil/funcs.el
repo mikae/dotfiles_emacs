@@ -20,6 +20,20 @@
   (when (evil-mode-p)
     (evil-insert-state)))
 
+(defun serika-f/evil/activate ()
+  "Activate `evil' in current buffer with `normal' state."
+  (evil-local-mode +1)
+  (evil-normal-state))
+
+(defun serika-f/evil/create-activator (&rest forms)
+  "Create lambda that activater `evil' in current buffer with `normal' state, and
+executes FORMS after."
+  `(lambda ()
+     (evil-local-mode +1)
+     (evil-normal-state)
+
+     (progn ,@forms)))
+
 ;; Global
 (defun serika-g/evil//require ()
   "Require modules for `evil'."

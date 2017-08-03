@@ -2,28 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/lua//require ()
-  (require 'lua-mode)
-  (require 'company-lua))
-
-(defun serika-g/lua//settings ()
-  "Configure `lua'."
-  ;; `auto-mode-alist'
-  (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
-
-  ;; `multi-compile'
-  (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
-
-(defun serika-g/lua//keymap ()
-  "Configure `lua-mode-map'."
-  (setq lua-mode-map (let ((map (make-sparse-keymap)))
-                       (define-key map (kbd "C-c c") 'multi-compile-run)
-                       (define-key map (kbd "C-t =") 'evil-indent)
-                       (define-key map (kbd "C-t /") 'evilnc-comment-or-uncomment-lines)
-                       (define-key map (kbd "C-t e") 'yas-expand)
-                       map)))
-
 ;; Local
 (defun serika-l/lua//evil ()
   "Configure `evil' for `lua-mode'."
@@ -68,42 +46,43 @@
   "Configure `lua-mode'."
   (serika-c/eg/add-install :package-list '(f s)
                            :name         'lua)
+  (serika-c/eg/add-many 'lua
+                        ("require")
+                        (lambda ()
+                          (require 'lua-mode)
+                          (require 'company-lua))
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode)))
+                        ("settings multi-compile")
+                        (lambda ()
+                          (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
+                        ("keymap")
+                        (lambda ()
+                          (serika-f/keymap/create lua-mode-map
+                                                  "C-c c" #'multi-compile-run
+                                                  "C-t =" #'evil-indent
+                                                  "C-t /" #'evilnc-comment-or-uncomment-lines
+                                                  "C-t e" #'yas-expand))
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list #'serika-l/lua//evil
+                                                  #'serika-l/lua//buffer-local-variables
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'lua
-                   :func    #'serika-g/lua//require)
+                                                  #'serika-l/lua//syntax-checking
+                                                  #'serika-l/lua//snippet-engine
+                                                  #'serika-l/lua//auto-completion
+                                                  #'serika-f/eldoc/activate
+                                                  #'serika-f/flycheck/activate
 
-  (serika-c/eg/add :parents '("settings"
-                              "settings w-purpose"
-                              "settings multi-compile")
-                   :name    'lua
-                   :func    #'serika-g/lua//settings)
+                                                  #'serika-l/lua//interface
+                                                  #'serika-l/lua//prettify-symbols
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'lua
-                   :func    #'serika-g/lua//keymap)
+                                                  (serika-f/purpose/use-layout "lua.purpose-layout")
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'lua
-                   :func    (lambda ()
-                              (dolist (callback (list
-                                                 #'serika-l/lua//evil
-                                                 #'serika-l/lua//buffer-local-variables
+                                                  #'serika-f/flycheck/create))
+                            (serika-f/hook/add 'lua-mode-hook callback))
 
-                                                 #'serika-l/lua//syntax-checking
-                                                 #'serika-l/lua//snippet-engine
-                                                 #'serika-l/lua//auto-completion
-                                                 #'serika-f/eldoc/activate
-                                                 #'serika-f/flycheck/activate
-
-                                                 #'serika-l/lua//interface
-                                                 #'serika-l/lua//prettify-symbols
-
-                                                 (serika-f/purpose/use-layout "lua.purpose-layout")
-
-                                                 #'serika-f/flycheck/create))
-                                (serika-f/hook/add 'lua-mode-hook callback))
-
-                              (serika-f/hook/add-predicated 'lua-mode-hook
-                                                            #'serika-f/neotree/create
-                                                            #'serika-f/neotree/not-exists-p))))
+                          (serika-f/hook/add-predicated 'lua-mode-hook
+                                                        #'serika-f/neotree/create
+                                                        #'serika-f/neotree/not-exists-p))))

@@ -2,41 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/html//require ()
-  "Require modules for `html'."
-  (require 'web-beautify)
-  (require 'sgml-mode))
-
-(defun serika-g/html//settings ()
-  "Configure `html'."
-  ;; `auto-mode-alist'
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
-
-  ;; `multi-compile'
-  (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
-                                                   ("Firefox-esr" . "firefox-esr %path")
-                                                   ("Chromium"    . "chromium    %path"))))
-  ;; `mmm-mode'
-  (mmm-add-classes '((html-js-1
-                      :submode js-mode
-                      :front   "<script[^>]*>[ \t]*\n?"
-                      :back    "[ \t]*</script>")))
-  (mmm-add-mode-ext-class 'html-mode nil 'html-js-1)
-  )
-
-(defun serika-g/html//keymap ()
-  "Configure `html-mode-map'."
-  (setq --serika-html-mode-map html-mode-map)
-  (setq html-mode-map (let ((map (make-sparse-keymap)))
-                        (define-key map (kbd "C-c c") #'multi-compile-run)
-                        (define-key map (kbd "C-t e") #'yas-expand)
-                        (define-key map (kbd "C-t E") #'serika-f/emmet/expand)
-                        (define-key map (kbd "C-t =") #'evil-indent)
-                        (define-key map (kbd "C-t +") #'web-beautify-html)
-                        (define-key map (kbd "C-t /") #'evilnc-comment-or-uncomment-lines)
-                        map)))
-
 ;; Local
 (defun serika-l/html//evil ()
   "Configure `evil' for `html'."
@@ -85,30 +50,52 @@
 ;; Init
 (defun init ()
   "Configure `html'."
-  (serika-c/eg/add :parents '("require")
-                   :name    'html
-                   :func    #'serika-g/html//require)
+  (serika-c/eg/add-many 'html
+                        ("require")
+                        (lambda ()
+                          (require 'web-beautify)
+                          (require 'sgml-mode))
 
-  (serika-c/eg/add :parents '("settings"
-                              "settings mmm-mode"
-                              "settings multi-compile")
-                   :name    'html
-                   :func    #'serika-g/html//settings)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode)))
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'html
-                   :func    #'serika-g/html//keymap)
+                        ("settings multi-compile")
+                        (lambda ()
+                          (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
+                                                                           ("Firefox-esr" . "firefox-esr %path")
+                                                                           ("Chromium"    . "chromium    %path")))))
 
-  (serika-c/eg/add :parents '("hook")
-                   :name    'html
-                   :func    (lambda ()
-                              (add-hook 'html-mode-hook 'serika-l/html//evil)
-                              (add-hook 'html-mode-hook 'serika-l/html//buffer-local-variables)
+                        ("settings mmm-mode")
+                        (lambda ()
+                          (mmm-add-classes '((html-js-1
+                                              :submode js-mode
+                                              :front   "<script[^>]*>[ \t]*\n?"
+                                              :back    "[ \t]*</script>")))
+                          (mmm-add-mode-ext-class 'html-mode nil 'html-js-1))
 
-                              (add-hook 'html-mode-hook 'serika-l/html//snippet-engine)
-                              (add-hook 'html-mode-hook 'serika-l/html//auto-completion)
-                              (add-hook 'html-mode-hook 'serika-l/html//syntax-checking)
-                              (add-hook 'html-mode-hook 'serika-f/eldoc/activate)
-                              (add-hook 'html-mode-hook 'serika-l/mmm-mode//activate)
+                        ("keymap")
+                        (lambda ()
+                          (setq --serika-html-mode-map html-mode-map)
+                          (serika-f/keymap/create html-mode-map
+                                                  "C-c c" #'multi-compile-run
+                                                  "C-t e" #'yas-expand
+                                                  "C-t E" #'serika-f/emmet/expand
+                                                  "C-t =" #'evil-indent
+                                                  "C-t +" #'web-beautify-html
+                                                  "C-t /" #'evilnc-comment-or-uncomment-lines))
 
-                              (add-hook 'html-mode-hook 'serika-l/html//interface))))
+                        ("hook")
+                        (lambda ()
+                          (dolist (callback (list #'serika-l/html//evil
+                                                  #'serika-l/html//buffer-local-variables
+
+                                                  #'serika-l/html//snippet-engine
+                                                  #'serika-l/html//auto-completion
+                                                  #'serika-l/html//syntax-checking
+                                                  #'serika-f/eldoc/activate
+                                                  #'serika-l/mmm-mode//activate
+
+                                                  #'serika-l/html//interface))
+                            (serika-f/hook/add 'html-mode-hook
+                                               callback)))))
