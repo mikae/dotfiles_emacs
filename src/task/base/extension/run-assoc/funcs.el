@@ -2,22 +2,19 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika-g/run-assoc//require ()
-  "Require modules for `run-assoc'."
-  (require 'run-assoc))
-
-(defun serika-g/run-assoc//variables ()
-  "Configure `run-assoc' variables."
-  (setq associated-program-alist
-        '(("animate" "\\.gif$")
-          ("smplayer" "\\.webm$"))))
-
+;; Init
 (defun init ()
   "Configure `run-assoc'."
-  (serika-c/eg/add :parents '("require")
-                   :name    'run-assoc
-                   :func    #'serika-g/run-assoc//require)
+  (serika-c/eg/add-install :type 'download
+                           :name 'run-assoc
+                           :src  "https://raw.githubusercontent.com/mikae/emacswiki.org/master/run-assoc.el")
+  (serika-c/eg/add-many 'run-assoc
+                        ("require")
+                        (lambda ()
+                          (require 'run-assoc))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'run-assoc
-                   :func    #'serika-g/run-assoc//variables))
+                        ("settings")
+                        (lambda ()
+                          (setq associated-program-alist
+                                '(("animate" "\\.gif$")
+                                  ("smplayer" "\\.webm$"))))))

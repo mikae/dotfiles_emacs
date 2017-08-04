@@ -23,6 +23,10 @@
 
 (defun init ()
   "Configure `vimperator'."
+  (serika-c/eg/add-install :type 'download
+                           :name 'vimperator
+                           :src  "https://raw.githubusercontent.com/mikae/vimperator-mode/master/vimperator-mode.el")
+
   (serika-c/eg/add-many 'vimperator
                         ("require")
                         (lambda ()

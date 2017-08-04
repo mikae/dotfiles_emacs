@@ -49,8 +49,14 @@
 ;; Init
 (defun init ()
   "Configure `epub'."
+  (serika-c/eg/add-install :type    'git
+                           :name    'ereader
+                           :src     "https://github.com/mikae/emacs-ereader"
+                           :parents '("install ereader"))
+
   (serika-c/eg/add-install :package-list '(xml+ s)
-                           :name         'epub)
+                           :name         'packages
+                           :parents      '("install ereader"))
 
   (serika-c/eg/add :parents '("require")
                    :name    'epub

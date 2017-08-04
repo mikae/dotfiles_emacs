@@ -29,49 +29,37 @@ DESTINATION_SAVE=$DESTINATION_DIR/.save
 
 DESTINATION_INIT=$DESTINATION_DIR/init.el
 
-config_update_plugins () {
+#config_update_plugins () {
     # evil
-    SOURCE_EVIL=https://github.com/mikae/evil
-    git clone $SOURCE_EVIL $DESTINATION_PLUGINS/evil
+    #SOURCE_EVIL=https://github.com/mikae/evil
+    #git clone $SOURCE_EVIL $DESTINATION_PLUGINS/evil
 
     # yasnippet
-    SOURCE_YASNIPPET=https://github.com/joaotavora/yasnippet
-    git clone $SOURCE_YASNIPPET $DESTINATION_PLUGINS/yasnippet
-    cd $DESTINATION_PLUGINS/yasnippet
-    rake
+    # SOURCE_YASNIPPET=https://github.com/joaotavora/yasnippet
+    # git clone $SOURCE_YASNIPPET $DESTINATION_PLUGINS/yasnippet
+    # cd $DESTINATION_PLUGINS/yasnippet
+    # rake
 
     # pomidor
-    SOURCE_POMIDOR=https://github.com/TatriX/pomidor
-    git clone $SOURCE_POMIDOR $DESTINATION_PLUGINS/pomidor
-
-    # run-assoc
-    SOURCE_RUN_ASSOC=https://raw.githubusercontent.com/mikae/emacswiki.org/master/run-assoc.el
-    wget $SOURCE_RUN_ASSOC -O $DESTINATION_PLUGINS/run-assoc.el
-
-    # help-fns+
-    SOURCE_HELP_FNSP=https://raw.githubusercontent.com/mikae/emacswiki.org/master/help-fns%2B.el
-    wget $SOURCE_HELP_FNSP -O $DESTINATION_PLUGINS/help-fns+.el
+    #SOURCE_POMIDOR=https://github.com/TatriX/pomidor
+    #git clone $SOURCE_POMIDOR $DESTINATION_PLUGINS/pomidor
 
     # lua-mode
-    SOURCE_LUA_MODE=https://github.com/mikae/lua-mode
-    git clone $SOURCE_LUA_MODE $DESTINATION_PLUGINS/lua-mode
+    #SOURCE_LUA_MODE=https://github.com/mikae/lua-mode
+    #git clone $SOURCE_LUA_MODE $DESTINATION_PLUGINS/lua-mode
 
     # web-beautify
-    SOURCE_WEB_BEAUTIFY=https://github.com/mikae/web-beautify
-    git clone $SOURCE_WEB_BEAUTIFY $DESTINATION_PLUGINS/web-beautify
+    #SOURCE_WEB_BEAUTIFY=https://github.com/mikae/web-beautify
+    #git clone $SOURCE_WEB_BEAUTIFY $DESTINATION_PLUGINS/web-beautify
 
     # ereader(ebook reader mode)
-    SOURCE_EREADER=https://github.com/mikae/emacs-ereader
-    git clone $SOURCE_EREADER $DESTINATION_PLUGINS/emacs-ereader
+    #SOURCE_EREADER=https://github.com/mikae/emacs-ereader
+    #git clone $SOURCE_EREADER $DESTINATION_PLUGINS/emacs-ereader
 
     # company-lua
-    SOURCE_COMPANY_LUA=https://github.com/ptrv/company-lua
-    git clone $SOURCE_COMPANY_LUA $DESTINATION_PLUGINS/company-lua
-
-    # vimperator mode
-    SOURCE_VIMPERATOR_MODE=https://raw.githubusercontent.com/mikae/vimperator-mode/master/vimperator-mode.el
-    wget $SOURCE_VIMPERATOR_MODE -O $DESTINATION_PLUGINS/vimperator-mode.el
-}
+    #SOURCE_COMPANY_LUA=https://github.com/ptrv/company-lua
+    #git clone $SOURCE_COMPANY_LUA $DESTINATION_PLUGINS/company-lua
+#}
 
 config_clean () {
     rm -rfv $TMP_DIR
@@ -159,10 +147,12 @@ do
 done
 
 if $TEST; then
-    emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-execution.el -l $CONFIG_DIR/test/core/func/func-execution.el -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-func.el -l $CONFIG_DIR/test/core/func/func-func.el -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-keymap.el -l $CONFIG_DIR/test/core/func/func-keymap.el -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -l $CONFIG_DIR/src/core/func/func-list.el -l $CONFIG_DIR/test/core/func/func-list.el -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-execution.el -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-func.el      -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-keymap.el    -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-list.el      -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-buffer.el    -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-string.el    -f ert-run-tests-batch-and-exit
     exit 0
 fi
 
@@ -176,7 +166,7 @@ if $INSTALL_PLUGINS; then
     # install Cask
     curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
-    config_update_plugins
+   # config_update_plugins
 fi
 
 config_install

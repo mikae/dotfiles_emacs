@@ -44,8 +44,21 @@
 
 (defun init ()
   "Configure `lua-mode'."
-  (serika-c/eg/add-install :package-list '(f s)
-                           :name         'lua)
+  (serika-c/eg/add-install :type   'git
+                           :name   'lua-mode
+                           :src    "https://github.com/mikae/lua-mode"
+                           :parents '("install lua"))
+
+  (serika-c/eg/add-install :type   'git
+                           :name   'company-lua
+                           :src    "https://github.com/ptrv/company-lua"
+                           :parents '("install lua"))
+
+  (serika-c/eg/add-install :type         'package
+                           :package-list '(f s)
+                           :name         'packages
+                           :parents      '("install lua"))
+
   (serika-c/eg/add-many 'lua
                         ("require")
                         (lambda ()

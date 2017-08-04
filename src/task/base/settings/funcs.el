@@ -9,13 +9,13 @@
   `(if (cl-oddp (length ',args))
        (error "Length of args should be even.")
      (lambda ()
-       (prettify-symbols-mode +1)
        (setq prettify-symbols-alist ())
 
        (let ((--args ',args))
          (while --args
-           (push (list (car --args) (nth 1 --args)) prettify-symbols-alist)
-           (setq --args (nthcdr 2 --args)))))))
+           (push `(,(car --args) . ,(nth 1 --args)) prettify-symbols-alist)
+           (setq --args (nthcdr 2 --args))))
+       (prettify-symbols-mode +1))))
 
 ;; `settings'
 (defmacro serika-f/settings/create-configurator (&rest args)

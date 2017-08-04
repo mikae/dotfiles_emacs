@@ -76,5 +76,15 @@ If nothing is here just hide buffer."
     (when item
       (select-window item))))
 
+(defun serika-f/buffer/check-modes (&rest mode-list)
+  "Return t if current buffer is one of modes in MODE-LIST."
+  (cl-reduce (serika-f/func/lambda 'serika-f/buffer/check-modes
+                                   (val mode)
+                                   (or val
+                                       (eq major-mode
+                                           mode)))
+             mode-list
+             :initial-value nil))
+
 (provide 'func-buffer)
 ;;; func-buffer.el ends here

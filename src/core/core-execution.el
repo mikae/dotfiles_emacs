@@ -4,6 +4,7 @@
 
 (require 'func-package)
 (require 'func-execution)
+(require 'func-string)
 
 (defvar --serika-execution-graph nil
   "Execution graph for all tasks.")
@@ -16,6 +17,8 @@
 									"base require"
 									"base configure"
 									"base interface"
+                  "base post install"
+                  "base post require"
 
 									;; tasks
 									"install"
@@ -44,17 +47,55 @@
           :func    func
           :node    node))
 
-(cl-defun serika-c/eg/add-install (&key package-list (last '())
-                                        &key name    (last '__unnamed__)
-                                        &key parents (last nil))
+(cl-defun serika-c/eg/add-install (&key type (last 'package)
+                                        &key package-list (last '())
+                                        &key name         (last '__unnamed__)
+                                        &key parents      (last nil)
+                                        &key src          (last nil)
+                                        &key post-hook    (last nil))
   "Add new execution node which installs PACKAGE-LIST."
-  (let ((package-list package-list))
-    (eg/add --serika-execution-graph
-            :name    name
-            :parents (or parents '("install"))
-            :func    (lambda ()
-                       (mapcar #'serika-f/package/make-sure-installed
-                               package-list)))))
+  (let ((--type         (or type    'package))
+        (--parents      (or parents '("install")))
+        (--package-list package-list)
+        (--src          src)
+        (--name         name)
+        (--lambda       nil)
+        (--post-hook    post-hook))
+    (setq --lambda (cond ((eq --type 'package) (lambda ()
+                                                 (mapcar #'serika-f/package/make-sure-installed
+                                                         --package-list)))
+                         ((eq --type 'download) (when (stringp --src)
+                                                  (lambda ()
+                                                    (let ((--destination (serika-f/path/join serika-plugin-directory
+                                                                                             (serika-f/string/resolve-url (file-name-nondirectory --src)))))
+                                                      (unless (file-exists-p --destination)
+                                                        (url-copy-file --src
+                                                                       --destination))))))
+                         ((eq --type 'git) (when (stringp --src)
+                                             (lambda ()
+                                               (let ((--destination (serika-f/path/join serika-plugin-directory
+                                                                                        (file-name-nondirectory --src))))
+                                                 (unless (file-exists-p --destination)
+                                                   (shell-command-to-string (format "git clone %s %s"
+                                                                                    --src
+                                                                                    --destination))
+                                                   ;; Execute post hook in cloned dir
+                                                   (when --post-hook
+                                                     (shell-command-to-string (format "cd %s && %s"
+                                                                                      --destination
+                                                                                      --post-hook)))
+
+
+                                                   ;; Update load path
+                                                   (when (file-accessible-directory-p --destination)
+                                                     (add-to-list 'load-path --destination)))))))
+                         (t nil)))
+
+    (when --lambda
+      (eg/add --serika-execution-graph
+              :name    --name
+              :parents --parents
+              :func    --lambda))))
 
 (defmacro serika-c/eg/add-many (name &rest args)
   "Add many execution nodes at once.

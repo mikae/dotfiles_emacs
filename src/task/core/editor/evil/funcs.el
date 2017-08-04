@@ -251,9 +251,14 @@ executes FORMS after."
 (defun init ()
   "Configure `evil'."
   ;; Configuration
+  (serika-c/eg/add-install :type 'git
+                           :name 'evil
+                           :src "https://github.com/mikae/evil")
+
   (serika-c/eg/add-install :package-list '(evil-nerd-commenter
                                            ace-jump-mode)
-                           :name 'evil)
+                           :name 'evil-plugins
+                           :parents '("install evil"))
 
   (serika-c/eg/add :parents '("require")
                    :name    'evil

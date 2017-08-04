@@ -49,6 +49,11 @@
 ;; Init
 (defun init ()
   "Configure `yasnippet'."
+  (serika-c/eg/add-install :type      'git
+                           :name      'yasnippet
+                           :src       "https://github.com/joaotavora/yasnippet"
+                           :post-hook "rake")
+
   (serika-c/eg/add :parents '("require")
                    :name    'yasnippet
                    :func    #'serika-g/yasnippet//require)

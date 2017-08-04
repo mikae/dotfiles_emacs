@@ -30,6 +30,10 @@
 ;; Init
 (defun init ()
   "Configure `pomidor'."
+  (serika-c/eg/add-install :type 'git
+                           :name 'pomidor
+                           :src  "https://github.com/TatriX/pomidor")
+
   (serika-c/eg/add :parents '("require")
                    :name    'pomidor
                    :func    #'serika-g/pomidor//require)
