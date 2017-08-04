@@ -6,8 +6,7 @@
 ;; `prettify-symbols'
 (defmacro serika-f/prettify-symbols/create-configurator (&rest args)
   "Create lambda that configures `prettify-symbols'."
-  `(progn
-     (if (cl-oddp (length ',args))
+  `(if (cl-oddp (length ',args))
        (error "Length of args should be even.")
      (lambda ()
        (prettify-symbols-mode +1)
@@ -16,7 +15,22 @@
        (let ((--args ',args))
          (while --args
            (push (list (car --args) (nth 1 --args)) prettify-symbols-alist)
-           (setq --args (nthcdr 2 --args))))))))
+           (setq --args (nthcdr 2 --args)))))))
+
+;; `settings'
+(defmacro serika-f/settings/create-configurator (&rest args)
+  "Create lambda that setups configuration variables."
+  `(if (cl-oddp (length ',args))
+       (error "Length of args should be even.")
+     (lambda ()
+       (let ((--args ',args))
+         (while --args
+           (set  (car --args) (nth 1 --args))
+           (setq --args (nthcdr 2 --args)))))))
+
+(defun serika-f/settings/show-trailing-whitespaces ()
+  "Show trailing whitespaces in current buffer."
+  (setq show-trailing-whitespace +1))
 
 ;; Init
 (defun init ()

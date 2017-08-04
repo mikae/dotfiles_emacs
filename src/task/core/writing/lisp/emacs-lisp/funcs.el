@@ -9,18 +9,11 @@
       major-mode))
 
 ;; Local
-(defun serika-l/emacs-lisp//buffer-local-variables ()
-  "Configure snippet engine for `emacs-lisp' mode."
-  (setq tab-width 2)
-  (setq truncate-lines t))
-
 (defun serika-l/emacs-lisp//interface ()
   "Configure interface for `emacs-lisp' mode."
-  (setq show-trailing-whitespace +1)
+  )
 
-  (rainbow-delimiters-mode       +1)
-  (serika-f/linum-relative/activate))
-
+;; Init
 (defun init ()
   "Configure `emacs-lisp-mode'."
   (serika-c/eg/add-install :package-list '(flycheck-cask)
@@ -37,6 +30,10 @@
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
 
+                        ("settings smartparens")
+                        (lambda ()
+                          (sp-local-pair 'emacs-lisp-mode "(" ")"))
+
                         ("keymap")
                         (lambda ()
                           (setq --serika-emacs-lisp-mode-map emacs-lisp-mode-map)
@@ -50,8 +47,9 @@
                           (dolist (callback (list
                                              (serika-f/evil/create-activator
                                               (setq evil-shift-width 2))
-
-                                             #'serika-l/emacs-lisp//buffer-local-variables
+                                             #'serika-f/smartparens/activate
+                                             (serika-f/settings/create-configurator tab-width      2
+                                                                                    truncate-lines t)
 
                                              #'serika-f/yasnippet/activate
                                              (serika-f/flycheck/create-activator
@@ -64,7 +62,10 @@
                                              #'serika-f/eldoc/activate
                                              #'serika-f/flycheck/activate
 
-                                             #'serika-l/emacs-lisp//interface
+                                             #'serika-f/settings/show-trailing-whitespaces
+                                             #'serika-f/linum-relative/activate
+                                             #'serika-f/rainbow-delimiters/activate
+
                                              (serika-f/prettify-symbols/create-configurator "lambda" ?λ
                                                                                             ">="     ?≤
                                                                                             "<="     ?≥)

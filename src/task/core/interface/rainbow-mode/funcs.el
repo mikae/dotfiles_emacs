@@ -1,23 +1,23 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(defun serika-g/rainbow-mode//require ()
-  "Require modules for `rainbow-mode'."
-  (require 'rainbow-mode))
 
-(defun serika-g/rainbow-mode//configure ()
-  "Configure `rainbow-mode'."
-  nil)
+;; Functions
+(defun serika-f/rainbow-mode/activate ()
+  "Activate rainbow mode in current buffer."
+  (rainbow-mode +1))
 
+;; Init
 (defun init ()
   "Configure `rainbow-mode'."
   (serika-c/eg/add-install :package-list '(rainbow-mode)
                            :name         'rainbow-mode)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'rainbow-mode
-                   :func    #'serika-g/rainbow-mode//require)
+  (serika-c/eg/add-many 'rainbow-mode
+                        ("require")
+                        (lambda ()
+                          (require 'rainbow-mode))
 
-  (serika-c/eg/add :parents '("interface")
-                   :name    'rainbow-mode
-                   :func    #'serika-g/rainbow-mode//configure))
+                        ("interface")
+                        (lambda ()
+                          )))

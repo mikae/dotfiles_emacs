@@ -2,14 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/rainbow-delimiters//require ()
-  "Require modules for `rainbow-delimiters'."
-  (require 'rainbow-delimiters))
-
-(defun serika-g/rainbow-delimiters//configure ()
-  "Configure `rainbow-delimiters'."
-  nil)
+;; Functions
+(defun serika-f/rainbow-delimiters/activate ()
+  "Activate `rainbow-delimiters' in current buffer."
+  (rainbow-delimiters-mode +1))
 
 ;; Init
 (defun init ()
@@ -17,10 +13,11 @@
   (serika-c/eg/add-install :package-list '(rainbow-delimiters)
                            :name         'rainbow-delimiters)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'rainbow-delimiters
-                   :func    #'serika-g/rainbow-delimiters//require)
+  (serika-c/eg/add-many 'rainbow-delimiters
+                        ("require")
+                        (lambda ()
+                          (require 'rainbow-delimiters))
 
-  (serika-c/eg/add :parents '("interface")
-                   :name    'rainbow-delimiters
-                   :func    #'serika-g/rainbow-delimiters//configure))
+                        ("interface")
+                        (lambda ()
+                          )))
