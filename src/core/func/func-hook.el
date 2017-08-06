@@ -3,31 +3,31 @@
 ;;; Code:
 
 (defun serika-f/hook/add-oncely (hook func &optional to-beginning)
-  (let* ((--hook   hook)
-         (--evaluated nil)
-         (--func   func)
-         (--func-1 (lambda ()
-                     (unless --evaluated
-                       (funcall --func)
-                       (setq --evaluated t))))
-         (--func-2 (lambda ()
-                     (when --evaluated
-                       (remove-hook --hook --func-1)))))
-    (add-hook --hook --func-1 (and (not to-beginning) t))
-    (add-hook --hook --func-2 (and (not to-beginning) t))))
+  "Add hooks, that will execute oncely in buffer."
+  (let* ((--orig func)
+         (--func (lambda ()
+                   (when (or (not (local-variable-p        '--hooks-executed))
+                             (not (local-variable-if-set-p '--hooks-executed))
+                             (not (buffer-local-value      '--hooks-executed
+                                                           (current-buffer))))
+                     (set (make-local-variable '--hooks-executed) t)
+                     (funcall --orig)))))
+    (add-hook hook --func)))
 
 (defun serika-f/hook/add-predicated (hook func predicate &optional to-beginning)
+  "Add hooks, that will execute if predicate is satisfied."
   (let* ((--hook hook)
-         (--fun  func)
+         (--orig func)
          (--pred predicate)
+         (--to-end (not to-beginning))
          (--func (lambda ()
                    (when (funcall --pred)
-                     (funcall --fun)))))
-    (add-hook --hook --func (and (not to-beginning) t))))
+                     (funcall --orig)))))
+    (add-hook --hook --func --to-end)))
 
 (defun serika-f/hook/add (hook func &optional to-beginning)
+  "Add hook."
   (add-hook hook func (and (not to-beginning) t)))
-
 
 (provide 'func-hook)
 ;;; func-hook.el ends here

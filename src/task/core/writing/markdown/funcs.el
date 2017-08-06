@@ -35,7 +35,7 @@
      (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
      (add-to-list 'auto-mode-alist '("\\.md\\'"       . markdown-mode))
      (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
-   
+
    ("keymap")
    (lambda ()
      (cl-macrolet ((--setup-markdown-keymap
@@ -99,8 +99,9 @@
 
                        ;; `kill'
                        (define-key ,map (kbd "C-c k")      #'markdown-kill-thing-at-point))))
-       (setq --serika-markdown-mode-map markdown-mode-map
-             --serika-gfm-mode-map      gfm-mode-map)
+
+       (serika-f/keymap/save markdown-mode-map
+                             gfm-mode-map)
 
        ;; Use new keymaps
        (--setup-markdown-keymap markdown-mode-map)

@@ -69,3 +69,14 @@
               'ignore))
   (should (eq (lookup-key global-map (kbd "C-t"))
               'ignore-2)))
+
+;; `save'
+(ert-deftest save|test ()
+  (setq test-keymap-1 (make-sparse-keymap)
+        test-keymap-2 (make-sparse-keymap))
+  (serika-f/keymap/save test-keymap-1
+                        test-keymap-2)
+  (should (eq test-keymap-1
+              --serika-saved-keymap-test-keymap-1))
+  (should (eq test-keymap-2
+              --serika-saved-keymap-test-keymap-2)))

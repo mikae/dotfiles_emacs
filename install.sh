@@ -29,38 +29,6 @@ DESTINATION_SAVE=$DESTINATION_DIR/.save
 
 DESTINATION_INIT=$DESTINATION_DIR/init.el
 
-#config_update_plugins () {
-    # evil
-    #SOURCE_EVIL=https://github.com/mikae/evil
-    #git clone $SOURCE_EVIL $DESTINATION_PLUGINS/evil
-
-    # yasnippet
-    # SOURCE_YASNIPPET=https://github.com/joaotavora/yasnippet
-    # git clone $SOURCE_YASNIPPET $DESTINATION_PLUGINS/yasnippet
-    # cd $DESTINATION_PLUGINS/yasnippet
-    # rake
-
-    # pomidor
-    #SOURCE_POMIDOR=https://github.com/TatriX/pomidor
-    #git clone $SOURCE_POMIDOR $DESTINATION_PLUGINS/pomidor
-
-    # lua-mode
-    #SOURCE_LUA_MODE=https://github.com/mikae/lua-mode
-    #git clone $SOURCE_LUA_MODE $DESTINATION_PLUGINS/lua-mode
-
-    # web-beautify
-    #SOURCE_WEB_BEAUTIFY=https://github.com/mikae/web-beautify
-    #git clone $SOURCE_WEB_BEAUTIFY $DESTINATION_PLUGINS/web-beautify
-
-    # ereader(ebook reader mode)
-    #SOURCE_EREADER=https://github.com/mikae/emacs-ereader
-    #git clone $SOURCE_EREADER $DESTINATION_PLUGINS/emacs-ereader
-
-    # company-lua
-    #SOURCE_COMPANY_LUA=https://github.com/ptrv/company-lua
-    #git clone $SOURCE_COMPANY_LUA $DESTINATION_PLUGINS/company-lua
-#}
-
 config_clean () {
     rm -rfv $TMP_DIR
     rm -rfv $DESTINATION_DIR
@@ -153,6 +121,7 @@ if $TEST; then
     emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-list.el      -f ert-run-tests-batch-and-exit
     emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-buffer.el    -f ert-run-tests-batch-and-exit
     emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-string.el    -f ert-run-tests-batch-and-exit
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-hook.el      -f ert-run-tests-batch-and-exit
     exit 0
 fi
 

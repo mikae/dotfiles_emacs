@@ -91,8 +91,8 @@
 
                         ("keymap")
                         (lambda ()
-                          (setq --serika-python-mode-map   python-mode-map
-                                --serika-anaconda-mode-map anaconda-mode-map)
+                          (serika-f/keymap/save python-mode-map
+                                                anaconda-mode-map)
 
                           (serika-f/keymap/create python-mode-map
                                                   "C-c v w" #'venv-workon

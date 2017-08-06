@@ -58,7 +58,7 @@
 
                         ("settings")
                         (lambda ()
-                          (setq --serika-css-mode-map css-mode-map)
+                          (serika-f/keymap/save css-mode-map)
                           (serika-f/keymap/create css-mode-map
                                                   "C-t e" #'yas-expand
                                                   "C-t E" #'serika-f/emmet/expand

@@ -21,9 +21,8 @@
 
 (defun serika-g/pdf//keymap ()
   "Configure `pdf-view-mode-map'."
+  (serika-f/keymap/save pdf-view-mode-map)
   (setq pdf-view-mode-map (let ((map (make-sparse-keymap)))
-                            ;; Save old keymap
-                            (setq --serika-pdf-view-mode-map pdf-view-mode-map)
 
                             ;; Kill
                             (define-key map (kbd "q")     #'serika-f/buffer/kill-current)

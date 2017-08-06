@@ -76,7 +76,7 @@
 
                         ("keymap")
                         (lambda ()
-                          (setq --serika-html-mode-map html-mode-map)
+                          (serika-f/keymap/save html-mode-map)
                           (serika-f/keymap/create html-mode-map
                                                   "C-c c" #'multi-compile-run
                                                   "C-t e" #'yas-expand

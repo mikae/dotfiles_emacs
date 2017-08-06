@@ -77,7 +77,7 @@
 
 (defun serika-c/splash/configure-keymap ()
   "Configure `splash-screen-keymap'."
-  (setq --serika-splash-screen-keymap splash-screen-keymap)
+  (serika-f/keymap/save splash-screen-keymap)
   (serika-f/keymap/create splash-screen-keymap
                           "q" #'exit-splash-screen))
 

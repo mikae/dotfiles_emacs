@@ -72,7 +72,7 @@
 
                         ("keymap")
                         (lambda ()
-                          (setq --serika-js2-mode-map js2-mode-map)
+                          (serika-f/keymap/save js2-mode-map)
                           (serika-f/keymap/create js2-mode-map
                                                   "C-c e e" 'skewer-eval-last-expression
                                                   "C-c e d" 'skewer-eval-defun

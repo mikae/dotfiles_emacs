@@ -42,7 +42,6 @@
   (serika-c/eg/add-many 'lisp-interaction
                         ("keymap")
                         (lambda ()
-                          (setq --serika-lisp-interaction-mode-map lisp-interaction-mode-map)
                           (serika-f/keymap/create lisp-interaction-mode-map
                                                   "C-t =" #'evil-indent
                                                   "C-t /" #'evilnc-comment-or-uncomment-lines
@@ -53,8 +52,6 @@
                                              'serika-l/lisp-interaction//evil
                                              'serika-l/lisp-interaction//buffer-local-variables
                                              'serika-l/lisp-interaction//save-function
-
-                                             'serika-f/eldoc/activate
 
                                              'serika-l/lisp-interaction//interface
                                              'serika-l/lisp-interaction//prettify-symbols))

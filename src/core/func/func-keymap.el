@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Functions
 (defun serika-f/keymap/p (arg)
   "Return t if ARG is a keymap."
   (and (listp arg)
@@ -69,6 +70,12 @@ Otherwise, throw an error."
       (global-set-key (kbd (nth counter args))
                       (nth (1+ counter) args))
       (setq counter (+ counter 2)))))
+
+(defmacro serika-f/keymap/save (&rest keymaps)
+  `(dolist (--keymap ',keymaps)
+     (set (intern (concat "--serika-saved-keymap-"
+                          (symbol-name --keymap)))
+          (symbol-value --keymap))))
 
 (provide 'func-keymap)
 ;;; func-keymap.el ends here

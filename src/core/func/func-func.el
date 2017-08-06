@@ -49,5 +49,24 @@ If name is nil, just create and return new lambda."
      (lambda ,args
        (progn ,@body))))
 
+(defun serika-f/func/construct (&rest funcs)
+  "Creates lambda, that executes all FUNCS."
+  (dolist (obj funcs)
+    (unless (functionp obj)
+      (error "Funcs should be an array of functions.")))
+  (lambda ()
+    (dolist (func funcs)
+      (funcall func))))
+
+(defun serika-f/func/predicated (func predicate)
+  "Create function, that wull execute FUNC only if
+result of invocation of PREDICATE is t."
+  (unless (and (functionp func)
+               (functionp predicate))
+    (error "FUNC and PREDICATE must be functions."))
+  (lambda ()
+    (when (funcall predicate)
+      (funcall func))))
+
 (provide 'func-func)
 ;;; func-func.el ends here

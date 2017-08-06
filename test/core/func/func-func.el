@@ -100,3 +100,40 @@
     (should fun-2)
     (should (eq fun-1
                 fun-2))))
+
+;; `construct'
+(ert-deftest construct|check-errors ()
+  (should-error (serika-f/func/construct 1)))
+
+(ert-deftest construct|check-constructed ()
+  (let* ((value       "")
+         (fun-1       (lambda ()
+                        (setq value (concat value "1"))))
+         (fun-2       (lambda ()
+                        (setq value (concat value "2"))))
+         (fun-3       (lambda ()
+                        (setq value (concat value "3"))))
+         (constructed (serika-f/func/construct fun-1
+                                               fun-2
+                                               fun-3)))
+    (funcall constructed)
+    (should (string= value
+                     "123"))))
+
+;; `predicated'
+(ert-deftest predicated|check-errors ()
+  (should-error (serika-f/func/predicated 1      1))
+  (should-error (serika-f/func/predicated (lambda ()) 1))
+  (should-error (serika-f/func/predicated 1      (lambda ()))))
+
+(ert-deftest predicated|check ()
+  (let* ((counter  0)
+         (pred-t   (lambda () t))
+         (pred-nil (lambda () nil))
+         (func     (lambda () (setq counter (1+ counter)))))
+    (funcall (serika-f/func/predicated func pred-t))
+    (should (eq counter
+                1))
+    (funcall (serika-f/func/predicated func pred-nil))
+    (should (eq counter
+                1))))

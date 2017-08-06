@@ -1,21 +1,28 @@
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
 ;; Functions
 ;; `prettify-symbols'
-(defmacro serika-f/prettify-symbols/create-configurator (&rest args)
-  "Create lambda that configures `prettify-symbols'."
-  `(if (cl-oddp (length ',args))
-       (error "Length of args should be even.")
-     (lambda ()
-       (setq prettify-symbols-alist ())
+;; todo: serika-f/smartparens/load
+;; make generic
+(defun serika-f/prettify-symbols/create-loader (name)
+  "Create lambda that activates `prettify-symbols-mode', and
+setups `prettify-symbols-alist'."
+  (let* ((--conf (serika-f/file/read-as-string (serika-f/path/join serika-conf-directory
+                                                                   "prettify-symbols"
+                                                                   (concat name
+                                                                           ".prettify-symbols"))))
+         (--parts (split-string --conf)))
+    (when (cl-oddp (length --parts))
+      (error "Incorrect prettify configuration file."))
+    (lambda ()
+      (let ((--temp --parts))
+        (while --temp
+          (push `(,(car --temp) . ,(nth 1 --temp)) prettify-symbols-alist)
+          (setq --temp (nthcdr 2 --temp))))
 
-       (let ((--args ',args))
-         (while --args
-           (push `(,(car --args) . ,(nth 1 --args)) prettify-symbols-alist)
-           (setq --args (nthcdr 2 --args))))
-       (prettify-symbols-mode +1))))
+      (prettify-symbols-mode +1))))
 
 ;; `settings'
 (defmacro serika-f/settings/create-configurator (&rest args)
