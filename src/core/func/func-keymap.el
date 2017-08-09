@@ -30,19 +30,13 @@ Otherwise, throw an error."
 
 (defmacro serika-f/keymap/create (keymap-name &rest args)
   "Create new KEYMAP-NAME."
-  `(when (= (% (length (list ,@args))
-               2)
-            0)
-     (setq ,keymap-name (make-sparse-keymap))
-     (let ((--counter 0)
-           (--length  (length (list ,@args))))
-       (while (< --counter
-                 --length)
-         (serika-f/keymap/bind ,keymap-name
-                               (nth --counter      (list ,@args))
-                               (nth (1+ --counter) (list ,@args)))
-         (setq --counter (+ --counter 2))))
-     ,keymap-name))
+  `(when (cl-evenp (length ',args))
+    (setq ,keymap-name (make-sparse-keymap))
+
+    (cl-loop for kbd  in ',args       by #'cddr
+             for func in (cdr ',args) by #'cddr
+             do
+             (serika-f/keymap/bind ,keymap-name kbd (car (cdr func))))))
 
 (defun serika-f/keymap/define (map &rest args)
   "Add bindings to MAP. Example:

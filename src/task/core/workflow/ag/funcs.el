@@ -1,51 +1,47 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(defun serika-gc/ag//require ()
-  "Require modules for `ag'."
-  (require 'ag))
 
-(defun serika-gc/ag//settings ()
-  "Configure settings for `ag'."
-  (setq ag-highlight-search t)
-  (setq ag-reuse-window t)
-  (setq ag-reuse-buffers t)
-
-  (setq ag-arguments ag-arguments)
-  (setq ag-executable (serika-f/system/getenv "PATH_EXECUTABLE_AG")))
-
-(defun serika-gc/ag//global-keymap ()
-  "Configure global keyamps for `ag'."
-  (global-set-key (kbd "C-f a f")     #'ag-files)
-  (global-set-key (kbd "C-f a r")     #'ag-regexp)
-  (global-set-key (kbd "C-f a a")     #'ag)
-
-  (global-set-key (kbd "C-f a d d")   #'ag-dired)
-  (global-set-key (kbd "C-f a d r")   #'ag-dired-regexp)
-
-  (global-set-key (kbd "C-f a p p")   #'ag-project)
-  (global-set-key (kbd "C-f a p f")   #'ag-project-files)
-  (global-set-key (kbd "C-f a p r")   #'ag-project-regexp)
-  (global-set-key (kbd "C-f a p a")   #'ag-project-at-point)
-
-  (global-set-key (kbd "C-f a p d d") #'ag-project-dired)
-  (global-set-key (kbd "C-f a p d r") #'ag-project-dired-regexp)
-  (global-set-key (kbd "C-f a p d d") #'ag-project-dired))
-
+;; Init
 (defun init ()
   "Configure `ag'."
-  (serika-c/eg/add-install :package-list '(ag)
-                           :name         'ag)
+  (serika-c/eg/add-install :name         'ag
+                           :type         'package
+                           :package-list '(ag))
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'ag
-                   :func    #'serika-gc/ag//require)
+  (serika-c/eg/add-many 'ag
+                        ("require")
+                        (lambda ()
+                          (require 'ag))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'ag
-                   :func    #'serika-gc/ag//settings)
+                        ("settings")
+                        (lambda ()
+                          (setq ag-highlight-search t
+                                ag-reuse-window     t
+                                ag-reuse-buffers    t
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'ag
-                   :func    #'serika-gc/ag//global-keymap)
-  )
+                                ag-arguments        ag-arguments
+                                ag-executable       (executable-find "ag")))
+
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'purpose-user-mode-purposes '(ag-mode . output)))
+
+                        ("global-keymap")
+                        (lambda ()
+                          (serika-f/keymap/define-global
+                           "C-f a f"     #'ag-files
+                           "C-f a r"     #'ag-regexp
+                           "C-f a a"     #'ag
+
+                           "C-f a d d"   #'ag-dired
+                           "C-f a d r"   #'ag-dired-regexp
+
+                           "C-f a p p"   #'ag-project
+                           "C-f a p f"   #'ag-project-files
+                           "C-f a p r"   #'ag-project-regexp
+                           "C-f a p a"   #'ag-project-at-point
+
+                           "C-f a p d d" #'ag-project-dired
+                           "C-f a p d r" #'ag-project-dired-regexp
+                           "C-f a p d d" #'ag-project-dired))))

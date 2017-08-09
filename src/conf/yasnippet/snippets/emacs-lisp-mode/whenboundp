@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: whenboundp 
-# key: wbp
-# --
-(when (boundp '${1:variable})
-  ${2:code})

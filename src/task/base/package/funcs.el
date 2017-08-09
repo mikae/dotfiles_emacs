@@ -5,8 +5,7 @@
 ;; Global
 (defun serika-g/package//require ()
   "Require modules."
-  (require 'func-package)
-  (message "require"))
+  (require 'func-package))
 
 (defun serika-g/package//configure ()
   "Configure package manager."
@@ -17,12 +16,10 @@
   (serika-f/package/repository-add "melpa"        "http://melpa.org/packages/")
 
   (serika-f/package/initialize)
-  (serika-f/package/list-update)
-  (message "configure"))
+  (serika-f/package/list-update))
 
 ;; Init
 (defun init ()
-  (message "hoi")
   (serika-c/eg/add :parents '("base require")
                    :name    'package-manager
                    :func    #'serika-g/package//require)

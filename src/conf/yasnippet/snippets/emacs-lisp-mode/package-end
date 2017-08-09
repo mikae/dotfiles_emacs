@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: package-end
-# key: pe
-# --
-;;; ${1} ends here

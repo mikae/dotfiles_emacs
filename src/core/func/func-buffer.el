@@ -86,5 +86,19 @@ If nothing is here just hide buffer."
              mode-list
              :initial-value nil))
 
+(defun serika-f/buffer/last-string (&optional count)
+  "Return last string."
+  (save-excursion
+    (goto-char (point-max))
+
+    (dotimes (counter (or (1- (or count 0)) 0))
+      (search-backward "\n" nil t))
+
+    (buffer-substring (if (search-backward "\n" nil t)
+                          (1+ (point))
+                        1)
+                      (point-max))))
+
+
 (provide 'func-buffer)
 ;;; func-buffer.el ends here

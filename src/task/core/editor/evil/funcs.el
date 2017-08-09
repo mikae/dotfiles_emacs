@@ -34,6 +34,18 @@ executes FORMS after."
 
      (progn ,@forms)))
 
+(defun serika-f/evil/toggle ()
+  "Toggle evil mode."
+  (interactive)
+  (cond
+   (evil-mode
+    (evil-mode -1))
+   (evil-local-mode
+    (evil-local-mode -1))
+   (t
+    (evil-local-mode +1)
+    (evil-normal-state))))
+
 ;; Global
 (defun serika-g/evil//require ()
   "Require modules for `evil'."
@@ -43,7 +55,8 @@ executes FORMS after."
 
   (require 'evil)
   (require 'evil-nerd-commenter)
-  (require 'ace-jump-mode))
+  (require 'ace-jump-mode)
+  (require 'evil-visualstar))
 
 (defun serika-g/evil//settings ()
   "Configure `evil' variables."
@@ -124,11 +137,14 @@ executes FORMS after."
 (defun serika-g/evil//visual-keymap ()
   "Configure `evil-visual-state-map'."
   (serika-f/keymap/define evil-visual-state-map
-                          "a" evil-outer-text-objects-map
-                          "r" evil-inner-text-objects-map
+                          "a"   evil-outer-text-objects-map
+                          "r"   evil-inner-text-objects-map
 
-                          "a" 'evil-append
-                          "r" 'evil-insert
+                          "A"   #'evil-append
+                          "R"   #'evil-insert
+
+                          "A-1" #'evil-visualstar/begin-search-forward
+                          "A-2" #'evil-visualstar/begin-search-backward
 
                           "C-, C-n" 'evil-exit-visual-state))
 
@@ -194,6 +210,8 @@ executes FORMS after."
    ;; `evil-ex'
    "M-s" 'evil-ex
 
+   "C-x t e" #'serika-f/evil/toggle
+
    ;; Window operations
    "C-w n" 'evil-window-left
    "C-w e" 'evil-window-down
@@ -254,6 +272,11 @@ executes FORMS after."
   (serika-c/eg/add-install :type 'git
                            :name 'evil
                            :src "https://github.com/mikae/evil")
+
+  (serika-c/eg/add-install :type 'git
+                           :name 'evil-visualstar
+                           :src  "https://github.com/mikae/evil-visualstar"
+                           :parents '("install evil"))
 
   (serika-c/eg/add-install :package-list '(evil-nerd-commenter
                                            ace-jump-mode)

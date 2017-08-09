@@ -46,6 +46,16 @@
                           (add-to-list 'auto-mode-alist '("\\.zshenv\\'" . sh-mode))
                           (add-to-list 'auto-mode-alist '("\\.zshprofile\\'" . sh-mode)))
 
+                        ("settings multi-compile")
+                        (lambda ()
+                          (add-to-list 'multi-compile-alist '(sh-mode . (("bash" . "bash  %path")
+                                                                           ("zsh"  . "zsh   %path")))))
+
+                        ("keymap")
+                        (lambda ()
+                          (serika-f/keymap/create sh-mode-map
+                                                  "C-c c" #'multi-compile-run))
+
                         ("hook")
                         (lambda ()
                           (dolist (callback (list

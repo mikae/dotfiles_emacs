@@ -12,43 +12,84 @@ CONFIG_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 CONFIG_SRC=$CONFIG_DIR/src
 CONFIG_ASSETS=$CONFIG_DIR/assets
 
-TMP_DIR=/tmp/emacs
-
-PREFIX_BUILD=$TMP_DIR/build
-BUILD_PLUGINS=$PREFIX_BUILD/plugins
-BUILD_INIT=$PREFIX_BUILD/init.el
-
-PREFIX_GIT=$TMP_DIR/git
-
 DESTINATION_DIR=~/.emacs.d
 
-DESTINATION_ELPA=$DESTINATION_DIR/elpa
-DESTINATION_DOC=$DESTINATION_DIR/doc
-DESTINATION_PLUGINS=$DESTINATION_DIR/plugin
-DESTINATION_SAVE=$DESTINATION_DIR/.save
+usage() {
+    echo "Usage:"
+    echo "      --clean: wipe old configuration"
+    echo "      --install-plugins: install plugins"
+    echo "      --install: install configuration files"
+    echo "      --all: wipe old configuration, then install plugin files, then install configuration files"
+    echo "      --test-all: run tests"
+    echo "      --test-<target>: run target"
 
-DESTINATION_INIT=$DESTINATION_DIR/init.el
+    exit 0
+}
 
-config_clean () {
-    rm -rfv $TMP_DIR
+CLEAN=false
+INSTALL=false
+declare -a TEST_TARGETS='()'
+
+if [ $# -eq 0 ]; then
+    usage
+fi
+
+while [ $# -gt 0 ]
+do
+    key="$1"
+    case $key in
+        --clean)
+            CLEAN=true
+        ;;
+        --install)
+            INSTALL=true
+        ;;
+        --test-all)
+            TEST_TARGETS[0]="execution"
+            TEST_TARGETS[1]="func"
+            TEST_TARGETS[2]="keymap"
+            TEST_TARGETS[3]="list"
+            TEST_TARGETS[4]="buffer"
+            TEST_TARGETS[5]="string"
+            TEST_TARGETS[6]="hook"
+        ;;
+        --test-*)
+            TEST_TARGETS[${#TEST_TARGETS[@]}]=${key:7}
+        ;;
+        --all)
+            CLEAN=true
+            INSTALL=true
+        ;;
+        --help)
+            usage
+        ;;
+    esac
+
+    shift
+done
+
+if (( ${#TEST_TARGETS[@]} > 0 )); then
+    for var in "${TEST_TARGETS[@]}"
+    do
+        emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-${var}.el -f ert-run-tests-batch-and-exit
+    done
+
+    exit 0
+fi
+
+if $CLEAN; then
     rm -rfv $DESTINATION_DIR
-}
+fi
 
-config_configure () {
-    mkdir $TMP_DIR
-    mkdir $PREFIX_BUILD
-    mkdir $BUILD_PLUGINS
-
-    mkdir $PREFIX_GIT
-
+if $INSTALL; then
     mkdir $DESTINATION_DIR
-    mkdir $DESTINATION_DOC
 
-    mkdir -p $DESTINATION_PLUGINS
-    mkdir -p $DESTINATION_SAVE
-}
+    mkdir -p $DESTINATION_DIR/plugin
+    mkdir -p $DESTINATION_DIR/.save
 
-config_install () {
+    # install Cask
+    curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+
     for f in $(find $CONFIG_SRC -type f); do
         case $f in
             *)
@@ -64,80 +105,6 @@ config_install () {
                 ;;
         esac
     done
-}
-
-usage() {
-    echo "Usage:"
-    echo "      --clean: wipe old configuration"
-    echo "      --install-plugins: install plugins"
-    echo "      --install: install configuration files"
-    echo "      --all: wipe old configuration, then install plugin files, then install configuration files"
-
-    exit 0
-}
-
-CLEAN=false
-INSTALL_PLUGINS=false
-INSTALL=false
-TEST=false
-
-if [ $# -eq 0 ]; then
-    usage
 fi
 
-while [ $# -gt 0 ]
-do
-    key="$1"
-    case $key in
-        --clean)
-            CLEAN=true
-        ;;
-        --install-plugins)
-            INSTALL_PLUGINS=true
-        ;;
-        --install)
-            INSTALL=true
-        ;;
-        --test)
-            TEST=true
-        ;;
-        --all)
-            CLEAN=true
-            INSTALL_PLUGINS=true
-            INSTALL=true
-        ;;
-        --help)
-            usage
-        ;;
-    esac
-
-    shift
-done
-
-if $TEST; then
-    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-execution.el -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-func.el      -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-keymap.el    -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-list.el      -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-buffer.el    -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-string.el    -f ert-run-tests-batch-and-exit
-    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-hook.el      -f ert-run-tests-batch-and-exit
-    exit 0
-fi
-
-if $CLEAN; then
-    config_clean
-fi
-
-config_configure
-
-if $INSTALL_PLUGINS; then
-    # install Cask
-    curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-
-   # config_update_plugins
-fi
-
-config_install
-
-clear
+#clear

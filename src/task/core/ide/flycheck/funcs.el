@@ -30,57 +30,43 @@ Executes FORMS after."
   "Return t if any flycheck buffer is created."
   (serika-f/buffer/not-exists-p 'flycheck-error-list-mode))
 
-;; Global
-(defun serika-g/flycheck//require ()
-  "Require modules for `flycheck'."
-  (require 'func-buffer)
-  (require 'flycheck))
-
-(defun serika-g/flycheck//settings ()
-  "Configure `flycheck' settings."
-  (add-to-list 'display-buffer-alist
-               `(,(rx bos "*Flycheck errors*" eos)
-                 (display-buffer-reuse-window display-buffer-in-side-window)
-                 (side            . bottom)
-                 (reusable-frames . visible)
-                 (window-height   . 0.33)))
-
-  (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
-
-  (setq flycheck-idle-change-delay 1))
-
-(defun serika-g/flycheck//keymap ()
-  "Configure `flycheck' keymaps."
-  (setq flycheck-error-list-mode-map (make-sparse-keymap))
-
-  (define-key flycheck-error-list-mode-map "n" 'evil-backward-char)
-  (define-key flycheck-error-list-mode-map "e" 'evil-next-visual-line)
-  (define-key flycheck-error-list-mode-map "i" 'evil-previous-visual-line)
-  (define-key flycheck-error-list-mode-map "o" 'evil-forward-char))
-
-(defun serika-g/flycheck//global-keymap ()
-  "Configure global keymap for using `flycheck'."
-  (global-set-key (kbd "C-, f s") 'serika-f/flycheck/create)
-  (global-set-key (kbd "C-, f h") 'serika-f/flycheck/remove))
-
 ;; Init
 (defun init ()
   "Configure `flycheck'."
   (serika-c/eg/add-install :package-list '(flycheck)
                            :name         'flycheck)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'flycheck
-                   :func    #'serika-g/flycheck//require)
+  (serika-c/eg/add-many 'flycheck
+                        ("require")
+                        (lambda ()
+                          (require 'func-buffer)
+                          (require 'flycheck))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'flycheck
-                   :func    #'serika-g/flycheck//settings)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'display-buffer-alist
+                                       `(,(rx bos "*Flycheck errors*" eos)
+                                         (display-buffer-reuse-window display-buffer-in-side-window)
+                                         (side            . bottom)
+                                         (reusable-frames . visible)
+                                         (window-height   . 0.33)))
+                          (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
+                          (setq flycheck-idle-change-delay 1))
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'flycheck
-                   :func    #'serika-g/flycheck//keymap)
+                        ("settings w-purpose")
+                        (lambda ()
+                          (add-to-list 'purpose-user-mode-purposes '(flycheck-error-list-mode . output)))
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'flycheck
-                   :func    #'serika-g/flycheck//global-keymap))
+                        ("keymap")
+                        (lambda ()
+                          (serika-f/keymap/save flycheck-error-list-mode-map)
+                          (serika-f/keymap/create flycheck-error-list-mode-map
+                                                  "A-n" #'evil-backward-char
+                                                  "A-e" #'evil-next-visual-line
+                                                  "A-i" #'evil-previous-visual-line
+                                                  "A-o" #'evil-forward-char))
+
+                        ("global-keymap")
+                        (lambda ()
+                          (serika-f/keymap/define-global "C-, f s" 'serika-f/flycheck/create
+                                                         "C-, f h" 'serika-f/flycheck/remove))))

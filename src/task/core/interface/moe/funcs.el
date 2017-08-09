@@ -21,12 +21,13 @@
   "Configure `moe-theme'."
   (serika-c/eg/add-install :package-list '(moe-theme)
                            :name         'moe-theme
-                           :parents      '("base interface install powerline configure"))
+                           :parents      '("base interface install"))
 
-  (serika-c/eg/add :parents '("base interface install powerline configure moe-theme")
+  (serika-c/eg/add :parents '("base interface install moe-theme")
                    :name    'require
                    :func    #'serika-g/moe-theme/require)
 
-  (serika-c/eg/add :parents '("base interface install powerline configure moe-theme")
+  (serika-c/eg/add :parents '("base interface install moe-theme"
+                              "base interface install powerline configure")
                    :name    'configure
                    :func    #'serika-g/moe-theme/configure))

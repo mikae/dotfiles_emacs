@@ -29,7 +29,8 @@
 
    ("settings smartparens")
    (lambda ()
-     (sp-local-pair 'emacs-lisp-mode "(" ")"))
+     (serika-f/smartparens/load 'emacs-lisp-mode)
+     )
 
    ("keymap")
    (lambda ()
@@ -69,8 +70,9 @@
                                  (serika-f/purpose/use-layout "emacs-lisp.purpose-layout")
 
                                  #'serika-f/flycheck/create
-                                 (serika-f/func/predicated #'serika-f/neotree/create
-                                                           #'serika-f/neotree/not-exists-p))
+                                 ;; (serika-f/func/predicated #'serika-f/neotree/create
+                                 ;;                           #'serika-f/neotree/not-exists-p)
+                                 )
         #'serika-f/emacs-lisp/p)
        (serika-f/func/predicated
         (serika-f/func/bind 'serika-f/buffer/focus-to

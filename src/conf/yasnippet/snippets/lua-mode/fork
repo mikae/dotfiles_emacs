@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: fork
-# key: fork
-# --
-for ${1:k}, ${2:v} in pairs(${4:table}) do
-   ${4:code}
-end

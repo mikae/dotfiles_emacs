@@ -2,7 +2,7 @@
  (0 0 192 54)
  (t
   (0 0 23 54)
-  (:purpose neotree
+  (:purpose file-manager
             :purpose-dedicated t
             :width 0.12105263157894737
             :height 0.6909090909090909
@@ -26,7 +26,7 @@
              :width 0.37894736842105264
              :height 0.8363636363636363
              :edges (0.4842105263157895 0.0 0.8631578947368421 0.8363636363636363)))
-  (:purpose check
+  (:purpose output
             :purpose-dedicated t
             :width 0.7421052631578947
             :height 0.14545454545454545

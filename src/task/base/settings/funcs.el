@@ -17,11 +17,11 @@ setups `prettify-symbols-alist'."
     (when (cl-oddp (length --parts))
       (error "Incorrect prettify configuration file."))
     (lambda ()
-      (let ((--temp --parts))
-        (while --temp
-          (push `(,(car --temp) . ,(nth 1 --temp)) prettify-symbols-alist)
-          (setq --temp (nthcdr 2 --temp))))
-
+      (cl-loop for --left  in --parts       by #'cddr
+               for --right in (cdr --parts) by #'cddr
+               do
+               (push (cons --left --right)
+                     prettify-symbols-alist))
       (prettify-symbols-mode +1))))
 
 ;; `settings'
@@ -31,13 +31,22 @@ setups `prettify-symbols-alist'."
        (error "Length of args should be even.")
      (lambda ()
        (let ((--args ',args))
-         (while --args
-           (set  (car --args) (nth 1 --args))
-           (setq --args (nthcdr 2 --args)))))))
+         (cl-loop for --prop  in --args       by #'cddr
+                  for --value in (cdr --args) by #'cddr
+                  do
+                  (set --prop --value))))))
 
-(defun serika-f/settings/show-trailing-whitespaces ()
+;; `trailing-whitespaces'
+(defun serika-f/settings/show-trailing-whitespaces (&optional turn-on)
   "Show trailing whitespaces in current buffer."
-  (setq show-trailing-whitespace +1))
+  (setq show-trailing-whitespace turn-on))
+
+;; `auto-revert-mode'
+(defun serika-f/settings/auto-revert-mode (&optional turn-on)
+  "Show trailing whitespaces in current buffer."
+  (auto-revert-mode (if turn-on
+                        +1
+                      -1)))
 
 ;; Init
 (defun init ()
@@ -65,6 +74,9 @@ setups `prettify-symbols-alist'."
                           ;; Disable all default mode selection.
                           (setq auto-mode-alist ())
 
+                          ;; Disable verbose messages of auto revert mode
+                          (setq auto-revert-verbose nil)
+
                           ;; Use spaces instead of tabs
                           (setq-default indent-tabs-mode nil
                                         tab-width        4)
@@ -72,4 +84,4 @@ setups `prettify-symbols-alist'."
                           (setq word-wrap t)
 
                           (electric-pair-mode -1)
-                          (auto-revert-mode -1))))
+                          (auto-revert-mode   -1))))

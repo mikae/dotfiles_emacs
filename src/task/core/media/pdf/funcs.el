@@ -2,74 +2,42 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/pdf//require ()
-  "Require modules for `pdf'."
-  (require 'pdf-tools))
-
-(defun serika-g/pdf//install ()
-  "Extra configuration for `pdf-tools'."
-  (pdf-tools-install))
-
-(defun serika-g/pdf//settings ()
-  "Configure `pdf'."
-  nil)
-
-(defun serika-g/pdf//auto-mode-alist ()
-  "Configure `auto-mode-alist' for `pdf-view-mode'."
-  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode)))
-
-(defun serika-g/pdf//keymap ()
-  "Configure `pdf-view-mode-map'."
-  (serika-f/keymap/save pdf-view-mode-map)
-  (setq pdf-view-mode-map (let ((map (make-sparse-keymap)))
-
-                            ;; Kill
-                            (define-key map (kbd "q")     #'serika-f/buffer/kill-current)
-
-                            ;; Move
-                            (define-key map (kbd "A-e")   #'pdf-view-next-line-or-next-page)
-                            (define-key map (kbd "A-i")   #'pdf-view-previous-line-or-previous-page)
-                            (define-key map (kbd "A-E")   #'pdf-view-scroll-up-or-next-page)
-                            (define-key map (kbd "A-I")   #'pdf-view-scroll-down-or-previous-page)
-                            (define-key map (kbd "A-p")   #'pdf-view-next-page)
-                            (define-key map (kbd "A-P")   #'pdf-view-previous-page)
-                            (define-key map (kbd "A-t")   #'pdf-view-first-page)
-                            (define-key map (kbd "A-T")   #'pdf-view-last-page)
-
-                            (define-key map (kbd "C-c p") #'pdf-view-goto-page)
-                            (define-key map (kbd "C-c l") #'pdf-view-goto-label)
-
-                            ;; Scale
-                            (define-key map (kbd "-")     #'pdf-view-shrink)
-                            (define-key map (kbd "+")     #'pdf-view-enlarge)
-                            (define-key map (kbd "0")     #'pdf-view-scale-reset)
-
-                            ;; Use new keymap
-                            map)))
-
 ;; Init
 (defun init ()
   "Configure `pdf'."
   (serika-c/eg/add-install :package-list '(pdf-tools)
                            :name         'pdf)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'pdf
-                   :func    #'serika-g/pdf//require)
+  (serika-c/eg/add-many 'pdf
+                        ("require")
+                        (lambda ()
+                          (require 'pdf-tools)
+                          (pdf-tools-install))
 
-  (serika-c/eg/add :parents '("install pdf")
-                   :name    'extra
-                   :func    #'serika-g/pdf//install)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode)))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'pdf
-                   :func    #'serika-g/pdf//settings)
+                        ("keymap")
+                        (lambda ()
+                          (serika-f/keymap/save   pdf-view-mode-map)
+                          (serika-f/keymap/create pdf-view-mode-map
+                                                  "q"     #'serika-f/buffer/kill-current
 
-  (serika-c/eg/add :parents '("settings pdf")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/pdf//auto-mode-alist)
+                                                  ;; Move
+                                                  "A-e"   #'pdf-view-next-line-or-next-page
+                                                  "A-i"   #'pdf-view-previous-line-or-previous-page
+                                                  "A-E"   #'pdf-view-scroll-up-or-next-page
+                                                  "A-I"   #'pdf-view-scroll-down-or-previous-page
+                                                  "A-p"   #'pdf-view-next-page
+                                                  "A-P"   #'pdf-view-previous-page
+                                                  "A-t"   #'pdf-view-first-page
+                                                  "A-T"   #'pdf-view-last-page
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'pdf
-                   :func    #'serika-g/pdf//keymap))
+                                                  "C-c p" #'pdf-view-goto-page
+                                                  "C-c l" #'pdf-view-goto-label
+
+                                                  ;; Scale
+                                                  "-"     #'pdf-view-shrink
+                                                  "+"     #'pdf-view-enlarge
+                                                  "0"     #'pdf-view-scale-reset))))

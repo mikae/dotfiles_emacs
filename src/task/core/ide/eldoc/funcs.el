@@ -15,12 +15,9 @@ executes FORMS after."
      (progn ,@forms)))
 
 ;; Global
-(defun serika-gc/eldoc//require ()
-  "Require modules for `eldoc'."
-  (require 'eldoc))
-
 (defun init ()
   "Configure `eldoc'."
-  (serika-c/eg/add :parents '("require")
-                   :name    'eldoc
-                   :func    #'serika-gc/eldoc//require))
+  (serika-c/eg/add-many 'eldoc
+                        ("require")
+                        (lambda ()
+                          (require 'eldoc))))

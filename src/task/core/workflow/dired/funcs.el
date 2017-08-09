@@ -213,8 +213,8 @@
   ;; Enable line truncations
   (setq truncate-lines t)
 
-  ;; Enable auto reverting
-  (auto-revert-mode +1)
+  ;; auto revert mode
+  (serika-f/settings/auto-revert-mode)
 
   ;; Omit some files
   (dired-omit-mode  +1)

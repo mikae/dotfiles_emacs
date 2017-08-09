@@ -5,6 +5,7 @@
 (require 'ert)
 (require 'func-list)
 
+;; `until-t'
 (ert-deftest until-t|check-execution ()
   (let* ((--values '(1 2 3 4 5 6 7 8 9 0))
          (--list ())
