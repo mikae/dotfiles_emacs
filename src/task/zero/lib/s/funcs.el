@@ -7,9 +7,9 @@
   (serika-c/eg/add-install :type         'package
                            :name         's
                            :package-list '(s)
-                           :parents      '("base post install"))
+                           :parents      '("zero lib install"))
 
   (serika-c/eg/add-many 's
-                        ("base post require")
+                        ("zero lib require")
                         (lambda ()
                           (require 's))))

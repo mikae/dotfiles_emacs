@@ -49,9 +49,9 @@ executes FORMS after."
 ;; Global
 (defun serika-g/evil//require ()
   "Require modules for `evil'."
-  (require 'func-package)
-  (require 'func-keymap)
-  (require 'func-char)
+  ()
+  ()
+  ()
 
   (require 'evil)
   (require 'evil-nerd-commenter)
@@ -73,7 +73,7 @@ executes FORMS after."
 (defun serika-g/evil//normal-keymap ()
   "Configure `evil-normal-state-map'."
   ;; qwfp
-  (serika-f/keymap/define evil-normal-state-map
+  (func/keymap/define evil-normal-state-map
                           "q" 'evil-open-below
                           "Q" 'evil-open-above
                           "w" 'evil-replace
@@ -118,15 +118,15 @@ executes FORMS after."
 
 (defun serika-g/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
-  (serika-f/keymap/define evil-motion-state-map
+  (func/keymap/define evil-motion-state-map
                           "<deletechar>" 'ignore
                           "DEL"          'ignore))
 
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
-  (serika-f/keymap/define evil-insert-state-map
-                          "A-n" 'serika-f/char/backward
-                          "A-o" 'serika-f/char/forward
+  (func/keymap/define evil-insert-state-map
+                          "A-n" 'func/char/backward
+                          "A-o" 'func/char/forward
 
                           ;; Ret with proper indentation
                           "RET" 'newline-and-indent
@@ -136,7 +136,7 @@ executes FORMS after."
 
 (defun serika-g/evil//visual-keymap ()
   "Configure `evil-visual-state-map'."
-  (serika-f/keymap/define evil-visual-state-map
+  (func/keymap/define evil-visual-state-map
                           "a"   evil-outer-text-objects-map
                           "r"   evil-inner-text-objects-map
 
@@ -150,17 +150,17 @@ executes FORMS after."
 
 (defun serika-g/evil//replace-keymap ()
   "Configure `evil-replace-state-map'."
-  (serika-f/keymap/define evil-replace-state-map
+  (func/keymap/define evil-replace-state-map
                           "C-, C-n" 'evil-normal-state))
 
 (defun serika-g/evil//emacs-keymap ()
   "Configure `evil-emacs-state-map'."
-  (serika-f/keymap/define evil-emacs-state-map
+  (func/keymap/define evil-emacs-state-map
                           "C-, C-n" 'evil-normal-state))
 
 (defun serika-g/evil//operator-state-keymap ()
   "Configure `evil-operator-state-map'."
-  (serika-f/keymap/define evil-operator-state-map
+  (func/keymap/define evil-operator-state-map
                           "C-, C-n" 'evil-normal-state
 
                           "a"        evil-outer-text-objects-map
@@ -168,7 +168,7 @@ executes FORMS after."
 
 (defun serika-g/evil//text-objects-keymap ()
   "Configure text objects map."
-  (serika-f/keymap/define evil-outer-text-objects-map
+  (func/keymap/define evil-outer-text-objects-map
                           "a" 'evil-a-word
                           "A" 'evil-a-WORD
                           "r" 'evil-a-paren
@@ -183,7 +183,7 @@ executes FORMS after."
                           "x" 'evil-a-sentence
                           "X" 'evil-a-paragraph)
 
-  (serika-f/keymap/define evil-inner-text-objects-map
+  (func/keymap/define evil-inner-text-objects-map
                           "a" 'evil-inner-word
                           "A" 'evil-inner-WORD
                           "r" 'evil-inner-paren
@@ -200,13 +200,13 @@ executes FORMS after."
 
 (defun serika-g/evil//ex-keymap ()
   "Configure evil-ex."
-  (serika-f/keymap/define evil-ex-completion-map
+  (func/keymap/define evil-ex-completion-map
                           [return] 'exit-minibuffer
                           "RET"    'exit-minibuffer))
 
 (defun serika-g/evil//global-keymap ()
   "Add movements into Emacs global keymap."
-  (serika-f/keymap/define-global
+  (func/keymap/define-global
    ;; `evil-ex'
    "M-s" 'evil-ex
 

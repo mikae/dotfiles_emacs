@@ -100,7 +100,7 @@
                        ;; `kill'
                        (define-key ,map (kbd "C-c k")      #'markdown-kill-thing-at-point))))
 
-       (serika-f/keymap/save markdown-mode-map
+       (func/keymap/save markdown-mode-map
                              gfm-mode-map)
 
        ;; Use new keymaps

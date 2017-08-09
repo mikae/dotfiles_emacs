@@ -41,5 +41,5 @@
                                              #'serika-l/xdefaults//buffer-local-mappings
 
                                              #'serika-l/xdefaults//interface))
-                            (serika-f/hook/add 'conf-xdefaults-mode-hook
+                            (func/hook/add 'conf-xdefaults-mode-hook
                                                callback)))))

@@ -5,7 +5,7 @@
 ;; Global
 (defun serika-g/buffer-move/require ()
   "Require modules for `buffer-move'."
-  (require 'func-package)
+  ()
   (require 'buffer-move))
 
 (defun serika-g/buffer-move/settings ()

@@ -36,7 +36,7 @@
   (serika-c/eg/add-many 'sh
                         ("require")
                         (lambda ()
-                          (require 'func-hook))
+                          ())
 
                         ("settings")
                         (lambda ()
@@ -53,7 +53,7 @@
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/create sh-mode-map
+                          (func/keymap/create sh-mode-map
                                                   "C-c c" #'multi-compile-run))
 
                         ("hook")
@@ -71,8 +71,8 @@
                                              (serika-f/purpose/use-layout "sh.purpose-layout")
 
                                              #'serika-f/flycheck/create))
-                            (serika-f/hook/add 'sh-mode-hook callback))
+                            (func/hook/add 'sh-mode-hook callback))
 
-                          (serika-f/hook/add-predicated 'sh-mode-hook
+                          (func/hook/add-predicated 'sh-mode-hook
                                                         #'serika-f/treemacs/create
                                                         #'serika-f/treemacs/not-exists-p))))

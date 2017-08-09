@@ -217,5 +217,5 @@ PARENTS is list of paths to parent nodes."
   (mapcar #'en/log (reverse (eg/roots graph)))
   (switch-to-buffer "*Messages*"))
 
-(provide 'func-execution)
+(provide 'core--execution)
 ;;; func-execution.el ends here

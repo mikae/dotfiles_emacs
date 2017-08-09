@@ -23,7 +23,7 @@ executes FORMS after."
   (serika-c/eg/add-many 'auto-complete
                         ("require")
                         (lambda ()
-                          (require 'func-path)
+                          ()
                           (require 'auto-complete))
 
                         ("settings")
@@ -36,7 +36,7 @@ executes FORMS after."
                           (setq ac-ignore-case t)
                           (setq ac-use-fuzzy t)
 
-                          (setq ac-comphist-file (serika-f/path/join serika-tmp-directory
+                          (setq ac-comphist-file (func/path/join serika-tmp-directory
                                                                      "ac-comphist.dat")))
 
                         ("keymap")
@@ -44,7 +44,7 @@ executes FORMS after."
                           (setq --ac-mode-map       ac-mode-map)
                           (setq --ac-completing-map ac-completing-map)
 
-                          (serika-f/keymap/create ac-completing-map
+                          (func/keymap/create ac-completing-map
                                                   "A-n" #'ac-stop
                                                   "A-e" #'ac-next
                                                   "A-o" #'ac-complete

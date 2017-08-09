@@ -1,11 +1,6 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-;;; Package-Requires:
-
-(require 'func-path)
-(require 'func-list)
-(require 'func-keymap)
 
 ;; Declare variables
 (defvar serika-splash-enable t
@@ -17,16 +12,15 @@
 
 (defvar serika-splash-buffer-name "*Welcome message :3*")
 
-;; Configuration functions
-(defun serika-c/splash/image-file ()
+(defun serika-f/splash/image-file ()
   "Return path to greetings file."
   (when (boundp 'serika-images-directory)
-    (serika-f/path/join serika-images-directory
+    (func/path/join serika-images-directory
                         "greetings.png")))
 
-(defun serika-c/splash/insert-header ()
+(defun serika-f/splash/insert-header ()
   "Insert the head part of the splash screen into the current buffer."
-  (let* ((image-file (serika-c/splash/image-file))
+  (let* ((image-file (serika-f/splash/image-file))
          (img (create-image image-file))
          (image-width (and img (car (image-size img))))
          (window-width (window-width)))
@@ -36,19 +30,19 @@
                           `(space :align-to (+ center (-0.5 . ,img)))))
       (insert-image img)
       (insert "\n")
-      (insert (serika-f/list/random serika-splash-greeting-list))
+      (insert (func/list/random serika-splash-greeting-list))
       (insert "\n"))))
 
-(defun serika-c/splash/insert-content ()
+(defun serika-f/splash/insert-content ()
   "Insert content to greetings buffer."
   ())
 
-(defun serika-c/splash/insert-footer ()
+(defun serika-f/splash/insert-footer ()
   "Insert footer to greetings buffer."
   (insert "Have a nice session :3")
   (insert "\n"))
 
-(defun serika-c/splash/configure-splash-screen ()
+(defun serika-f/splash/configure-splash-screen ()
   "Configure splash screen."
   (setq inhibit-startup-screen (not serika-splash-enable))
 
@@ -63,9 +57,9 @@
                      (when pure-space-overflow
                        (insert pure-space-overflow-message)))
 
-                (serika-c/splash/insert-header)
-                (serika-c/splash/insert-content)
-                (serika-c/splash/insert-footer)
+                (serika-f/splash/insert-header)
+                (serika-f/splash/insert-content)
+                (serika-f/splash/insert-footer)
 
                 (use-local-map splash-screen-keymap)
                 (setq buffer-read-only t)
@@ -75,30 +69,32 @@
                 (goto-char (point-max)))
               splash-buffer)))))
 
-(defun serika-c/splash/configure-keymap ()
+(defun serika-f/splash/configure-keymap ()
   "Configure `splash-screen-keymap'."
-  (serika-f/keymap/save splash-screen-keymap)
-  (serika-f/keymap/create splash-screen-keymap
+  (func/keymap/save splash-screen-keymap)
+  (func/keymap/create splash-screen-keymap
                           "q" #'exit-splash-screen))
 
-(defun serika-c/splash/configure ()
+(defun serika-f/splash/configure ()
   "Configure splash screen."
   (when serika-splash-enable
     (progn
-      (serika-c/splash/configure-splash-screen)
-      (serika-c/splash/configure-keymap))))
+      (serika-f/splash/configure-splash-screen)
+      (serika-f/splash/configure-keymap))))
 
 ;; Functions
 (defun serika-f/splash/show ()
   "Show splash screen."
   (interactive)
-  (mapc (serika-f/func/lambda 'serika-f/splash/show
+  (mapc (func/func/lambda 'serika-f/splash/show
                               (buffer)
                               (with-current-buffer buffer
-                                (serika-f/buffer/kill)))
+                                (func/buffer/kill)))
         (buffer-list))
   (switch-to-buffer (funcall initial-buffer-choice))
   (delete-other-windows))
 
-(provide 'core-splash)
-;;; core-splash.el ends here
+(defun init ()
+  (serika-c/eg/add-many 'splash
+                        ("post")
+                        #'serika-f/splash/configure))

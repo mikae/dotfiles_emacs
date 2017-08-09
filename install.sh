@@ -28,6 +28,7 @@ usage() {
 
 CLEAN=false
 INSTALL=false
+TEST=false
 declare -a TEST_TARGETS='()'
 
 if [ $# -eq 0 ]; then
@@ -44,17 +45,8 @@ do
         --install)
             INSTALL=true
         ;;
-        --test-all)
-            TEST_TARGETS[0]="execution"
-            TEST_TARGETS[1]="func"
-            TEST_TARGETS[2]="keymap"
-            TEST_TARGETS[3]="list"
-            TEST_TARGETS[4]="buffer"
-            TEST_TARGETS[5]="string"
-            TEST_TARGETS[6]="hook"
-        ;;
-        --test-*)
-            TEST_TARGETS[${#TEST_TARGETS[@]}]=${key:7}
+        --test)
+            TEST=true
         ;;
         --all)
             CLEAN=true
@@ -68,12 +60,8 @@ do
     shift
 done
 
-if (( ${#TEST_TARGETS[@]} > 0 )); then
-    for var in "${TEST_TARGETS[@]}"
-    do
-        emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-${var}.el -f ert-run-tests-batch-and-exit
-    done
-
+if $TEST; then
+    emacs -batch -l ert -L $CONFIG_DIR/src/core/func -l $CONFIG_DIR/test/core/func/func-execution.el -f ert-run-tests-batch-and-exit
     exit 0
 fi
 
@@ -85,6 +73,7 @@ if $INSTALL; then
     mkdir $DESTINATION_DIR
 
     mkdir -p $DESTINATION_DIR/plugin
+    mkdir -p $DESTINATION_DIR/lib
     mkdir -p $DESTINATION_DIR/.save
 
     # install Cask

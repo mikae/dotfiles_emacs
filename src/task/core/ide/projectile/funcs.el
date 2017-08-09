@@ -6,14 +6,14 @@
 (defun serika-f/projectile/ini ()
   "Ini `projectile' project in current directory."
   (interactive)
-  (serika-f/file/create ".projectile")
+  (func/file/create ".projectile")
   (when (equal major-mode 'dired-mode)
     (revert-buffer)))
 
 ;; Global
 (defun serika-g/projectile//require ()
   "Require modules for `projectile'."
-  (require 'func-file)
+  ()
   (require 'projectile))
 
 (defun serika-g/projectile//keymap ()

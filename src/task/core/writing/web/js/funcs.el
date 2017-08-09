@@ -72,8 +72,8 @@
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/save js2-mode-map)
-                          (serika-f/keymap/create js2-mode-map
+                          (func/keymap/save js2-mode-map)
+                          (func/keymap/create js2-mode-map
                                                   "C-c e e" 'skewer-eval-last-expression
                                                   "C-c e d" 'skewer-eval-defun
                                                   "C-c e a" 'skewer-load-buffer
@@ -82,7 +82,7 @@
                                                   "C-c c c" 'multi-compile-run
                                                   "C-c c d" (lambda ()
                                                               (interactive)
-                                                              (serika-f/buffer/kill-by-major-mode 'compilation-mode))
+                                                              (func/buffer/kill-by-major-mode 'compilation-mode))
 
                                                   "C-t ="   'evil-indent
                                                   "C-t +"   'web-beautify-js
@@ -110,8 +110,8 @@
                                              (serika-f/purpose/use-layout "js.purpose-layout")
 
                                              #'serika-f/flycheck/create))
-                            (serika-f/hook/add 'js2-mode-hook callback))
+                            (func/hook/add 'js2-mode-hook callback))
 
-                          (serika-f/hook/add-predicated 'js2-mode-hook
+                          (func/hook/add-predicated 'js2-mode-hook
                                                         #'serika-f/treemacs/create
                                                         #'serika-f/treemacs/not-exists-p))))

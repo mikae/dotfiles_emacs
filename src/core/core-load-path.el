@@ -27,6 +27,11 @@
                             (file-name-as-directory "plugin")))
   "Directory for manual installed plugins.")
 
+(defconst serika-lib-directory
+  (expand-file-name (concat serika-start-directory
+                            (file-name-as-directory "lib")))
+  "Directory for manual installed libraries.")
+
 (defconst serika-conf-directory
   (expand-file-name (concat serika-start-directory
                             (file-name-as-directory "conf")))
@@ -61,6 +66,7 @@
           ,serika-core-directory
           ,serika-plugin-directory
           ,serika-extension-directory
+          ,serika-lib-directory
           ,(concat serika-core-directory "func/")
           ))
 

@@ -21,19 +21,19 @@
   (serika-c/eg/add-many 'yasnippet
                         ("require")
                         (lambda ()
-                          (require 'func-path))
+                          ())
 
                         ("settings")
                         (lambda ()
-                          (serika-f/keymap/create yas-minor-mode-map)
-                          (serika-f/keymap/create yas-keymap
+                          (func/keymap/create yas-minor-mode-map)
+                          (func/keymap/create yas-keymap
                                                   "A-O" 'yas-next-field
                                                   "A-N" 'yas-prev-field)
 
                           (require 'yasnippet)
 
                           (setq yas-snippet-dirs
-                                (serika-f/path/join serika-conf-directory
+                                (func/path/join serika-conf-directory
                                                     "yasnippet"
                                                     "snippets"))))
 

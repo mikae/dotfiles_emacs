@@ -20,9 +20,9 @@
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/save   pdf-view-mode-map)
-                          (serika-f/keymap/create pdf-view-mode-map
-                                                  "q"     #'serika-f/buffer/kill-current
+                          (func/keymap/save   pdf-view-mode-map)
+                          (func/keymap/create pdf-view-mode-map
+                                                  "q"     #'func/buffer/kill-current
 
                                                   ;; Move
                                                   "A-e"   #'pdf-view-next-line-or-next-page

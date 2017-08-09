@@ -39,7 +39,7 @@
   "Configure `image-mode-map'."
   (setq image-mode-map (let ((map (make-sparse-keymap)))
                          ;; Quit from image viewing
-                         (define-key map (kbd "q")     #'serika-f/buffer/kill-current)
+                         (define-key map (kbd "q")     #'func/buffer/kill-current)
 
                          (define-key map (kbd "n")     #'serika-f/image/scroll-left)
                          (define-key map (kbd "e")     #'serika-f/image/scroll-down)

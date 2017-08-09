@@ -44,5 +44,5 @@
                           (dolist (callback (list #'serika-l/vimperator//evil
                                                   #'serika-l/vimperator//buffer-local-variables
                                                   #'serika-l/vimperator//interface))
-                            (serika-f/hook/add 'vimperator-mode-hook
+                            (func/hook/add 'vimperator-mode-hook
                                                callback)))))

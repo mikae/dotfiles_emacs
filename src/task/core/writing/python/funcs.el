@@ -15,7 +15,7 @@
   "Configure `virtualenwrapper'."
   (venv-initialize-interactive-shells)
   (venv-initialize-eshell)
-  (setq venv-location (serika-f/system/getenv "PATH_VIRTUALENVS")))
+  (setq venv-location (func/system/getenv "PATH_VIRTUALENVS")))
 
 (defun serika-g/python//keymap ()
   "Configure `python-mode-map'."
@@ -91,10 +91,10 @@
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/save python-mode-map
+                          (func/keymap/save python-mode-map
                                                 anaconda-mode-map)
 
-                          (serika-f/keymap/create python-mode-map
+                          (func/keymap/create python-mode-map
                                                   "C-c v w" #'venv-workon
                                                   "C-c v d" #'venv-deactivate
                                                   "C-c v m" #'venv-mkvirtualenv
@@ -102,7 +102,7 @@
                                                   "C-c v l" #'venv-lsvirtualenv
                                                   "C-c v c" #'venv-cdvirtualenv
                                                   "C-c v y" #'venv-cpvirtualenv)
-                          (serika-f/keymap/create anaconda-mode-map))
+                          (func/keymap/create anaconda-mode-map))
 
                         ("hook")
                         (lambda ()
@@ -117,7 +117,7 @@
                                                   #'serika-f/eldoc/activate
 
                                                   #'serika-l/python//interface))
-                            (serika-f/hook/add 'python-mode-hook callback))))
+                            (func/hook/add 'python-mode-hook callback))))
 
   (serika-c/eg/add :parents '("settings python")
                    :name    'virtualenvwrapper

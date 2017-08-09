@@ -3,13 +3,13 @@
 ;;; Code:
 
 (defun init ()
-  "Configure `help-fns+'."
+  "Configure f."
   (serika-c/eg/add-install :type         'package
                            :name         'f
                            :package-list '(f)
-                           :parents      '("base post install"))
+                           :parents      '("zero lib install"))
 
   (serika-c/eg/add-many 'f
-                        ("base post require")
+                        ("zero lib require")
                         (lambda ()
                           (require 'f))))

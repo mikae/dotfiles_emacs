@@ -30,5 +30,5 @@
                           (dolist (callback (list #'serika-l/text//evil
                                                   #'serika-l/text//buffer-local-variables
                                                   #'serika-l/text//interface))
-                            (serika-f/hook/add 'text-mode-hook
+                            (func/hook/add 'text-mode-hook
                                                callback)))))

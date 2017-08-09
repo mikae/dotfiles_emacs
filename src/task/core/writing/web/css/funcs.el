@@ -58,8 +58,8 @@
 
                         ("settings")
                         (lambda ()
-                          (serika-f/keymap/save css-mode-map)
-                          (serika-f/keymap/create css-mode-map
+                          (func/keymap/save css-mode-map)
+                          (func/keymap/create css-mode-map
                                                   "C-t e" #'yas-expand
                                                   "C-t E" #'serika-f/emmet/expand
                                                   "C-t =" #'evil-indent
@@ -75,5 +75,5 @@
                                                   #'serika-l/css//auto-completion
                                                   #'serika-f/eldoc/activate
                                                   #'serika-l/css//interface))
-                            (serika-f/hook/add 'css-mode-hook
+                            (func/hook/add 'css-mode-hook
                                                callback)))))

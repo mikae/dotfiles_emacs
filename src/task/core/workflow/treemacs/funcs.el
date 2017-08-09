@@ -12,7 +12,7 @@
 
 (defun serika-f/treemacs/not-exists-p ()
   "Retutn t if treemacs buffer exists."
-  (serika-f/buffer/not-exists-p 'treemacs-mode))
+  (func/buffer/not-exists-p 'treemacs-mode))
 
 (defun init ()
   "Configure `treemacs'."
@@ -43,8 +43,8 @@
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/save   treemacs-mode-map)
-                          (serika-f/keymap/create treemacs-mode-map
+                          (func/keymap/save   treemacs-mode-map)
+                          (func/keymap/create treemacs-mode-map
                                                   "q"   #'treemacs-toggle
                                                   "g"   #'treemacs-refresh
                                                   "RET" #'treemacs-push-button

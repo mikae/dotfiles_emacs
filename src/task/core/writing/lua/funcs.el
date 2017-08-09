@@ -67,7 +67,7 @@
                           (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/create lua-mode-map
+                          (func/keymap/create lua-mode-map
                                                   "C-c c" #'multi-compile-run
                                                   "C-t =" #'evil-indent
                                                   "C-t /" #'evilnc-comment-or-uncomment-lines
@@ -89,8 +89,8 @@
                                                   (serika-f/purpose/use-layout "lua.purpose-layout")
 
                                                   #'serika-f/flycheck/create))
-                            (serika-f/hook/add 'lua-mode-hook callback))
+                            (func/hook/add 'lua-mode-hook callback))
 
-                          (serika-f/hook/add-predicated 'lua-mode-hook
+                          (func/hook/add-predicated 'lua-mode-hook
                                                         #'serika-f/treemacs/create
                                                         #'serika-f/treemacs/not-exists-p))))

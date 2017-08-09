@@ -29,7 +29,7 @@
 
                         ("global-keymap")
                         (lambda ()
-                          (serika-f/keymap/define-global
+                          (func/keymap/define-global
                            "C-f a f"     #'ag-files
                            "C-f a r"     #'ag-regexp
                            "C-f a a"     #'ag

@@ -3,11 +3,6 @@
 ;;; Code:
 
 ;; Local
-(defun serika-l/lisp-interaction//save-function ()
-  "Ignore saving."
-  (set (make-local-variable 'serika-buffer-save-function)
-       #'ignore))
-
 (defun serika-l/lisp-interaction//buffer-local-variables ()
   "Configure snippet engine for `lisp-interaction' mode."
   (setq tab-width 2)
@@ -42,17 +37,17 @@
   (serika-c/eg/add-many 'lisp-interaction
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/create lisp-interaction-mode-map
-                                                  "C-t =" #'evil-indent
-                                                  "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                  "C-c e" #'eval-last-sexp))
+                          (func/keymap/create lisp-interaction-mode-map
+                                                  "C-t ="    #'evil-indent
+                                                  "C-t /"    #'evilnc-comment-or-uncomment-lines
+                                                  "C-c e"    #'eval-last-sexp
+                                                  "C-x C-s"  #'ignore))
                         ("hook")
                         (lambda ()
                           (dolist (callback (list
                                              'serika-l/lisp-interaction//evil
                                              'serika-l/lisp-interaction//buffer-local-variables
-                                             'serika-l/lisp-interaction//save-function
 
                                              'serika-l/lisp-interaction//interface
                                              'serika-l/lisp-interaction//prettify-symbols))
-                            (serika-f/hook/add 'lisp-interaction-mode-hook callback)))))
+                            (func/hook/add 'lisp-interaction-mode-hook callback)))))

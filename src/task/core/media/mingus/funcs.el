@@ -40,8 +40,8 @@
                         ("keymap")
                         (lambda ()
                           (cl-macrolet ((configure-keymap (map)
-                                                          `(serika-f/keymap/save ,map)
-                                                          `(serika-f/keymap/create ,map
+                                                          `(func/keymap/save ,map)
+                                                          `(func/keymap/create ,map
                                                                                   "1"   #'mingus-help
                                                                                   "2"   #'mingus
                                                                                   "3"   #'mingus-browse
@@ -69,28 +69,28 @@
                                                                                   "A-Z" #'evil-search-previous)))
                             ;; `mingus-help-map'
                             (configure-keymap mingus-help-map)
-                            (serika-f/keymap/define mingus-help-map
+                            (func/keymap/define mingus-help-map
                                                     "A-n" #'evil-backward-char
                                                     "A-o" #'evil-forward-char)
 
                             ;; `mingus-playlist-map'
                             (configure-keymap mingus-playlist-map)
-                            (serika-f/keymap/define mingus-playlist-map
+                            (func/keymap/define mingus-playlist-map
                                                     "RET" #'mingus-play
                                                     "s"   (lambda () (interactive) (mingus-shuffle))
                                                     "d"   #'mingus-del-dwim2)
 
                             ;; `mingus-browse-map'
                             (configure-keymap mingus-browse-map)
-                            (serika-f/keymap/define mingus-browse-map
+                            (func/keymap/define mingus-browse-map
                                                     "a"   'mingus-insert
 
                                                     "A-n" 'mingus-open-parent
                                                     "A-o" 'mingus-down-dir-or-play-song
                                                     "RET" 'mingus-insert-and-play)
 
-                            (serika-f/keymap/save   mingus-global-map)
-                            (serika-f/keymap/create mingus-global-map)))
+                            (func/keymap/save   mingus-global-map)
+                            (func/keymap/create mingus-global-map)))
 
                         ("global-keymap")
                         (lambda ()

@@ -8,7 +8,7 @@
   (and (file-exists-p layout-path)))
 
 (defun serika-f/purpose/use-layout (layout-name)
-  (let ((layout-path (serika-f/path/join serika-layouts-directory
+  (let ((layout-path (func/path/join serika-layouts-directory
                                          layout-name)))
     (if (serika-f/purpose/layoutp layout-path)
         (lambda ()
@@ -34,7 +34,7 @@
   (serika-c/eg/add-many 'w-purpose
                         ("require")
                         (lambda ()
-                          (require 'func-path)
+                          ()
                           (setq purpose-use-default-configuration nil)
                           (require 'window-purpose)
                           (require 's-helm-window-purpose))
@@ -56,18 +56,18 @@
                           (add-to-list 'purpose-user-mode-purposes '(compilation-mode         . output))
 
                           ;; `s-helm-window-purpose'
-                          (add-to-list 's-purpose-layout-dirs (serika-f/path/join serika-conf-directory
+                          (add-to-list 's-purpose-layout-dirs (func/path/join serika-conf-directory
                                                                                   "layouts")))
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/save purpose-mode-map)
-                          (serika-f/keymap/create purpose-mode-map
+                          (func/keymap/save purpose-mode-map)
+                          (func/keymap/create purpose-mode-map
                                                   "C-x p l" #'s/purpose-layout-helm))
 
                         ("global-keymap")
                         (lambda ()
-                          (serika-f/keymap/define-global "C-x p l" #'s/purpose-layout-helm
+                          (func/keymap/define-global "C-x p l" #'s/purpose-layout-helm
                                                          "C-x p k" #'purpose-delete-non-dedicated-windows))
                         ("post activate")
                         #'serika-f/purpose/activate))

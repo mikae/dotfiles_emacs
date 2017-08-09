@@ -5,9 +5,9 @@
 ;; Global
 (defun serika-g/key//require ()
   "Require modules for `dired'."
-  (require 'func-buffer)
-  (require 'func-tramp)
-  (require 'func-window))
+  ()
+  ()
+  ())
 
 (defun serika-g/key//unset-bindings ()
   "Clear default bindings."
@@ -83,10 +83,10 @@
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
     (global-set-key (kbd elem) 'digit-argument))
 
-  (global-set-key (kbd "C-x C-s")   #'serika-f/buffer/save)
-  (global-set-key (kbd "C-x C-S-s") #'serika-f/tramp/sudo-write)
-  (global-set-key (kbd "C-x C-c")   #'serika-f/buffer/kill)
-  (global-set-key (kbd "C-x C-h")   #'serika-f/buffer/hide)
+  (global-set-key (kbd "C-x C-s")   #'save-buffer)
+  (global-set-key (kbd "C-x C-S-s") #'func/tramp/sudo-write)
+  (global-set-key (kbd "C-x C-c")   #'func/buffer/kill)
+  (global-set-key (kbd "C-x C-h")   #'previous-buffer)
   (global-set-key (kbd "C-x C-g")   #'revert-buffer)
 
   (global-set-key (kbd "C-x C-q")   #'save-buffers-kill-terminal)
@@ -106,7 +106,7 @@
 
   ;; Windows
   (global-set-key (kbd "C-w f")   #'delete-other-windows)
-  (global-set-key (kbd "C-w F")   #'serika-f/window/only-new-window))
+  (global-set-key (kbd "C-w F")   #'func/window/only-new-window))
 
 (defun init ()
   "Configure keys."

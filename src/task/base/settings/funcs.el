@@ -9,7 +9,7 @@
 (defun serika-f/prettify-symbols/create-loader (name)
   "Create lambda that activates `prettify-symbols-mode', and
 setups `prettify-symbols-alist'."
-  (let* ((--conf (serika-f/file/read-as-string (serika-f/path/join serika-conf-directory
+  (let* ((--conf (func/file/read-as-string (func/path/join serika-conf-directory
                                                                    "prettify-symbols"
                                                                    (concat name
                                                                            ".prettify-symbols"))))
@@ -54,7 +54,7 @@ setups `prettify-symbols-alist'."
   (serika-c/eg/add-many 'settings
                         ("base require")
                         (lambda ()
-                          (require 'func-path))
+                          ())
 
                         ("base configure")
                         (lambda ()
@@ -67,7 +67,7 @@ setups `prettify-symbols-alist'."
                                 auto-save-default        nil)
 
                           (setq auto-save-list-file-prefix
-                                (serika-f/path/join serika-tmp-directory
+                                (func/path/join serika-tmp-directory
                                                     "auto-save-list"
                                                     ".saves-"))
 

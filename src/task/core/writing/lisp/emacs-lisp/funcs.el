@@ -19,8 +19,8 @@
    'emacs-lisp
    ("require")
    (lambda ()
-     (require 'func-keymap)
-     (require 'func-buffer)
+     ()
+     ()
      (require 'flycheck-cask))
 
    ("settings")
@@ -34,20 +34,20 @@
 
    ("keymap")
    (lambda ()
-     (serika-f/keymap/create emacs-lisp-mode-map
+     (func/keymap/create emacs-lisp-mode-map
                              "C-t =" #'evil-indent
                              "C-t /" #'evilnc-comment-or-uncomment-lines
                              "C-t e" #'yas-expand))
 
    ("hook")
    (lambda ()
-     (serika-f/hook/add-oncely
+     (func/hook/add-oncely
       'emacs-lisp-mode-hook
-      (serika-f/func/construct
+      (func/func/construct
        ;; `lisp-interaction-mode' is inherited from `emacs-lisp-mode',
        ;; so, predicate was added
-       (serika-f/func/predicated
-        (serika-f/func/construct (serika-f/settings/create-configurator tab-width      2
+       (func/func/predicated
+        (func/func/construct (serika-f/settings/create-configurator tab-width      2
                                                                         truncate-lines t)
                                  (serika-f/evil/create-activator
                                   (setq evil-shift-width 2))
@@ -70,13 +70,13 @@
                                  (serika-f/purpose/use-layout "emacs-lisp.purpose-layout")
 
                                  #'serika-f/flycheck/create
-                                 (serika-f/func/predicated #'serika-f/treemacs/create
+                                 (func/func/predicated #'serika-f/treemacs/create
                                                            #'serika-f/treemacs/not-exists-p)
                                  )
         #'serika-f/emacs-lisp/p)
-       (serika-f/func/predicated
-        (serika-f/func/bind 'serika-f/buffer/focus-to
+       (func/func/predicated
+        (func/func/bind 'func/buffer/focus-to
                             'emacs-lisp-mode)
         (lambda ()
-          (not (serika-f/buffer/check-modes 'emacs-lisp-mode
+          (not (func/buffer/check-modes 'emacs-lisp-mode
                                             'lisp-interaction-mode)))))))))

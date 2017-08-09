@@ -19,7 +19,7 @@
 
 (defun serika-g/epub//keymap ()
   "Configure `ereader-mode-map'."
-  (serika-f/keymap/save ereader-mode-map)
+  (func/keymap/save ereader-mode-map)
   (setq ereader-mode-map (let ((map (make-sparse-keymap)))
                            ;; Searching
                            (define-key map (kbd "A-1")   #'evil-search-forward)

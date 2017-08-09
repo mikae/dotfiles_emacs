@@ -5,7 +5,7 @@
 ;; Global
 (defun serika-g/moe-theme/require ()
   "Require modules for `moe'."
-  (require 'func-package)
+  ()
   (require 'moe-theme))
 
 (defun serika-g/moe-theme/configure ()

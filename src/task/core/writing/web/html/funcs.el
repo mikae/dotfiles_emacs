@@ -76,8 +76,8 @@
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/save html-mode-map)
-                          (serika-f/keymap/create html-mode-map
+                          (func/keymap/save html-mode-map)
+                          (func/keymap/create html-mode-map
                                                   "C-c c" #'multi-compile-run
                                                   "C-t e" #'yas-expand
                                                   "C-t E" #'serika-f/emmet/expand
@@ -97,5 +97,5 @@
                                                   #'serika-l/mmm-mode//activate
 
                                                   #'serika-l/html//interface))
-                            (serika-f/hook/add 'html-mode-hook
+                            (func/hook/add 'html-mode-hook
                                                callback)))))

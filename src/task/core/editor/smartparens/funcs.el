@@ -8,7 +8,7 @@
   (smartparens-mode +1))
 
 (defun serika-f/smartparens/load (mode)
-  (let* ((--conf (serika-f/file/read-as-string (serika-f/path/join serika-conf-directory
+  (let* ((--conf (func/file/read-as-string (func/path/join serika-conf-directory
                                                                    "smartparens"
                                                                    (concat (symbol-name mode)
                                                                            ".smartparens-pairs"))))

@@ -3,24 +3,20 @@
 ;;; Code:
 
 (require 'cl-lib)
-
 (require 'core-execution)
-(require 'core-lazy)
 (require 'core-task)
-(require 'core-splash)
 
 (defun serika-c/init ()
   "Initialize `serika'."
   (serika-c/eg/create)
-  (serika-c/lazy/configure)
 
+  (serika-c/task/add "zero")
   (serika-c/task/add "util")
   (serika-c/task/add "base")
   (serika-c/task/add "core")
   (serika-c/task/execute-all)
 
   (serika-c/eg/execute)
-  (serika-c/splash/configure)
 )
 
 (provide 'core-serika)

@@ -20,15 +20,15 @@ Executes FORMS after."
 
 (defun serika-f/flycheck/remove ()
   "Remove `flycheck' buffers."
-  (serika-f/buffer/kill-by-major-mode 'flycheck-error-list-mode))
+  (func/buffer/kill-by-major-mode 'flycheck-error-list-mode))
 
 (defun serika-f/flycheck/exists-p ()
   "Return t if any flycheck buffer is created."
-  (serika-f/buffer/exists-p 'flycheck-error-list-mode))
+  (func/buffer/exists-p 'flycheck-error-list-mode))
 
 (defun serika-f/flycheck/not-exists-p ()
   "Return t if any flycheck buffer is created."
-  (serika-f/buffer/not-exists-p 'flycheck-error-list-mode))
+  (func/buffer/not-exists-p 'flycheck-error-list-mode))
 
 ;; Init
 (defun init ()
@@ -39,7 +39,7 @@ Executes FORMS after."
   (serika-c/eg/add-many 'flycheck
                         ("require")
                         (lambda ()
-                          (require 'func-buffer)
+                          ()
                           (require 'flycheck))
 
                         ("settings")
@@ -59,8 +59,8 @@ Executes FORMS after."
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/save flycheck-error-list-mode-map)
-                          (serika-f/keymap/create flycheck-error-list-mode-map
+                          (func/keymap/save flycheck-error-list-mode-map)
+                          (func/keymap/create flycheck-error-list-mode-map
                                                   "A-n" #'evil-backward-char
                                                   "A-e" #'evil-next-visual-line
                                                   "A-i" #'evil-previous-visual-line
@@ -68,5 +68,5 @@ Executes FORMS after."
 
                         ("global-keymap")
                         (lambda ()
-                          (serika-f/keymap/define-global "C-, f s" 'serika-f/flycheck/create
+                          (func/keymap/define-global "C-, f s" 'serika-f/flycheck/create
                                                          "C-, f h" 'serika-f/flycheck/remove))))

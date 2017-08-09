@@ -66,7 +66,7 @@
                         ("keymap")
                         (lambda ()
                           (setq --json-mode-map json-mode-map)
-                          (serika-f/keymap/create json-mode-map))
+                          (func/keymap/create json-mode-map))
 
                         ("hook")
                         (lambda ()

@@ -5,7 +5,7 @@
 ;; Global
 (defun serika-g/eshell//require ()
   "Require modules for `eshell'."
-  (require 'func-path))
+  ())
 
 (defun serika-g/eshell//settings ()
   "Configure `eshell' variables."
@@ -15,19 +15,19 @@
 
   ;; Set path to eshell history file
   (setq eshell-history-file-name
-        (serika-f/path/join serika-tmp-directory
+        (func/path/join serika-tmp-directory
                           "eshell"
                           "history"))
 
   ;; Set path to eshell last-dir-ring file
   (setq eshell-last-dir-ring-file-name
-        (serika-f/path/join serika-tmp-directory
+        (func/path/join serika-tmp-directory
                           "eshell"
                           "lastdir"))
 
   ;; Set path to eshell aliases file
   (setq eshell-aliases-file
-        (serika-f/path/join serika-conf-directory
+        (func/path/join serika-conf-directory
                           "eshell"
                           "aliases"))
 
@@ -61,17 +61,12 @@
   (setq-local eshell-mode-map (make-sparse-keymap))
   (use-local-map eshell-mode-map)
 
-  (define-key eshell-mode-map (kbd "A-e")   'eshell-next-matching-input-from-input)
-  (define-key eshell-mode-map (kbd "A-i")   'eshell-previous-matching-input-from-input)
-  (define-key eshell-mode-map (kbd "A-E")   'eshell-next-matching-input)
-  (define-key eshell-mode-map (kbd "A-I") 'eshell-previous-matching-input)
-  (define-key eshell-mode-map (kbd "RET")   'eshell-send-input))
-
-(defun serika-l/eshell//kill-function ()
-  "Configure `serika-buffer-kill-function'."
-  (set (make-local-variable 'serika-buffer-kill-function)
-       (lambda ()
-         (previous-buffer))))
+  (define-key eshell-mode-map (kbd "A-e")     #'eshell-next-matching-input-from-input)
+  (define-key eshell-mode-map (kbd "A-i")     #'eshell-previous-matching-input-from-input)
+  (define-key eshell-mode-map (kbd "A-E")     #'eshell-next-matching-input)
+  (define-key eshell-mode-map (kbd "A-I")     #'eshell-previous-matching-input)
+  (define-key eshell-mode-map (kbd "RET")     #'eshell-send-input)
+  (define-key eshell-mode-map (kbd "C-x C-c") #'previous-buffer))
 
 (defun init ()
   "Configure `eshell'."
@@ -90,5 +85,4 @@
   (serika-c/eg/add :parents '("hook")
                    :name    'eshell
                    :func    (lambda ()
-                              (add-hook 'eshell-mode-hook 'serika-l/eshell//local-mappings)
-                              (add-hook 'eshell-mode-hook 'serika-l/eshell//kill-function))))
+                              (add-hook 'eshell-mode-hook 'serika-l/eshell//local-mappings))))

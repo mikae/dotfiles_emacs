@@ -58,7 +58,7 @@
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/create scheme-mode-map
+                          (func/keymap/create scheme-mode-map
                                                   "C-t =" 'evil-indent
                                                   "C-t /" 'evilnc-comment-or-uncomment-lines
                                                   "C-t e" 'yas-expand))
@@ -76,4 +76,4 @@
 
                                              'serika-l/scheme//interface
                                              'serika-l/scheme//prettify-symbols))
-                            (serika-f/hook/add 'scheme-mode-hook callback)))))
+                            (func/hook/add 'scheme-mode-hook callback)))))

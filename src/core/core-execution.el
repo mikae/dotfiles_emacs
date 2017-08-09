@@ -2,9 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'func-package)
-(require 'func-execution)
-(require 'func-string)
+(require 'core-package)
+(require 'core--execution)
+(require 'core-funcs)
 
 (defvar --serika-execution-graph nil
   "Execution graph for all tasks.")
@@ -12,29 +12,30 @@
 (defun serika-c/eg/create (&rest packages)
   (setq --serika-execution-graph (eg/create))
 
-	(dolist (task '(
-									;; base tasks
-									"base require"
-									"base configure"
-									"base interface"
+  (dolist (task '(
+                  ;; zero tasks
+                  "zero require"
+                  "zero configure"
+                  "zero lib install"
+                  "zero lib require"
+
+                  ;; base tasks
+                  "base require"
+                  "base configure"
+                  "base interface"
                   "base post install"
                   "base post require"
 
-									;; tasks
-									"install"
-									"require"
-									"interface"
-									"settings"
-									"keymap"
-									"global-keymap"
-									"hook"
-									"post activate"))
-		(eg/create-path --serika-execution-graph task)))
-
-(defun serika-c/eg/packages (&rest packages)
-  "Install packages."
-  (dolist (package (packages))
-    (serika-f/package/make-sure-installed package-name)))
+                  ;; tasks
+                  "install"
+                  "require"
+                  "interface"
+                  "settings"
+                  "keymap"
+                  "global-keymap"
+                  "hook"
+                  "post activate"))
+    (eg/create-path --serika-execution-graph task)))
 
 (cl-defun serika-c/eg/add (&key name         (last '__unnamed__)
                                 &key parents (last nil)
@@ -68,14 +69,14 @@
                                            --package-list)))
            ((eq --type 'download) (when (stringp --src)
                                     (lambda ()
-                                      (let ((--destination (serika-f/path/join serika-plugin-directory
-                                                                               (serika-f/string/resolve-url (file-name-nondirectory --src)))))
+                                      (let ((--destination (func/path-join serika-plugin-directory
+                                                                               (func/string-parse-url (file-name-nondirectory --src)))))
                                         (unless (file-exists-p --destination)
                                           (url-copy-file --src
                                                          --destination))))))
            ((eq --type 'git) (when (stringp --src)
                                (lambda ()
-                                 (let ((--destination (serika-f/path/join serika-plugin-directory
+                                 (let ((--destination (func/path-join serika-plugin-directory
                                                                           (file-name-nondirectory --src))))
                                    (unless (file-exists-p --destination)
                                      (shell-command-to-string (format "git clone %s %s"

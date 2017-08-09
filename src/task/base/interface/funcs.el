@@ -5,13 +5,13 @@
 ;; Global
 (defun serika-g/interface//require ()
   "Require modules."
-  (require 'func-system))
+  ())
 
 (defun serika-g/interface//hide-gui ()
   "Hide menu, toolbar, scrollbar, tooltips elements."
   (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
     (tool-bar-mode -1))
-  (unless (serika-f/system/mac-p)
+  (unless (func/system/mac-p)
     (when (and (fboundp 'menu-bar-mode) (not (eq menu-bar-mode -1)))
       (menu-bar-mode -1)))
   (when (and (fboundp 'scroll-bar-mode) (not (eq scroll-bar-mode -1)))

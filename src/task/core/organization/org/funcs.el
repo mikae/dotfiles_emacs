@@ -5,7 +5,7 @@
 ;; Global
 (defun serika-g/org//require ()
   "Require modules for `org'."
-  (require 'func-path)
+  ()
   (require 'org))
 
 (defun serika-g/org//settings ()
@@ -15,7 +15,7 @@
 
   ;; `org'
   ;; `filepaths'
-  (setq org-id-locations-file (serika-f/path/join serika-tmp-directory
+  (setq org-id-locations-file (func/path/join serika-tmp-directory
                                                 ".org-id-locations"))
   ;; `todo'
   (setq org-todo-keywords

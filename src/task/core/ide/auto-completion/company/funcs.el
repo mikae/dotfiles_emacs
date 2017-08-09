@@ -24,7 +24,7 @@ Executer FORMS after."
   (serika-c/eg/add-many 'company
                         ("require")
                         (lambda ()
-                          (require 'func-package)
+                          ()
                           (require 'company))
 
                         ("settings")
@@ -34,7 +34,7 @@ Executer FORMS after."
 
                         ("keymap")
                         (lambda ()
-                          (serika-f/keymap/create company-active-map
+                          (func/keymap/create company-active-map
                                                   "A-n" #'company-abort
                                                   "A-e" #'company-select-next
                                                   "A-o" #'company-complete-selection
