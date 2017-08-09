@@ -23,7 +23,7 @@
 
 (defmacro serika-f/purpose/add (mode purpose)
   "Register MODE with PURPOSE."
-  )
+  `(add-to-list 'purpose-user-mode-purposes (cons ,mode ,purpose)))
 
 ;; Local
 (defun init ()

@@ -92,5 +92,5 @@
                             (serika-f/hook/add 'lua-mode-hook callback))
 
                           (serika-f/hook/add-predicated 'lua-mode-hook
-                                                        #'serika-f/neotree/create
-                                                        #'serika-f/neotree/not-exists-p))))
+                                                        #'serika-f/treemacs/create
+                                                        #'serika-f/treemacs/not-exists-p))))

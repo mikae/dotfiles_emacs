@@ -6,7 +6,7 @@
 (require 'func-logging)
 (require 'func-buffer)
 
-(ert-deftest log ()
+(ert-deftest log|simple ()
   (setq serika-logging-format "Log: %m")
   (serika/logging/log "test")
   (with-current-buffer (get-buffer "*Messages*")

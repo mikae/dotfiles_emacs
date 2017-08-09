@@ -74,5 +74,5 @@
                             (serika-f/hook/add 'sh-mode-hook callback))
 
                           (serika-f/hook/add-predicated 'sh-mode-hook
-                                                        #'serika-f/neotree/create
-                                                        #'serika-f/neotree/not-exists-p))))
+                                                        #'serika-f/treemacs/create
+                                                        #'serika-f/treemacs/not-exists-p))))

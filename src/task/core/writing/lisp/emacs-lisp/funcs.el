@@ -70,8 +70,8 @@
                                  (serika-f/purpose/use-layout "emacs-lisp.purpose-layout")
 
                                  #'serika-f/flycheck/create
-                                 ;; (serika-f/func/predicated #'serika-f/neotree/create
-                                 ;;                           #'serika-f/neotree/not-exists-p)
+                                 (serika-f/func/predicated #'serika-f/treemacs/create
+                                                           #'serika-f/treemacs/not-exists-p)
                                  )
         #'serika-f/emacs-lisp/p)
        (serika-f/func/predicated
