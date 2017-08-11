@@ -259,7 +259,7 @@
         (node    (en/create :func '(--macro counter))))
 
     (defmacro --macro (var)
-      `(lambda () (setq ,var (1+ ,var))))
+      `(setq ,var (1+ ,var)))
     (en/execute node)
     (should (= 1 counter))
     ))

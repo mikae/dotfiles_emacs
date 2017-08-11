@@ -108,7 +108,7 @@
      ((null (en/func node))
       ())
      ((macrop (car (en/func node)))
-      (funcall (car (cdr (macroexpand-all (en/func node))))))
+      (eval (macroexpand-all (en/func node))))
      (t (error "beda"))
      )
     (en/executed node t)
