@@ -105,12 +105,11 @@
     (cond
      ((functionp (en/func node))
       (funcall (en/func node)))
-     ((null (en/func node))
-      ())
      ((macrop (car (en/func node)))
       (eval (macroexpand-all (en/func node))))
-     (t (error "beda"))
-     )
+     ((null (en/func node))
+      ())
+     (t (error "Unknown entity in the execution node.")))
     (en/executed node t)
     (mapcar #'en/execute (reverse (en/children node)))))
 
