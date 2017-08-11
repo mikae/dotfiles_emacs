@@ -102,8 +102,15 @@
 (defun en/execute (node)
   "Execute node."
   (when (en/executablep node)
-    (when (en/func node)
+    (cond
+     ((functionp (en/func node))
       (funcall (en/func node)))
+     ((null (en/func node))
+      ())
+     ((macrop (car (en/func node)))
+      (funcall (car (cdr (macroexpand-all (en/func node))))))
+     (t (error "beda"))
+     )
     (en/executed node t)
     (mapcar #'en/execute (reverse (en/children node)))))
 

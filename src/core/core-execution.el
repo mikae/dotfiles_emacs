@@ -103,22 +103,42 @@
 (defmacro serika-c/eg/add-many (name &rest args)
   "Add many execution nodes at once.
 Example: ."
-  `(let ((--length (length ',args))
-         (--args   ',args)
-         (--name   ,name))
-     (when (cl-evenp --length)
-       (while --args
-         (eg/add --serika-execution-graph
-                 :name    --name
-                 :parents (car --args)
-                 :func    (let* ((--elem (car (cdr --args)))
-                                 (--car  (car --elem)))
-                            (if (eq --car
-                                    'function)
-                                (car (cdr --elem))
-                              --elem)))
-         (setq --args
-               (nthcdr 2 --args))))))
+  `(when (cl-oddp (length ',args))
+     (error "Length of ARGS must be even."))
+  `(let ((--name ,name)
+         (--args ',args))
+     (cl-loop for --parents in --args       by #'cddr
+              for --elem    in (cdr --args) by #'cddr
+              do
+              (eg/add --serika-execution-graph
+                      :name    --name
+                      :parents --parents
+                      :func    (cond
+                                ((eq (car --elem) 'function)
+                                 (car (cdr --elem)))
+                                ((eq (car --elem) 'lambda)
+                                 --elem)
+                                ((macrop (car --elem))
+                                 (macroexpand (car --elem)))
+                                (t --elem)))))
+  ;; `(let ((--length (length ',args))
+  ;;        (--args   ',args)
+  ;;        (--name   ,name))
+  ;;    (when (cl-evenp --length)
+  ;;      (while --args
+  ;;        (eg/add --serika-execution-graph
+  ;;                :name    --name
+  ;;                :parents (car --args)
+  ;;                :func    (let* ((--elem (car (cdr --args)))
+  ;;                                (--car  (car --elem)))
+  ;;                           (cond ((eq --car 'function)
+  ;;                                  (car (cdr --elem)))
+  ;;                                 ((macrop --elem) (error "thereis a macro"))
+  ;;                                 (t --elem)
+  ;;                                 )))
+  ;;        (setq --args
+  ;;              (nthcdr 2 --args)))))
+  )
 
 (defun serika-c/eg/execute ()
   "Execute execution graph."

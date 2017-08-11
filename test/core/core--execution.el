@@ -254,6 +254,16 @@
     ;; Finally, node should become executed
     (should (en/executed node))))
 
+(ert-deftest en|execute-macro ()
+  (let ((counter 0)
+        (node    (en/create :func '(--macro counter))))
+
+    (defmacro --macro (var)
+      `(lambda () (setq ,var (1+ ,var))))
+    (en/execute node)
+    (should (= 1 counter))
+    ))
+
 (ert-deftest en|execute-2 ()
   (let* ((root     (en/create))
          (node-1   (en/create))

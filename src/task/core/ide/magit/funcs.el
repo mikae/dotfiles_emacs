@@ -22,4 +22,6 @@
                         ("hook")
                         (lambda ()
                           (func/hook/add 'magit-log-mode-hook
-                                         #'serika-f/emojify/activate))))
+                                         (serika-f/emojify/create-activator :emoji-styles '(github)))
+                          (func/hook/add 'magit-status-mode-hook
+                                         (serika-f/emojify/create-activator :emoji-styles '(github))))))

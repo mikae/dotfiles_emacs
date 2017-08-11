@@ -7,6 +7,11 @@
   "Activate `emojify-mode' in current buffer."
   (emojify-mode +1))
 
+(cl-defmacro serika-f/emojify/create-activator (&key ((:emoji-styles styles) '(ascii unicode github)))
+  `(lambda ()
+     (emojify-mode +1)
+     (setq-local emojify-emoji-styles ,styles)))
+
 ;; Init
 (defun init ()
   "Configure `emojify'."
@@ -26,6 +31,13 @@
                                         "emojis"))
                           (setq emojify-program-contexts
                                 '(comments string)))
+
+                        ("keymap")
+                        (lambda ()
+                          (func/keymap/save emojify-emoji-keymap)
+                          (func/keymap/create emojify-emoji-keymap
+                                              "C-c e i" #'emojify-insert-emoji
+                                              "C-c e d" #'emojify-delete-emoji))
 
                         ("post")
                         (lambda ()

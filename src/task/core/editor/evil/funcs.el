@@ -47,13 +47,6 @@ executes FORMS after."
     (evil-normal-state))))
 
 ;; Global
-(defun serika-g/evil//require ()
-  "Require modules for `evil'."
-  (require 'evil)
-  (require 'evil-nerd-commenter)
-  (require 'ace-jump-mode)
-  (require 'evil-visualstar))
-
 (defun serika-g/evil//settings ()
   "Configure `evil' variables."
   (setq evil-default-state 'emacs)
@@ -70,43 +63,43 @@ executes FORMS after."
   "Configure `evil-normal-state-map'."
   ;; qwfp
   (func/keymap/define evil-normal-state-map
-                      "q" 'evil-open-below
-                      "Q" 'evil-open-above
-                      "w" 'evil-replace
-                      "W" 'evil-replace-state
-                      "f" 'evil-delete-char
-                      "F" 'evil-invert-char
+                      "q"   #'evil-open-below
+                      "Q"   #'evil-open-above
+                      "w"   #'evil-replace
+                      "W"   #'evil-replace-state
+                      "f"   #'evil-delete-char
+                      "F"   #'evil-invert-char
 
-                      "a" 'evil-append
-                      "A" 'evil-append-line
-                      "r" 'evil-insert
-                      "R" 'evil-insert-line
-                      "s" 'evil-change
-                      "S" 'evil-change-line
-                      "t" 'evil-substitute
-                      "T" 'evil-change-whole-line
+                      "a"   #'evil-append
+                      "A"   #'evil-append-line
+                      "r"   #'evil-insert
+                      "R"   #'evil-insert-line
+                      "s"   #'evil-change
+                      "S"   #'evil-change-line
+                      "t"   #'evil-substitute
+                      "T"   #'evil-change-whole-line
 
-                      "z" 'evil-delete
-                      "Z" 'evil-delete-line
-                      "x" 'evil-yank
-                      "X" 'evil-yank-line
-                      "c" 'evil-paste-after
-                      "C" 'evil-paste-before
-                      "v" 'evil-visual-char
-                      "V" 'evil-visual-line
+                      "z"   #'evil-delete
+                      "Z"   #'evil-delete-line
+                      "x"   #'evil-yank
+                      "X"   #'evil-yank-line
+                      "c"   #'evil-paste-after
+                      "C"   #'evil-paste-before
+                      "v"   #'evil-visual-char
+                      "V"   #'evil-visual-line
 
-                      "m" 'kmacro-start-macro-or-insert-counter
-                      "M" 'kmacro-end-or-call-macro
-                      "," 'evil-repeat
-                      "<" 'evil-use-register
-                      "." 'undo
-                      ">" 'redo
+                      "m"   #'kmacro-start-macro-or-insert-counter
+                      "M"   #'kmacro-end-or-call-macro
+                      ","   #'evil-repeat
+                      "<"   #'evil-use-register
+                      "."   #'undo
+                      ">"   #'redo
 
-                      "C-v" 'evil-visual-block
+                      "C-v" #'evil-visual-block
 
-                      "H-z" 'erase-buffer
-                      "H-t" 'serika-f/evil/replace-buffer
-                      "H-s" 'serika-f/evil/change-buffer
+                      "H-z" #'erase-buffer
+                      "H-t" #'serika-f/evil/replace-buffer
+                      "H-s" #'serika-f/evil/change-buffer
 
                       "C-, C-n" 'evil-emacs-state))
 
@@ -131,21 +124,18 @@ executes FORMS after."
 (defun serika-g/evil//visual-keymap ()
   "Configure `evil-visual-state-map'."
   (func/keymap/define evil-visual-state-map
-                          "a"   evil-outer-text-objects-map
-                          "r"   evil-inner-text-objects-map
+                      "a"   evil-outer-text-objects-map
+                      "r"   evil-inner-text-objects-map
 
-                          "A"   #'evil-append
-                          "R"   #'evil-insert
+                      "A"   #'evil-append
+                      "R"   #'evil-insert
 
-                          "A-1" #'evil-visualstar/begin-search-forward
-                          "A-2" #'evil-visualstar/begin-search-backward
-
-                          "C-, C-n" 'evil-exit-visual-state))
+                      "C-, C-n" 'evil-exit-visual-state))
 
 (defun serika-g/evil//replace-keymap ()
   "Configure `evil-replace-state-map'."
   (func/keymap/define evil-replace-state-map
-                          "C-, C-n" 'evil-normal-state))
+                      "C-, C-n" 'evil-normal-state))
 
 (defun serika-g/evil//emacs-keymap ()
   "Configure `evil-emacs-state-map'."
@@ -239,14 +229,11 @@ executes FORMS after."
    "A-Z"  'evil-search-previous
    "A-X"  'evil-jump-forward
    "A-x"  'evil-jump-backward
-   "A-c"  'ace-jump-word-mode
-   "A-C"  'ace-jump-char-mode
-   "A-v"  'ace-jump-line-mode
 
    ;; <Tab>!@
-   "<A-tab>" 'evil-jump-item
-   "A-1"     'evil-search-forward
-   "A-!"     'evil-search-backward
+   "<A-tab>" #'evil-jump-item
+   "A-1"     #'evil-search-forward
+   "A-!"     #'evil-search-backward
 
    ;; neio'
    "A-n"  'evil-backward-char
@@ -266,19 +253,9 @@ executes FORMS after."
                            :name 'evil
                            :src "https://github.com/mikae/evil")
 
-  (serika-c/eg/add-install :type 'git
-                           :name 'evil-visualstar
-                           :src  "https://github.com/mikae/evil-visualstar"
-                           :parents '("install evil"))
-
-  (serika-c/eg/add-install :package-list '(evil-nerd-commenter
-                                           ace-jump-mode)
-                           :name 'evil-plugins
-                           :parents '("install evil"))
-
-  (serika-c/eg/add :parents '("require")
-                   :name    'evil
-                   :func    #'serika-g/evil//require)
+  (serika-c/eg/add-many 'evil
+                        ("require")
+                        (func/func/requirer evil))
 
   (serika-c/eg/add :parents '("settings")
                    :name    'evil
