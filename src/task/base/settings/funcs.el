@@ -39,7 +39,7 @@ setups `prettify-symbols-alist'."
 ;; `trailing-whitespaces'
 (defun serika-f/settings/show-trailing-whitespaces (&optional turn-on)
   "Show trailing whitespaces in current buffer."
-  (setq show-trailing-whitespace turn-on))
+  (setq show-trailing-whitespace t))
 
 ;; `auto-revert-mode'
 (defun serika-f/settings/auto-revert-mode (&optional turn-on)
@@ -52,10 +52,6 @@ setups `prettify-symbols-alist'."
 (defun init ()
   "Configure Emacs settings."
   (serika-c/eg/add-many 'settings
-                        ("base require")
-                        (lambda ()
-                          ())
-
                         ("base configure")
                         (lambda ()
                           (setq gc-cons-threshold 50000000)

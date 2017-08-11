@@ -4,11 +4,11 @@
 
 (defun serika-f/treemacs/create ()
   "Create treemacs window."
-  (treemacs-toggle)
+  (treemacs)
   (let ((--window (get-buffer-window "*pu-dummy-file-manager*")))
     (when --window
       (treemacs-toggle)
-      (set-window-buffer --window "*Treemacs*"))))
+      (set-window-buffer --window "Treemacs"))))
 
 (defun serika-f/treemacs/not-exists-p ()
   "Retutn t if treemacs buffer exists."
@@ -45,23 +45,24 @@
                         (lambda ()
                           (func/keymap/save   treemacs-mode-map)
                           (func/keymap/create treemacs-mode-map
-                                                  "q"   #'treemacs-toggle
-                                                  "g"   #'treemacs-refresh
-                                                  "RET" #'treemacs-push-button
+                                                  "q"          #'treemacs-toggle
+                                                  "g"          #'treemacs-refresh
+                                                  "RET"        #'treemacs-push-button
+                                                  "<C-return>" #'treemacs-visit-node-no-split
 
-                                                  "t h" #'treemacs-toggle-show-dotfiles
+                                                  "t h"        #'treemacs-toggle-show-dotfiles
 
-                                                  "y y" #'treemacs-yank-path-at-point
-                                                  "y r" #'treemacs-yank-root
+                                                  "y y"        #'treemacs-yank-path-at-point
+                                                  "y r"        #'treemacs-yank-root
 
-                                                  "n d" #'treemacs-create-dir
-                                                  "n f" #'treemacs-create-file
+                                                  "n d"        #'treemacs-create-dir
+                                                  "n f"        #'treemacs-create-file
 
-                                                  "d d" #'treemacs-delete
-                                                  "d o" #'treemacs-xdg-open
+                                                  "d d"        #'treemacs-delete
+                                                  "d o"        #'treemacs-xdg-open
 
-                                                  "A-n" #'treemacs-uproot
-                                                  "A-o" #'treemacs-change-root
+                                                  "A-n"        #'treemacs-uproot
+                                                  "A-o"        #'treemacs-change-root
 
-                                                  "A-e" #'treemacs-next-line
-                                                  "A-i" #'treemacs-previous-line))))
+                                                  "A-e"        #'treemacs-next-line
+                                                  "A-i"        #'treemacs-previous-line))))

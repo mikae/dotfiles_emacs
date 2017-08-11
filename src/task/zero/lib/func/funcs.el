@@ -20,7 +20,6 @@
                           (require 'func-hook)
                           (require 'func-keymap)
                           (require 'func-list)
-                          (require 'func-logging)
                           (require 'func-path)
                           (require 'func-string)
                           (require 'func-symbol)

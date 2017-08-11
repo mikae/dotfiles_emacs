@@ -34,7 +34,6 @@
   (serika-c/eg/add-many 'w-purpose
                         ("require")
                         (lambda ()
-                          ()
                           (setq purpose-use-default-configuration nil)
                           (require 'window-purpose)
                           (require 's-helm-window-purpose))
@@ -46,14 +45,8 @@
 
                           (setq purpose-preferred-prompt 'helm)
 
-                          ;; `edit' purpose
-                          (add-to-list 'purpose-user-mode-purposes '(lua-mode        . edit))
-                          (add-to-list 'purpose-user-mode-purposes '(sh-mode         . edit))
-                          (add-to-list 'purpose-user-mode-purposes '(js2-mode        . edit))
-                          (add-to-list 'purpose-user-mode-purposes '(emacs-lisp-mode . edit))
-
                           ;; `output' purpose
-                          (add-to-list 'purpose-user-mode-purposes '(compilation-mode         . output))
+                          (add-to-list 'purpose-user-mode-purposes '(compilation-mode . output))
 
                           ;; `s-helm-window-purpose'
                           (add-to-list 's-purpose-layout-dirs (func/path/join serika-conf-directory

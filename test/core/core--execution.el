@@ -1,7 +1,7 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(require 'func-execution)
+(require 'core--execution)
 (require 'ert)
 (require 'cl)
 

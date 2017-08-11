@@ -19,10 +19,6 @@
                            :post-hook "rake")
 
   (serika-c/eg/add-many 'yasnippet
-                        ("require")
-                        (lambda ()
-                          ())
-
                         ("settings")
                         (lambda ()
                           (func/keymap/create yas-minor-mode-map)

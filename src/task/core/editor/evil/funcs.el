@@ -25,7 +25,7 @@
   (evil-local-mode +1)
   (evil-normal-state))
 
-(defun serika-f/evil/create-activator (&rest forms)
+(defmacro serika-f/evil/create-activator (&rest forms)
   "Create lambda that activater `evil' in current buffer with `normal' state, and
 executes FORMS after."
   `(lambda ()
@@ -49,10 +49,6 @@ executes FORMS after."
 ;; Global
 (defun serika-g/evil//require ()
   "Require modules for `evil'."
-  ()
-  ()
-  ()
-
   (require 'evil)
   (require 'evil-nerd-commenter)
   (require 'ace-jump-mode)
@@ -74,47 +70,45 @@ executes FORMS after."
   "Configure `evil-normal-state-map'."
   ;; qwfp
   (func/keymap/define evil-normal-state-map
-                          "q" 'evil-open-below
-                          "Q" 'evil-open-above
-                          "w" 'evil-replace
-                          "W" 'evil-replace-state
-                          "f" 'evil-delete-char
-                          "F" 'evil-invert-char
-                          "p" 'evil-shift-left
-                          "P" 'evil-shift-right
+                      "q" 'evil-open-below
+                      "Q" 'evil-open-above
+                      "w" 'evil-replace
+                      "W" 'evil-replace-state
+                      "f" 'evil-delete-char
+                      "F" 'evil-invert-char
 
-                          "a" 'evil-append
-                          "A" 'evil-append-line
-                          "r" 'evil-insert
-                          "R" 'evil-insert-line
-                          "s" 'evil-change
-                          "S" 'evil-change-line
-                          "t" 'evil-substitute
-                          "T" 'evil-change-whole-line
+                      "a" 'evil-append
+                      "A" 'evil-append-line
+                      "r" 'evil-insert
+                      "R" 'evil-insert-line
+                      "s" 'evil-change
+                      "S" 'evil-change-line
+                      "t" 'evil-substitute
+                      "T" 'evil-change-whole-line
 
-                          "z" 'evil-delete
-                          "Z" 'evil-delete-line
-                          "x" 'evil-yank
-                          "X" 'evil-yank-line
-                          "c" 'evil-paste-after
-                          "C" 'evil-paste-before
-                          "v" 'evil-visual-char
-                          "V" 'evil-visual-line
+                      "z" 'evil-delete
+                      "Z" 'evil-delete-line
+                      "x" 'evil-yank
+                      "X" 'evil-yank-line
+                      "c" 'evil-paste-after
+                      "C" 'evil-paste-before
+                      "v" 'evil-visual-char
+                      "V" 'evil-visual-line
 
-                          "m" 'kmacro-start-macro-or-insert-counter
-                          "M" 'kmacro-end-or-call-macro
-                          "," 'evil-repeat
-                          "<" 'evil-use-register
-                          "." 'undo
-                          ">" 'redo
+                      "m" 'kmacro-start-macro-or-insert-counter
+                      "M" 'kmacro-end-or-call-macro
+                      "," 'evil-repeat
+                      "<" 'evil-use-register
+                      "." 'undo
+                      ">" 'redo
 
-                          "C-v" 'evil-visual-block
+                      "C-v" 'evil-visual-block
 
-                          "H-z" 'erase-buffer
-                          "H-t" 'serika-f/evil/replace-buffer
-                          "H-s" 'serika-f/evil/change-buffer
+                      "H-z" 'erase-buffer
+                      "H-t" 'serika-f/evil/replace-buffer
+                      "H-s" 'serika-f/evil/change-buffer
 
-                          "C-, C-n" 'evil-emacs-state))
+                      "C-, C-n" 'evil-emacs-state))
 
 (defun serika-g/evil//motion-keymap ()
   "Configure `evil-motion-state-map'."
@@ -201,7 +195,6 @@ executes FORMS after."
 (defun serika-g/evil//ex-keymap ()
   "Configure evil-ex."
   (func/keymap/define evil-ex-completion-map
-                          [return] 'exit-minibuffer
                           "RET"    'exit-minibuffer))
 
 (defun serika-g/evil//global-keymap ()
@@ -244,8 +237,8 @@ executes FORMS after."
    ;; zxcv
    "A-z"  'evil-search-next
    "A-Z"  'evil-search-previous
-   "A-x"  'evil-jump-forward
-   "A-X"  'evil-jump-backward
+   "A-X"  'evil-jump-forward
+   "A-x"  'evil-jump-backward
    "A-c"  'ace-jump-word-mode
    "A-C"  'ace-jump-char-mode
    "A-v"  'ace-jump-line-mode

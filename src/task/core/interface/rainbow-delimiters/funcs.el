@@ -16,8 +16,4 @@
   (serika-c/eg/add-many 'rainbow-delimiters
                         ("require")
                         (lambda ()
-                          (require 'rainbow-delimiters))
-
-                        ("interface")
-                        (lambda ()
-                          )))
+                          (require 'rainbow-delimiters))))

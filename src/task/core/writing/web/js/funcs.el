@@ -66,6 +66,10 @@
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'purpose-user-mode-purposes '(js2-mode . edit)))
+
                         ("settings multi-compile")
                         (lambda ()
                           (add-to-list 'multi-compile-alist '(js2-mode . (("Execute" . "node %path")))))

@@ -20,27 +20,20 @@
   "Activate `emmet-mode'."
   (emmet-mode +1))
 
-;; Global
-(defun serika-g/emmet//keymap ()
-  "Configure `emmet-mode-keymap'."
-  (defvar emmet-mode-keymap (make-sparse-keymap))
-  ;; Because `emmet' uses keymap as local variable
-  (require 'emmet-mode))
-
-(defun serika-g/emmet//settings ()
-  "Configure `emmet-mode' variables."
-  (setq emmet-preview-default nil))
-
 ;; Init
 (defun init ()
   "Configure `emmet-mode'."
-  (serika-c/eg/add-install :package-list '(emmet-mode)
+  (serika-c/eg/add-install :type 'package
+                           :package-list '(emmet-mode)
                            :name         'emmet-mode)
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'emmet-mode
-                   :func    #'serika-g/emmet//keymap)
+  (serika-c/eg/add-many 'emmet-mode
+                        ("require")
+                        (lambda ()
+                          (defvar emmet-mode-keymap (make-sparse-keymap))
+                          ;; Because `emmet' uses keymap as local variable
+                          (require 'emmet-mode) )
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'emmet-mode
-                   :func    #'serika-g/emmet//settings))
+                        ("settings")
+                        (lambda ()
+                          (setq emmet-preview-default nil))))

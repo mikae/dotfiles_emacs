@@ -4,48 +4,6 @@
 ;;; Todo:
 ;;; - setup org-mode integration
 
-;; Global
-(defun serika-g/epub//require ()
-  "Require modules for `epub'."
-  (require 'ereader))
-
-(defun serika-g/epub//settings ()
-  "Configure `epub'."
-  nil)
-
-(defun serika-g/epub//auto-mode-alist ()
-  "Configure `auto-mode-alist'."
-  (add-to-list 'auto-mode-alist '("\\.epub\\'" . ereader-mode)))
-
-(defun serika-g/epub//keymap ()
-  "Configure `ereader-mode-map'."
-  (func/keymap/save ereader-mode-map)
-  (setq ereader-mode-map (let ((map (make-sparse-keymap)))
-                           ;; Searching
-                           (define-key map (kbd "A-1")   #'evil-search-forward)
-                           (define-key map (kbd "A-2")   #'evil-search-backward)
-                           (define-key map (kbd "A-z")   #'evil-search-next)
-                           (define-key map (kbd "A-Z")   #'evil-search-previous)
-
-                           ;; Scrolling
-                           (define-key map (kbd "A-e")   #'evil-scroll-down)
-                           (define-key map (kbd "A-i")   #'evil-scroll-up)
-                           (define-key map (kbd "A-p")   #'evil-scroll-page-down)
-                           (define-key map (kbd "A-P")   #'evil-scroll-page-up)
-
-                           ;; Defaults
-                           (define-key map (kbd "C-c A") #'ereader-hide-annotation)
-                           (define-key map (kbd "C-c G") #'ereader-goto-chapter)
-                           (define-key map (kbd "C-c M") #'ereader-hide-all-annotations)
-                           (define-key map (kbd "C-c R") #'ereader-load-annotations)
-                           (define-key map (kbd "C-c a") #'ereader-show-annotation)
-                           (define-key map (kbd "C-c c") #'ereader-message-chapter)
-                           (define-key map (kbd "C-c g") #'ereader-goto-chapter)
-                           (define-key map (kbd "C-c m") #'ereader-show-all-annotations)
-
-                           ;; (define-key map (kbd "C-c l") 'org-store-link)
-                           map)))
-
 ;; Init
 (defun init ()
   "Configure `epub'."
@@ -58,18 +16,39 @@
                            :name         'packages
                            :parents      '("install ereader"))
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'epub
-                   :func    #'serika-g/epub//require)
+  (serika-c/eg/add-many 'epub
+                        ("require")
+                        (lambda ()
+                          (require 'ereader))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'epub
-                   :func    #'serika-g/epub//settings)
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.epub\\'" . ereader-mode)))
 
-  (serika-c/eg/add :parents '("settings epub")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/epub//auto-mode-alist)
+                        ("keymap")
+                        (lambda ()
+                          (func/keymap/save   ereader-mode-map)
+                          (func/keymap/create ereader-mode-map
+                                              ;; Searching
+                                              "A-1"   #'evil-search-forward
+                                              "A-2"   #'evil-search-backward
+                                              "A-z"   #'evil-search-next
+                                              "A-Z"   #'evil-search-previous
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'epub
-                   :func    #'serika-g/epub//keymap))
+                                              
+                                              "A-e"   #'evil-scroll-down
+                                              "A-i"   #'evil-scroll-up
+                                              "A-p"   #'evil-scroll-page-down
+                                              "A-P"   #'evil-scroll-page-up
+
+                                              
+                                              "C-c A" #'ereader-hide-annotation
+                                              "C-c G" #'ereader-goto-chapter
+                                              "C-c M" #'ereader-hide-all-annotations
+                                              "C-c R" #'ereader-load-annotations
+                                              "C-c a" #'ereader-show-annotation
+                                              "C-c c" #'ereader-message-chapter
+                                              "C-c g" #'ereader-goto-chapter
+                                              "C-c m" #'ereader-show-all-annotations
+                                              ;; "C-c l" 'org-store-link
+                                              ))))

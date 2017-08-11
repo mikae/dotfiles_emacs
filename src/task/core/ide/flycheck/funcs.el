@@ -39,7 +39,6 @@ Executes FORMS after."
   (serika-c/eg/add-many 'flycheck
                         ("require")
                         (lambda ()
-                          ()
                           (require 'flycheck))
 
                         ("settings")

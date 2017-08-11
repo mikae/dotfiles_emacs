@@ -2,58 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/helm//require ()
-  "Require modules for `helm'."
-  (require 'helm-lib)
-  (require 'helm-config))
-
-(defun serika-g/helm//global-keymap ()
-  "Configure global keymap for using `helm'."
-  (global-set-key (kbd "M-a")   #'helm-M-x)
-
-  (global-set-key (kbd "C-x f") #'helm-find-files)
-  (global-set-key (kbd "C-x y") #'helm-show-kill-ring))
-
-(defun serika-g/helm//settings ()
-  "Configure `helm' variables."
-  (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t))
-
-  (setq helm-split-window-in-side-p           t)
-  (setq helm-buffers-fuzzy-matching           t)
-  (setq helm-move-to-line-cycle-in-source     t)
-  (setq helm-ff-search-library-in-sexp        t)
-  (setq helm-ff-file-name-history-use-recentf t))
-
-(defun serika-g/helm//keymap ()
-  "Configure `helm' keymaps."
-  (flet ((cl (ind)
-             ;; Create lambda => cl
-             (lexical-let ((-ind ind))
-               (lambda ()
-                 (interactive)
-                 (helm-select-nth-action -ind))))
-         (cm (map)
-             ;; Configure map => cm
-             (define-key map (kbd "A-e") 'helm-next-line)
-             (define-key map (kbd "A-i") 'helm-previous-line)
-             (define-key map (kbd "A-E") 'helm-next-source)
-             (define-key map (kbd "A-I") 'helm-previous-source)
-             (define-key map (kbd "RET") 'helm-maybe-exit-minibuffer)
-             (define-key map (kbd "TAB") 'helm-select-action)
-             (dolist (ind '(1 2 3 4 5 6 7 8 9))
-               (define-key map (kbd (format "A-%d" ind)) (cl (1- ind))))
-             (define-key map (kbd "A-0") (cl 9))
-             )
-         )
-    (setq helm-map (make-sparse-keymap))
-    (cm helm-map)
-
-    (setq helm-buffer-map (make-sparse-keymap))
-    ()))
-
-(defun serika-g/helm//activate ()
+;; Funcs
+(defun serika-f/helm/activate ()
   "Activate `helm'."
   (helm-mode +1))
 
@@ -63,22 +13,59 @@
   (serika-c/eg/add-install :package-list '(helm)
                            :name         'helm)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'helm
-                   :func    #'serika-g/helm//require)
+  (serika-c/eg/add-many 'helm
+                        ("require")
+                        (lambda ()
+                          (require 'helm-lib)
+                          (require 'helm-config))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'helm
-                   :func    #'serika-g/helm//settings)
+                        ("settings")
+                        (lambda ()
+                          (when (executable-find "curl")
+                            (setq helm-google-suggest-use-curl-p t))
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'helm
-                   :func    #'serika-g/helm//keymap)
+                          (setq helm-split-window-in-side-p           t)
+                          (setq helm-buffers-fuzzy-matching           t)
+                          (setq helm-move-to-line-cycle-in-source     t)
+                          (setq helm-ff-search-library-in-sexp        t)
+                          (setq helm-ff-file-name-history-use-recentf t))
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'helm
-                   :func    #'serika-g/helm//global-keymap)
+                        ("keymap")
+                        (lambda ()
+                          (cl-macrolet ((cl (ind)
+                                            `(lambda ()
+                                               (interactive)
+                                               (helm-select-nth-action (- ,ind))))
+                                        (cm (map)
+                                            `(func/keymap/save   ,map)
+                                            `(func/keymap/create ,map
+                                                                 "A-e" 'helm-next-line
+                                                                 "A-i" 'helm-previous-line
+                                                                 "A-E" 'helm-next-source
+                                                                 "A-I" 'helm-previous-source
+                                                                 "RET" 'helm-maybe-exit-minibuffer
+                                                                 "TAB" 'helm-select-action
+                                                                 "A-1" (cl 0)
+                                                                 "A-2" (cl 1)
+                                                                 "A-3" (cl 2)
+                                                                 "A-4" (cl 3)
+                                                                 "A-5" (cl 4)
+                                                                 "A-6" (cl 5)
+                                                                 "A-7" (cl 6)
+                                                                 "A-8" (cl 7)
+                                                                 "A-9" (cl 8)
+                                                                 "A-0" (cl 9))))
+                            (cm helm-map)
 
-  (serika-c/eg/add :parents '("post activate")
-                   :name    'helm
-                   :func    #'serika-g/helm//activate))
+                            (func/keymap/save   helm-buffer-map)
+                            (func/keymap/create helm-buffer-map)))
+
+                        ("global-keymap")
+                        (lambda ()
+                          (func/keymap/define-global "M-a"   #'helm-M-x
+
+                                                     "C-x f" #'helm-find-files
+                                                     "C-x y" #'helm-show-kill-ring))
+
+                        ("post activate")
+                        #'serika-f/helm/activate))

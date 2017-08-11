@@ -23,12 +23,11 @@ executes FORMS after."
   (serika-c/eg/add-many 'auto-complete
                         ("require")
                         (lambda ()
-                          ()
                           (require 'auto-complete))
 
                         ("settings")
                         (lambda ()
-                          (setq ac-delay 0.2)
+                          (setq ac-delay 0.1)
                           (setq ac-quick-help-delay 2)
                           (setq ac-auto-start 2)
                           (setq ac-use-quick-help t)

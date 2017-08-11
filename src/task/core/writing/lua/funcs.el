@@ -59,19 +59,26 @@
                         (lambda ()
                           (require 'lua-mode)
                           (require 'company-lua))
+
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode)))
+
+                        ("settings w-purpose")
+                        (lambda ()
+                          (add-to-list 'purpose-user-mode-purposes '(lua-mode . edit)))
+
                         ("settings multi-compile")
                         (lambda ()
                           (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
+
                         ("keymap")
                         (lambda ()
                           (func/keymap/create lua-mode-map
-                                                  "C-c c" #'multi-compile-run
-                                                  "C-t =" #'evil-indent
-                                                  "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                  "C-t e" #'yas-expand))
+                                              "C-c c" #'multi-compile-run
+                                              "C-t =" #'evil-indent
+                                              "C-t /" #'evilnc-comment-or-uncomment-lines
+                                              "C-t e" #'yas-expand))
                         ("hook")
                         (lambda ()
                           (dolist (callback (list #'serika-l/lua//evil

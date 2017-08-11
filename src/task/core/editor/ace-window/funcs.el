@@ -2,35 +2,22 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Global
-(defun serika-g/ace-window//require ()
-  "Require modules."
-  (require 'ace-window))
-
-(defun serika-g/ace-window//settings ()
-  "Configure `ace-window' settings."
-  (setq aw-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o))
-  (setq aw-dispatch-always t))
-
-(defun serika-g/ace-window//global-keymap ()
-  "Configure global keymap to use`ace-window'."
-  (global-set-key (kbd "C-w s") 'ace-window))
-
 ;; Init
 (defun init ()
   "Configure ace-window."
   (serika-c/eg/add-install :package-list '(ace-window)
                            :name 'ace-window)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'ace-window
-                   :func    #'serika-g/ace-window//require)
+  (serika-c/eg/add-many 'ace-window
+                        ("require")
+                        (lambda ()
+                          (require 'ace-window))
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'ace-window
-                   :func    #'serika-g/ace-window//settings)
+                        ("settings")
+                        (lambda ()
+                          (setq aw-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o))
+                          (setq aw-dispatch-always t))
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'ace-window
-                   :func    #'serika-g/ace-window//global-keymap)
-  )
+                        ("global-keymap")
+                        (lambda ()
+                          (func/keymap/define-global "C-w s" #'ace-window))))

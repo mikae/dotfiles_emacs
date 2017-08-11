@@ -24,46 +24,30 @@
   (scroll-left 1))
 
 ;; Global
-(defun serika-g/image//settings ()
-  "Configure `auto-mode-alist' for image files."
-  nil)
-
-(defun serika-g/image//auto-mode-alist ()
-  "Configure `auto-mode-alist' for image files."
-  (add-to-list 'auto-mode-alist '("\\.bmp\\'"  . image-mode))
-  (add-to-list 'auto-mode-alist '("\\.jpg\\'"  . image-mode))
-  (add-to-list 'auto-mode-alist '("\\.jpeg\\'" . image-mode))
-  (add-to-list 'auto-mode-alist '("\\.png\\'"  . image-mode)))
-
-(defun serika-g/image//keymap ()
-  "Configure `image-mode-map'."
-  (setq image-mode-map (let ((map (make-sparse-keymap)))
-                         ;; Quit from image viewing
-                         (define-key map (kbd "q")     #'func/buffer/kill-current)
-
-                         (define-key map (kbd "n")     #'serika-f/image/scroll-left)
-                         (define-key map (kbd "e")     #'serika-f/image/scroll-down)
-                         (define-key map (kbd "i")     #'serika-f/image/scroll-up)
-                         (define-key map (kbd "o")     #'serika-f/image/scroll-right)
-
-                         (define-key map (kbd "A-E")   #'image-next-file)
-                         (define-key map (kbd "A-I")   #'image-previous-file)
-
-                         (define-key map (kbd "C-c p") (lambda ()
-                                                         (interactive)
-                                                         (run-associated-program buffer-file-name)))
-                         map)))
-
 (defun init ()
   "Configure `image-mode'."
-  (serika-c/eg/add :parents '("settings")
-                   :name    'image
-                   :func    #'serika-g/image//settings)
+  (serika-c/eg/add-many 'image
+                        ("settings")
+                        (lambda ()
+                          (add-to-list 'auto-mode-alist '("\\.bmp\\'"  . image-mode))
+                          (add-to-list 'auto-mode-alist '("\\.jpg\\'"  . image-mode))
+                          (add-to-list 'auto-mode-alist '("\\.jpeg\\'" . image-mode))
+                          (add-to-list 'auto-mode-alist '("\\.png\\'"  . image-mode)))
 
-  (serika-c/eg/add :parents '("settings image")
-                   :name    'auto-mode-alist
-                   :func    #'serika-g/image//auto-mode-alist)
+                        ("keymap")
+                        (lambda ()
+                          (func/keymap/save   image-mode-map)
+                          (func/keymap/create image-mode-map
+                                              "q"     #'func/buffer/kill-current
 
-  (serika-c/eg/add :parents '("keymap")
-                   :name    'image
-                   :func    #'serika-g/image//keymap))
+                                              "n"     #'serika-f/image/scroll-left
+                                              "e"     #'serika-f/image/scroll-down
+                                              "i"     #'serika-f/image/scroll-up
+                                              "o"     #'serika-f/image/scroll-right
+
+                                              "A-E"   #'image-next-file
+                                              "A-I"   #'image-previous-file
+
+                                              "C-c p" (lambda ()
+                                                        (interactive)
+                                                        (run-associated-program buffer-file-name))))))

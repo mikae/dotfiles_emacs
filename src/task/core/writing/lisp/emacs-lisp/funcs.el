@@ -19,13 +19,15 @@
    'emacs-lisp
    ("require")
    (lambda ()
-     ()
-     ()
      (require 'flycheck-cask))
 
    ("settings")
    (lambda ()
      (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
+
+   ("settings w-purpose")
+   (lambda ()
+     (add-to-list 'purpose-user-mode-purposes '(emacs-lisp-mode . edit)))
 
    ("settings smartparens")
    (lambda ()
@@ -35,9 +37,9 @@
    ("keymap")
    (lambda ()
      (func/keymap/create emacs-lisp-mode-map
-                             "C-t =" #'evil-indent
-                             "C-t /" #'evilnc-comment-or-uncomment-lines
-                             "C-t e" #'yas-expand))
+                         "C-t =" #'evil-indent
+                         "C-t /" #'evilnc-comment-or-uncomment-lines
+                         "C-t e" #'yas-expand))
 
    ("hook")
    (lambda ()
@@ -48,35 +50,37 @@
        ;; so, predicate was added
        (func/func/predicated
         (func/func/construct (serika-f/settings/create-configurator tab-width      2
-                                                                        truncate-lines t)
-                                 (serika-f/evil/create-activator
-                                  (setq evil-shift-width 2))
-                                 #'serika-f/smartparens/activate
+                                                                    truncate-lines t)
+                             (serika-f/evil/create-activator
+                              (setq evil-shift-width 2))
+                             #'serika-f/smartparens/activate
+                             #'serika-f/aggressive-indent/activate
 
-                                 #'serika-f/yasnippet/activate
-                                 (serika-f/flycheck/create-activator
-                                  (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-                                  (flycheck-cask-setup))
-                                 (serika-f/company/create-activator
-                                  (setq-local company-backends '(company-elisp)))
-                                 #'serika-f/eldoc/activate
-                                 #'serika-f/ggtags/activate
-                                 #'serika-f/flycheck/activate
+                             #'serika-f/yasnippet/activate
+                             (serika-f/flycheck/create-activator
+                              (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+                              (flycheck-cask-setup))
+                             (serika-f/company/create-activator
+                              (setq-local company-backends '(company-elisp)))
+                             #'serika-f/eldoc/activate
+                             #'serika-f/ggtags/activate
+                             #'serika-f/flycheck/activate
+                             #'serika-f/projectile/try-activate
 
-                                 #'serika-f/settings/show-trailing-whitespaces
-                                 #'serika-f/linum-relative/activate
-                                 #'serika-f/rainbow-delimiters/activate
-                                 (serika-f/prettify-symbols/create-loader "emacs-lisp")
-                                 (serika-f/purpose/use-layout "emacs-lisp.purpose-layout")
+                             #'serika-f/settings/show-trailing-whitespaces
+                             #'serika-f/linum-relative/activate
+                             #'serika-f/rainbow-delimiters/activate
+                             #'serika-f/highlight-symbol/activate
+                             (serika-f/prettify-symbols/create-loader "emacs-lisp")
+                             (serika-f/purpose/use-layout "emacs-lisp.purpose-layout")
 
-                                 #'serika-f/flycheck/create
-                                 (func/func/predicated #'serika-f/treemacs/create
-                                                           #'serika-f/treemacs/not-exists-p)
-                                 )
+                             #'serika-f/flycheck/create
+                             (func/func/predicated #'serika-f/treemacs/create
+                                                   #'serika-f/treemacs/not-exists-p))
         #'serika-f/emacs-lisp/p)
        (func/func/predicated
         (func/func/bind 'func/buffer/focus-to
-                            'emacs-lisp-mode)
+                        'emacs-lisp-mode)
         (lambda ()
           (not (func/buffer/check-modes 'emacs-lisp-mode
-                                            'lisp-interaction-mode)))))))))
+                                        'lisp-interaction-mode)))))))))

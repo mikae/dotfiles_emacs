@@ -16,8 +16,4 @@
   (serika-c/eg/add-many 'rainbow-mode
                         ("require")
                         (lambda ()
-                          (require 'rainbow-mode))
-
-                        ("interface")
-                        (lambda ()
-                          )))
+                          (require 'rainbow-mode))))

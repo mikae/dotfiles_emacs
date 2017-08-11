@@ -3,15 +3,8 @@
 ;;; Code:
 
 ;; Global
-(defun serika-g/key//require ()
-  "Require modules for `dired'."
-  ()
-  ()
-  ())
-
 (defun serika-g/key//unset-bindings ()
   "Clear default bindings."
-  (message "lol")
   (dolist (k '(
                "return" "tab" "escape"))
     (global-unset-key (kbd (concat "<C-" k ">")))
@@ -110,10 +103,6 @@
 
 (defun init ()
   "Configure keys."
-  (serika-c/eg/add :parents '("base require")
-                   :name    'keys
-                   :func    #'serika-g/key//require)
-
   (serika-c/eg/add :parents '("global-keymap")
                    :name    'unset-bindings
                    :func    #'serika-g/key//unset-bindings)

@@ -5,7 +5,6 @@
 ;; Global
 (defun serika-g/moe-theme/require ()
   "Require modules for `moe'."
-  ()
   (require 'moe-theme))
 
 (defun serika-g/moe-theme/configure ()
@@ -19,7 +18,8 @@
 ;; Init
 (defun init ()
   "Configure `moe-theme'."
-  (serika-c/eg/add-install :package-list '(moe-theme)
+  (serika-c/eg/add-install :type 'package
+                           :package-list '(moe-theme)
                            :name         'moe-theme
                            :parents      '("base interface install"))
 

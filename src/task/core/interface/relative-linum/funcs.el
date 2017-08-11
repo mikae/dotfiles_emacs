@@ -8,17 +8,18 @@
   (linum-on)
   (linum-relative-on))
 
-;; Global
-(defun serika-g/linum-relative//require ()
-  "Require modules for linum"
-  (require 'linum-relative))
-
 ;; Init
 (defun init ()
   "Configure `linum'."
-  (serika-c/eg/add-install :package-list '(linum-relative)
+  (serika-c/eg/add-install :type         'package
+                           :package-list '(linum-relative)
                            :name         'linum-relative)
 
-  (serika-c/eg/add :parents '("require")
-                   :name    'linum-relative
-                   :func    #'serika-g/linum-relative//require))
+  (serika-c/eg/add-many 'linum-relative
+                        ("require")
+                        (lambda ()
+                          (require 'linum-relative))
+
+                        ("settings")
+                        (lambda ()
+                          (setq linum-relative-current-symbol ""))))

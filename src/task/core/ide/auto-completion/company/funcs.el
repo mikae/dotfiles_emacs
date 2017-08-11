@@ -24,13 +24,13 @@ Executer FORMS after."
   (serika-c/eg/add-many 'company
                         ("require")
                         (lambda ()
-                          ()
                           (require 'company))
 
                         ("settings")
                         (lambda ()
                           (setq company-minimum-prefix-length 2)
-                          (setq company-mode/enable-yas t))
+                          (setq company-mode/enable-yas t)
+                          (setq company-idle-delay 0.1))
 
                         ("keymap")
                         (lambda ()
