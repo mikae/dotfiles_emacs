@@ -1,7 +1,7 @@
 ;;; package --- serika entry point -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(defconst serika-emacs-min-version   "24.4"
+(defconst serika-emacs-min-version   "25.1.1"
   "Minimal version of Emacs.")
 
 (if (not (version<= serika-emacs-min-version emacs-version))

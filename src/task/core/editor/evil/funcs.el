@@ -246,7 +246,7 @@ executes FORMS after."
    ;; <Tab>!@
    "<A-tab>" 'evil-jump-item
    "A-1"     'evil-search-forward
-   "A-2"     'evil-search-backward
+   "A-!"     'evil-search-backward
 
    ;; neio'
    "A-n"  'evil-backward-char

@@ -21,4 +21,5 @@
                                               "C-p f" 'helm-projectile-find-file-dwim
                                               "C-p g" 'helm-projectile-find-file
                                               "C-p b" 'helm-projectile-switch-to-buffer
-                                              "C-p o" 'helm-projectile-find-other-file))))
+                                              "C-p o" 'helm-projectile-find-other-file)
+                          )))

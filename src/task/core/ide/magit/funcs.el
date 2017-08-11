@@ -17,4 +17,9 @@
                         ("global-keymap")
                         (lambda ()
                           (func/keymap/define-global "C-x m i" 'magit-init
-                                                     "C-x m s" 'magit-status))))
+                                                     "C-x m s" 'magit-status))
+
+                        ("hook")
+                        (lambda ()
+                          (func/hook/add 'magit-log-mode-hook
+                                         #'serika-f/emojify/activate))))

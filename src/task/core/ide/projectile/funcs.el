@@ -28,8 +28,23 @@
 
                         ("keymap")
                         (lambda ()
-                          (func/keymap/save   projectile-mode-map)
-                          (func/keymap/create projectile-mode-map
+                          ;; fix this. doesn't work
+                          ;; (func/keymap/save  projectile-mode-map)
+                          ;; (func/keymap/define projectile-mode-map
+                          ;;                     "C-p !" 'projectile-run-shell-command-in-root
+                          ;;                     "C-p @" 'projectile-run-async-shell-command-in-root
+
+                          ;;                     "C-p d" 'projectile-dired
+                          ;;                     "C-p e" 'projectile-edit-dir-locals
+                          ;;                     "C-p k" 'projectile-kill-buffers
+                          ;;                     "C-p r" 'projectile-recentf
+                          ;;                     "C-p t" 'projectile-toggle-between-implementation-and-test
+                          ;;                     "C-p a" 'projectile-ag
+
+                          ;;                     "C-p C" 'projectile-compile-project
+                          ;;                     "C-p T" 'projectile-test-project
+                          ;;                     "C-p S" 'projectile-save-project-buffers)
+                          (func/keymap/define projectile-mode-map
                                               "C-p !" 'projectile-run-shell-command-in-root
                                               "C-p @" 'projectile-run-async-shell-command-in-root
 
@@ -42,7 +57,8 @@
 
                                               "C-p C" 'projectile-compile-project
                                               "C-p T" 'projectile-test-project
-                                              "C-p S" 'projectile-save-project-buffers))
+                                              "C-p S" 'projectile-save-project-buffers)
+                          )
 
                         ("keymap dired")
                         (lambda ()
