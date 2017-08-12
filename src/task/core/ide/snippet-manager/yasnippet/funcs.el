@@ -13,25 +13,24 @@
 ;; Init
 (defun init ()
   "Configure `yasnippet'."
-  (serika-c/eg/add-install :type      'git
-                           :name      'yasnippet
-                           :src       "https://github.com/joaotavora/yasnippet"
-                           :post-hook "rake")
+  (serika-c/eg/add-install :type         'package
+                           :name         'yasnippet
+                           :package-list '(yasnippet))
 
   (serika-c/eg/add-many 'yasnippet
                         ("settings")
                         (lambda ()
                           (func/keymap/create yas-minor-mode-map)
                           (func/keymap/create yas-keymap
-                                                  "A-O" 'yas-next-field
-                                                  "A-N" 'yas-prev-field)
+                                              "A-O" 'yas-next-field
+                                              "A-N" 'yas-prev-field)
 
                           (require 'yasnippet)
 
                           (setq yas-snippet-dirs
                                 (func/path/join serika-conf-directory
-                                                    "yasnippet"
-                                                    "snippets"))))
+                                                "yasnippet"
+                                                "snippets"))))
 
   (serika-c/eg/add-many 'yasnippet-snippet
                         ("settings")

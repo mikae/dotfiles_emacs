@@ -9,7 +9,7 @@
 (defun serika-f/prettify-symbols/create-loader (name)
   "Create lambda that activates `prettify-symbols-mode', and
 setups `prettify-symbols-alist'."
-  (let* ((--conf (func/file/read-as-string (func/path/join serika-conf-directory
+  (let* ((--conf (f-read-text (func/path/join serika-conf-directory
                                                                    "prettify-symbols"
                                                                    (concat name
                                                                            ".prettify-symbols"))))

@@ -6,7 +6,7 @@
 (defun serika-f/projectile/ini ()
   "Ini `projectile' project in current directory."
   (interactive)
-  (func/file/create ".projectile")
+  (f-append-text "" 'utf-8 ".projectile")
   (when (equal major-mode 'dired-mode)
     (revert-buffer)))
 

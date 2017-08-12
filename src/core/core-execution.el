@@ -47,13 +47,13 @@
           :parents parents
           :func    func
           :node    node))
-
-(cl-defun serika-c/eg/add-install (&key type (last 'package)
-                                        &key package-list (last '())
-                                        &key name         (last '__unnamed__)
-                                        &key parents      (last nil)
-                                        &key src          (last nil)
-                                        &key post-hook    (last nil))
+(cl-defun serika-c/eg/add-install (&key (type 'package)
+                                        (package-list '())
+                                        (name         '__unnamed__)
+                                        (parents      nil)
+                                        (src          nil)
+                                        (post-hook    nil)
+                                        (extra-path   '()))
   "Add new execution node which installs PACKAGE-LIST."
   (let ((--type         (or type    'package))
         (--parents      (or parents '("install")))
@@ -61,44 +61,51 @@
         (--src          src)
         (--name         name)
         (--lambda       nil)
-        (--post-hook    post-hook))
+        (--post-hook    post-hook)
+        (--extra-path   extra-path))
     (setq --lambda
           (cond
            ((eq --type 'package) (lambda ()
                                    (mapcar #'serika-f/package/make-sure-installed
                                            --package-list)))
+           ;; todo: add directory download
            ((eq --type 'download) (when (stringp --src)
                                     (lambda ()
                                       (let ((--destination (func/path-join serika-plugin-directory
-                                                                               (func/string-parse-url (file-name-nondirectory --src)))))
+                                                                           (func/string-parse-url (file-name-nondirectory --src)))))
                                         (unless (file-exists-p --destination)
                                           (url-copy-file --src
                                                          --destination))))))
            ((eq --type 'git) (when (stringp --src)
                                (lambda ()
                                  (let ((--destination (func/path-join serika-plugin-directory
-                                                                          (file-name-nondirectory --src))))
+                                                                      (file-name-nondirectory --src))))
                                    (unless (file-exists-p --destination)
                                      (shell-command-to-string (format "git clone %s %s"
                                                                       --src
                                                                       --destination))
-                                     ;; Execute post hook in cloned dir
                                      (when --post-hook
                                        (shell-command-to-string (format "cd %s && %s"
                                                                         --destination
-                                                                        --post-hook)))
+                                                                        --post-hook))))
 
+                                   (when (file-accessible-directory-p --destination)
+                                     (add-to-list 'load-path --destination)
 
-                                     ;; Update load path
-                                     (when (file-accessible-directory-p --destination)
-                                       (add-to-list 'load-path --destination)))))))
+                                     (cl-loop for --ep in --extra-path
+                                              do
+                                              (when (file-accessible-directory-p (func/path-join --destination
+                                                                                                 --ep))
+                                                (add-to-list 'load-path (func/path-join --destination --ep)))))))))
            (t nil)))
 
     (when --lambda
       (eg/add --serika-execution-graph
               :name    --name
               :parents --parents
-              :func    --lambda))))
+              :func --lambda))))
+
+
 
 (defmacro serika-c/eg/add-many (name &rest args)
   "Add many execution nodes at once.

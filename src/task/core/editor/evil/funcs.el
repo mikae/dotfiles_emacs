@@ -69,6 +69,8 @@ executes FORMS after."
                       "W"   #'evil-replace-state
                       "f"   #'evil-delete-char
                       "F"   #'evil-invert-char
+                      "p"   #'evil-join
+                      "P"   #'evil-join-whitespace
 
                       "a"   #'evil-append
                       "A"   #'evil-append-line
@@ -98,8 +100,8 @@ executes FORMS after."
                       "C-v" #'evil-visual-block
 
                       "H-z" #'erase-buffer
-                      "H-t" #'serika-f/evil/replace-buffer
-                      "H-s" #'serika-f/evil/change-buffer
+                      "H-x" #'serika-f/evil/replace-buffer
+                      "H-c" #'serika-f/evil/change-buffer
 
                       "C-, C-n" 'evil-emacs-state))
 
@@ -185,7 +187,7 @@ executes FORMS after."
 (defun serika-g/evil//ex-keymap ()
   "Configure evil-ex."
   (func/keymap/define evil-ex-completion-map
-                          "RET"    'exit-minibuffer))
+                      "RET" 'exit-minibuffer))
 
 (defun serika-g/evil//global-keymap ()
   "Add movements into Emacs global keymap."

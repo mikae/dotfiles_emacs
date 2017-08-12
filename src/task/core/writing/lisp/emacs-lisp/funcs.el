@@ -31,7 +31,12 @@
 
    ("settings smartparens")
    (lambda ()
-     (serika-f/smartparens/load 'emacs-lisp-mode)
+     (sp-local-pair 'emacs-lisp-mode "("    ")")
+     (sp-local-pair 'emacs-lisp-mode "{"    "}")
+     (sp-local-pair 'emacs-lisp-mode "["    "]")
+     (sp-local-pair 'emacs-lisp-mode "\""   "\"")
+     (sp-local-pair 'emacs-lisp-mode "`"    "'")
+     (sp-local-pair 'emacs-lisp-mode "\\\"" "\\\"")
      )
 
    ("keymap")
@@ -80,10 +85,10 @@
           (not (func/buffer/check-modes 'emacs-lisp-mode
                                         'lisp-interaction-mode))))
 
-       (func/func/predicated (func/func/construct #'serika-f/focus/activate
-                                                  #'serika-f/settings/show-trailing-whitespaces
-                                                  #'serika-f/linum-relative/activate
-                                                  #'serika-f/rainbow-delimiters/activate
-                                                  #'serika-f/highlight-symbol/activate
-                                                  (serika-f/prettify-symbols/create-loader "emacs-lisp")                                                  )
+       (func/func/predicated (func/func/construct
+                              #'serika-f/settings/show-trailing-whitespaces
+                              #'serika-f/linum-relative/activate
+                              #'serika-f/rainbow-delimiters/activate
+                              #'serika-f/highlight-symbol/activate
+                              (serika-f/prettify-symbols/create-loader "emacs-lisp")                                                  )
                              #'serika-f/emacs-lisp/p))))))

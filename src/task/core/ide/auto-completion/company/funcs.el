@@ -3,9 +3,11 @@
 ;;; Code:
 
 ;; Functions
-(defun serika-f/company/activate ()
+(cl-defun serika-f/company/activate (&key (backends nil backends-provided-p))
   "Activate `company-mode' in current buffer."
-  (company-mode +1))
+  (company-mode +1)
+  (when backends-provided-p
+    (setq-local company-backends backends)))
 
 (defmacro serika-f/company/create-activator (&rest forms)
   "Return lambda that activater `company-mode' in current buffer.

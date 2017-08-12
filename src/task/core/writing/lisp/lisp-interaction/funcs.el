@@ -2,52 +2,33 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Local
-(defun serika-l/lisp-interaction//buffer-local-variables ()
-  "Configure snippet engine for `lisp-interaction' mode."
-  (setq tab-width 2)
-  (setq truncate-lines t))
-
-
-(defun serika-l/lisp-interaction//evil ()
-  "Configure `evil' for `lisp-interaction-mode'."
-  (setq evil-shift-width 2)
-  (evil-local-mode +1)
-  (evil-normal-state))
-
-(defun serika-l/lisp-interaction//interface ()
-  "Configure interface for `lisp-interaction' mode."
-  (setq show-trailing-whitespace +1)
-
-  (rainbow-delimiters-mode       +1)
-  (serika-f/linum-relative/activate))
-
-(defun serika-l/lisp-interaction//prettify-symbols ()
-  "Configure prettify symbols for `lisp-interaction' mode."
-  (prettify-symbols-mode +1)
-
-  (setq prettify-symbols-alist ())
-
-  (push '("lambda" . ?λ) prettify-symbols-alist)
-  (push '(">="     . ?≤) prettify-symbols-alist)
-  (push '("<="     . ?≥) prettify-symbols-alist))
-
+;; Init
 (defun init ()
   "Configure `lisp-interaction-mode'."
   (serika-c/eg/add-many 'lisp-interaction
                         ("keymap")
                         (lambda ()
                           (func/keymap/create lisp-interaction-mode-map
-                                                  "C-t ="    #'evil-indent
-                                                  "C-t /"    #'evilnc-comment-or-uncomment-lines
-                                                  "C-c e"    #'eval-last-sexp
-                                                  "C-x C-s"  #'ignore))
+                                              "C-t ="    #'evil-indent
+                                              "C-t /"    #'evilnc-comment-or-uncomment-lines
+                                              "C-c e"    #'eval-last-sexp
+                                              "C-x C-s"  #'ignore))
                         ("hook")
                         (lambda ()
-                          (dolist (callback (list
-                                             'serika-l/lisp-interaction//evil
-                                             'serika-l/lisp-interaction//buffer-local-variables
+                          (func/hook/add 'lisp-interaction-mode-hook
+                                         (func/func/construct (serika-f/settings/create-configurator tab-width       2
+                                                                                                     truncate-lines  t)
+                                                              (serika-f/evil/create-activator
+                                                               (setq evil-shift-width 2))
 
-                                             'serika-l/lisp-interaction//interface
-                                             'serika-l/lisp-interaction//prettify-symbols))
-                            (func/hook/add 'lisp-interaction-mode-hook callback)))))
+                                                              #'serika-f/yasnippet/activate
+                                                              #'serika-f/eldoc/activate
+                                                              (serika-f/company/create-activator
+                                                               (setq-local company-backends '(company-elisp)))
+
+
+                                                              #'serika-f/highlight-symbol/activate
+                                                              #'serika-f/settings/show-trailing-whitespaces
+                                                              #'serika-f/linum-relative/activate
+                                                              #'serika-f/rainbow-delimiters/activate
+                                                              (serika-f/prettify-symbols/create-loader "lisp-interaction"))))))

@@ -15,7 +15,6 @@
                           (require 'func-buffer)
                           (require 'func-char)
                           (require 'func-eval)
-                          (require 'func-file)
                           (require 'func-func)
                           (require 'func-hook)
                           (require 'func-keymap)

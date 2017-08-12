@@ -7,9 +7,16 @@
   "Return t if LAYOUT-PATH is correct window purpose layout file."
   (and (file-exists-p layout-path)))
 
+(defun serika-f/purpose/load-layout (layout-name)
+  (let ((layout-path (f-join serika-layouts-directory
+                             layout-name)))
+    (when (serika-f/purpose/layoutp layout-path)
+      (purpose-x-code1-setup)
+      (purpose-load-window-layout-file layout-path))))
+
 (defun serika-f/purpose/use-layout (layout-name)
-  (let ((layout-path (func/path/join serika-layouts-directory
-                                         layout-name)))
+  (let ((layout-path (f-join serika-layouts-directory
+                             layout-name)))
     (if (serika-f/purpose/layoutp layout-path)
         (lambda ()
           (purpose-x-code1-setup)

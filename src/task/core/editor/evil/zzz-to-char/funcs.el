@@ -16,5 +16,5 @@
                         ("keymap evil normal")
                         (lambda ()
                           (func/keymap/define evil-normal-state-map
-                                              "p"   #'zzz-to-char
-                                              "P"   #'zzz-up-to-char))))
+                                              "g"   #'zzz-to-char
+                                              "G"   #'zzz-up-to-char))))
