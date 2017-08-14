@@ -89,11 +89,11 @@
 
                         ("settings smartparens")
                         (lambda ()
-                          (sp-local-pair 'emacs-lisp-mode "("    ")")
-                          (sp-local-pair 'emacs-lisp-mode "{"    "}")
-                          (sp-local-pair 'emacs-lisp-mode "["    "]")
-                          (sp-local-pair 'emacs-lisp-mode "\""   "\"")
-                          (sp-local-pair 'emacs-lisp-mode "\\\"" "\\\"")
+                          (sp-local-pair 'js2-mode "("    ")")
+                          (sp-local-pair 'js2-mode "{"    "}")
+                          (sp-local-pair 'js2-mode "["    "]")
+                          (sp-local-pair 'js2-mode "\""   "\"")
+                          (sp-local-pair 'js2-mode "\\\"" "\\\"")
                           )
 
                         ("keymap")
