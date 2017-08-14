@@ -15,5 +15,5 @@
                         ("keymap evil visual")
                         (lambda ()
                           (func/keymap/define evil-visual-state-map
-                                              "s" #'er/expand-region)))
+                                              "TAB" #'er/expand-region)))
   )

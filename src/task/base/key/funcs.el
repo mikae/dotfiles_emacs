@@ -76,30 +76,31 @@
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
     (global-set-key (kbd elem) 'digit-argument))
 
-  (global-set-key (kbd "C-x C-s")   #'save-buffer)
-  (global-set-key (kbd "C-x C-S-s") #'func/tramp/sudo-write)
-  (global-set-key (kbd "C-x C-c")   #'func/buffer/kill)
-  (global-set-key (kbd "C-x C-h")   #'previous-buffer)
-  (global-set-key (kbd "C-x C-g")   #'revert-buffer)
+  (func/keymap/define-global "C-x C-s"   #'save-buffer
+                             "C-x C-S-s" #'func/tramp/sudo-write
+                             "C-x C-c"   #'func/buffer/kill
+                             "C-x C-h"   #'previous-buffer
+                             "C-x C-g"   #'revert-buffer
 
-  (global-set-key (kbd "C-x C-q")   #'save-buffers-kill-terminal)
+                             "C-x C-q"   #'save-buffers-kill-terminal
 
-  (global-set-key (kbd "M-r")       #'eval-expression)
+                             "C-x m m"   #'kmacro-start-macro-or-insert-counter
+                             "C-x m M"   #'kmacro-end-or-call-macro
 
-  ;; Describe
-  (global-set-key (kbd "C-x h v")   #'describe-variable)
-  (global-set-key (kbd "C-x h f")   #'describe-function)
-  (global-set-key (kbd "C-x h k")   #'describe-key)
+                             "C-x h v"   #'describe-variable
+                             "C-x h f"   #'describe-function
+                             "C-x h k"   #'describe-key
 
-  ;; Transform
-  (global-set-key (kbd "C-t w")     #'delete-trailing-whitespace)
+                             "C-x c u"   #'serika-f/settings/change-user
 
-  ;; Toggle
-  (global-set-key (kbd "C-x t r")   #'read-only-mode)
+                             "C-t w"     #'delete-trailing-whitespace
 
-  ;; Windows
-  (global-set-key (kbd "C-w f")   #'delete-other-windows)
-  (global-set-key (kbd "C-w F")   #'func/window/only-new-window))
+                             "C-x t r"   #'read-only-mode
+
+                             "C-w f"     #'delete-other-windows
+                             "C-w F"     #'func/window/only-new-window
+
+                             "M-r"       #'eval-expression))
 
 (defun init ()
   "Configure keys."

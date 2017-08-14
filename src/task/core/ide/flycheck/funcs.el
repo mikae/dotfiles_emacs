@@ -3,8 +3,13 @@
 ;;; Code:
 
 ;; Functions
-(defun serika-f/flycheck/activate ()
+(cl-defun serika-f/flycheck/activate (&key ((:disabled-checkers --fdc) '() --fdc-p))
   "Enable flycheck in current buffer."
+  (when --fdc-p
+    (if (listp --fdc)
+        (setq flycheck-disabled-checkers --fdc)
+      (error "Attempt to set non-list to `flycheck-disabled-checkers'.")
+      ))
   (flycheck-mode +1))
 
 (defmacro serika-f/flycheck/create-activator (&rest forms)

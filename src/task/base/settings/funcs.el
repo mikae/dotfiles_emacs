@@ -2,17 +2,45 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Vars
+(defvar --serika-prettify-symbols-cache (make-hash-table :test 'equal)
+  "Cache for `prettify-symbols' content files.")
+
 ;; Functions
-;; `prettify-symbols'
-;; todo: serika-f/smartparens/load
-;; make generic
+(cl-defun serika-f/prettify-symbols/activate (&key ((:name   --name)   "" --name-p)
+                                                   ((:cached --cached) t))
+  "Load `name'."
+  (if --name-p
+      (let ((--result))
+        (setq --result (or (when --cached
+                             (gethash --name --serika-prettify-symbols-cache))
+                           (let* ((--filepath (f-join serika-conf-directory
+                                                      "prettify-symbols"
+                                                      (concat --name
+                                                              ".prettify-symbols")))
+                                  (--parts (split-string (f-read-text --filepath))))
+                             (when (cl-oddp (length --parts))
+                               (error "Incorrect `prettify-symbols' configuration file."))
+                             (when --cached
+                               (puthash --name --parts --serika-prettify-symbols-cache))
+                             --parts)))
+        (when (> (length --result)
+                 0)
+          (setq prettify-symbols-alist ())
+          (cl-loop for --first  in --result       by #'cddr
+                   for --second in (cdr --result) by #'cddr
+                   do
+                   (push (cons --first --second) prettify-symbols-alist))
+          (prettify-symbols-mode +1)))
+    (error "Name was not provided.")))
+
 (defun serika-f/prettify-symbols/create-loader (name)
   "Create lambda that activates `prettify-symbols-mode', and
 setups `prettify-symbols-alist'."
   (let* ((--conf (f-read-text (func/path/join serika-conf-directory
-                                                                   "prettify-symbols"
-                                                                   (concat name
-                                                                           ".prettify-symbols"))))
+                                              "prettify-symbols"
+                                              (concat name
+                                                      ".prettify-symbols"))))
          (--parts (split-string --conf)))
     (when (cl-oddp (length --parts))
       (error "Incorrect prettify configuration file."))
@@ -35,6 +63,16 @@ setups `prettify-symbols-alist'."
                   for --value in (cdr --args) by #'cddr
                   do
                   (set --prop --value))))))
+
+(cl-defun serika-f/settings/change-user ()
+  "Change user settings."
+  (interactive)
+  (let ((--user-name (read-string "Enter user name: " user-full-name))
+        (--user-mail (read-string "Enter user f-mail: " user-mail-address)))
+    (when (stringp --user-name)
+      (setq user-full-name --user-name))
+    (when (stringp --user-mail)
+      (setq user-mail-address --user-mail))))
 
 ;; `trailing-whitespaces'
 (defun serika-f/settings/show-trailing-whitespaces (&optional turn-on)

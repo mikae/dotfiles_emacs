@@ -20,10 +20,25 @@
   (when (evil-mode-p)
     (evil-insert-state)))
 
-(defun serika-f/evil/activate ()
-  "Activate `evil' in current buffer with `normal' state."
+(cl-defun serika-f/evil/activate (&key ((:evil-shift-width --evil-shift-width) 4       --evil-shift-width-p)
+                                       ((:evil-state       --evil-state)       'normal --evil-state-p))
+  "Activate `evil' in current buffer."
   (evil-local-mode +1)
-  (evil-normal-state))
+  (if --evil-state-p
+      (cond
+       ((eq --evil-state
+            'normal)
+        (evil-normal-state))
+       ((eq --evil-state
+            'motion)
+        (evil-motion-state))
+       ((eq --evil-state
+            'emacs)
+        (evil-emacs-state))
+       (t (error "Strange state war proposed to `evil'.")))
+    (evil-normal-state))
+  (when --evil-shift-width-p
+    (setq evil-shift-width --evil-shift-width)))
 
 (defmacro serika-f/evil/create-activator (&rest forms)
   "Create lambda that activater `evil' in current buffer with `normal' state, and
@@ -90,8 +105,6 @@ executes FORMS after."
                       "v"   #'evil-visual-char
                       "V"   #'evil-visual-line
 
-                      "m"   #'kmacro-start-macro-or-insert-counter
-                      "M"   #'kmacro-end-or-call-macro
                       ","   #'evil-repeat
                       "<"   #'evil-use-register
                       "."   #'undo

@@ -19,7 +19,7 @@
                           (setq pomidor-sound-tick     nil
                                 pomidor-sound-tack     nil
                                 pomidor-sound-overwork t
-                                pomidor-seconds        1500))
+                                pomidor-seconds        2250))
 
                         ("keymap")
                         (lambda ()
