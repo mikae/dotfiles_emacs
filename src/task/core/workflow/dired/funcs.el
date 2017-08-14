@@ -126,6 +126,33 @@
           (revert-buffer t t))
       (error "2 marked files are required for `shn-split'"))))
 
+(defun serika-f/dired/uncompress-selected ()
+  "Uncompress selected files."
+  (interactive)
+  (let ((--input (read-string "Path: " nil default-directory))
+        (--target))
+    (setq --target (cond
+                    ((string= ""
+                              --input)
+                     default-directory)
+                    ((f-absolute-p --input) --input)
+                    (t (f-join default-directory
+                               --input))))
+    (unless (f-dir-p --target)
+      (f-mkdir --target))
+    (setq default-directory
+          --target)
+    (cl-loop for --item in (dired-get-marked-files)
+             do (let ((--cmd (format (cond
+                                      ((string-match "\\.zip$" --item)
+                                       "unzip -d %s \"%s\"")
+                                      (t (error "Unsupported archive format.")))
+                                     (s-replace "\"" "\\\"" default-directory)
+                                     --item)))
+                  (when --cmd
+                    (shell-command --cmd)
+                    (dired-revert))))))
+
 ;; Local
 (defun serika-l/dired//buffer-local-settings ()
   "Configure `dired-mode' buffers."
@@ -160,7 +187,10 @@
                                                    "^\\.\\.$"
                                                    "^flycheck_\.+\\.el$")
                                              "\\|"))
-                          (setq dired-omit-verbose nil))
+                          (setq dired-omit-verbose nil)
+
+                          (setq dired-compress-file-suffixes
+                                '(("\\.zip\\'" ".zip" "unzip"))))
 
                         ("keymap")
                         (lambda ()
@@ -169,6 +199,7 @@
                                               "d d"   #'dired-do-delete
                                               "d r"   #'dired-do-rename
                                               "d c"   #'dired-do-copy
+                                              "d u"   #'serika-f/dired/uncompress-selected
 
                                               "* m"   #'dired-mark
                                               "* u"   #'dired-unmark
@@ -187,13 +218,13 @@
                                                         (interactive)
                                                         (func/buffer/kill-by-major-mode 'dired-mode))
 
-                                              
+
                                               "A-n"     #'dired-up-directory
                                               "A-e"     #'serika-f/dired/next-visual-line
                                               "A-o"     #'dired-find-file
                                               "A-i"     #'serika-f/dired/previous-visual-line
 
-                                              
+
                                               "A-1"     #'evil-search-forward
                                               "A-2"     #'evil-search-backward
                                               "A-z"     #'evil-search-next
