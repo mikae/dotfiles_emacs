@@ -14,14 +14,15 @@
   "Configure `js2-mode' buffer."
   (when (eq major-mode 'js2-mode)
     (setq tab-width        2
-          truncate-lines   t
-          evil-shift-width 2)
+          truncate-lines   t)
 
     (setq js2-global-externs '("define" "require" "app")
+          js2-pretty-multiline-declarations nil
           js2-include-node-externs t
-          js2-pretty-multiline-declarations nil)
+          js-indent-level 2)
 
-    (serika-f/evil/activate)
+    (serika-f/evil/activate :evil-shift-width 2
+                            :evil-state       'normal)
     (serika-f/smartparens/activate)
     (serika-f/aggressive-indent/activate)
 
@@ -36,7 +37,6 @@
     (serika-f/tern/activate)
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)
-    (serika-f/flycheck/activate)
     (serika-f/projectile/try-activate)
 
     (serika-f/purpose/load-layout "js2.purpose-layout")
@@ -55,11 +55,7 @@
     (serika-f/rainbow-delimiters/activate)
     (serika-f/highlight-symbol/activate)
 
-    ;; todo replace
-    (unless (fboundp #'serika-f/js2/configure-prettify-symbols)
-      (fset 'serika-f/js2/configure-prettify-symbols
-            (serika-f/prettify-symbols/create-loader "js2")))
-    (serika-f/js2/configure-prettify-symbols)))
+    (serika-f/prettify-symbols/activate :name "js2")))
 
 
 ;; Init
