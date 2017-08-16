@@ -78,6 +78,8 @@ executes FORMS after."
   "Configure `evil-normal-state-map'."
   ;; qwfp
   (func/keymap/define evil-normal-state-map
+                      "C-t" nil
+
                       "q"   #'evil-open-below
                       "Q"   #'evil-open-above
                       "w"   #'evil-replace

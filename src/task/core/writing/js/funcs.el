@@ -44,8 +44,8 @@
     (when yas-minor-mode
       (serika-f/flycheck/create))
 
-    (when (serika-f/treemacs/not-exists-p)
-      (serika-f/treemacs/create))
+    (serika-f/treemacs/create)
+    (serika-f/treemacs/show)
 
     (unless (func/buffer/check-modes 'js2-mode)
       (func/buffer/focus-to 'js2-mode))
@@ -91,13 +91,16 @@
                           (sp-local-pair 'js2-mode "\""   "\"")
                           (sp-local-pair 'js2-mode "'"    "'")
                           (sp-local-pair 'js2-mode "\\\"" "\\\"")
-                          (sp-local-pair 'js2-mode "\\'" "\\'")
-                          )
+                          (sp-local-pair 'js2-mode "\\'" "\\'"))
 
                         ("keymap")
                         (lambda ()
                           (func/keymap/save   js2-mode-map)
-                          (func/keymap/create js2-mode-map))
+                          (func/keymap/create js2-mode-map
+                                              "C-t =" #'evil-indent
+                                              "C-t /" #'evilnc-comment-or-uncomment-lines
+                                              "C-t e" #'yas-expand
+                                              "C-t E" #'serika-f/emmet/expand))
 
                         ("hook")
                         (lambda ()

@@ -5,10 +5,15 @@
 (defun serika-f/treemacs/create ()
   "Create treemacs window."
   (treemacs)
-  (let ((--window (get-buffer-window "*pu-dummy-file-manager*")))
+  (treemacs-toggle))
+
+(defun serika-f/treemacs/show ()
+  "Show treemacs window."
+  (let ((--window (get-buffer-window "*pu-dummy-file-manager*"))
+        (--flag t))
     (when --window
-      (treemacs-toggle)
-      (set-window-buffer --window "Treemacs"))))
+      (set-window-buffer --window "*Treemacs*")
+      )))
 
 (defun serika-f/treemacs/not-exists-p ()
   "Retutn t if treemacs buffer exists."

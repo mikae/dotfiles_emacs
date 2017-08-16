@@ -38,9 +38,11 @@
 
     (serika-f/purpose/load-layout "emacs-lisp.purpose-layout")
 
-    (serika-f/flycheck/create)
-    (when (serika-f/treemacs/not-exists-p)
-      (serika-f/treemacs/create))
+    (when (serika-f/flycheck/not-exists-p)
+      (serika-f/flycheck/create))
+
+    (serika-f/treemacs/create)
+    (serika-f/treemacs/show)
 
     (when (not (func/buffer/check-modes 'emacs-lisp-mode
                                         'lisp-interaction-mode))

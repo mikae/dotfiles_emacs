@@ -7,7 +7,7 @@
             :width 0.12105263157894737
             :height 0.6909090909090909
             :edges (0.0 0.0 0.12105263157894737 0.6909090909090909))
-  (:purpose buffers
+  (:purpose buffer-list
             :purpose-dedicated t
             :width 0.12105263157894737
             :height 0.2909090909090909
