@@ -36,12 +36,8 @@
     (serika-f/highlight-symbol/activate)
     (serika-f/prettify-symbols/activate :name "emacs-lisp")
 
-    (serika-f/purpose/load-layout "emacs-lisp.purpose-layout")
-
     (when (serika-f/flycheck/not-exists-p)
       (serika-f/flycheck/create))
-
-    (serika-f/treemacs/create)
 
     (when (not (func/buffer/check-modes 'emacs-lisp-mode
                                         'lisp-interaction-mode))
@@ -65,9 +61,6 @@
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
 
-                        ("settings w-purpose")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(emacs-lisp-mode . edit)))
 
                         ("settings smartparens")
                         (lambda ()

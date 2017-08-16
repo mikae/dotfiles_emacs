@@ -16,11 +16,6 @@
                           (add-to-list 'ibuffer-never-show-predicates "^\\*")
                           (setq ibuffer-saved-filter-groups nil))
 
-                        ("settings w-purpose")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes
-                                       '(ibuffer-mode . buffer-list)))
-
                         ("keymap")
                         (lambda ()
                           (func/keymap/save   ibuffer-mode-map)

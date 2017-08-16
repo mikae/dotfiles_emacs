@@ -66,10 +66,6 @@
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(js2-mode . edit)))
-
                         ("settings multi-compile")
                         (lambda ()
                           (add-to-list 'multi-compile-alist '(js2-mode . (("Execute" . "node %path")))))
@@ -78,21 +74,21 @@
                         (lambda ()
                           (func/keymap/save js2-mode-map)
                           (func/keymap/create js2-mode-map
-                                                  "C-c e e" 'skewer-eval-last-expression
-                                                  "C-c e d" 'skewer-eval-defun
-                                                  "C-c e a" 'skewer-load-buffer
-                                                  "C-c e r" 'run-skewer
+                                              "C-c e e" 'skewer-eval-last-expression
+                                              "C-c e d" 'skewer-eval-defun
+                                              "C-c e a" 'skewer-load-buffer
+                                              "C-c e r" 'run-skewer
 
-                                                  "C-c c c" 'multi-compile-run
-                                                  "C-c c d" (lambda ()
-                                                              (interactive)
-                                                              (func/buffer/kill-by-major-mode 'compilation-mode))
+                                              "C-c c c" 'multi-compile-run
+                                              "C-c c d" (lambda ()
+                                                          (interactive)
+                                                          (func/buffer/kill-by-major-mode 'compilation-mode))
 
-                                                  "C-t ="   'evil-indent
-                                                  "C-t +"   'web-beautify-js
-                                                  "C-t /"   'evilnc-comment-or-uncomment-lines
-                                                  "C-t e"   'yas-expand
-                                                  "C-t E"   'serika-f/emmet/expand))
+                                              "C-t ="   'evil-indent
+                                              "C-t +"   'web-beautify-js
+                                              "C-t /"   'evilnc-comment-or-uncomment-lines
+                                              "C-t e"   'yas-expand
+                                              "C-t E"   'serika-f/emmet/expand))
                         ("hook")
                         (lambda ()
                           (dolist (callback (list
@@ -111,11 +107,8 @@
 
                                              #'serika-l/js2//interface
                                              #'serika-l/js2//prettify-symbols
-                                             (serika-f/purpose/use-layout "js.purpose-layout")
 
                                              #'serika-f/flycheck/create))
                             (func/hook/add 'js2-mode-hook callback))
 
-                          (func/hook/add-predicated 'js2-mode-hook
-                                                        #'serika-f/treemacs/create
-                                                        #'serika-f/treemacs/not-exists-p))))
+                          )))

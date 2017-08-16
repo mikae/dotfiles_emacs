@@ -39,12 +39,8 @@
     (serika-f/ggtags/activate)
     (serika-f/projectile/try-activate)
 
-    (serika-f/purpose/load-layout "js2.purpose-layout")
-
     (when yas-minor-mode
       (serika-f/flycheck/create))
-
-    (serika-f/treemacs/create)
 
     (unless (func/buffer/check-modes 'js2-mode)
       (func/buffer/focus-to 'js2-mode))
@@ -77,10 +73,6 @@
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
-
-                        ("settings w-purpose")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(js2-mode . edit)))
 
                         ("settings smartparens")
                         (lambda ()

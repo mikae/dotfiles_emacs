@@ -64,10 +64,6 @@
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode)))
 
-                        ("settings w-purpose")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(lua-mode . edit)))
-
                         ("settings multi-compile")
                         (lambda ()
                           (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
@@ -92,12 +88,6 @@
 
                                                   #'serika-l/lua//interface
                                                   #'serika-l/lua//prettify-symbols
-
-                                                  (serika-f/purpose/use-layout "lua.purpose-layout")
-
-                                                  #'serika-f/flycheck/create))
+                                                  ))
                             (func/hook/add 'lua-mode-hook callback))
-
-                          (func/hook/add-predicated 'lua-mode-hook
-                                                        #'serika-f/treemacs/create
-                                                        #'serika-f/treemacs/not-exists-p))))
+                          )))

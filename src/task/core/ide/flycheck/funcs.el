@@ -57,20 +57,16 @@ Executes FORMS after."
                           (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
                           (setq flycheck-idle-change-delay 1))
 
-                        ("settings w-purpose")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(flycheck-error-list-mode . output)))
-
                         ("keymap")
                         (lambda ()
                           (func/keymap/save flycheck-error-list-mode-map)
                           (func/keymap/create flycheck-error-list-mode-map
-                                                  "A-n" #'evil-backward-char
-                                                  "A-e" #'evil-next-visual-line
-                                                  "A-i" #'evil-previous-visual-line
-                                                  "A-o" #'evil-forward-char))
+                                              "A-n" #'evil-backward-char
+                                              "A-e" #'evil-next-visual-line
+                                              "A-i" #'evil-previous-visual-line
+                                              "A-o" #'evil-forward-char))
 
                         ("global-keymap")
                         (lambda ()
                           (func/keymap/define-global "C-, f s" 'serika-f/flycheck/create
-                                                         "C-, f h" 'serika-f/flycheck/remove))))
+                                                     "C-, f h" 'serika-f/flycheck/remove))))

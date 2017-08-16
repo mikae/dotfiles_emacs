@@ -30,10 +30,6 @@
 (defun init ()
   "Configure `lisp-interaction-mode'."
   (serika-c/eg/add-many 'lisp-interaction
-                        ("settings w-purpose")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(lisp-interaction-mode . edit)))
-
                         ("settings smartparens")
                         (lambda ()
                           (sp-local-pair 'lisp-interaction-mode "("    ")")

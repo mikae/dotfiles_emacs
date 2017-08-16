@@ -23,10 +23,6 @@
                                 ag-arguments        ag-arguments
                                 ag-executable       (executable-find "ag")))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(ag-mode . output)))
-
                         ("global-keymap")
                         (lambda ()
                           (func/keymap/define-global

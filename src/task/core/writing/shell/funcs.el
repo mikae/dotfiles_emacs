@@ -31,10 +31,6 @@
     (when yas-minor-mode
       (serika-f/flycheck/create))
 
-    (serika-f/purpose/load-layout "sh.purpose-layout")
-
-    (serika-f/treemacs/create)
-
     (unless (func/buffer/check-modes 'sh-mode)
       (func/buffer/focus-to 'sh-mode))
 
@@ -57,10 +53,6 @@
                           (add-to-list 'auto-mode-alist '("\\.zshenv\\'" . sh-mode))
                           (add-to-list 'auto-mode-alist '("\\.zshprofile\\'" . sh-mode))
                           (add-to-list 'auto-mode-alist '("\\.xinit\\'" . sh-mode)))
-
-                        ("settings w-purpose")
-                        (lambda ()
-                          (add-to-list 'purpose-user-mode-purposes '(sh-mode . edit)))
 
                         ("settings multi-compile")
                         (lambda ()
