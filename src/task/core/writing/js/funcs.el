@@ -45,7 +45,6 @@
       (serika-f/flycheck/create))
 
     (serika-f/treemacs/create)
-    (serika-f/treemacs/show)
 
     (unless (func/buffer/check-modes 'js2-mode)
       (func/buffer/focus-to 'js2-mode))

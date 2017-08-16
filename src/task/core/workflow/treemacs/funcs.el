@@ -3,14 +3,11 @@
 ;;; Code:
 
 (defun serika-f/treemacs/create ()
-  "Create treemacs window."
-  (treemacs)
-  (treemacs-toggle))
-
-(defun serika-f/treemacs/show ()
   "Show treemacs window."
+  (treemacs)
   (let ((--window (get-buffer-window "*pu-dummy-file-manager*"))
         (--flag t))
+    (treemacs-toggle)
     (when --window
       (set-window-buffer --window "*Treemacs*")
       )))

@@ -34,7 +34,6 @@
     (serika-f/purpose/load-layout "sh.purpose-layout")
 
     (serika-f/treemacs/create)
-    (serika-f/treemacs/show)
 
     (unless (func/buffer/check-modes 'sh-mode)
       (func/buffer/focus-to 'sh-mode))

@@ -42,7 +42,6 @@
       (serika-f/flycheck/create))
 
     (serika-f/treemacs/create)
-    (serika-f/treemacs/show)
 
     (when (not (func/buffer/check-modes 'emacs-lisp-mode
                                         'lisp-interaction-mode))
