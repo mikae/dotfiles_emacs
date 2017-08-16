@@ -53,7 +53,7 @@ Executes FORMS after."
                                          (display-buffer-reuse-window display-buffer-in-side-window)
                                          (side            . bottom)
                                          (reusable-frames . visible)
-                                         (window-height   . 0.33)))
+                                         (window-height   . 0.2)))
                           (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
                           (setq flycheck-idle-change-delay 1))
 
