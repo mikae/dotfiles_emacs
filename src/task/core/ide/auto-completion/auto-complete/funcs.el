@@ -7,12 +7,6 @@
   "Activate `auto-complete' in current buffer."
   (auto-complete-mode +1))
 
-(defun serika-f/auto-complete/create-activator (&rest forms)
-  "Create lambda that activates `auto-complete', and
-executes FORMS after."
-  `(lambda ()
-     (auto-complete-mode +1)
-     (progn ,@forms)))
 
 ;; Init
 (defun init ()
@@ -36,7 +30,7 @@ executes FORMS after."
                           (setq ac-use-fuzzy t)
 
                           (setq ac-comphist-file (func/path/join serika-tmp-directory
-                                                                     "ac-comphist.dat")))
+                                                                 "ac-comphist.dat")))
 
                         ("keymap")
                         (lambda ()
@@ -44,7 +38,7 @@ executes FORMS after."
                           (setq --ac-completing-map ac-completing-map)
 
                           (func/keymap/create ac-completing-map
-                                                  "A-n" #'ac-stop
-                                                  "A-e" #'ac-next
-                                                  "A-o" #'ac-complete
-                                                  "A-i" #'ac-previous))))
+                                              "A-n" #'ac-stop
+                                              "A-e" #'ac-next
+                                              "A-o" #'ac-complete
+                                              "A-i" #'ac-previous))))

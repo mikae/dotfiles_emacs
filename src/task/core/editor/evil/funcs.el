@@ -40,15 +40,6 @@
   (when --evil-shift-width-p
     (setq evil-shift-width --evil-shift-width)))
 
-(defmacro serika-f/evil/create-activator (&rest forms)
-  "Create lambda that activater `evil' in current buffer with `normal' state, and
-executes FORMS after."
-  `(lambda ()
-     (evil-local-mode +1)
-     (evil-normal-state)
-
-     (progn ,@forms)))
-
 (defun serika-f/evil/toggle ()
   "Toggle evil mode."
   (interactive)

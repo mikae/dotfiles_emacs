@@ -3,14 +3,19 @@
 ;;; Code:
 
 ;; Funcs
-(defun serika-f/emojify/activate ()
-  "Activate `emojify-mode' in current buffer."
+(cl-defun serika-f/emojify/activate (&key ((:emoji-styles style) '(ascii unicode github)))
+  "Activate `emojify-mode' in current buffer.
+`emoji-styles' can be:
+  - symbols: ascii, unicode, github;
+  - list contained symbols described above."
+  (setq-local emojify-emoji-styles
+              (cond
+               ((listp style)
+                style)
+               ((symbolp style)
+                '(style))
+               (t (error "Unexpected entity in emojify styles."))))
   (emojify-mode +1))
-
-(cl-defmacro serika-f/emojify/create-activator (&key ((:emoji-styles styles) '(ascii unicode github)))
-  `(lambda ()
-     (emojify-mode +1)
-     (setq-local emojify-emoji-styles ,styles)))
 
 ;; Init
 (defun init ()

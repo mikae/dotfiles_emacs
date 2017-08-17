@@ -2,7 +2,54 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Variables
+(defvar --serika-dired-omit-mode-hidden-patterns '("^\\\.")
+  "Rules for hidden patterns.")
+
+(defvar --serika-dired-omit-mode-omitted-patterns '("^flycheck_\.+\\.el$")
+  "Rules for omitted patterns.")
+
+(defvar --serika-dired-omit-mode-bits 0
+  "Bitmap for rule selection.
+0x - bit of hidden files;
+x0 - bit of omitted files.")
+
+;; Private
+(defun serika-f/dired//apply-omit-rules ()
+  "Creates omit rules for `dired-omit-mode'."
+  ;; todo: replace ugly code
+  (setq dired-omit-files
+        (string-join (cons "^I AM A MAN, WHO WALKS ALONE, AND WHEN I'm WALKING A DARK ROAD$"
+                           (append (if (= (logand --serika-dired-omit-mode-bits
+                                                  2)
+                                          2)
+                                       --serika-dired-omit-mode-omitted-patterns
+                                     ())
+                                   (if (= (logand --serika-dired-omit-mode-bits
+                                                  1)
+                                          1)
+                                       --serika-dired-omit-mode-hidden-patterns
+                                     ())))
+                     "\\|"))
+  (dired-revert))
+
 ;; Public
+(defun serika-f/dired/toggle-hidden ()
+  "Toggles flag of hidden files."
+  (interactive)
+  (setq --serika-dired-omit-mode-bits
+        (logxor --serika-dired-omit-mode-bits
+                1))
+  (serika-f/dired//apply-omit-rules))
+
+(defun serika-f/dired/toggle-omitted ()
+  "Toggles flag of omitted files."
+  (interactive)
+  (setq --serika-dired-omit-mode-bits
+        (logxor --serika-dired-omit-mode-bits
+                2))
+  (serika-f/dired//apply-omit-rules))
+
 (defun serika-f/dired/open-this-directory ()
   "Opens dired in this directory."
   (interactive)
@@ -154,7 +201,7 @@
                     (dired-revert))))))
 
 ;; Local
-(defun serika-l/dired//buffer-local-settings ()
+(defun serika-l/dired//setup-buffer ()
   "Configure `dired-mode' buffers."
   ;; Enable line truncations
   (setq truncate-lines t)
@@ -181,12 +228,6 @@
                                 dired-dwim-target       t)
 
                           ;; Omit some files with patterns
-                          (setq dired-omit-files
-                                (string-join (list "^\\.?#"
-                                                   "^\\.$"
-                                                   "^\\.\\.$"
-                                                   "^flycheck_\.+\\.el$")
-                                             "\\|"))
                           (setq dired-omit-verbose nil)
 
                           (setq dired-compress-file-suffixes
@@ -212,7 +253,8 @@
                                               "c o"   #'dired-do-chown
                                               "c g"   #'dired-do-chgrp
 
-                                              "t o"   (func/func/create-minor-mode-toggler dired-omit-mode)
+                                              "t h"   #'serika-f/dired/toggle-hidden
+                                              "t o"   #'serika-f/dired/toggle-omitted
 
                                               "q"     (lambda ()
                                                         (interactive)
@@ -250,4 +292,4 @@
 
                         ("hook")
                         (lambda ()
-                          (add-hook 'dired-mode-hook #'serika-l/dired//buffer-local-settings))))
+                          (add-hook 'dired-mode-hook #'serika-l/dired//setup-buffer))))

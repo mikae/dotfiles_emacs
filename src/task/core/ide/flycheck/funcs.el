@@ -6,18 +6,14 @@
 (cl-defun serika-f/flycheck/activate (&key ((:disabled-checkers --fdc) '() --fdc-p))
   "Enable flycheck in current buffer."
   (when --fdc-p
-    (if (listp --fdc)
-        (setq flycheck-disabled-checkers --fdc)
-      (error "Attempt to set non-list to `flycheck-disabled-checkers'.")
-      ))
+    (setq flycheck-disabled-checkers
+          (cond
+           ((listp --fdc)
+            (setq flycheck-disabled-checkers --fdc))
+           ((symbolp --fdc-p)
+            (setq flycheck-disabled-checkers (list --fdc)))
+           (t (error "Unexpected disabled checkers declaration.")))))
   (flycheck-mode +1))
-
-(defmacro serika-f/flycheck/create-activator (&rest forms)
-  "Create lambda, that activates yasnippet in current buffer.
-Executes FORMS after."
-  `(lambda ()
-    (flycheck-mode +1)
-    (progn ,@forms)))
 
 (defun serika-f/flycheck/create ()
   "Create `flycheck' buffer."

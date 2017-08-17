@@ -2,6 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Funcs
+(defun serika-f/help/setup-buffer ()
+  "Setup `help' buffer."
+  )
+
 ;; Init
 (defun init ()
   "Configure `help-mode'."
@@ -14,5 +19,4 @@
 
                         ("hook")
                         (lambda ()
-                          (add-hook 'help-mode-hook (serika-f/evil/create-activator
-                                                     (evil-motion-state))))))
+                          (add-hook 'help-mode-hook #'serika-f/help/setup-buffer))))

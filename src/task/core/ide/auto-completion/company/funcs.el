@@ -9,14 +9,6 @@
   (when backends-provided-p
     (setq-local company-backends backends)))
 
-(defmacro serika-f/company/create-activator (&rest forms)
-  "Return lambda that activater `company-mode' in current buffer.
-Executer FORMS after."
-  `(lambda ()
-     (company-mode +1)
-
-     (progn ,@forms)))
-
 ;; Init
 (defun init ()
   "Configure `company'."
@@ -37,7 +29,7 @@ Executer FORMS after."
                         ("keymap")
                         (lambda ()
                           (func/keymap/create company-active-map
-                                                  "A-n" #'company-abort
-                                                  "A-e" #'company-select-next
-                                                  "A-o" #'company-complete-selection
-                                                  "A-i" #'company-select-previous))))
+                                              "A-n" #'company-abort
+                                              "A-e" #'company-select-next
+                                              "A-o" #'company-complete-selection
+                                              "A-i" #'company-select-previous))))
