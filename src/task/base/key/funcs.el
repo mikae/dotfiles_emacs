@@ -69,7 +69,8 @@
 
 (defun serika-g/key//configure-input-decode-map ()
   "Configure `input-decode-map'."
-  (define-key input-decode-map [?\C-m] [C-m]))
+  (define-key input-decode-map [?\C-m] [C-m])
+  (define-key input-decode-map [?\C-o] [C-o]))
 
 (defun serika-g/key//create-bindings ()
   "Create global bindings."
@@ -84,8 +85,10 @@
 
                              "C-x C-q"   #'save-buffers-kill-terminal
 
-                             "C-x m m"   #'kmacro-start-macro-or-insert-counter
-                             "C-x m M"   #'kmacro-end-or-call-macro
+                             "C-x t r"   #'read-only-mode
+
+                             "C-x m n"   #'kmacro-start-macro-or-insert-counter
+                             "C-x m r"   #'kmacro-end-or-call-macro
 
                              "C-x h v"   #'describe-variable
                              "C-x h f"   #'describe-function
@@ -94,8 +97,6 @@
                              "C-x c u"   #'serika-f/settings/change-user
 
                              "C-t w"     #'delete-trailing-whitespace
-
-                             "C-x t r"   #'read-only-mode
 
                              "C-w f"     #'delete-other-windows
                              "C-w F"     #'func/window/only-new-window

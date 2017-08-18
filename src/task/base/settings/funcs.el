@@ -9,7 +9,7 @@
 ;; Functions
 (cl-defun serika-f/prettify-symbols/activate (&key ((:name   --name)   "" --name-p)
                                                    ((:cached --cached) t))
-  "Load `name'."
+  "Load prettify-symbols file`name'. Cached"
   (if --name-p
       (let ((--result))
         (setq --result (or (when --cached

@@ -20,4 +20,7 @@
 
                         ("keymap")
                         (lambda ()
+                          ;; (func/keymap/save   ggtags-mode-map)
+                          ;; (func/keymap/create ggtags-mode-map
+                          ;;                     "C-x t")
                           )))

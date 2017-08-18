@@ -5,9 +5,9 @@
 ;; Functions
 (cl-defun serika-f/company/activate (&key (backends nil backends-provided-p))
   "Activate `company-mode' in current buffer."
-  (company-mode +1)
   (when backends-provided-p
-    (setq-local company-backends backends)))
+    (setq-local company-backends backends))
+  (company-mode +1))
 
 ;; Init
 (defun init ()

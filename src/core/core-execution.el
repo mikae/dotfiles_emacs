@@ -109,7 +109,12 @@
 
 (defmacro serika-c/eg/add-many (name &rest args)
   "Add many execution nodes at once.
-Example: ."
+Example:
+(serika-f/eg/add-many 'enode-name
+                      (\"parents-1\")
+                      lambda-1
+                      (\"parents-2\")
+                      lambda-2."
   `(when (cl-oddp (length ',args))
      (error "Length of ARGS must be even."))
   `(let ((--name ,name)
@@ -127,25 +132,7 @@ Example: ."
                                  --elem)
                                 ((macrop (car --elem))
                                  (macroexpand (car --elem)))
-                                (t --elem)))))
-  ;; `(let ((--length (length ',args))
-  ;;        (--args   ',args)
-  ;;        (--name   ,name))
-  ;;    (when (cl-evenp --length)
-  ;;      (while --args
-  ;;        (eg/add --serika-execution-graph
-  ;;                :name    --name
-  ;;                :parents (car --args)
-  ;;                :func    (let* ((--elem (car (cdr --args)))
-  ;;                                (--car  (car --elem)))
-  ;;                           (cond ((eq --car 'function)
-  ;;                                  (car (cdr --elem)))
-  ;;                                 ((macrop --elem) (error "thereis a macro"))
-  ;;                                 (t --elem)
-  ;;                                 )))
-  ;;        (setq --args
-  ;;              (nthcdr 2 --args)))))
-  )
+                                (t --elem))))))
 
 (defun serika-c/eg/execute ()
   "Execute execution graph."
