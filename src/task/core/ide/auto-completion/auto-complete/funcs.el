@@ -14,7 +14,7 @@
   (serika-c/eg/add-install :package-list '(auto-complete)
                            :name         'auto-complete)
 
-  (serika-c/eg/add-many 'auto-complete
+  (serika-c/eg/add-many-by-name 'auto-complete
                         ("require")
                         (lambda ()
                           (require 'auto-complete))

@@ -21,7 +21,7 @@
   (serika-c/eg/add-install :package-list '(projectile)
                            :name         'projectile)
 
-  (serika-c/eg/add-many 'projectile
+  (serika-c/eg/add-many-by-name 'projectile
                         ("require")
                         (lambda ()
                           (require 'projectile))

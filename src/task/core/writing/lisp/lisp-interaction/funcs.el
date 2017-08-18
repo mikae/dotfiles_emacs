@@ -29,7 +29,7 @@
 ;; Init
 (defun init ()
   "Configure `lisp-interaction-mode'."
-  (serika-c/eg/add-many 'lisp-interaction
+  (serika-c/eg/add-many-by-name 'lisp-interaction
                         ("settings smartparens")
                         (lambda ()
                           (sp-local-pair 'lisp-interaction-mode "("    ")")

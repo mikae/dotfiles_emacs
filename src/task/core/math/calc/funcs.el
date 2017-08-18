@@ -4,7 +4,7 @@
 
 (defun init ()
   "Configure `calc-mode'."
-  (serika-c/eg/add-many 'calc
+  (serika-c/eg/add-many-by-name 'calc
                         ("keymap")
                         (lambda ()
                           ;; (func/keymap/save   calc-mode-map)

@@ -10,7 +10,7 @@
                                            visual-regexp-steroids)
                            :parents '("install evil"))
 
-  (serika-c/eg/add-many 'visual-regexp
+  (serika-c/eg/add-many-by-name 'visual-regexp
                         ("require evil")
                         (func/func/requirer visual-regexp
                                             visual-regexp-steroids)

@@ -13,7 +13,7 @@
                            :name         'ggtags
                            :package-list '(ggtags))
 
-  (serika-c/eg/add-many 'ggtags
+  (serika-c/eg/add-many-by-name 'ggtags
                         ("require")
                         (lambda ()
                           (require 'ggtags))

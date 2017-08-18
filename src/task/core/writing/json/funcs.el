@@ -53,7 +53,7 @@
   (serika-c/eg/add-install :package-list '(json-mode)
 			   :name         'json)
 
-  (serika-c/eg/add-many 'json
+  (serika-c/eg/add-many-by-name 'json
                         ("require")
                         (lambda ()
                           (require 'json-mode)

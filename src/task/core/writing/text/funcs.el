@@ -20,7 +20,7 @@
 ;; Init
 (defun init ()
   "Configure `text-mode'."
-  (serika-c/eg/add-many 'text
+  (serika-c/eg/add-many-by-name 'text
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode)))

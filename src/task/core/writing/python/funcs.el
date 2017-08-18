@@ -77,7 +77,7 @@
                                            pyenv-mode
                                            virtualenvwrapper)
                            :name         'python)
-  (serika-c/eg/add-many 'python
+  (serika-c/eg/add-many-by-name 'python
                         ("require")
                         (lambda ()
                           (require 'anaconda-mode)

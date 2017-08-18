@@ -3,10 +3,6 @@
 ;;; Code:
 
 ;; Global
-(defun serika-g/interface//require ()
-  "Require modules."
-  ())
-
 (defun serika-g/interface//hide-gui ()
   "Hide menu, toolbar, scrollbar, tooltips elements."
   (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
@@ -33,12 +29,9 @@
 ;; Init
 (defun init ()
   "Configure interface."
-  (serika-c/eg/add :parents '("base require")
-                   :name    'interface
-                   :func    #'serika-g/interface//require)
-  (serika-c/eg/add :parents '("base interface")
-                   :name    'hide-gui
-                   :func    #'serika-g/interface//hide-gui)
-  (serika-c/eg/add :parents '("base interface")
-                   :name    'set-font
-                   :func    #'serika-g/interface//font))
+  (serika-c/eg/add-many-by-parents '("base interface")
+                                   'hide-gui
+                                   #'serika-g/interface//hide-gui
+
+                                   'set-font
+                                   #'serika-g/interface//font))

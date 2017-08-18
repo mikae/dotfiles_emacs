@@ -9,7 +9,7 @@
                            :type         'package
                            :package-list '(ag))
 
-  (serika-c/eg/add-many 'ag
+  (serika-c/eg/add-many-by-name 'ag
                         ("require")
                         (lambda ()
                           (require 'ag))

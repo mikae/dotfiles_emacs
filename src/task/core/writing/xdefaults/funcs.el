@@ -28,7 +28,7 @@
 
 (defun init ()
   "Configure `xdefaults'."
-  (serika-c/eg/add-many 'xdefaults
+  (serika-c/eg/add-many-by-name 'xdefaults
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.Xresources\\'" . conf-xdefaults-mode)))

@@ -25,7 +25,7 @@
                            :package-list '(mingus)
                            :name         'mingus)
 
-  (serika-c/eg/add-many 'mingus
+  (serika-c/eg/add-many-by-name 'mingus
                         ("require")
                         (lambda ()
                           (require 'mingus))

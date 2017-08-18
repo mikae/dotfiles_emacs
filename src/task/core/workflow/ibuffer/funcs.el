@@ -5,7 +5,7 @@
 ;; Init
 (defun init ()
   "Configure `ibuffer'."
-  (serika-c/eg/add-many 'ibuffer
+  (serika-c/eg/add-many-by-name 'ibuffer
                         ("require")
                         (lambda ()
                           (require 'ibuffer)

@@ -15,7 +15,7 @@
   (serika-c/eg/add-install :package-list '(company)
                            :name         'company)
 
-  (serika-c/eg/add-many 'company
+  (serika-c/eg/add-many-by-name 'company
                         ("require")
                         (lambda ()
                           (require 'company))

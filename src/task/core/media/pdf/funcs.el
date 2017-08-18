@@ -8,7 +8,7 @@
   (serika-c/eg/add-install :package-list '(pdf-tools)
                            :name         'pdf)
 
-  (serika-c/eg/add-many 'pdf
+  (serika-c/eg/add-many-by-name 'pdf
                         ("require")
                         (lambda ()
                           (require 'pdf-tools)

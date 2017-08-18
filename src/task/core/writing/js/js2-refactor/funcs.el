@@ -13,7 +13,7 @@
                            :name 'js2-refactor
                            :package-list '(js2-refactor))
 
-  (serika-c/eg/add-many 'js2-refactor
+  (serika-c/eg/add-many-by-name 'js2-refactor
                         ("require js2")
                         (func/func/requirer js2-refactor)
 

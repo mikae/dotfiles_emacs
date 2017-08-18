@@ -29,7 +29,7 @@
 ;; Init
 (defun init ()
   "Configure `lisp-mode'."
-  (serika-c/eg/add-many 'lisp-mode
+  (serika-c/eg/add-many-by-name 'lisp-mode
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.lsp\\'" . lisp-mode)))

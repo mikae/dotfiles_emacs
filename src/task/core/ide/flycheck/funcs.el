@@ -37,7 +37,7 @@
   (serika-c/eg/add-install :package-list '(flycheck)
                            :name         'flycheck)
 
-  (serika-c/eg/add-many 'flycheck
+  (serika-c/eg/add-many-by-name 'flycheck
                         ("require")
                         (lambda ()
                           (require 'flycheck))

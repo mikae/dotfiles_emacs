@@ -8,7 +8,7 @@
                            :name 'help-fns+
                            :src  "https://raw.githubusercontent.com/mikae/emacswiki.org/master/help-fns%2B.el")
 
-  (serika-c/eg/add-many 'help-fns+
+  (serika-c/eg/add-many-by-name 'help-fns+
                         ("require")
                         (lambda ()
                           (require 'help-fns+))

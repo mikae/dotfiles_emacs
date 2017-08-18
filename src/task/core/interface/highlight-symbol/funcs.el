@@ -13,7 +13,7 @@
                            :name 'highlight-symbol
                            :package-list '(highlight-symbol))
 
-  (serika-c/eg/add-many 'highlight-symbol
+  (serika-c/eg/add-many-by-name 'highlight-symbol
                         ("require")
                         (lambda ()
                           (require 'highlight-symbol))))

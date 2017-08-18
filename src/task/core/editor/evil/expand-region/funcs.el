@@ -8,7 +8,7 @@
                            :name 'expand-region
                            :package-list '(expand-region)
                            :parents '("install evil"))
-  (serika-c/eg/add-many 'expand-region
+  (serika-c/eg/add-many-by-name 'expand-region
                         ("require")
                         (func/func/requirer expand-region)
 

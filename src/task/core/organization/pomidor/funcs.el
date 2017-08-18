@@ -9,7 +9,7 @@
                            :name 'pomidor
                            :src  "https://github.com/TatriX/pomidor")
 
-  (serika-c/eg/add-many 'pomidor
+  (serika-c/eg/add-many-by-name 'pomidor
                         ("require")
                         (lambda ()
                           (require 'pomidor))

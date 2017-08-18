@@ -18,7 +18,7 @@
 
 (defun init ()
   "Configure `eshell'."
-  (serika-c/eg/add-many 'eshell
+  (serika-c/eg/add-many-by-name 'eshell
                         ("settings")
                         (lambda ()
                           (setq eshell-visual-commands '(

@@ -55,7 +55,7 @@
   (serika-c/eg/add-install :package-list '(js2-mode
                                            ac-js2)
                            :name         'js2)
-  (serika-c/eg/add-many 'js2
+  (serika-c/eg/add-many-by-name 'js2
                         ("require")
                         (lambda ()
                           (require 'js2-mode)

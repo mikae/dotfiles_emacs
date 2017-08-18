@@ -54,7 +54,7 @@
                            :src    "https://github.com/ptrv/company-lua"
                            :parents '("install lua"))
 
-  (serika-c/eg/add-many 'lua
+  (serika-c/eg/add-many-by-name 'lua
                         ("require")
                         (lambda ()
                           (require 'lua-mode)

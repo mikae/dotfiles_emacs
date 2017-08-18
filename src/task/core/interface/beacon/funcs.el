@@ -7,7 +7,7 @@
   (serika-c/eg/add-install :type 'package
                            :name 'beacon
                            :package-list '(beacon))
-  (serika-c/eg/add-many 'beacon
+  (serika-c/eg/add-many-by-name 'beacon
                         ("require")
                         (lambda ()
                           (require 'beacon))

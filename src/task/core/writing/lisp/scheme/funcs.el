@@ -47,7 +47,7 @@
 ;; Init
 (defun init ()
   "Configure `scheme-mode'."
-  (serika-c/eg/add-many 'scheme
+  (serika-c/eg/add-many-by-name 'scheme
                         ("require")
                         (lambda ()
                           (require 'scheme))

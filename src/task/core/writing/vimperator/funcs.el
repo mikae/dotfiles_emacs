@@ -27,7 +27,7 @@
                            :name 'vimperator
                            :src  "https://raw.githubusercontent.com/mikae/vimperator-mode/master/vimperator-mode.el")
 
-  (serika-c/eg/add-many 'vimperator
+  (serika-c/eg/add-many-by-name 'vimperator
                         ("require")
                         (lambda ()
                           (require 'vimperator-mode))

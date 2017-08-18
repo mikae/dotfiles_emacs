@@ -24,7 +24,7 @@
   (serika-c/eg/add-install :package-list '(markdown-mode markdown-mode+)
                            :name         'markdown)
 
-  (serika-c/eg/add-many
+  (serika-c/eg/add-many-by-name
    'markdown
    ("require")
    (lambda ()

@@ -47,7 +47,7 @@
 
 (defun init ()
   "Configure `css'."
-  (serika-c/eg/add-many 'css
+  (serika-c/eg/add-many-by-name 'css
                         ("require")
                         (lambda ()
                           (require 'css-mode))

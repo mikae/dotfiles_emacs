@@ -44,7 +44,7 @@
 ;; Init
 (defun init ()
   "Configure `sh-mode'."
-  (serika-c/eg/add-many 'sh
+  (serika-c/eg/add-many-by-name 'sh
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.sh\\'"  . sh-mode))

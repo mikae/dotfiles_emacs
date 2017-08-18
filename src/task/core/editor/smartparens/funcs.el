@@ -13,7 +13,7 @@
   (serika-c/eg/add-install :package-list '(smartparens)
                            :name 'smartparens)
 
-  (serika-c/eg/add-many 'smartparens
+  (serika-c/eg/add-many-by-name 'smartparens
                         ("require")
                         (lambda ()
                           (require 'smartparens))

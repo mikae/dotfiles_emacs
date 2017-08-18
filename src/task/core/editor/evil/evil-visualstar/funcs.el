@@ -9,7 +9,7 @@
                            :src  "https://github.com/mikae/evil-visualstar"
                            :parents '("install evil"))
 
-  (serika-c/eg/add-many 'evil-visualstar
+  (serika-c/eg/add-many-by-name 'evil-visualstar
                         ("require evil")
                         (func/func/requirer evil-visualstar)
 

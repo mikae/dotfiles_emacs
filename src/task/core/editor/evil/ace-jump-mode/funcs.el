@@ -9,7 +9,7 @@
                            :package-list '(ace-jump-mode)
                            :parents '("install evil"))
 
-  (serika-c/eg/add-many 'ace-jump-mode
+  (serika-c/eg/add-many-by-name 'ace-jump-mode
                         ("require")
                         (func/func/requirer ace-jump-mode)
 

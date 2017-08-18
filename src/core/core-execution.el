@@ -107,14 +107,15 @@
 
 
 
-(defmacro serika-c/eg/add-many (name &rest args)
+;; todo: merge these functions?
+(defmacro serika-c/eg/add-many-by-name (name &rest args)
   "Add many execution nodes at once.
 Example:
-(serika-f/eg/add-many 'enode-name
-                      (\"parents-1\")
-                      lambda-1
-                      (\"parents-2\")
-                      lambda-2."
+(serika-f/eg/add-many-by-name 'enode-name
+                              (\"parents-1\")
+                              lambda-1
+                              (\"parents-2\")
+                              lambda-2."
   `(when (cl-oddp (length ',args))
      (error "Length of ARGS must be even."))
   `(let ((--name ,name)
@@ -124,6 +125,33 @@ Example:
               do
               (eg/add --serika-execution-graph
                       :name    --name
+                      :parents --parents
+                      :func    (cond
+                                ((eq (car --elem) 'function)
+                                 (car (cdr --elem)))
+                                ((eq (car --elem) 'lambda)
+                                 --elem)
+                                ((macrop (car --elem))
+                                 (macroexpand (car --elem)))
+                                (t --elem))))))
+
+(defmacro serika-c/eg/add-many-by-parents (parents &rest args)
+  "Add many execution nodes at once.
+Example:
+(serika-f/eg/add-many-by-parents parents
+                                 'name-1
+                                 lambda-1
+                                 'name-2
+                                 lambda-2."
+  `(when (cl-oddp (length ',args))
+     (error "Length of ARGS must be even."))
+  `(let ((--parents ,parents)
+         (--args    ',args))
+     (cl-loop for --name in --args       by #'cddr
+              for --elem in (cdr --args) by #'cddr
+              do
+              (eg/add --serika-execution-graph
+                      :name    (car (cdr --name))
                       :parents --parents
                       :func    (cond
                                 ((eq (car --elem) 'function)

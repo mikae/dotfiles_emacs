@@ -24,7 +24,7 @@
                            :name 'emojify
                            :package-list '(emojify))
 
-  (serika-c/eg/add-many 'emojify
+  (serika-c/eg/add-many-by-name 'emojify
                         ("require")
                         (lambda ()
                           (require 'emojify))

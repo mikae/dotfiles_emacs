@@ -13,7 +13,7 @@
   (serika-c/eg/add-install :package-list '(mmm-mode)
                            :name         'mmm-mode)
 
-  (serika-c/eg/add-many 'mmm-mode
+  (serika-c/eg/add-many-by-name 'mmm-mode
                         ("require")
                         (lambda ()
                           (require 'mmm-mode))))

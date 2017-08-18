@@ -16,7 +16,7 @@
                            :name         'packages
                            :parents      '("install ereader"))
 
-  (serika-c/eg/add-many 'epub
+  (serika-c/eg/add-many-by-name 'epub
                         ("require")
                         (lambda ()
                           (require 'ereader))

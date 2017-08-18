@@ -15,7 +15,7 @@
                            :package-list '(linum-relative)
                            :name         'linum-relative)
 
-  (serika-c/eg/add-many 'linum-relative
+  (serika-c/eg/add-many-by-name 'linum-relative
                         ("require")
                         (lambda ()
                           (require 'linum-relative))

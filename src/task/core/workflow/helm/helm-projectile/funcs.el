@@ -9,7 +9,7 @@
                            :package-list '(helm-projectile)
                            :name         'helm-projectile)
 
-  (serika-c/eg/add-many 'helm-projectile
+  (serika-c/eg/add-many-by-name 'helm-projectile
                         ("require")
                         (lambda ()
                           (require 'helm-projectile))

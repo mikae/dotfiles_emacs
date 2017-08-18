@@ -26,7 +26,7 @@
 ;; Global
 (defun init ()
   "Configure `image-mode'."
-  (serika-c/eg/add-many 'image
+  (serika-c/eg/add-many-by-name 'image
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.bmp\\'"  . image-mode))

@@ -9,20 +9,20 @@
                            :package-list '(magit)
                            :name         'magit)
 
-  (serika-c/eg/add-many 'magit
-                        ("require")
-                        (lambda ()
-                          (require 'magit))
+  (serika-c/eg/add-many-by-name 'magit
+                                ("require")
+                                (lambda ()
+                                  (require 'magit))
 
-                        ("global-keymap")
-                        (lambda ()
-                          (func/keymap/define-global "C-x m i" 'magit-init
-                                                     "C-x m s" 'magit-status))
+                                ("global-keymap")
+                                (lambda ()
+                                  (func/keymap/define-global "C-x m i" 'magit-init
+                                                             "C-x m s" 'magit-status))
 
-                        ("hook")
-                        (lambda ()
-                          ;; (func/hook/add 'magit-log-mode-hook
-                          ;;                (serika-f/emojify/create-activator :emoji-styles '(github)))
-                          ;; (func/hook/add 'magit-status-mode-hook
-                          ;;                (serika-f/emojify/create-activator :emoji-styles '(github)))
-                          )))
+                                ("hook")
+                                (lambda ()
+                                  ;; (func/hook/add 'magit-log-mode-hook
+                                  ;;                (serika-f/emojify/create-activator :emoji-styles '(github)))
+                                  ;; (func/hook/add 'magit-status-mode-hook
+                                  ;;                (serika-f/emojify/create-activator :emoji-styles '(github)))
+                                  )))

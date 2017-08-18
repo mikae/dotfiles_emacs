@@ -8,7 +8,7 @@
   (serika-c/eg/add-install :package-list '(ace-window)
                            :name 'ace-window)
 
-  (serika-c/eg/add-many 'ace-window
+  (serika-c/eg/add-many-by-name 'ace-window
                         ("require")
                         (lambda ()
                           (require 'ace-window))

@@ -8,7 +8,7 @@
   (serika-c/eg/add-install :package-list '(buffer-move)
                            :name 'buffer-move)
 
-  (serika-c/eg/add-many 'buffer-move
+  (serika-c/eg/add-many-by-name 'buffer-move
                         ("require")
                         (lambda ()
                           (require 'buffer-move))

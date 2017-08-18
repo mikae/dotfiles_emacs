@@ -7,7 +7,7 @@
   (serika-c/eg/add-install :type 'package
                            :name 'dashboard
                            :package-list '(dashboard))
-  (serika-c/eg/add-many 'dashboard
+  (serika-c/eg/add-many-by-name 'dashboard
                         ("require")
                         (lambda ()
                           (require 'dashboard))

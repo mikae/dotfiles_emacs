@@ -11,7 +11,7 @@
 ;; Global
 (defun init ()
   "Configure `eldoc'."
-  (serika-c/eg/add-many 'eldoc
+  (serika-c/eg/add-many-by-name 'eldoc
                         ("require")
                         (lambda ()
                           (require 'eldoc))))

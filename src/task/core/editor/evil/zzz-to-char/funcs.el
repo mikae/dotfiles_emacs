@@ -9,7 +9,7 @@
                            :package-list '(zzz-to-char)
                            :parents '("install evil"))
 
-  (serika-c/eg/add-many 'zzz-to-char
+  (serika-c/eg/add-many-by-name 'zzz-to-char
                         ("require evil")
                         (func/func/requirer zzz-to-char)
 

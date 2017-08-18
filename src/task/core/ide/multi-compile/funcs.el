@@ -7,7 +7,7 @@
   "Configure `multi-compile'."
   (serika-c/eg/add-install :package-list '(multi-compile)
                            :name         'multi-compile)
-  (serika-c/eg/add-many 'multi-compile
+  (serika-c/eg/add-many-by-name 'multi-compile
                         ("require")
                         (lambda ()
                           (require 'multi-compile))

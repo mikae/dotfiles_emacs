@@ -50,7 +50,7 @@
 ;; Init
 (defun init ()
   "Configure `html'."
-  (serika-c/eg/add-many 'html
+  (serika-c/eg/add-many-by-name 'html
                         ("require")
                         (lambda ()
                           (require 'web-beautify)

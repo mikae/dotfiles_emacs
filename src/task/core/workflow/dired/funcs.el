@@ -215,7 +215,7 @@ x0 - bit of omitted files.")
 ;; Init
 (defun init ()
   "Configure `dired'."
-  (serika-c/eg/add-many 'dired
+  (serika-c/eg/add-many-by-name 'dired
                         ("require")
                         (lambda ()
                           (require 'dired)

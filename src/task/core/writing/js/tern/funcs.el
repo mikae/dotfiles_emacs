@@ -16,7 +16,7 @@
                            :post-hook  "npm install"
                            :parents    '("install js2"))
 
-  (serika-c/eg/add-many 'tern
+  (serika-c/eg/add-many-by-name 'tern
                         ("require js2")
                         (func/func/requirer tern)
 

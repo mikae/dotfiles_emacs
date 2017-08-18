@@ -261,7 +261,7 @@
                            :name 'evil
                            :src "https://github.com/mikae/evil")
 
-  (serika-c/eg/add-many 'evil
+  (serika-c/eg/add-many-by-name 'evil
                         ("require")
                         (func/func/requirer evil))
 

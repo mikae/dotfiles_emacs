@@ -13,7 +13,7 @@
   (serika-c/eg/add-install :package-list '(rainbow-mode)
                            :name         'rainbow-mode)
 
-  (serika-c/eg/add-many 'rainbow-mode
+  (serika-c/eg/add-many-by-name 'rainbow-mode
                         ("require")
                         (lambda ()
                           (require 'rainbow-mode))))

@@ -27,7 +27,7 @@
                            :package-list '(emmet-mode)
                            :name         'emmet-mode)
 
-  (serika-c/eg/add-many 'emmet-mode
+  (serika-c/eg/add-many-by-name 'emmet-mode
                         ("require")
                         (lambda ()
                           (defvar emmet-mode-keymap (make-sparse-keymap))

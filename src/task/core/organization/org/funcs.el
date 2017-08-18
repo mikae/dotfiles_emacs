@@ -142,7 +142,7 @@
   (serika-c/eg/add-install :package-list '(org)
                            :name         'org)
 
-  (serika-c/eg/add-many 'org
+  (serika-c/eg/add-many-by-name 'org
                         ("require")
                         (lambda ()
                           (require 'org)

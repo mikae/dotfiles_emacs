@@ -13,7 +13,7 @@
   (serika-c/eg/add-install :package-list '(helm)
                            :name         'helm)
 
-  (serika-c/eg/add-many 'helm
+  (serika-c/eg/add-many-by-name 'helm
                         ("require")
                         (lambda ()
                           (require 'helm-lib)

@@ -17,7 +17,7 @@
                            :name         'yasnippet
                            :package-list '(yasnippet))
 
-  (serika-c/eg/add-many 'yasnippet
+  (serika-c/eg/add-many-by-name 'yasnippet
                         ("settings")
                         (lambda ()
                           (func/keymap/create yas-minor-mode-map)
@@ -32,7 +32,7 @@
                                                 "yasnippet"
                                                 "snippets"))))
 
-  (serika-c/eg/add-many 'yasnippet-snippet
+  (serika-c/eg/add-many-by-name 'yasnippet-snippet
                         ("settings")
                         (lambda ()
                           (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode)))

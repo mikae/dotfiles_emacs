@@ -10,7 +10,7 @@
 ;; Init
 (defun init ()
   "Configure `help-mode'."
-  (serika-c/eg/add-many 'help
+  (serika-c/eg/add-many-by-name 'help
                         ("keymap")
                         (lambda ()
                           (func/keymap/save   help-mode-map)

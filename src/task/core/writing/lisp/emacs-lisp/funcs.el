@@ -52,7 +52,7 @@
                            :package-list '(flycheck-cask)
                            :name         'emacs-lisp)
 
-  (serika-c/eg/add-many 'emacs-lisp
+  (serika-c/eg/add-many-by-name 'emacs-lisp
                         ("require")
                         (lambda ()
                           (require 'flycheck-cask))

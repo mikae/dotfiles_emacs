@@ -9,7 +9,7 @@
                            :package-list '(dash)
                            :parents      '("zero lib install"))
 
-  (serika-c/eg/add-many 'dash
+  (serika-c/eg/add-many-by-name 'dash
                         ("zero lib require")
                         (lambda ()
                           (require 'dash))))

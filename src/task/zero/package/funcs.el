@@ -4,7 +4,7 @@
 
 ;; Init
 (defun init ()
-  (serika-c/eg/add-many 'package-manager
+  (serika-c/eg/add-many-by-name 'package-manager
                         ("zero require")
                         (lambda ()
                           ())

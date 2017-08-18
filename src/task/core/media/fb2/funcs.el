@@ -8,7 +8,7 @@
                            :name 'fb2-mode
                            :src  "https://github.com/mikae/fb2-mode")
 
-  (serika-c/eg/add-many 'fb2-mode
+  (serika-c/eg/add-many-by-name 'fb2-mode
                         ("require")
                         (func/func/requirer fb2-mode)
 

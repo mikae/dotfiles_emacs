@@ -9,7 +9,7 @@
                            :package-list '(evil-nerd-commenter)
                            :parents '("install evil"))
 
-  (serika-c/eg/add-many 'evil-nerd-commenter
+  (serika-c/eg/add-many-by-name 'evil-nerd-commenter
                         ("require evil")
                         (func/func/requirer evil-nerd-commenter))
   )

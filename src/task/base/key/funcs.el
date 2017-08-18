@@ -105,18 +105,15 @@
 
 (defun init ()
   "Configure keys."
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'unset-bindings
-                   :func    #'serika-g/key//unset-bindings)
+  (serika-c/eg/add-many-by-parents '("global-keymap")
+                                   'unset-bindings
+                                   #'serika-g/key//unset-bindings
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'disable-arrows
-                   :func    #'serika-g/key//disable-arrows)
+                                   'disable-arrows
+                                   #'serika-g/key//disable-arrows
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'input-decode-map
-                   :func    #'serika-g/key//configure-input-decode-map)
+                                   'input-decode-map
+                                   #'serika-g/key//configure-input-decode-map
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'create-new-bindings
-                   :func    #'serika-g/key//create-bindings))
+                                   'create-new-bindings
+                                   #'serika-g/key//create-bindings))

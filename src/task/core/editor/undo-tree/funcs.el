@@ -12,7 +12,7 @@
   (serika-c/eg/add-install :type 'package
                            :package-list '(undo-tree)
                            :name 'undo-tree)
-  (serika-c/eg/add-many 'undo-tree
+  (serika-c/eg/add-many-by-name 'undo-tree
                         ("require")
                         (lambda ()
                           (require 'undo-tree))
