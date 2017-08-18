@@ -16,10 +16,9 @@
                            :name         'powerline
                            :parents      '("base interface install"))
 
-  (serika-c/eg/add :parents '("base interface install powerline")
-                   :name    'require
-                   :func    #'serika-g/powerline//require)
+  (serika-c/eg/add-many-by-parents '("base interface install powerline")
+                                   'require
+                                   #'serika-g/powerline//require
 
-  (serika-c/eg/add :parents '("base interface install powerline")
-                   :name    'configure
-                   :func    #'serika-g/powerline//configure))
+                                   'configure
+                                   #'serika-g/powerline//configure))

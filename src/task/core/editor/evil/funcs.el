@@ -262,50 +262,39 @@
                            :src "https://github.com/mikae/evil")
 
   (serika-c/eg/add-many-by-name 'evil
-                        ("require")
-                        (func/func/requirer evil))
+                                ("require")
+                                (func/func/requirer evil)
 
-  (serika-c/eg/add :parents '("settings")
-                   :name    'evil
-                   :func    #'serika-g/evil//settings)
+                                ("settings")
+                                #'serika-g/evil//settings
 
-  (serika-c/eg/add :parents '("global-keymap")
-                   :name    'evil
-                   :func    #'serika-g/evil//global-keymap)
+                                ("global-keymap")
+                                #'serika-g/evil//global-keymap)
 
-  ;; Keymaps
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'normal
-                   :func    #'serika-g/evil//normal-keymap)
+  (serika-c/eg/add-many-by-parents '("keymap evil")
+                                   'normal
+                                   #'serika-g/evil//normal-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'motion
-                   :func    #'serika-g/evil//motion-keymap)
+                                   'motion
+                                   #'serika-g/evil//motion-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'insert
-                   :func    #'serika-g/evil//insert-keymap)
+                                   'insert
+                                   #'serika-g/evil//insert-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'visual
-                   :func    #'serika-g/evil//visual-keymap)
+                                   'visual
+                                   #'serika-g/evil//visual-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'replace
-                   :func    #'serika-g/evil//replace-keymap)
+                                   'replace
+                                   #'serika-g/evil//replace-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'emacs
-                   :func    #'serika-g/evil//emacs-keymap)
+                                   'emacs
+                                   #'serika-g/evil//emacs-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'operator-state
-                   :func    #'serika-g/evil//operator-state-keymap)
+                                   'operator-state
+                                   #'serika-g/evil//operator-state-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'text-objects
-                   :func    #'serika-g/evil//text-objects-keymap)
+                                   'text-objects
+                                   #'serika-g/evil//text-objects-keymap
 
-  (serika-c/eg/add :parents '("keymap evil")
-                   :name    'ex-keymap
-                   :func    #'serika-g/evil//ex-keymap))
+                                   'ex-keymap
+                                   #'serika-g/evil//ex-keymap))
