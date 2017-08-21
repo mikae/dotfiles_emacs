@@ -271,7 +271,7 @@
                                 ("global-keymap")
                                 #'serika-g/evil//global-keymap)
 
-  (serika-c/eg/add-many-by-parents '("keymap evil")
+  (serika-c/eg/add-many-by-parents ("keymap evil")
                                    'normal
                                    #'serika-g/evil//normal-keymap
 

@@ -1,5 +1,5 @@
 ;;; package --- Summary
-;;; Commentary: 
+;;; Commentary:
 ;;; Code:
 
 (defun serika-f/aggressive-indent/activate ()
@@ -13,6 +13,10 @@
                            :name 'aggressive-indent
                            :package-list '(aggressive-indent))
   (serika-c/eg/add-many-by-name 'aggressive-indent
-                        ("require")
-                        (lambda ()
-                          (require 'aggressive-indent))))
+                                ("require")
+                                (lambda ()
+                                  (require 'aggressive-indent))
+
+                                ("settings")
+                                (lambda ()
+                                  (setq aggressive-indent-dont-indent-if ()))))

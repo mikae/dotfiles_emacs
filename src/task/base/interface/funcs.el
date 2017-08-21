@@ -29,7 +29,7 @@
 ;; Init
 (defun init ()
   "Configure interface."
-  (serika-c/eg/add-many-by-parents '("base interface")
+  (serika-c/eg/add-many-by-parents ("base interface")
                                    'hide-gui
                                    #'serika-g/interface//hide-gui
 

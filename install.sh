@@ -74,6 +74,7 @@ if $INSTALL; then
     mkdir $DESTINATION_DIR
 
     mkdir -p $DESTINATION_DIR/plugin
+    mkdir -p $DESTINATION_DIR/extension
     mkdir -p $DESTINATION_DIR/lib
     mkdir -p $DESTINATION_DIR/.save
 

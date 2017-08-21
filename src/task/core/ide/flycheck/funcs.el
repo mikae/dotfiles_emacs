@@ -17,10 +17,12 @@
 
 (defun serika-f/flycheck/create ()
   "Create `flycheck' buffer."
+  (interactive)
   (flycheck-list-errors))
 
 (defun serika-f/flycheck/remove ()
   "Remove `flycheck' buffers."
+  (interactive)
   (func/buffer/kill-by-major-mode 'flycheck-error-list-mode))
 
 (defun serika-f/flycheck/exists-p ()

@@ -216,80 +216,80 @@ x0 - bit of omitted files.")
 (defun init ()
   "Configure `dired'."
   (serika-c/eg/add-many-by-name 'dired
-                        ("require")
-                        (lambda ()
-                          (require 'dired)
-                          (require 'dired-x)
-                          (require 'evil))
+                                ("require")
+                                (lambda ()
+                                  (require 'dired)
+                                  (require 'dired-x)
+                                  (require 'evil))
 
-                        ("settings")
-                        (lambda ()
-                          (setq dired-recursive-deletes 'always
-                                dired-dwim-target       t)
+                                ("settings")
+                                (lambda ()
+                                  (setq dired-recursive-deletes 'always
+                                        dired-dwim-target       t)
 
-                          ;; Omit some files with patterns
-                          (setq dired-omit-verbose nil)
+                                  ;; Omit some files with patterns
+                                  (setq dired-omit-verbose nil)
 
-                          (setq dired-compress-file-suffixes
-                                '(("\\.zip\\'" ".zip" "unzip"))))
+                                  (setq dired-compress-file-suffixes
+                                        '(("\\.zip\\'" ".zip" "unzip"))))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save dired-mode-map)
-                          (func/keymap/create dired-mode-map
-                                              "d d"   #'dired-do-delete
-                                              "d r"   #'dired-do-rename
-                                              "d c"   #'dired-do-copy
-                                              "d u"   #'serika-f/dired/uncompress-selected
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save dired-mode-map)
+                                  (func/keymap/create dired-mode-map
+                                                      "d d"   #'dired-do-delete
+                                                      "d r"   #'dired-do-rename
+                                                      "d c"   #'dired-do-copy
+                                                      "d u"   #'serika-f/dired/uncompress-selected
 
-                                              "* m"   #'dired-mark
-                                              "* u"   #'dired-unmark
+                                                      "* m"   #'dired-mark
+                                                      "* u"   #'dired-unmark
 
-                                              "n d"   #'serika-f/dired/create-directory
-                                              "n f"   #'helm-find-files
-                                              "n h"   #'dired-do-hardlink
-                                              "n s"   #'dired-do-symlink
+                                                      "n d"   #'serika-f/dired/create-directory
+                                                      "n f"   #'helm-find-files
+                                                      "n h"   #'dired-do-hardlink
+                                                      "n s"   #'dired-do-symlink
 
-                                              "c o"   #'dired-do-chown
-                                              "c g"   #'dired-do-chgrp
+                                                      "c o"   #'dired-do-chown
+                                                      "c g"   #'dired-do-chgrp
 
-                                              "t h"   #'serika-f/dired/toggle-hidden
-                                              "t o"   #'serika-f/dired/toggle-omitted
+                                                      "t h"   #'serika-f/dired/toggle-hidden
+                                                      "t o"   #'serika-f/dired/toggle-omitted
 
-                                              "q"     (lambda ()
-                                                        (interactive)
-                                                        (func/buffer/kill-by-major-mode 'dired-mode))
-
-
-                                              "A-n"     #'dired-up-directory
-                                              "A-e"     #'serika-f/dired/next-visual-line
-                                              "A-o"     #'dired-find-file
-                                              "A-i"     #'serika-f/dired/previous-visual-line
+                                                      "q"     (lambda ()
+                                                                (interactive)
+                                                                (func/buffer/kill-by-major-mode 'dired-mode))
 
 
-                                              "A-1"     #'evil-search-forward
-                                              "A-2"     #'evil-search-backward
-                                              "A-z"     #'evil-search-next
-                                              "A-Z"     #'evil-search-previous
+                                                      "A-n"     #'dired-up-directory
+                                                      "A-e"     #'serika-f/dired/next-visual-line
+                                                      "A-o"     #'dired-find-file
+                                                      "A-i"     #'serika-f/dired/previous-visual-line
 
-                                              "A-t"     #'serika-f/dired/move-to-beginning
-                                              "A-T"     #'serika-f/dired/move-to-end
 
-                                              "A-I"     #'serika-f/dired/move-to-window-top
-                                              "A-E"     #'serika-f/dired/move-to-window-bottom
-                                              "A-\""    #'serika-f/dired/move-to-window-middle
+                                                      "A-1"     #'evil-search-forward
+                                                      "A-2"     #'evil-search-backward
+                                                      "A-z"     #'evil-search-next
+                                                      "A-Z"     #'evil-search-previous
 
-                                              "A-p"     #'serika-f/dired/scroll-page-down
-                                              "A-P"     #'serika-f/dired/scroll-page-up
+                                                      "A-t"     #'serika-f/dired/move-to-beginning
+                                                      "A-T"     #'serika-f/dired/move-to-end
 
-                                              "RET"     #'dired-run-associated-program
-                                              "C-x C-s" #'ignore)
-                          (func/keymap/bind-digits dired-mode-map #'digit-argument))
+                                                      "A-I"     #'serika-f/dired/move-to-window-top
+                                                      "A-E"     #'serika-f/dired/move-to-window-bottom
+                                                      "A-\""    #'serika-f/dired/move-to-window-middle
 
-                        ("global-keymap")
-                        (lambda ()
-                          (func/keymap/define-global "C-x d" #'serika-f/dired/open-this-directory))
+                                                      "A-p"     #'serika-f/dired/scroll-page-down
+                                                      "A-P"     #'serika-f/dired/scroll-page-up
 
-                        ("hook")
-                        (lambda ()
-                          (add-hook 'dired-mode-hook #'serika-l/dired//setup-buffer))))
+                                                      "RET"     #'dired-run-associated-program
+                                                      "C-x C-s" #'ignore)
+                                  (func/keymap/bind-digits dired-mode-map #'digit-argument))
+
+                                ("global-keymap")
+                                (lambda ()
+                                  (func/keymap/define-global "C-x d" #'serika-f/dired/open-this-directory))
+
+                                ("hook")
+                                (lambda ()
+                                  (add-hook 'dired-mode-hook #'serika-l/dired//setup-buffer))))

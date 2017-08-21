@@ -87,8 +87,6 @@
 
                              "C-x t r"   #'read-only-mode
 
-                             "C-x m n"   #'kmacro-start-macro-or-insert-counter
-                             "C-x m r"   #'kmacro-end-or-call-macro
 
                              "C-x h v"   #'describe-variable
                              "C-x h f"   #'describe-function
@@ -98,6 +96,9 @@
 
                              "C-t w"     #'delete-trailing-whitespace
 
+                             "<C-m> n"     #'kmacro-start-macro-or-insert-counter
+                             "<C-m> r"     #'kmacro-end-or-call-macro
+
                              "C-w f"     #'delete-other-windows
                              "C-w F"     #'func/window/only-new-window
 
@@ -105,7 +106,7 @@
 
 (defun init ()
   "Configure keys."
-  (serika-c/eg/add-many-by-parents '("global-keymap")
+  (serika-c/eg/add-many-by-parents ("global-keymap")
                                    'unset-bindings
                                    #'serika-g/key//unset-bindings
 

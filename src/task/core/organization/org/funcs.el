@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Functions
 (defun serika-f/org/table-up-field ()
   (interactive)
   (message "Not implemented :("))
@@ -25,6 +26,11 @@
 (defun serika-f/org/table-move-right ()
   (interactive)
   (message "Not implemented :("))
+
+(defun serika-f/org/store-note ()
+  "Store note."
+  (interactive)
+  (org-store-log-note))
 
 (defun serika-f/org/insert-item ()
   "Insert item."
@@ -51,36 +57,40 @@
 3)"
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'org-table-previous-field))
-   ((org-at-heading-p) (call-interactively 'org-promote-subtree))
-   ((org-at-item-p)    (call-interactively 'org-outdent-item-tree))))
+   ((org-at-table-p)     (call-interactively 'org-table-previous-field))
+   ((org-at-heading-p)   (call-interactively 'org-promote-subtree))
+   ((org-at-item-p)      (call-interactively 'org-outdent-item-tree))
+   ((org-at-timestamp-p) (call-interactively 'org-timestamp-down-day))))
 
 (defun serika-f/org/ctrl-c-ctrl-e ()
   "When cursor at:
 "
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'serika-f/org//table-up-field))
-   ((org-at-heading-p) (call-interactively 'org-forward-heading-same-level))
-   ((org-at-item-p)    (call-interactively 'org-shiftdown))))
+   ((org-at-table-p)     (call-interactively 'serika-f/org//table-up-field))
+   ((org-at-heading-p)   (call-interactively 'org-forward-heading-same-level))
+   ((org-at-item-p)      (call-interactively 'org-shiftdown))
+   ((org-at-timestamp-p) (call-interactively 'org-timestamp-down))))
 
 (defun serika-f/org/ctrl-c-ctrl-i ()
   "When cursor at:
 "
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'serika-f/org//table-down-field))
-   ((org-at-heading-p) (call-interactively 'org-backward-heading-same-level))
-   ((org-at-item-p)    (call-interactively 'org-shiftup))))
+   ((org-at-table-p)     (call-interactively 'serika-f/org//table-down-field))
+   ((org-at-heading-p)   (call-interactively 'org-backward-heading-same-level))
+   ((org-at-item-p)      (call-interactively 'org-shiftup))
+   ((org-at-timestamp-p) (call-interactively 'org-timestamp-up))))
 
 (defun serika-f/org/ctrl-c-ctrl-o ()
   "When cursor at:
 "
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'org-table-next-field))
-   ((org-at-heading-p) (call-interactively 'org-demote-subtree))
-   ((org-at-item-p)    (call-interactively 'org-indent-item-tree))))
+   ((org-at-table-p)     (call-interactively 'org-table-next-field))
+   ((org-at-heading-p)   (call-interactively 'org-demote-subtree))
+   ((org-at-item-p)      (call-interactively 'org-indent-item-tree))
+   ((org-at-timestamp-p) (call-interactively 'org-timestamp-up-day))))
 
 (defun serika-f/org/ctrl-c-ctrl-shift-n ()
   "When cursor at:
@@ -126,7 +136,7 @@
    ((org-at-heading-p) (call-interactively 'org-demote))
    ((org-at-item-p)    (call-interactively 'org-indent-item))))
 
-;;
+;; Setup buffer
 (defun serika-f/org//setup-buffer ()
   "Setup `org' buffer."
   (setq truncate-lines nil)
@@ -134,152 +144,217 @@
   (serika-f/settings/show-trailing-whitespaces)
   (serika-f/evil/activate :evil-state       'normal
                           :evil-shift-width 4)
-  (serika-f/aggressive-indent/activate))
+  ;; (serika-f/aggressive-indent/activate)
+  (serika-f/smartparens/activate))
 
 ;; Init
 (defun init ()
   "Configure `org-mode'."
-  (serika-c/eg/add-install :package-list '(org)
-                           :name         'org)
+  (serika-c/eg/add-install :type 'git
+                           :name 'org
+                           :src  "git://orgmode.org/org-mode.git"
+                           :post-hook "make")
 
-  (serika-c/eg/add-many-by-name 'org
-                        ("require")
-                        (lambda ()
-                          (require 'org)
-                          (require 'org-capture))
+  (serika-c/eg/add-many-by-name
+   'org
+   ("require")
+   (lambda ()
+     (require 'org)
+     (require 'org-capture))
 
-                        ("settings")
-                        (lambda ()
-                          ;;`auto-mode-alist'
-                          (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+   ("settings")
+   (lambda ()
+     ;;`auto-mode-alist'
+     (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
-                          ;; `directories'
-                          (setq org-directory (f-join (func/system/user-home)
-                                                      "org")
-                                org-id-locations-file (f-join org-directory
-                                                              ".hidden"
-                                                              ".org-id-locations")
-                                org-default-notes-file (f-join org-directory
-                                                               "notes.org")
-                                org-archive-location (f-join org-directory
-                                                             ".archive"
-                                                             "%s_archived::"))
-                          ;; `settings'
-                          (setq org-log-done                'note
-                                org-startup-folded           nil
-                                org-startup-truncated        nil
-                                org-structure-template-alist ()
-                                org-log-into-drawer          t)
+     ;; `directories'
+     (setq org-directory          (f-join (func/system/user-home)
+                                          "org")
+           org-id-locations-file  (f-join org-directory
+                                          ".data"
+                                          "org-id-locations")
+           org-archive-location   (f-join org-directory
+                                          ".data"
+                                          "archive"
+                                          "%s_archived::")
+           org-default-notes-file (f-join org-directory
+                                          "notes.org")
+           org-agenda-files       (list (f-join org-directory
+                                                ".data")
+                                        (f-join org-directory
+                                                "notes.org")
+                                        (f-join org-directory
+                                                "gtd")
+                                        (f-join org-directory
+                                                "thoughts")))
 
-                          (setq org-todo-keywords
-                                '((sequence "TODO(t)" "|" "DONE(d!)" "CANCELED(c@)")))
+     ;; relative links
+     (setq org-link-file-path-type 'relative)
 
-                          (setq org-capture-templates
-                                `(("t"
-                                   "Todo"
-                                   entry
-                                   (file+headline ,(f-join org-directory
-                                                           "thoughts"
-                                                           "gtd.org")
-                                                  "Tasks")
-                                   "* TODO %?\n %i\n %a")))
+     ;; `startup'
+     (setq org-log-done         'note
+           org-startup-folded    nil
+           org-startup-truncated nil)
 
-                          (setq org-agenda-files (list org-directory))
-                          )
+     ;; `templates'
+     (setq org-structure-template-alist
+           '(("e"
+              "#+BEGIN_EXAMPLE\n?\n#+END_EXAMPLE"
+              "<example>\n?\n</example>")
+             ("r"
+              "#+BEGIN_RULE\n?\n#+END_RULE"
+              "<div class=\"rule\">\n?\n</div>")
+             ("s" "#+BEGIN_SRC ?\n\n#+END_SRC")
+             ("js" "#+BEGIN_SRC js\n?\n#+END_SRC")
+             ("ps" ":PROPERTIES:\n:header-args: :results silent\n:END:")))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save org-mode-map)
-                          (func/keymap/create org-mode-map
-                                              ;; Cycling
-                                              "TAB"       #'org-cycle
-                                              "S-TAB"     #'org-cycle
+     ;; `org-babel'
+     (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+                                                              (js . t)))
+     (setq org-confirm-babel-evaluate nil)
 
-                                              ;; Movements
-                                              "C-c C-n"   #'serika-f/org/ctrl-c-ctrl-n
-                                              "C-c C-e"   #'serika-f/org/ctrl-c-ctrl-e
-                                              "C-c C-i"   #'serika-f/org/ctrl-c-ctrl-i
-                                              "C-c <C-o>" #'serika-f/org/ctrl-c-ctrl-o
+     ;; `todos'
+     (setq org-todo-keywords
+           '((sequence "TODO(t)" "ACCEPTED(a)" "|" "DONE(d!)"  "CANCELLED(c@)")
+             (sequence "BUG(b)"  "CONFIRMED(c)"   "|" "FIXED(f!)" )))
 
-                                              "C-c C-S-n" #'serika-f/org/ctrl-c-ctrl-shift-n
-                                              "C-c C-S-e" #'serika-f/org/ctrl-c-ctrl-shift-e
-                                              "C-c C-S-i" #'serika-f/org/ctrl-c-ctrl-shift-i
-                                              "C-c C-S-o" #'serika-f/org/ctrl-c-ctrl-shift-o
+     (setq org-enforce-todo-dependencies          t
+           org-enforce-todo-checkbox-dependencies t)
 
-                                              ;; Headings
-                                              "C-c C-z h" #'org-insert-heading
-                                              "C-c C-z H" #'org-insert-subheading
+     (setq org-capture-templates
+           `(("t" "Todo" entry (file+headline ,(f-join org-directory
+                                                       "thoughts"
+                                                       "thoughts.org")
+                                              "Tasks")
+              "* TODO %?\n %i\n %a")))
 
-                                              ;; Todo
-                                              "C-c C-z t" #'org-insert-todo-heading
-                                              "C-c C-z T" #'org-insert-todo-subheading
+     (setq org-tag-alist '()))
 
-                                              "C-c t t"   #'org-todo
-                                              "C-c t p"   #'org-priority
+   ;; todo: fix it
+   ;; ("settings aggressive-indent")
+   ;; (lambda ()
+   ;;   (add-to-list 'aggressive-indent-dont-indent-if
+   ;;                '(and (derived-mode-p 'org-mode)
+   ;;                      (let ((item (org-element-at-point)))
+   ;;                        (and item
+   ;;                             (eq 'src-block
+   ;;                                 (car item)))))))
 
-                                              ;; Headings & Todo
-                                              "C-c h z"   #'org-cut-subtree
-                                              "C-c h x"   #'org-copy-subtree
-                                              "C-c h c"   #'org-paste-subtree
-                                              "C-c h v"   #'org-mark-subtree
+   ;; ("settings smartparens")
+   ;; (lambda ()
+   ;;   ;; todo: make it smarter
+   ;;   (sp-local-pair 'org-mode "*" "*"
+   ;;                  :unless '(sp-point-at-bol-p))
+   ;;   (sp-local-pair 'org-mode "/" "/")
+   ;;   (sp-local-pair 'org-mode "_" "_")
+   ;;   (sp-local-pair 'org-mode "=" "=")
+   ;;   (sp-local-pair 'org-mode "~" "~")
+   ;;   (sp-local-pair 'org-mode "+" "+"))
 
-                                              ;; Items
-                                              "C-c C-z i" #'serika-f/org/insert-item
+   ("hook")
+   (lambda ()
+     (add-hook 'org-mode-hook #'serika-f/org//setup-buffer))
 
-                                              ;; Checkbox
-                                              "C-c C-z v" #'serika-f/org/insert-checkbox
-                                              "C-c C-c t"   #'serika-f/org/toggle-checkbox
+   ("global-keymap")
+   (lambda ()
+     (func/keymap/define-global "C-x <C-o> C-a" #'org-agenda)))
 
-                                              ;; Tables
-                                              "C-c C-z |" #'org-table-create
-                                              "C-c n r"   #'org-table-insert-row
-                                              "C-c n c"   #'org-table-insert-column
-                                              "C-c n -"   #'org-table-insert-hline
-                                              "C-c n _"   #'org-table-hline-and-move
-                                              "C-c k r"   #'org-table-kill-row
-                                              "C-c s t"   #'org-table-sort-lines
+  (serika-c/eg/add-many-by-parents
+   ("keymap org")
+   'outline
+   (lambda ()
+     (func/keymap/save   outline-mode-map)
+     (func/keymap/create outline-mode-map))
 
-                                              ;; Links
-                                              "C-c C-z l" #'org-insert-link
+   'org
+   (lambda ()
+     (func/keymap/save org-mode-map)
+     (func/keymap/create org-mode-map
+                         ;; Cycling
+                         "TAB"       #'org-cycle
+                         "<C-tab>"   #'org-global-cycle
+                         "RET"       #'org-open-at-point
 
-                                              ;; Tags
-                                              "C-c C-z :" #'org-set-tags-command
+                         ;; Movements
+                         "C-c C-n"   #'serika-f/org/ctrl-c-ctrl-n
+                         "C-c C-e"   #'serika-f/org/ctrl-c-ctrl-e
+                         "C-c C-i"   #'serika-f/org/ctrl-c-ctrl-i
+                         "C-c <C-o>" #'serika-f/org/ctrl-c-ctrl-o
+                         "C-c C-u"   #'outline-up-heading
 
-                                              ;; Properties
-                                              "C-c C-z s" #'org-set-property-and-value
+                         "C-c C-S-n" #'serika-f/org/ctrl-c-ctrl-shift-n
+                         "C-c C-S-e" #'serika-f/org/ctrl-c-ctrl-shift-e
+                         "C-c C-S-i" #'serika-f/org/ctrl-c-ctrl-shift-i
+                         "C-c C-S-o" #'serika-f/org/ctrl-c-ctrl-shift-o
 
-                                              ;; Timestamps
-                                              "C-c C-z ," #'org-time-stamp
-                                              "C-c C-z ." #'org-time-stamp-inactive
-                                              "C-c <"     #'org-timestamp-down
-                                              "C-c >"     #'org-timestamp-up
+                         ;; Headings
+                         "C-c C-z h" #'org-insert-heading
+                         "C-c C-z H" #'org-insert-subheading
 
-                                              "C-c C-z d"   #'org-deadline
-                                              "C-c C-z s"   #'org-scheduled
-                                              "C-c C-z c i" #'org-clock-in
-                                              "C-c C-z c o" #'org-clock-out
+                         ;; Todo
+                         "C-c C-z t" #'org-insert-todo-heading
+                         "C-c C-z T" #'org-insert-todo-subheading
 
-                                              ;; Capture
-                                              "C-c C-c c" #'org-capture
+                         ;; Headings & Todo
+                         "C-c h z"   #'org-cut-subtree
+                         "C-c h x"   #'org-copy-subtree
+                         "C-c h c"   #'org-paste-subtree
+                         "C-c h v"   #'org-mark-subtree
+                         "C-c h t"   #'org-todo
+                         "C-c h p"   #'org-priority
 
-                                              ;; Refile
-                                              "C-c C-c r" #'org-refile
+                         ;; Items
+                         "C-c C-z i" #'serika-f/org/insert-item
 
-                                              ;; Agenda
-                                              "C-c C-a a" #'org-agenda-file-to-front
-                                              "C-c C-a k" #'org-remove-file
-                                              "C-c C-a c" #'org-cycle-agenda-files
+                         ;; Checkbox
+                         "C-c C-z v" #'serika-f/org/insert-checkbox
+                         "C-c v t"   #'serika-f/org/toggle-checkbox
 
-                                              ;; Misc
-                                              "C-t = t"   #'org-indent-item-tree
-                                              "C-t = l"   #'org-indent-line
-                                              "C-t = i"   #'org-indent-item
-                                              "C-t = r"   #'org-indent-region
+                         ;; Tables
+                         "C-c C-z |" #'org-table-create-with-table.el
+                         "C-c t c"   #'org-edit-special
 
-                                              "RET"       #'org-open-at-point
-                                              )
-                          )
+                         ;; Links
+                         "C-c C-z l" #'org-insert-link
 
-                        ("hook")
-                        (lambda ()
-                          (add-hook 'org-mode-hook #'serika-f/org//setup-buffer))))
+                         ;; Tags
+                         "C-c C-z :" #'org-set-tags-command
+                         "C-c : s"   #'org-tags-view
+
+                         ;; Timestamps
+                         "C-c C-z ," #'org-time-stamp
+                         "C-c C-z ." #'org-time-stamp-inactive
+
+                         ;; Clocks
+                         "C-c C-z c d" #'org-deadline
+                         "C-c C-z c s" #'org-schedule
+                         "C-c C-z c i" #'org-clock-in
+                         "C-c C-z c o" #'org-clock-out
+                         "C-c c e"     #'org-evaluate-time-range
+
+                         ;; Capture
+                         "C-c C-c c" #'org-capture
+                         ;; todo remap org-capture-mode-map
+                         ;; "C-c C-c f" #'org-capture-finalize
+
+                         ;; Babel execute
+                         "C-c C-c e" #'org-babel-execute-src-block
+
+                         ;; Refile
+                         "C-c C-c r" #'org-refile
+
+                         ;; Properties
+                         "C-c C-z p" #'org-set-property
+                         "C-c p k"   #'org-delete-property
+                         "C-c p o"   #'org-property-next-allowed-value
+                         "C-c p n"   #'org-property-previous-allowed-value
+
+                         ;; Agenda
+                         "C-c a a"   #'org-agenda
+                         "C-c a t"   #'org-agenda-todo
+                         "C-c a c"   #'org-cycle-agenda-files
+                         "C-c a n"   #'org-agenda-file-to-front
+                         "C-c a d"   #'org-remove-file
+
+                         ;; Notes
+                         "C-c n s"   #'serika-f/org/store-note))))

@@ -145,7 +145,7 @@ Example:
                                  lambda-2."
   `(when (cl-oddp (length ',args))
      (error "Length of ARGS must be even."))
-  `(let ((--parents ,parents)
+  `(let ((--parents ',parents)
          (--args    ',args))
      (cl-loop for --name in --args       by #'cddr
               for --elem in (cdr --args) by #'cddr
