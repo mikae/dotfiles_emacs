@@ -3,30 +3,6 @@
 ;;; Code:
 
 ;; Functions
-(defun serika-f/org/table-up-field ()
-  (interactive)
-  (message "Not implemented :("))
-
-(defun serika-f/org/table-down-field ()
-  (interactive)
-  (message "Not implemented :("))
-
-(defun serika-f/org/table-move-left ()
-  (interactive)
-  (message "Not implemented :("))
-
-(defun serika-f/org/table-move-down ()
-  (interactive)
-  (message "Not implemented :("))
-
-(defun serika-f/org/table-move-up ()
-  (interactive)
-  (message "Not implemented :("))
-
-(defun serika-f/org/table-move-right ()
-  (interactive)
-  (message "Not implemented :("))
-
 (defun serika-f/org/store-note ()
   "Store note."
   (interactive)
@@ -57,7 +33,6 @@
 3)"
   (interactive)
   (cond
-   ((org-at-table-p)     (call-interactively 'org-table-previous-field))
    ((org-at-heading-p)   (call-interactively 'org-promote-subtree))
    ((org-at-item-p)      (call-interactively 'org-outdent-item-tree))
    ((org-at-timestamp-p) (call-interactively 'org-timestamp-down-day))))
@@ -67,7 +42,6 @@
 "
   (interactive)
   (cond
-   ((org-at-table-p)     (call-interactively 'serika-f/org//table-up-field))
    ((org-at-heading-p)   (call-interactively 'org-forward-heading-same-level))
    ((org-at-item-p)      (call-interactively 'org-shiftdown))
    ((org-at-timestamp-p) (call-interactively 'org-timestamp-down))))
@@ -77,7 +51,6 @@
 "
   (interactive)
   (cond
-   ((org-at-table-p)     (call-interactively 'serika-f/org//table-down-field))
    ((org-at-heading-p)   (call-interactively 'org-backward-heading-same-level))
    ((org-at-item-p)      (call-interactively 'org-shiftup))
    ((org-at-timestamp-p) (call-interactively 'org-timestamp-up))))
@@ -87,7 +60,6 @@
 "
   (interactive)
   (cond
-   ((org-at-table-p)     (call-interactively 'org-table-next-field))
    ((org-at-heading-p)   (call-interactively 'org-demote-subtree))
    ((org-at-item-p)      (call-interactively 'org-indent-item-tree))
    ((org-at-timestamp-p) (call-interactively 'org-timestamp-up-day))))
@@ -99,7 +71,6 @@
 3)"
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'serika-f/org/table-move-left))
    ((org-at-heading-p) (call-interactively 'org-promote))
    ((org-at-item-p)    (call-interactively 'org-outdent-item))))
 
@@ -110,7 +81,6 @@
 3)"
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'serika-f/org/table-move-down))
    ((org-at-heading-p) (call-interactively 'org-move-subtree-down))
    ((org-at-item-p)    (call-interactively 'org-move-item-down))))
 
@@ -121,7 +91,6 @@
 3)"
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'serika-f/org/table-move-up))
    ((org-at-heading-p) (call-interactively 'org-move-subtree-up))
    ((org-at-item-p)    (call-interactively 'org-move-item-up))))
 
@@ -132,7 +101,6 @@
 3)"
   (interactive)
   (cond
-   ((org-at-table-p)   (call-interactively 'serika-f/org/table-move-right))
    ((org-at-heading-p) (call-interactively 'org-demote))
    ((org-at-item-p)    (call-interactively 'org-indent-item))))
 
