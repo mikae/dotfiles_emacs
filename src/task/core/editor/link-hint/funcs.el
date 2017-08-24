@@ -16,8 +16,7 @@
                                 (lambda ()
                                   (setq browse-url-browser-function 'browse-url-firefox))
 
-                                ("keymap")
+                                ("global-keymap")
                                 (lambda ()
-                                  ;;(func/keymap/define-global "C-z l o" #'link-hint-open-link)
-                                  ;;(func/keymap/define-global "C-z l o" #'link-hint-copy-link)
-                                  )))
+                                  (func/keymap/define-global "C-z l o" #'link-hint-open-link)
+                                  (func/keymap/define-global "C-z l o" #'link-hint-copy-link))))

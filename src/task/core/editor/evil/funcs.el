@@ -120,14 +120,14 @@
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
   (func/keymap/define evil-insert-state-map
-                          "A-n" 'func/char/backward
-                          "A-o" 'func/char/forward
+                      "A-n" 'func/char/backward
+                      "A-o" 'func/char/forward
 
-                          ;; Ret with proper indentation
-                          "RET" 'newline-and-indent
+                      ;; Ret with proper indentation
+                      "RET" 'newline
 
-                          ;; Exit insert state
-                          "C-, C-n" 'evil-normal-state))
+                      ;; Exit insert state
+                      "C-, C-n" 'evil-normal-state))
 
 (defun serika-g/evil//visual-keymap ()
   "Configure `evil-visual-state-map'."

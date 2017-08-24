@@ -2,7 +2,44 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Functions
+;; Org wrapper functions
+(defun serika-f/org/create-answer-table (&optional question-count)
+  "Create question-answer-correct?-correction table."
+  (interactive "P")
+  (let ((--question-count (or question-count 1)))
+    (org-table-create (format "4x%d" (+ 2 (or question-count 1))))
+    ;; header content
+    (dolist (--elem '("Q" "A" "OK?" "Correction"))
+      (org-cycle)
+      (insert --elem))
+    (org-cycle)
+    ;; number of answer
+    (dotimes (--i (1- --question-count))
+      (insert (format "%d)" (1+ --i)))
+      (dotimes (_ 4)
+        (org-cycle)))
+    ;; last row
+    (insert (format "%d)" --question-count))
+    (org-table-insert-hline)
+    (org-table-align)
+    (next-line 3)
+    (let ((--format (format "#+TBLFM: @%d$3='(format \"%%.2f%%%%\" (* (let ((--s (concat  @2$3..@%d$3))) (/ (s-count-matches \"v\" --s) %.1f)) 100))"
+                            (+ 2 --question-count)
+                            (+ 1 --question-count)
+                            (* --question-count 1.0)
+                            )))
+      (insert --format))))
+
+(defun serika-f/org/recalculate-table ()
+  (interactive)
+  (when (org-table-p)
+    (org-table-recalculate :all)))
+
+(defun serika-f/org/recalculate-row ()
+  (interactive)
+  (when (org-table-p)
+    (org-table-recalculate)))
+
 (defun serika-f/org/store-note ()
   "Store note."
   (interactive)
@@ -34,6 +71,7 @@
   (interactive)
   (cond
    ((org-at-heading-p)   (call-interactively 'org-promote-subtree))
+   ((org-at-table-p)     (call-interactively 'org-table-previous-field))
    ((org-at-item-p)      (call-interactively 'org-outdent-item-tree))
    ((org-at-timestamp-p) (call-interactively 'org-timestamp-down-day))))
 
@@ -61,6 +99,7 @@
   (interactive)
   (cond
    ((org-at-heading-p)   (call-interactively 'org-demote-subtree))
+   ((org-at-table-p)     (call-interactively 'org-table-next-field))
    ((org-at-item-p)      (call-interactively 'org-indent-item-tree))
    ((org-at-timestamp-p) (call-interactively 'org-timestamp-up-day))))
 
@@ -72,6 +111,7 @@
   (interactive)
   (cond
    ((org-at-heading-p) (call-interactively 'org-promote))
+   ((org-at-table-p)   (call-interactively 'org-table-move-column-left))
    ((org-at-item-p)    (call-interactively 'org-outdent-item))))
 
 (defun serika-f/org/ctrl-c-ctrl-shift-e ()
@@ -82,6 +122,7 @@
   (interactive)
   (cond
    ((org-at-heading-p) (call-interactively 'org-move-subtree-down))
+   ((org-at-table-p)   (call-interactively 'org-table-move-row-down))
    ((org-at-item-p)    (call-interactively 'org-move-item-down))))
 
 (defun serika-f/org/ctrl-c-ctrl-shift-i ()
@@ -92,6 +133,7 @@
   (interactive)
   (cond
    ((org-at-heading-p) (call-interactively 'org-move-subtree-up))
+   ((org-at-table-p)   (call-interactively 'org-table-move-row-up))
    ((org-at-item-p)    (call-interactively 'org-move-item-up))))
 
 (defun serika-f/org/ctrl-c-ctrl-shift-o ()
@@ -102,6 +144,7 @@
   (interactive)
   (cond
    ((org-at-heading-p) (call-interactively 'org-demote))
+   ((org-at-table-p)   (call-interactively 'org-table-move-column-right))
    ((org-at-item-p)    (call-interactively 'org-indent-item))))
 
 ;; Setup buffer
@@ -113,7 +156,8 @@
   (serika-f/evil/activate :evil-state       'normal
                           :evil-shift-width 4)
   ;; (serika-f/aggressive-indent/activate)
-  (serika-f/smartparens/activate))
+  (serika-f/smartparens/activate)
+  (serika-f/prettify-symbols/activate :name "org"))
 
 ;; Init
 (defun init ()
@@ -139,22 +183,19 @@
      (setq org-directory          (f-join (func/system/user-home)
                                           "org")
            org-id-locations-file  (f-join org-directory
-                                          ".data"
+                                          ".hidden"
                                           "org-id-locations")
            org-archive-location   (f-join org-directory
-                                          ".data"
+                                          ".hidden"
                                           "archive"
                                           "%s_archived::")
            org-default-notes-file (f-join org-directory
                                           "notes.org")
            org-agenda-files       (list (f-join org-directory
-                                                ".data")
-                                        (f-join org-directory
-                                                "notes.org")
-                                        (f-join org-directory
-                                                "gtd")
-                                        (f-join org-directory
-                                                "thoughts")))
+                                                "gtd"))
+           org-archive-location   (f-join org-directory
+                                          "archive"
+                                          "archive.org::"))
 
      ;; relative links
      (setq org-link-file-path-type 'relative)
@@ -178,25 +219,33 @@
 
      ;; `org-babel'
      (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-                                                              (js . t)))
+                                                              (js         . t)))
      (setq org-confirm-babel-evaluate nil)
 
      ;; `todos'
      (setq org-todo-keywords
-           '((sequence "TODO(t)" "ACCEPTED(a)" "|" "DONE(d!)"  "CANCELLED(c@)")
-             (sequence "BUG(b)"  "CONFIRMED(c)"   "|" "FIXED(f!)" )))
+           '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+             (sequence "|" "CANCELLED(c@/!)")))
+
+     (setq org-todo-keyword-faces
+           (quote (("TODO" :foreground "red" :weight bold)
+                   ("NEXT" :foreground "blue" :weight bold)
+                   ("DONE" :foreground "forest green" :weight bold)
+                   ("CANCELLED" :foreground "forest green" :weight bold))))
 
      (setq org-enforce-todo-dependencies          t
-           org-enforce-todo-checkbox-dependencies t)
+           org-enforce-todo-checkbox-dependencies t
+           org-use-fast-todo-selection t)
 
      (setq org-capture-templates
            `(("t" "Todo" entry (file+headline ,(f-join org-directory
-                                                       "thoughts"
-                                                       "thoughts.org")
+                                                       "gtd"
+                                                       "todo.org")
                                               "Tasks")
               "* TODO %?\n %i\n %a")))
-
-     (setq org-tag-alist '()))
+     ;; `agenda'
+     (setq org-agenda-custom-commands '(("x" agenda)))
+     )
 
    ;; todo: fix it
    ;; ("settings aggressive-indent")
@@ -270,6 +319,7 @@
                          "C-c h v"   #'org-mark-subtree
                          "C-c h t"   #'org-todo
                          "C-c h p"   #'org-priority
+                         "C-c h a"   #'org-archive-subtree
 
                          ;; Items
                          "C-c C-z i" #'serika-f/org/insert-item
@@ -279,8 +329,25 @@
                          "C-c v t"   #'serika-f/org/toggle-checkbox
 
                          ;; Tables
+                         ;; table.el
                          "C-c C-z |" #'org-table-create-with-table.el
-                         "C-c t c"   #'org-edit-special
+                         "C-c t e"   #'org-edit-special
+
+                         ;; org-table
+                         "C-c C-z \\" #'org-table-create
+                         "C-c t a"    #'org-table-align
+                         "C-c t r"    #'serika-f/org/recalculate-row
+                         "C-c t R"    #'serika-f/org/recalculate-table
+                         "C-c t d c"  #'org-table-delete-column
+                         "C-c t d r"  #'org-table-delete-row
+                         "C-c t n r"  #'org-table-insert-row
+                         "C-c t n c" #'org-table-insert-column
+                         "C-c t n -"  #'org-table-insert-hline
+                         "C-c t n _"  #'org-table-hline-and-move
+                         "C-c t m n"  #'org-table-move-column-left
+                         "C-c t m e"  #'org-table-move-row-down
+                         "C-c t m i"  #'org-table-move-row-up
+                         "C-c t m o"  #'org-table-move-column-right
 
                          ;; Links
                          "C-c C-z l" #'org-insert-link

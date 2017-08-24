@@ -6,6 +6,8 @@
 (defun serika-f/org-wiki/create ()
   "Create page in same directory with correct relative path to `org-wiki-location'."
   (interactive)
+  (unless (f-dir-p org-wiki-location)
+    (error "`org-wiki-location' is not a directory."))
   (let ((page-name (read-string "Page path: ")))
     (save-excursion (insert (org-make-link-string (concat "wiki:"
                                                           (f-join (f-dirname (f-relative buffer-file-name

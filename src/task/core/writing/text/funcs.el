@@ -37,8 +37,8 @@
                                                       "C-c t c" 'table-insert-column
                                                       "C-c t R" 'table-delete-row
                                                       "C-c t C" 'table-delete-column
-                                                      "C-c t |" 'table-split-cell-vertically
-                                                      "C-c t _" 'table-split-cell-horizontally
+                                                      "C-c t _" 'table-split-cell-vertically
+                                                      "C-c t |" 'table-split-cell-horizontally
                                                       "C-c t j" 'table-justify
                                                       ))
 

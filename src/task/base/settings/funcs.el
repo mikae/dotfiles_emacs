@@ -118,4 +118,5 @@ setups `prettify-symbols-alist'."
                                   (setq word-wrap t)
 
                                   (electric-pair-mode -1)
+                                  (electric-indent-mode -1)
                                   (auto-revert-mode   -1))))
