@@ -2,34 +2,43 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Org wrapper functions
+;; Some goodies
 (defun serika-f/org/create-answer-table (&optional question-count)
   "Create question-answer-correct?-correction table."
   (interactive "P")
   (let ((--question-count (or question-count 1)))
-    (org-table-create (format "4x%d" (+ 2 (or question-count 1))))
+    (org-table-create (format "5x%d" (+ 2 (or question-count 1))))
     ;; header content
-    (dolist (--elem '("Q" "A" "OK?" "Correction"))
+    (dolist (--elem '("" "Q" "A" "OK?" "Correction"))
       (org-cycle)
       (insert --elem))
     (org-cycle)
     ;; number of answer
     (dotimes (--i (1- --question-count))
+      (insert "#")
+      (org-cycle)
       (insert (format "%d)" (1+ --i)))
       (dotimes (_ 4)
         (org-cycle)))
     ;; last row
+    (insert "#")
+    (org-cycle)
     (insert (format "%d)" --question-count))
     (org-table-insert-hline)
+    (forward-line 2)
+    (dotimes (_ 4)
+      (org-cycle))
+    (insert "0%")
     (org-table-align)
-    (next-line 3)
-    (let ((--format (format "#+TBLFM: @%d$3='(format \"%%.2f%%%%\" (* (let ((--s (concat  @2$3..@%d$3))) (/ (s-count-matches \"v\" --s) %.1f)) 100))"
+    (forward-line)
+    (let ((--format (format "#+TBLFM: @%d$4='(format \"%%.2f%%%%\" (* (let ((--s (concat  @2$4..@%d$4))) (/ (s-count-matches \"v\" --s) %.1f)) 100))"
                             (+ 2 --question-count)
                             (+ 1 --question-count)
                             (* --question-count 1.0)
                             )))
       (insert --format))))
 
+;; Org wrapper functions
 (defun serika-f/org/recalculate-table ()
   (interactive)
   (when (org-table-p)

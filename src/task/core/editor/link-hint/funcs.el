@@ -19,4 +19,4 @@
                                 ("global-keymap")
                                 (lambda ()
                                   (func/keymap/define-global "C-z l o" #'link-hint-open-link)
-                                  (func/keymap/define-global "C-z l o" #'link-hint-copy-link))))
+                                  (func/keymap/define-global "C-z l c" #'link-hint-copy-link))))
