@@ -209,6 +209,13 @@
      ;; relative links
      (setq org-link-file-path-type 'relative)
 
+     ;; `interface'
+     (setq org-emphasis-alist '(("*" bold)
+                                ("/" italic)
+                                ("_" underline)
+                                ("=" org-verbatim verbatim)
+                                ("~" org-code verbatim)))
+
      ;; `startup'
      (setq org-log-done         'note
            org-startup-folded    nil
@@ -329,6 +336,7 @@
                          "C-c h t"   #'org-todo
                          "C-c h p"   #'org-priority
                          "C-c h a"   #'org-archive-subtree
+                         "C-c h n"   #'org-narrow-to-subtree
 
                          ;; Items
                          "C-c C-z i" #'serika-f/org/insert-item

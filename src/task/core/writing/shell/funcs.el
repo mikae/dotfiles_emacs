@@ -45,40 +45,40 @@
 (defun init ()
   "Configure `sh-mode'."
   (serika-c/eg/add-many-by-name 'sh
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.sh\\'"  . sh-mode))
-                          (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
-                          (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
-                          (add-to-list 'auto-mode-alist '("\\.zshenv\\'" . sh-mode))
-                          (add-to-list 'auto-mode-alist '("\\.zshprofile\\'" . sh-mode))
-                          (add-to-list 'auto-mode-alist '("\\.xinit\\'" . sh-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (add-to-list 'auto-mode-alist '("\\.sh\\'"  . sh-mode))
+                                  (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+                                  (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
+                                  (add-to-list 'auto-mode-alist '("\\.zshenv\\'" . sh-mode))
+                                  (add-to-list 'auto-mode-alist '("\\.zshprofile\\'" . sh-mode))
+                                  (add-to-list 'auto-mode-alist '("\\.xinit\\'" . sh-mode)))
 
-                        ("settings multi-compile")
-                        (lambda ()
-                          (add-to-list 'multi-compile-alist '(sh-mode . (("bash" . "bash  %path")
-                                                                         ("zsh"  . "zsh   %path")))))
+                                ("settings multi-compile")
+                                (lambda ()
+                                  (add-to-list 'multi-compile-alist '(sh-mode . (("bash" . "bash  %path")
+                                                                                 ("zsh"  . "zsh   %path")))))
 
-                        ("settings smartparens")
-                        (lambda ()
-                          (sp-local-pair 'sh-mode "("    ")")
-                          (sp-local-pair 'sh-mode "{"    "}")
-                          (sp-local-pair 'sh-mode "["    "]")
-                          (sp-local-pair 'sh-mode "\""   "\"")
-                          (sp-local-pair 'sh-mode "'"    "'")
-                          (sp-local-pair 'sh-mode "\\\"" "\\\""))
+                                ("settings smartparens")
+                                (lambda ()
+                                  (sp-local-pair 'sh-mode "("    ")")
+                                  (sp-local-pair 'sh-mode "{"    "}")
+                                  (sp-local-pair 'sh-mode "["    "]")
+                                  (sp-local-pair 'sh-mode "\""   "\"")
+                                  (sp-local-pair 'sh-mode "'"    "'")
+                                  (sp-local-pair 'sh-mode "\\\"" "\\\""))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/create sh-mode-map
-                                              "C-c c" #'multi-compile-run
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/create sh-mode-map
+                                                      "C-c C-c e" #'multi-compile-run
 
-                                              "C-t =" #'evil-indent
-                                              "C-t /" #'evilnc-comment-or-uncomment-lines
-                                              "C-t e" #'yas-expand))
+                                                      "C-t =" #'evil-indent
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
+                                                      "C-t e" #'yas-expand))
 
-                        ("hook")
-                        (lambda ()
-                          (func/hook/add 'sh-mode-hook
-                                         #'serika-f/sh/setup-buffer)
-                          )))
+                                ("hook")
+                                (lambda ()
+                                  (func/hook/add 'sh-mode-hook
+                                                 #'serika-f/sh/setup-buffer)
+                                  )))

@@ -8,12 +8,12 @@
 
 ;; Init
 (defun init ()
-  "Configure tern."
+  "Configure company-tern."
   (serika-c/eg/add-install :type         'package
                            :name         'company-tern
                            :package-list '(company-tern)
                            :parents      '("install js2"))
 
   (serika-c/eg/add-many-by-name 'js2
-                        ("keymap js2")
-                        (func/func/requirer company-tern)))
+                                ("keymap js2")
+                                (func/func/requirer company-tern)))

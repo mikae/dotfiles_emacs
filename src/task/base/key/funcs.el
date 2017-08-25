@@ -84,6 +84,7 @@
                              "C-x C-g"   #'revert-buffer
 
                              "C-x C-q"   #'save-buffers-kill-terminal
+                             "C-x C-w"   #'widen
 
                              "C-x t r"   #'read-only-mode
 
@@ -96,8 +97,8 @@
 
                              "C-t w"     #'delete-trailing-whitespace
 
-                             "<C-m> n"     #'kmacro-start-macro-or-insert-counter
-                             "<C-m> r"     #'kmacro-end-or-call-macro
+                             "<C-m> n"   #'kmacro-start-macro-or-insert-counter
+                             "<C-m> r"   #'kmacro-end-or-call-macro
 
                              "C-w f"     #'delete-other-windows
                              "C-w F"     #'func/window/only-new-window

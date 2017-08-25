@@ -61,39 +61,42 @@
                            :name         'js2)
 
   (serika-c/eg/add-many-by-name 'js2
-                        ("require")
-                        (lambda ()
-                          (require 'js2-mode)
-                          (require 'js2-refactor)
-                          (require 'xref-js2)
-                          (require 'tern)
-                          (require 'company-tern)
-                          )
+                                ("require")
+                                (lambda ()
+                                  (require 'js2-mode)
+                                  (require 'js2-refactor)
+                                  (require 'xref-js2))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 
-                        ("settings smartparens")
-                        (lambda ()
-                          (sp-local-pair 'js2-mode "("    ")")
-                          (sp-local-pair 'js2-mode "{"    "}")
-                          (sp-local-pair 'js2-mode "["    "]")
-                          (sp-local-pair 'js2-mode "\""   "\"")
-                          (sp-local-pair 'js2-mode "'"    "'")
-                          (sp-local-pair 'js2-mode "\\\"" "\\\"")
-                          (sp-local-pair 'js2-mode "\\'" "\\'"))
+                                ("settings multi-compile")
+                                (lambda ()
+                                  (add-to-list 'multi-compile-alist '(js2-mode . (("node" . "node %path")))))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save   js2-mode-map)
-                          (func/keymap/create js2-mode-map
-                                              "C-t =" #'evil-indent
-                                              "C-t /" #'evilnc-comment-or-uncomment-lines
-                                              "C-t e" #'yas-expand
-                                              "C-t E" #'serika-f/emmet/expand))
+                                ("settings smartparens")
+                                (lambda ()
+                                  (sp-local-pair 'js2-mode "("    ")")
+                                  (sp-local-pair 'js2-mode "{"    "}")
+                                  (sp-local-pair 'js2-mode "["    "]")
+                                  (sp-local-pair 'js2-mode "\""   "\"")
+                                  (sp-local-pair 'js2-mode "'"    "'")
+                                  (sp-local-pair 'js2-mode "\\\"" "\\\"")
+                                  (sp-local-pair 'js2-mode "\\'" "\\'"))
 
-                        ("hook")
-                        (lambda ()
-                          (func/hook/add-oncely 'js2-mode-hook
-                                                #'serika-f/js2/setup-buffer))))
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save   js2-mode-map)
+                                  (func/keymap/create js2-mode-map
+                                                      "C-t ="     #'evil-indent
+                                                      "C-t /"     #'evilnc-comment-or-uncomment-lines
+                                                      "C-t e"     #'yas-expand
+                                                      "C-t E"     #'serika-f/emmet/expand
+
+                                                      "C-c C-c e" #'serika-f/multi-compile/run))
+
+                                ("hook")
+                                (lambda ()
+                                  (func/hook/add-oncely 'js2-mode-hook
+                                                        #'serika-f/js2/setup-buffer))))
