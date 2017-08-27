@@ -2,6 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Vars
+(defvar serika-interface-font-default "DejaVu Sans Mono"
+  "This variable contains font name that will be used by default.")
+
+(defvar serika-interface-font-power 12
+  "This variable contains the power of the fonts.")
+
 ;; Global
 (defun serika-g/interface//hide-gui ()
   "Hide menu, toolbar, scrollbar, tooltips elements."

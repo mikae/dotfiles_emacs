@@ -2,6 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Vars
+(defvar serika-eshell-window-height 10
+  "Height of vertically splitted eshell window.")
+
+(defvar serika-eshell--counter 0
+  "Counter of eshell sessions.")
+
 ;; Private
 (defun serika-f/eshell//update-counter ()
   "Update `serika-eshell--counter'."

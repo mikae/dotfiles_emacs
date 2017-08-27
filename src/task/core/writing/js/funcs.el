@@ -44,8 +44,7 @@
                                   (func/keymap/save   js-mode-map)
                                   (func/keymap/create js-mode-map
                                                       "C-t ="     #'evil-indent
-                                                      "C-t /"     #'evilnc-comment-or-uncomment-lines
-                                                      "C-x C-s"   #'ignore))
+                                                      "C-t /"     #'evilnc-comment-or-uncomment-lines))
 
                                 ("hook")
                                 (lambda ()

@@ -15,12 +15,10 @@
                    :func    (lambda ()
                               (require 'moe-theme)))
 
-  (serika-c/eg/add :parents '("base interface install moe-theme"
-                              "base interface install powerline configure")
+  (serika-c/eg/add :parents '("base interface install moe-theme")
                    :name    'configure
                    :func    (lambda ()
                               (setq moe-theme-highlight-buffer-id t)
 
                               (moe-theme-random-color)
-                              (powerline-moe-theme)
                               (moe-dark))))

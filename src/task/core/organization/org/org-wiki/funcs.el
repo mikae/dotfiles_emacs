@@ -31,7 +31,19 @@
                                 ("settings org")
                                 (lambda ()
                                   (setq org-wiki-location (f-join org-directory
-                                                                  "wiki")))
+                                                                  "wiki"))
+
+                                  ;; NODE_PATH
+                                  (setenv "NODE_PATH"
+                                          (concat
+                                           (f-join org-wiki-location
+                                                   "programming"
+                                                   "javascript"
+                                                   "node_modules"
+                                                   )
+                                           ":"
+                                           (getenv "NODE_PATH")))
+                                  )
 
                                 ("keymap org")
                                 (lambda ()

@@ -2,6 +2,15 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Shadower
+(define-minor-mode org-edit-src-shadower-mode
+  "Minor mode for shadowing some keys."
+  :init-value nil
+  :keymap (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "C-x C-s") #'ignore)
+            (define-key map (kbd "C-x C-c") #'ignore)
+            map))
+
 ;; Some goodies
 (defun serika-f/org/create-answer-table (&optional question-count)
   "Create question-answer-correct?-correction table."
@@ -38,26 +47,6 @@
                             )))
       (insert --format))))
 
-(defun serika-f/org/narrow-to-src ()
-  "Narrow to src block, excludes BEGIN_SRC and END_SRC."
-  (interactive)
-  (let* ((case-fold-search t)
-         (blockp (org-between-regexps-p "^[ \t]*#\\+begin_.*"
-                                        "^[ \t]*#\\+end_.*")))
-    (if blockp
-        (let* ((--block-beg (car blockp))
-               (--block-end (cdr blockp))
-               (--beg (save-excursion
-                        (goto-char --block-beg)
-                        (search-forward-regexp "\n")
-                        (point)))
-               (--end (save-excursion
-                        (goto-char --block-end)
-                        (search-backward-regexp "\n")
-                        (point))))
-          (narrow-to-region --beg --end))
-      (user-error "Not in a block"))))
-
 (defun serika-f/org/edit-src ()
   "Narrow to src block, excludes BEGIN_SRC and END_SRC."
   (interactive)
@@ -88,6 +77,7 @@
             (switch-to-buffer --buffer)
             (insert --text)
             (funcall (intern (concat --language "-mode")))
+            (org-edit-src-shadower-mode +1)
             (func/buffer/save-function
              (lambda ()
                (let ((--new-text (buffer-substring (point-min) (point-max))))
@@ -451,7 +441,8 @@
                          ;; "C-c C-c f" #'org-capture-finalize
 
                          ;; Babel execute
-                         "C-c C-c e" #'org-babel-execute-src-block
+                         "C-c C-c c" #'org-babel-execute-src-block
+                         "C-c C-c e" #'serika-f/org/edit-src
 
                          ;; Refile
                          "C-c C-c r" #'org-refile
