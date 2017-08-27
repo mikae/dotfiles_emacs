@@ -79,6 +79,7 @@
 
   (func/keymap/define-global "C-x C-s"   #'save-buffer
                              "C-x C-S-s" #'func/tramp/sudo-write
+                             "C-x C-x C-s" #'func/buffer/invoke-save-function
                              "C-x C-c"   #'func/buffer/kill
                              "C-x C-h"   #'previous-buffer
                              "C-x C-g"   #'revert-buffer

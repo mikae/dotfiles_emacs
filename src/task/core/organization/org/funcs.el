@@ -1,4 +1,4 @@
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -37,6 +37,67 @@
                             (* --question-count 1.0)
                             )))
       (insert --format))))
+
+(defun serika-f/org/narrow-to-src ()
+  "Narrow to src block, excludes BEGIN_SRC and END_SRC."
+  (interactive)
+  (let* ((case-fold-search t)
+         (blockp (org-between-regexps-p "^[ \t]*#\\+begin_.*"
+                                        "^[ \t]*#\\+end_.*")))
+    (if blockp
+        (let* ((--block-beg (car blockp))
+               (--block-end (cdr blockp))
+               (--beg (save-excursion
+                        (goto-char --block-beg)
+                        (search-forward-regexp "\n")
+                        (point)))
+               (--end (save-excursion
+                        (goto-char --block-end)
+                        (search-backward-regexp "\n")
+                        (point))))
+          (narrow-to-region --beg --end))
+      (user-error "Not in a block"))))
+
+(defun serika-f/org/edit-src ()
+  "Narrow to src block, excludes BEGIN_SRC and END_SRC."
+  (interactive)
+  (let* ((case-fold-search t)
+         (blockp (org-between-regexps-p "^[ \t]*#\\+begin_src.*"
+                                        "^[ \t]*#\\+end_src.*")))
+    (if blockp
+        (let* ((--block-beg (car blockp))
+               (--block-end (cdr blockp))
+               (--beg (save-excursion
+                        (goto-char --block-beg)
+                        (search-forward-regexp "\n")
+                        (point)))
+               (--end (save-excursion
+                        (goto-char --block-end)
+                        (search-backward-regexp "\n")
+                        (point)))
+               (--block-beg-line-end (progn
+                                       (goto-char --block-beg)
+                                       (search-forward-regexp "\n")
+                                       (point)))
+               (--block-beg-line (buffer-substring --block-beg --block-beg-line-end))
+               (--text (buffer-substring --beg --end))
+               (--source-buffer (current-buffer))
+               (--buffer (generate-new-buffer "edit src"))
+               (--language (nth 1 (split-string --block-beg-line))))
+          (with-current-buffer --buffer
+            (switch-to-buffer --buffer)
+            (insert --text)
+            (funcall (intern (concat --language "-mode")))
+            (func/buffer/save-function
+             (lambda ()
+               (let ((--new-text (buffer-substring (point-min) (point-max))))
+                 (with-current-buffer --source-buffer
+                   (kill-region --beg
+                                --end)
+                   (goto-char --beg)
+                   (insert --new-text)))
+               (kill-buffer (current-buffer))))))
+      (user-error "Not in a src block"))))
 
 ;; Org wrapper functions
 (defun serika-f/org/recalculate-table ()

@@ -14,6 +14,6 @@
                            :package-list '(company-tern)
                            :parents      '("install js2"))
 
-  (serika-c/eg/add-many-by-name 'js2
+  (serika-c/eg/add-many-by-name 'company-tern
                                 ("keymap js2")
                                 (func/func/requirer company-tern)))
