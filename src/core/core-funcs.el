@@ -1,5 +1,5 @@
 ;;; package --- Summary
-;;; Commentary: 
+;;; Commentary:
 ;;; Code:
 
 (defun func/path-join (&rest parts)

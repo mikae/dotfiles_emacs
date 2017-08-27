@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Variables
+;; Vars
 (defvar serika-tasks (list)
   "List of tasks that will be executed.")
 
@@ -21,15 +21,9 @@
                            (goto-char (point-max))
                            (backward-sexp)
                            (eval (sexp-at-point)))))
-    (let* ((vars-path  (func/path-join serika-task-directory
-                                           task
-                                           "vars.el"))
-           (funcs-path (func/path-join serika-task-directory
-                                           task
-                                           "funcs.el")))
-      (when (file-exists-p vars-path)
-        (message "vars-path")
-        (--eval-file vars-path))
+    (let* ((funcs-path (func/path-join serika-task-directory
+                                       task
+                                       "funcs.el")))
       (when (file-exists-p funcs-path)
         (message "funcs-path")
         (when (fboundp 'init)
@@ -45,16 +39,15 @@
           (fset 'init '--temp-init)
           (fmakunbound '--temp-init)))
       (dolist (dir (directory-files (func/path-join serika-task-directory
-                                                        task)
+                                                    task)
                                     t))
         (if (and (file-directory-p dir)
                  (not (string-match "\/\\.$" dir))
                  (not (string-match "\/\\.\\.$" dir)))
             (add-to-list 'serika-tasks (func/path-join task
-                                                           (file-name-nondirectory (directory-file-name dir))))
+                                                       (file-name-nondirectory (directory-file-name dir))))
           (when (file-directory-p dir)
-            (message dir))
-          )))))
+            (message dir)))))))
 
 (defun serika-c/task/execute-all ()
   "Execute all task defined by `serika-tasks'."
