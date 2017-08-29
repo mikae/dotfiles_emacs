@@ -210,7 +210,8 @@ x0 - bit of omitted files.")
   (serika-f/settings/auto-revert-mode)
 
   ;; Omit some files
-  (dired-omit-mode  +1))
+  (dired-omit-mode  +1)
+  (dired-hide-details-mode -1))
 
 ;; Init
 (defun init ()
@@ -245,6 +246,7 @@ x0 - bit of omitted files.")
                                                       "d d"   #'dired-do-delete
                                                       "d r"   #'dired-do-rename
                                                       "d c"   #'dired-do-copy
+                                                      "d l"   #'diredp-list-marked
                                                       "d u"   #'serika-f/dired/uncompress-selected
 
                                                       "* m"   #'dired-mark
@@ -260,6 +262,7 @@ x0 - bit of omitted files.")
 
                                                       "t h"   #'serika-f/dired/toggle-hidden
                                                       "t o"   #'serika-f/dired/toggle-omitted
+                                                      "t d"   (func/func/create-minor-mode-toggler dired-hide-details-mode)
 
                                                       "q"     (lambda ()
                                                                 (interactive)
