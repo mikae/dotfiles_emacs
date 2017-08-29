@@ -37,7 +37,7 @@
     (serika-f/tern/activate)
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)
-    (serika-f/projectile/try-activate)
+    ;; (serika-f/projectile/try-activate)
 
     (when yas-minor-mode
       (serika-f/flycheck/create))
