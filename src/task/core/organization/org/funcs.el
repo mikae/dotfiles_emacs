@@ -312,7 +312,13 @@
                                                        "gtd"
                                                        "todo.org")
                                               "Tasks")
-              "* TODO %?\n %i\n %a")))
+              "* TODO %?\n %i\n %a")
+             ("j" "JS todo" entry (file+headline ,(f-join org-directory
+                                                          "gtd"
+                                                          "js.org")
+                                                 "JS tasks")
+              "* TODO %?\n %i\n %a")
+             ))
      ;; `agenda'
      (setq org-agenda-custom-commands '(("x" agenda)))
      )
