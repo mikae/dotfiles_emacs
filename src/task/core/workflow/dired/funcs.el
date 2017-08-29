@@ -215,11 +215,16 @@ x0 - bit of omitted files.")
 ;; Init
 (defun init ()
   "Configure `dired'."
+  (serika-c/eg/add-install :type 'download
+                           :name 'dired+
+                           :src "https://raw.githubusercontent.com/mikae/emacswiki.org/master/dired%2B.el")
+
   (serika-c/eg/add-many-by-name 'dired
                                 ("require")
                                 (lambda ()
                                   (require 'dired)
                                   (require 'dired-x)
+                                  (require 'dired+)
                                   (require 'evil))
 
                                 ("settings")
