@@ -313,10 +313,10 @@
                                                        "todo.org")
                                               "Tasks")
               "* TODO %?\n %i\n %a")
-             ("j" "JS todo" entry (file+headline ,(f-join org-directory
-                                                          "gtd"
-                                                          "js.org")
-                                                 "JS tasks")
+             ("j" "Todo" entry (file+headline ,(f-join org-directory
+                                                       "gtd"
+                                                       "js.org")
+                                              "Tasks")
               "* TODO %?\n %i\n %a")
              ))
      ;; `agenda'
