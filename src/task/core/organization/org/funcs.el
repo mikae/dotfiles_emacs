@@ -240,7 +240,10 @@
      (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
      ;; `directories'
-     (setq org-directory          (f-join (func/system/user-home)
+     (setq org-directory          (f-join (f-root)
+                                          "home"
+                                          "data"
+                                          "Data"
                                           "org")
            org-id-locations-file  (f-join org-directory
                                           ".hidden"

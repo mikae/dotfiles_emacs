@@ -10,15 +10,15 @@
                            :name         'moe-theme
                            :parents      '("base interface install"))
 
-  (serika-c/eg/add :parents '("base interface install moe-theme")
-                   :name    'require
-                   :func    (lambda ()
-                              (require 'moe-theme)))
+  (serika-c/eg/add-many-by-parents ("base interface install moe-theme")
+                                   'require
+                                   (lambda ()
+                                     (require 'moe-theme))
 
-  (serika-c/eg/add :parents '("base interface install moe-theme")
-                   :name    'configure
-                   :func    (lambda ()
-                              (setq moe-theme-highlight-buffer-id t)
-
-                              (moe-theme-random-color)
-                              (moe-dark))))
+                                   'configure
+                                   (lambda ()
+                                     ;; (setq moe-theme-highlight-buffer-id t)
+                                     ;; (moe-theme-select-color 'cyan)
+                                     ;; (moe-dark)
+                                     (load-theme 'moe-dark t)))
+  )
