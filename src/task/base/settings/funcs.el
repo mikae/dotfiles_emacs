@@ -9,7 +9,7 @@
 ;; Functions
 (cl-defun serika-f/prettify-symbols/activate (&key ((:name   --name)   "" --name-p)
                                                    ((:cached --cached) t))
-  "Load prettify-symbols file`name'. Cached"
+  "Load prettify-symbols file `name'. Cached in `--serika-prettify-symbols-cache'."
   (if --name-p
       (let ((--result))
         (setq --result (or (when --cached
@@ -64,7 +64,11 @@ setups `prettify-symbols-alist'."
                   do
                   (set --prop --value))))))
 
-(cl-defun serika-f/settings/change-user ()
+(defun serika-f/settings/register-ft (pattern mode)
+  "Add new item in `auto-mode-alist'."
+  (add-to-list 'auto-mode-alist `(,pattern . ,mode)))
+
+(defun serika-f/settings/change-user ()
   "Change user settings."
   (interactive)
   (let ((--user-name (read-string "Enter user name: " user-full-name))
@@ -76,8 +80,8 @@ setups `prettify-symbols-alist'."
 
 ;; `trailing-whitespaces'
 (defun serika-f/settings/show-trailing-whitespaces (&optional turn-on)
-  "Show trailing whitespaces in current buffer."
-  (setq show-trailing-whitespace t))
+  "Show/disable trailing whitespaces in current buffer."
+  (setq show-trailing-whitespace (or turn-on t)))
 
 ;; `auto-revert-mode'
 (defun serika-f/settings/auto-revert-mode (&optional turn-on)

@@ -14,6 +14,9 @@
                            :package-list '(highlight-symbol))
 
   (serika-c/eg/add-many-by-name 'highlight-symbol
-                        ("require")
-                        (lambda ()
-                          (require 'highlight-symbol))))
+                                ("require")
+                                (func/func/requirer 'highlight-symbol)
+
+                                ("settings")
+                                (lambda ()
+                                  (setq highlight-symbol-idle-delay 0.1))))
