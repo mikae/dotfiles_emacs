@@ -10,7 +10,7 @@
 
   (serika-c/eg/add-many-by-name 'link-hint
                                 ("require")
-                                (func/func/requirer link-hint)
+                                (func/func/requirer 'link-hint)
 
                                 ("settings")
                                 (lambda ()

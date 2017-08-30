@@ -243,14 +243,15 @@ x0 - bit of omitted files.")
                                 (lambda ()
                                   (func/keymap/save dired-mode-map)
                                   (func/keymap/create dired-mode-map
+                                                      "* m"   #'dired-mark
+                                                      "* u"   #'dired-unmark
+                                                      "* U"   #'dired-unmark-all-marks
+
                                                       "d d"   #'dired-do-delete
                                                       "d r"   #'dired-do-rename
                                                       "d c"   #'dired-do-copy
                                                       "d l"   #'diredp-list-marked
                                                       "d u"   #'serika-f/dired/uncompress-selected
-
-                                                      "* m"   #'dired-mark
-                                                      "* u"   #'dired-unmark
 
                                                       "n d"   #'serika-f/dired/create-directory
                                                       "n f"   #'helm-find-files
@@ -259,6 +260,10 @@ x0 - bit of omitted files.")
 
                                                       "c o"   #'dired-do-chown
                                                       "c g"   #'dired-do-chgrp
+
+                                                      "o o"   (lambda ()
+                                                                (interactive)
+                                                                (dired org-directory))
 
                                                       "t h"   #'serika-f/dired/toggle-hidden
                                                       "t o"   #'serika-f/dired/toggle-omitted

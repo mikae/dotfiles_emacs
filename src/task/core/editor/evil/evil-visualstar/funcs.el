@@ -10,12 +10,12 @@
                            :parents '("install evil"))
 
   (serika-c/eg/add-many-by-name 'evil-visualstar
-                        ("require evil")
-                        (func/func/requirer evil-visualstar)
+                                ("require evil")
+                                (func/func/requirer 'evil-visualstar)
 
-                        ("keymap evil visual")
-                        (lambda ()
-                          (func/keymap/define evil-visual-state-map
-                                              "A-1" #'evil-visualstar/begin-search-forward
-                                              "A-!" #'evil-visualstar/begin-search-forward)))
+                                ("keymap evil visual")
+                                (lambda ()
+                                  (func/keymap/define evil-visual-state-map
+                                                      "A-1" #'evil-visualstar/begin-search-forward
+                                                      "A-!" #'evil-visualstar/begin-search-forward)))
   )

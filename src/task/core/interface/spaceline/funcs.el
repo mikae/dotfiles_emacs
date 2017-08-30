@@ -10,8 +10,8 @@
 
   (serika-c/eg/add-many-by-name 'spaceline
                                 ("require")
-                                (func/func/requirer spaceline
-                                                    spaceline-segments)
+                                (func/func/requirer 'spaceline
+                                                    'spaceline-segments)
 
                                 ("settings")
                                 (lambda ()

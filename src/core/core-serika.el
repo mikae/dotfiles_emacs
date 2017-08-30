@@ -14,10 +14,11 @@
   (serika-c/task/add "util")
   (serika-c/task/add "base")
   (serika-c/task/add "core")
+  (serika-c/task/add "inf")
   (serika-c/task/execute-all)
 
   (serika-c/eg/execute)
-)
+  )
 
 (provide 'core-serika)
 ;;; core-serika.el ends here

@@ -72,8 +72,8 @@
                                   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 
                                 ("settings multi-compile")
-                                (lambda ()
-                                  (add-to-list 'multi-compile-alist '(js2-mode . (("node" . "node %path")))))
+                                (serika-f/multi-compile/configure 'js2-mode
+                                                                  "node" "node %path")
 
                                 ("settings smartparens")
                                 (lambda ()

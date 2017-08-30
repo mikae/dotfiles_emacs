@@ -34,7 +34,11 @@
                   "keymap"
                   "global-keymap"
                   "hook"
-                  "post activate"))
+                  "post"
+                  "post activate"
+
+                  ;; end tasks
+                  "inf"))
     (eg/create-path --serika-execution-graph task)))
 
 (cl-defun serika-c/eg/add (&key name         (last '__unnamed__)

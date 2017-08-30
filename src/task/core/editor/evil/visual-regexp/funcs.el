@@ -11,15 +11,15 @@
                            :parents '("install evil"))
 
   (serika-c/eg/add-many-by-name 'visual-regexp
-                        ("require evil")
-                        (func/func/requirer visual-regexp
-                                            visual-regexp-steroids)
+                                ("require evil")
+                                (func/func/requirer 'visual-regexp
+                                                    'visual-regexp-steroids)
 
-                        ("global-keymap evil")
-                        (lambda ()
-                          (func/keymap/define-global
-                           "A-2"     #'vr/isearch-forward
-                           "A-@"     #'vr/isearch-backward
-                           "A-3"     #'vr/replace
-                           "A-#"     #'vr/query-replace)))
+                                ("global-keymap evil")
+                                (lambda ()
+                                  (func/keymap/define-global
+                                   "A-2"     #'vr/isearch-forward
+                                   "A-@"     #'vr/isearch-backward
+                                   "A-3"     #'vr/replace
+                                   "A-#"     #'vr/query-replace)))
   )

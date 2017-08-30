@@ -1,6 +1,7 @@
 ;;; package --- serika entry point -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+(debug-on-entry 'projectile-mode)
 (defconst serika-emacs-min-version   "25.1.1"
   "Minimal version of Emacs.")
 

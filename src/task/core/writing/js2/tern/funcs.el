@@ -18,7 +18,7 @@
 
   (serika-c/eg/add-many-by-name 'tern
                                 ("require js2")
-                                (func/func/requirer tern)
+                                (func/func/requirer 'tern)
 
                                 ("keymap js2")
                                 (lambda ()

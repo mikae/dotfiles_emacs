@@ -80,22 +80,7 @@ if $INSTALL; then
 
     # install Cask
     curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-
-    for f in $(find $CONFIG_SRC -type f); do
-        case $f in
-            *)
-                if $INSTALL; then
-                    relative_name=`realpath --relative-to="$CONFIG_SRC" "$f"`
-                    source_path=$CONFIG_SRC/$relative_name
-                    destination_path=$DESTINATION_DIR/$relative_name
-                    destination_dir="$(dirname $destination_path)"
-
-                    [ ! -d $destination_dir ] && mkdir -p $destination_dir
-                    cp -v $source_path $destination_path
-                fi
-                ;;
-        esac
-    done
+    cp -Rv $CONFIG_SRC/* $DESTINATION_DIR
 fi
 
 #clear

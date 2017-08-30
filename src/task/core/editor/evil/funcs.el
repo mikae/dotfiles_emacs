@@ -263,7 +263,7 @@
 
   (serika-c/eg/add-many-by-name 'evil
                                 ("require")
-                                (func/func/requirer evil)
+                                (func/func/requirer 'evil)
 
                                 ("settings")
                                 #'serika-g/evil//settings

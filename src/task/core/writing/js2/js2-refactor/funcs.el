@@ -14,11 +14,11 @@
                            :package-list '(js2-refactor))
 
   (serika-c/eg/add-many-by-name 'js2-refactor
-                        ("require js2")
-                        (func/func/requirer js2-refactor)
+                                ("require js2")
+                                (func/func/requirer 'js2-refactor)
 
-                        ("keymap js2")
-                        (lambda ()
-                          (func/keymap/save   js2-refactor-mode-map)
-                          (func/keymap/create js2-refactor-mode-map)))
+                                ("keymap js2")
+                                (lambda ()
+                                  (func/keymap/save   js2-refactor-mode-map)
+                                  (func/keymap/create js2-refactor-mode-map)))
   )

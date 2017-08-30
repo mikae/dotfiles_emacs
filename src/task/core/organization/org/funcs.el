@@ -307,18 +307,32 @@
            org-enforce-todo-checkbox-dependencies t
            org-use-fast-todo-selection t)
 
+     ;; (setq org-capture-templates
+     ;;       `(("t" "Todo" entry (file+headline ,(f-join org-directory
+     ;;                                                   "gtd"
+     ;;                                                   "captures.org")
+     ;;                                          "Tasks")
+     ;;          "* TODO %?\n %i\n %a")
+     ;;         ("j" "Todo" entry (file+headline ,(f-join org-directory
+     ;;                                                   "gtd"
+     ;;                                                   "js.org")
+     ;;                                          "Tasks")
+     ;;          "* TODO %?\n %i\n %a")
+     ;;         ))
      (setq org-capture-templates
-           `(("t" "Todo" entry (file+headline ,(f-join org-directory
-                                                       "gtd"
-                                                       "todo.org")
-                                              "Tasks")
-              "* TODO %?\n %i\n %a")
-             ("j" "Todo" entry (file+headline ,(f-join org-directory
-                                                       "gtd"
-                                                       "js.org")
-                                              "Tasks")
-              "* TODO %?\n %i\n %a")
-             ))
+           `(
+             ("t"
+              "TODO"
+              entry
+              (file+headline ,(f-join org-directory
+                                      "gtd"
+                                      "captures.org")
+                             "Tasks")
+              "* TODO %^{Todo} %(org-set-tags) \n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+              :kill-buffer t
+              :immediate-finish t)
+             )
+           )
      ;; `agenda'
      (setq org-agenda-custom-commands '(("x" agenda)))
      )

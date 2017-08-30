@@ -10,11 +10,11 @@
                            :parents '("install evil"))
 
   (serika-c/eg/add-many-by-name 'zzz-to-char
-                        ("require evil")
-                        (func/func/requirer zzz-to-char)
+                                ("require evil")
+                                (func/func/requirer 'zzz-to-char)
 
-                        ("keymap evil normal")
-                        (lambda ()
-                          (func/keymap/define evil-normal-state-map
-                                              "g"   #'zzz-to-char
-                                              "G"   #'zzz-up-to-char))))
+                                ("keymap evil normal")
+                                (lambda ()
+                                  (func/keymap/define evil-normal-state-map
+                                                      "g"   #'zzz-to-char
+                                                      "G"   #'zzz-up-to-char))))
