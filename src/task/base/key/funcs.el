@@ -77,35 +77,42 @@
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
     (global-set-key (kbd elem) 'digit-argument))
 
+  ;; save/kill ... etc
   (func/keymap/define-global "C-x C-s"     #'save-buffer
                              "C-x C-S-s"   #'func/tramp/sudo-write
                              "C-x C-x C-s" #'func/buffer/invoke-save-function
                              "C-x C-c"     #'func/buffer/kill
                              "C-x C-x C-c" #'func/buffer/kill
                              "C-x C-h"     #'previous-buffer
-                             "C-x C-g"     #'revert-buffer
+                             "C-x C-g"     #'revert-buffer)
 
-                             "C-x C-q"   #'save-buffers-kill-terminal
-                             "C-x C-w"   #'widen
+  ;; narrowing
+  (func/keymap/define-global "C-x C-q"   #'save-buffers-kill-terminal
+                             "C-x C-w"   #'widen)
 
-                             "C-x t r"   #'read-only-mode
+  ;; toggles
+  (func/keymap/define-global "C-x t r"   #'read-only-mode)
 
-
-                             "C-x h v"   #'describe-variable
+  ;; describes
+  (func/keymap/define-global "C-x h v"   #'describe-variable
                              "C-x h f"   #'describe-function
-                             "C-x h k"   #'describe-key
+                             "C-x h k"   #'describe-key)
 
-                             "C-x c u"   #'serika-f/settings/change-user
+  ;; changes
+  (func/keymap/define-global "C-x c u"   #'serika-f/settings/change-user)
 
-                             "C-t w"     #'delete-trailing-whitespace
+  ;; text
+  (func/keymap/define-global "C-t w"     #'delete-trailing-whitespace)
 
-                             "<C-m> n"   #'kmacro-start-macro-or-insert-counter
-                             "<C-m> r"   #'kmacro-end-or-call-macro
+  ;; macro
+  (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter
+                             "<C-m> r"   #'kmacro-end-or-call-macro)
 
-                             "C-w f"     #'delete-other-windows
-                             "C-w F"     #'func/window/only-new-window
+  ;; windows
+  (func/keymap/define-global "C-w f"     #'delete-other-windows
+                             "C-w F"     #'serika-f/window/delete-but-scratch)
 
-                             "M-r"       #'eval-expression))
+  (func/keymap/define-global "M-r"       #'eval-expression))
 
 (defun init ()
   "Configure keys."

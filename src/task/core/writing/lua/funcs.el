@@ -55,39 +55,39 @@
                            :parents '("install lua"))
 
   (serika-c/eg/add-many-by-name 'lua
-                        ("require")
-                        (lambda ()
-                          (require 'lua-mode)
-                          (require 'company-lua))
+                                ("require")
+                                (lambda ()
+                                  (require 'lua-mode)
+                                  (require 'company-lua))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'lua-mode "\\.lua\\'"))
 
-                        ("settings multi-compile")
-                        (lambda ()
-                          (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
+                                ("settings multi-compile")
+                                (lambda ()
+                                  (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/create lua-mode-map
-                                              "C-c c" #'multi-compile-run
-                                              "C-t =" #'evil-indent
-                                              "C-t /" #'evilnc-comment-or-uncomment-lines
-                                              "C-t e" #'yas-expand))
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list #'serika-l/lua//evil
-                                                  #'serika-l/lua//buffer-local-variables
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/create lua-mode-map
+                                                      "C-c c" #'multi-compile-run
+                                                      "C-t =" #'evil-indent
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
+                                                      "C-t e" #'yas-expand))
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list #'serika-l/lua//evil
+                                                          #'serika-l/lua//buffer-local-variables
 
-                                                  #'serika-l/lua//syntax-checking
-                                                  #'serika-l/lua//snippet-engine
-                                                  #'serika-l/lua//auto-completion
-                                                  #'serika-f/eldoc/activate
-                                                  #'serika-f/flycheck/activate
+                                                          #'serika-l/lua//syntax-checking
+                                                          #'serika-l/lua//snippet-engine
+                                                          #'serika-l/lua//auto-completion
+                                                          #'serika-f/eldoc/activate
+                                                          #'serika-f/flycheck/activate
 
-                                                  #'serika-l/lua//interface
-                                                  #'serika-l/lua//prettify-symbols
-                                                  ))
-                            (func/hook/add 'lua-mode-hook callback))
-                          )))
+                                                          #'serika-l/lua//interface
+                                                          #'serika-l/lua//prettify-symbols
+                                                          ))
+                                    (func/hook/add 'lua-mode-hook callback))
+                                  )))

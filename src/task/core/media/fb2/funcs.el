@@ -14,5 +14,4 @@
 
                                 ("settings")
                                 (lambda ()
-                                  (add-to-list 'auto-mode-alist '("\\.fb2\\'" . fb2-mode))))
-  )
+                                  (serika-f/settings/register-ft 'fb2-mode "\\.fb2\\'"))))

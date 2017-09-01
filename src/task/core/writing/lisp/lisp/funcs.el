@@ -30,11 +30,11 @@
 (defun init ()
   "Configure `lisp-mode'."
   (serika-c/eg/add-many-by-name 'lisp-mode
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.lsp\\'" . lisp-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'lisp-mode "\\.lsp\\'"))
 
-                        ("hook")
-                        (lambda ()
-                          (func/hook/add 'lisp-mode-hook
-                                         #'serika-f/lisp/setup-buffer))))
+                                ("hook")
+                                (lambda ()
+                                  (func/hook/add 'lisp-mode-hook
+                                                 #'serika-f/lisp/setup-buffer))))

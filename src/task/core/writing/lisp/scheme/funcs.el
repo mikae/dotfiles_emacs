@@ -48,32 +48,32 @@
 (defun init ()
   "Configure `scheme-mode'."
   (serika-c/eg/add-many-by-name 'scheme
-                        ("require")
-                        (lambda ()
-                          (require 'scheme))
+                                ("require")
+                                (lambda ()
+                                  (require 'scheme))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.scm\\'" . scheme-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'scheme-mode "\\.scm\\'"))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/create scheme-mode-map
-                                                  "C-t =" 'evil-indent
-                                                  "C-t /" 'evilnc-comment-or-uncomment-lines
-                                                  "C-t e" 'yas-expand))
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/create scheme-mode-map
+                                                      "C-t =" 'evil-indent
+                                                      "C-t /" 'evilnc-comment-or-uncomment-lines
+                                                      "C-t e" 'yas-expand))
 
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list
-                                             'serika-l/scheme//evil
-                                             'serika-l/scheme//buffer-local-variables
-                                             'serika-l/scheme//buffer-local-mappings
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list
+                                                     'serika-l/scheme//evil
+                                                     'serika-l/scheme//buffer-local-variables
+                                                     'serika-l/scheme//buffer-local-mappings
 
-                                             'serika-f/yasnippet/activate
-                                             'serika-f/flycheck/activate
-                                             'serika-l/scheme//auto-completion
+                                                     'serika-f/yasnippet/activate
+                                                     'serika-f/flycheck/activate
+                                                     'serika-l/scheme//auto-completion
 
-                                             'serika-l/scheme//interface
-                                             'serika-l/scheme//prettify-symbols))
-                            (func/hook/add 'scheme-mode-hook callback)))))
+                                                     'serika-l/scheme//interface
+                                                     'serika-l/scheme//prettify-symbols))
+                                    (func/hook/add 'scheme-mode-hook callback)))))

@@ -1,5 +1,5 @@
 ;;; package --- Summary
-;;; Commentary: 
+;;; Commentary:
 ;;; Code:
 
 (defun init ()
@@ -10,18 +10,6 @@
                            :parents      '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'func
-                        ("zero lib require")
-                        (lambda ()
-                          (require 'func-buffer)
-                          (require 'func-char)
-                          (require 'func-eval)
-                          (require 'func-func)
-                          (require 'func-hook)
-                          (require 'func-keymap)
-                          (require 'func-list)
-                          (require 'func-path)
-                          (require 'func-string)
-                          (require 'func-symbol)
-                          (require 'func-system)
-                          (require 'func-tramp)
-                          (require 'func-window))))
+                                ("zero lib require")
+                                (lambda ()
+                                  (require 'func-all))))

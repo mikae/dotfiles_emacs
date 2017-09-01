@@ -10,6 +10,6 @@
                            :parents      '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 's
-                        ("zero lib require")
-                        (lambda ()
-                          (require 's))))
+                                ("zero lib require")
+                                (lambda ()
+                                  (require 's))))

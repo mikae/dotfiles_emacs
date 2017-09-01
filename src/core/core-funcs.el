@@ -9,8 +9,5 @@
                          part)))
     path))
 
-(defun func/string-parse-url (url-string)
-  (replace-regexp-in-string "%2b" "+" (file-name-nondirectory url-string)))
-
 (provide 'core-funcs)
 ;;; core-funcs.el ends here

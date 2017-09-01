@@ -30,13 +30,13 @@
                                 ("settings")
                                 (lambda ()
                                   ;; `load-path'
-                                  (add-to-list 'auto-mode-alist '("\\.bmp\\'"  . image-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.jpg\\'"  . image-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.jpeg\\'" . image-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.png\\'"  . image-mode))
+                                  (serika-f/settings/register-ft 'image-mode
+                                                                 "\\.bmp\\'"
+                                                                 "\\.jpg\\'"
+                                                                 "\\.jpeg\\'"
+                                                                 "\\.png\\'")
 
-                                  (setq image-animate-loop t)
-                                  )
+                                  (setq image-animate-loop t))
 
                                 ("keymap")
                                 (lambda ()

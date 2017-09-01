@@ -32,9 +32,10 @@
 
    ("settings")
    (lambda ()
-     (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-     (add-to-list 'auto-mode-alist '("\\.md\\'"       . markdown-mode))
-     (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
+     (serika-f/settings/register-ft 'markdown-mode
+                                    "\\.markdown\\'"
+                                    "\\.md\\'")
+     (serika-f/settings/register-ft 'gfm-mode "README\\.md\\'"))
 
    ("keymap")
    (lambda ()
@@ -101,7 +102,7 @@
                        (define-key ,map (kbd "C-c k")      #'markdown-kill-thing-at-point))))
 
        (func/keymap/save markdown-mode-map
-                             gfm-mode-map)
+                         gfm-mode-map)
 
        ;; Use new keymaps
        (--setup-markdown-keymap markdown-mode-map)

@@ -69,7 +69,7 @@
 
                                 ("settings")
                                 (lambda ()
-                                  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+                                  (serika-f/settings/register-ft 'js2-mode "\\.js\\'"))
 
                                 ("settings multi-compile")
                                 (serika-f/multi-compile/configure 'js2-mode

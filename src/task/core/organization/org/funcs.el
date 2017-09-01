@@ -237,7 +237,7 @@
    ("settings")
    (lambda ()
      ;;`auto-mode-alist'
-     (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+     (serika-f/settings/register-ft 'org-mode "\\.org\\'")
 
      ;; `directories'
      (setq org-directory          (f-join (f-root)
@@ -331,10 +331,18 @@
               "* TODO %^{Todo} %(org-set-tags) \n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
               :kill-buffer t
               :immediate-finish t)
+             ("j"
+              "TODO"
+              entry
+              (file+headline ,(f-join org-directory
+                                      "gtd"
+                                      "js.org")
+                             "JS Tasks")
+              "* TODO %^{Todo} %(org-set-tags) \n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+              :kill-buffer t
+              :immediate-finish t)
              )
            )
-     ;; `agenda'
-     (setq org-agenda-custom-commands '(("x" agenda)))
      )
 
    ;; todo: fix it

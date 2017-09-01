@@ -37,10 +37,10 @@
 (defun serika-f/prettify-symbols/create-loader (name)
   "Create lambda that activates `prettify-symbols-mode', and
 setups `prettify-symbols-alist'."
-  (let* ((--conf (f-read-text (func/path/join serika-conf-directory
-                                              "prettify-symbols"
-                                              (concat name
-                                                      ".prettify-symbols"))))
+  (let* ((--conf (f-read-text (f-join serika-conf-directory
+                                      "prettify-symbols"
+                                      (concat name
+                                              ".prettify-symbols"))))
          (--parts (split-string --conf)))
     (when (cl-oddp (length --parts))
       (error "Incorrect prettify configuration file."))
@@ -64,9 +64,11 @@ setups `prettify-symbols-alist'."
                   do
                   (set --prop --value))))))
 
-(defun serika-f/settings/register-ft (pattern mode)
+(defun serika-f/settings/register-ft (mode &rest patterns)
   "Add new item in `auto-mode-alist'."
-  (add-to-list 'auto-mode-alist `(,pattern . ,mode)))
+  (cl-loop for --pattern in patterns
+           do
+           (add-to-list 'auto-mode-alist `(,--pattern . ,mode))))
 
 (defun serika-f/settings/change-user ()
   "Change user settings."
@@ -105,9 +107,9 @@ setups `prettify-symbols-alist'."
                                         auto-save-default        nil)
 
                                   (setq auto-save-list-file-prefix
-                                        (func/path/join serika-tmp-directory
-                                                        "auto-save-list"
-                                                        ".saves-"))
+                                        (f-join serika-tmp-directory
+                                                "auto-save-list"
+                                                ".saves-"))
 
                                   ;; Disable all default mode selection.
                                   (setq auto-mode-alist ())

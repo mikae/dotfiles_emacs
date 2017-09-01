@@ -29,17 +29,17 @@
 (defun init ()
   "Configure `xdefaults'."
   (serika-c/eg/add-many-by-name 'xdefaults
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.Xresources\\'" . conf-xdefaults-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'conf-xdefaults-mode "\\.Xresources\\'"))
 
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list
-                                             #'serika-l/xdefaults//evil
-                                             #'serika-l/xdefaults//buffer-local-variables
-                                             #'serika-l/xdefaults//buffer-local-mappings
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list
+                                                     #'serika-l/xdefaults//evil
+                                                     #'serika-l/xdefaults//buffer-local-variables
+                                                     #'serika-l/xdefaults//buffer-local-mappings
 
-                                             #'serika-l/xdefaults//interface))
-                            (func/hook/add 'conf-xdefaults-mode-hook
-                                               callback)))))
+                                                     #'serika-l/xdefaults//interface))
+                                    (func/hook/add 'conf-xdefaults-mode-hook
+                                                   callback)))))

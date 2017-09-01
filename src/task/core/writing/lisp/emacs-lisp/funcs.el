@@ -53,32 +53,32 @@
                            :name         'emacs-lisp)
 
   (serika-c/eg/add-many-by-name 'emacs-lisp
-                        ("require")
-                        (lambda ()
-                          (require 'flycheck-cask))
+                                ("require")
+                                (lambda ()
+                                  (require 'flycheck-cask))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'emacs-lisp-mode "\\.el\\'"))
 
 
-                        ("settings smartparens")
-                        (lambda ()
-                          (sp-local-pair 'emacs-lisp-mode "("    ")")
-                          (sp-local-pair 'emacs-lisp-mode "{"    "}")
-                          (sp-local-pair 'emacs-lisp-mode "["    "]")
-                          (sp-local-pair 'emacs-lisp-mode "\""   "\"")
-                          (sp-local-pair 'emacs-lisp-mode "`"    "'")
-                          (sp-local-pair 'emacs-lisp-mode "\\\"" "\\\""))
+                                ("settings smartparens")
+                                (lambda ()
+                                  (sp-local-pair 'emacs-lisp-mode "("    ")")
+                                  (sp-local-pair 'emacs-lisp-mode "{"    "}")
+                                  (sp-local-pair 'emacs-lisp-mode "["    "]")
+                                  (sp-local-pair 'emacs-lisp-mode "\""   "\"")
+                                  (sp-local-pair 'emacs-lisp-mode "`"    "'")
+                                  (sp-local-pair 'emacs-lisp-mode "\\\"" "\\\""))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/create emacs-lisp-mode-map
-                                              "C-t =" #'evil-indent
-                                              "C-t /" #'evilnc-comment-or-uncomment-lines
-                                              "C-t e" #'yas-expand))
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/create emacs-lisp-mode-map
+                                                      "C-t =" #'evil-indent
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
+                                                      "C-t e" #'yas-expand))
 
-                        ("hook")
-                        (lambda ()
-                          (func/hook/add-oncely 'emacs-lisp-mode-hook
-                                                #'serika-f/emacs-lisp/setup-buffer))))
+                                ("hook")
+                                (lambda ()
+                                  (func/hook/add-oncely 'emacs-lisp-mode-hook
+                                                        #'serika-f/emacs-lisp/setup-buffer))))

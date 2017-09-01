@@ -7,6 +7,18 @@
   "Return t if evil mode is active"
   (or evil-mode evil-local-mode))
 
+(defun serika-f/evil/forward-char ()
+  "Forward char if next char is not a \n char."
+  (interactive)
+  (when (not (eolp))
+    (forward-char)))
+
+(defun serika-f/evil/backward-char ()
+  "Forward char if next char is not a \n char."
+  (interactive)
+  (when (not (bolp))
+    (backward-char)))
+
 (defun serika-f/evil/replace-buffer ()
   "Replace all text in current buffer with text from clipboard."
   (interactive)
@@ -120,8 +132,8 @@
 (defun serika-g/evil//insert-keymap ()
   "Configure `evil-insert-state-map'."
   (func/keymap/define evil-insert-state-map
-                      "A-n" 'func/char/backward
-                      "A-o" 'func/char/forward
+                      "A-n" 'serika-f/evil/backward-char
+                      "A-o" 'serika-f/evil/forward-char
 
                       ;; Ret with proper indentation
                       "RET" 'newline
@@ -281,8 +293,6 @@
                                    'insert
                                    #'serika-g/evil//insert-keymap
 
-                                   'visual
-                                   #'serika-g/evil//visual-keymap
 
                                    'replace
                                    #'serika-g/evil//replace-keymap
@@ -297,4 +307,7 @@
                                    #'serika-g/evil//text-objects-keymap
 
                                    'ex-keymap
-                                   #'serika-g/evil//ex-keymap))
+                                   #'serika-g/evil//ex-keymap
+
+                                   'visual
+                                   #'serika-g/evil//visual-keymap))

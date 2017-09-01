@@ -10,6 +10,7 @@
                            :parents      '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'dash
-                        ("zero lib require")
-                        (lambda ()
-                          (require 'dash))))
+                                ("zero lib require")
+                                (lambda ()
+                                  (require 'dash)
+                                  (dash-enable-font-lock))))

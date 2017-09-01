@@ -17,7 +17,7 @@
   (serika-c/eg/add-many-by-name 'text
                                 ("settings")
                                 (lambda ()
-                                  (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode)))
+                                  (serika-f/settings/register-ft 'text-mode "\\.txt\\'"))
 
                                 ("keymap")
                                 (lambda ()

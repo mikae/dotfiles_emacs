@@ -28,21 +28,22 @@
                            :src  "https://raw.githubusercontent.com/mikae/vimperator-mode/master/vimperator-mode.el")
 
   (serika-c/eg/add-many-by-name 'vimperator
-                        ("require")
-                        (lambda ()
-                          (require 'vimperator-mode))
+                                ("require")
+                                (lambda ()
+                                  (require 'vimperator-mode))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\'" . vimperator-mode))
-                          (add-to-list 'auto-mode-alist '("\\.vimperatorrc\\.after\\'" . vimperator-mode))
-                          (add-to-list 'auto-mode-alist '("\\.vimp\\'" . vimperator-mode))
-                          (add-to-list 'auto-mode-alist '("\\.vimp\\.after\\'" . vimperator-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'vimperator-mode
+                                                                 "\\.vimperatorrc\\'"
+                                                                 "\\.vimperatorrc\\.after\\'"
+                                                                 "\\.vimp\\'"
+                                                                 "\\.vimp\\.after\\'"))
 
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list #'serika-l/vimperator//evil
-                                                  #'serika-l/vimperator//buffer-local-variables
-                                                  #'serika-l/vimperator//interface))
-                            (func/hook/add 'vimperator-mode-hook
-                                               callback)))))
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list #'serika-l/vimperator//evil
+                                                          #'serika-l/vimperator//buffer-local-variables
+                                                          #'serika-l/vimperator//interface))
+                                    (func/hook/add 'vimperator-mode-hook
+                                                   callback)))))

@@ -17,38 +17,38 @@
                            :parents      '("install ereader"))
 
   (serika-c/eg/add-many-by-name 'epub
-                        ("require")
-                        (lambda ()
-                          (require 'ereader))
+                                ("require")
+                                (lambda ()
+                                  (require 'ereader))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.epub\\'" . ereader-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'ereader-mode "\\.epub\\'"))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save   ereader-mode-map)
-                          (func/keymap/create ereader-mode-map
-                                              ;; Searching
-                                              "A-1"   #'evil-search-forward
-                                              "A-2"   #'evil-search-backward
-                                              "A-z"   #'evil-search-next
-                                              "A-Z"   #'evil-search-previous
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save   ereader-mode-map)
+                                  (func/keymap/create ereader-mode-map
+                                                      ;; Searching
+                                                      "A-1"   #'evil-search-forward
+                                                      "A-2"   #'evil-search-backward
+                                                      "A-z"   #'evil-search-next
+                                                      "A-Z"   #'evil-search-previous
 
-                                              
-                                              "A-e"   #'evil-scroll-down
-                                              "A-i"   #'evil-scroll-up
-                                              "A-p"   #'evil-scroll-page-down
-                                              "A-P"   #'evil-scroll-page-up
 
-                                              
-                                              "C-c A" #'ereader-hide-annotation
-                                              "C-c G" #'ereader-goto-chapter
-                                              "C-c M" #'ereader-hide-all-annotations
-                                              "C-c R" #'ereader-load-annotations
-                                              "C-c a" #'ereader-show-annotation
-                                              "C-c c" #'ereader-message-chapter
-                                              "C-c g" #'ereader-goto-chapter
-                                              "C-c m" #'ereader-show-all-annotations
-                                              ;; "C-c l" 'org-store-link
-                                              ))))
+                                                      "A-e"   #'evil-scroll-down
+                                                      "A-i"   #'evil-scroll-up
+                                                      "A-p"   #'evil-scroll-page-down
+                                                      "A-P"   #'evil-scroll-page-up
+
+
+                                                      "C-c A" #'ereader-hide-annotation
+                                                      "C-c G" #'ereader-goto-chapter
+                                                      "C-c M" #'ereader-hide-all-annotations
+                                                      "C-c R" #'ereader-load-annotations
+                                                      "C-c a" #'ereader-show-annotation
+                                                      "C-c c" #'ereader-message-chapter
+                                                      "C-c g" #'ereader-goto-chapter
+                                                      "C-c m" #'ereader-show-all-annotations
+                                                      ;; "C-c l" 'org-store-link
+                                                      ))))

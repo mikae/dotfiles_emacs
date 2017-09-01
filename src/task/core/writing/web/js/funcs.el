@@ -56,59 +56,59 @@
                                            ac-js2)
                            :name         'js2)
   (serika-c/eg/add-many-by-name 'js2
-                        ("require")
-                        (lambda ()
-                          (require 'js2-mode)
-                          (require 'skewer-mode)
-                          (require 'ac-js2))
+                                ("require")
+                                (lambda ()
+                                  (require 'js2-mode)
+                                  (require 'skewer-mode)
+                                  (require 'ac-js2))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'js2-mode "\\.js\\'"))
 
-                        ("settings multi-compile")
-                        (lambda ()
-                          (add-to-list 'multi-compile-alist '(js2-mode . (("Execute" . "node %path")))))
+                                ("settings multi-compile")
+                                (lambda ()
+                                  (add-to-list 'multi-compile-alist '(js2-mode . (("Execute" . "node %path")))))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save js2-mode-map)
-                          (func/keymap/create js2-mode-map
-                                              "C-c e e" 'skewer-eval-last-expression
-                                              "C-c e d" 'skewer-eval-defun
-                                              "C-c e a" 'skewer-load-buffer
-                                              "C-c e r" 'run-skewer
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save js2-mode-map)
+                                  (func/keymap/create js2-mode-map
+                                                      "C-c e e" 'skewer-eval-last-expression
+                                                      "C-c e d" 'skewer-eval-defun
+                                                      "C-c e a" 'skewer-load-buffer
+                                                      "C-c e r" 'run-skewer
 
-                                              "C-c c c" 'multi-compile-run
-                                              "C-c c d" (lambda ()
-                                                          (interactive)
-                                                          (func/buffer/kill-by-major-mode 'compilation-mode))
+                                                      "C-c c c" 'multi-compile-run
+                                                      "C-c c d" (lambda ()
+                                                                  (interactive)
+                                                                  (func/buffer/kill-by-major-mode 'compilation-mode))
 
-                                              "C-t ="   'evil-indent
-                                              "C-t +"   'web-beautify-js
-                                              "C-t /"   'evilnc-comment-or-uncomment-lines
-                                              "C-t e"   'yas-expand
-                                              "C-t E"   'serika-f/emmet/expand))
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list
-                                             #'serika-l/js2//evil
-                                             #'serika-l/js2//buffer-local-variables
+                                                      "C-t ="   'evil-indent
+                                                      "C-t +"   'web-beautify-js
+                                                      "C-t /"   'evilnc-comment-or-uncomment-lines
+                                                      "C-t e"   'yas-expand
+                                                      "C-t E"   'serika-f/emmet/expand))
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list
+                                                     #'serika-l/js2//evil
+                                                     #'serika-l/js2//buffer-local-variables
 
-                                             #'serika-l/js2//syntax-checking
-                                             #'serika-l/js2//snippet-engine
-                                             #'serika-f/skewer/activate
-                                             #'serika-f/eldoc/activate
-                                             #'serika-f/flycheck/create
+                                                     #'serika-l/js2//syntax-checking
+                                                     #'serika-l/js2//snippet-engine
+                                                     #'serika-f/skewer/activate
+                                                     #'serika-f/eldoc/activate
+                                                     #'serika-f/flycheck/create
 
-                                             ;; bug:
-                                             ;; `https://github.com/ScottyB/ac-js2/issues/18'
-                                             ;; (add-hook 'js2-mode-hook #'serika-l/js2//auto-completion)
+                                                     ;; bug:
+                                                     ;; `https://github.com/ScottyB/ac-js2/issues/18'
+                                                     ;; (add-hook 'js2-mode-hook #'serika-l/js2//auto-completion)
 
-                                             #'serika-l/js2//interface
-                                             #'serika-l/js2//prettify-symbols
+                                                     #'serika-l/js2//interface
+                                                     #'serika-l/js2//prettify-symbols
 
-                                             #'serika-f/flycheck/create))
-                            (func/hook/add 'js2-mode-hook callback))
+                                                     #'serika-f/flycheck/create))
+                                    (func/hook/add 'js2-mode-hook callback))
 
-                          )))
+                                  )))

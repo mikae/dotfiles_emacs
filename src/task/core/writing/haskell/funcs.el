@@ -15,7 +15,7 @@
 
                                 ("settings")
                                 (lambda ()
-                                  (add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-mode)))
+                                  (serika-f/settings/register-ft 'haskell-mode "\\.hs\\'"))
 
                                 ("keymap")
                                 (lambda ()

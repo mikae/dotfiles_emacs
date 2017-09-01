@@ -47,12 +47,13 @@
   (serika-c/eg/add-many-by-name 'sh
                                 ("settings")
                                 (lambda ()
-                                  (add-to-list 'auto-mode-alist '("\\.sh\\'"  . sh-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . sh-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.zshenv\\'" . sh-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.zshprofile\\'" . sh-mode))
-                                  (add-to-list 'auto-mode-alist '("\\.xinit\\'" . sh-mode)))
+                                  (serika-f/settings/register-ft 'sh-mode
+                                                                 "\\.sh\\'"
+                                                                 "\\.zsh\\'"
+                                                                 "\\.zshrc\\'"
+                                                                 "\\.zshenv\\'"
+                                                                 "\\.zshprofile\\'"
+                                                                 "\\.xinit\\'"))
 
                                 ("settings multi-compile")
                                 (lambda ()

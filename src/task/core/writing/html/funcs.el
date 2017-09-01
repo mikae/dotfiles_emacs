@@ -51,51 +51,51 @@
 (defun init ()
   "Configure `html'."
   (serika-c/eg/add-many-by-name 'html
-                        ("require")
-                        (lambda ()
-                          (require 'web-beautify)
-                          (require 'sgml-mode))
+                                ("require")
+                                (lambda ()
+                                  (require 'web-beautify)
+                                  (require 'sgml-mode))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'html-mode "\\.html\\'"))
 
-                        ("settings multi-compile")
-                        (lambda ()
-                          (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
-                                                                           ("Firefox-esr" . "firefox-esr %path")
-                                                                           ("Chromium"    . "chromium    %path")))))
+                                ("settings multi-compile")
+                                (lambda ()
+                                  (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
+                                                                                   ("Firefox-esr" . "firefox-esr %path")
+                                                                                   ("Chromium"    . "chromium    %path")))))
 
-                        ("settings mmm-mode")
-                        (lambda ()
-                          (mmm-add-classes '((html-js-1
-                                              :submode js-mode
-                                              :front   "<script[^>]*>[ \t]*\n?"
-                                              :back    "[ \t]*</script>")))
-                          (mmm-add-mode-ext-class 'html-mode nil 'html-js-1))
+                                ("settings mmm-mode")
+                                (lambda ()
+                                  (mmm-add-classes '((html-js-1
+                                                      :submode js-mode
+                                                      :front   "<script[^>]*>[ \t]*\n?"
+                                                      :back    "[ \t]*</script>")))
+                                  (mmm-add-mode-ext-class 'html-mode nil 'html-js-1))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save html-mode-map)
-                          (func/keymap/create html-mode-map
-                                                  "C-c c" #'multi-compile-run
-                                                  "C-t e" #'yas-expand
-                                                  "C-t E" #'serika-f/emmet/expand
-                                                  "C-t =" #'evil-indent
-                                                  "C-t +" #'web-beautify-html
-                                                  "C-t /" #'evilnc-comment-or-uncomment-lines))
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save html-mode-map)
+                                  (func/keymap/create html-mode-map
+                                                      "C-c c" #'multi-compile-run
+                                                      "C-t e" #'yas-expand
+                                                      "C-t E" #'serika-f/emmet/expand
+                                                      "C-t =" #'evil-indent
+                                                      "C-t +" #'web-beautify-html
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
 
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list #'serika-l/html//evil
-                                                  #'serika-l/html//buffer-local-variables
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list #'serika-l/html//evil
+                                                          #'serika-l/html//buffer-local-variables
 
-                                                  #'serika-l/html//snippet-engine
-                                                  #'serika-l/html//auto-completion
-                                                  #'serika-l/html//syntax-checking
-                                                  #'serika-f/eldoc/activate
-                                                  #'serika-l/mmm-mode//activate
+                                                          #'serika-l/html//snippet-engine
+                                                          #'serika-l/html//auto-completion
+                                                          #'serika-l/html//syntax-checking
+                                                          #'serika-f/eldoc/activate
+                                                          #'serika-l/mmm-mode//activate
 
-                                                  #'serika-l/html//interface))
-                            (func/hook/add 'html-mode-hook
-                                               callback)))))
+                                                          #'serika-l/html//interface))
+                                    (func/hook/add 'html-mode-hook
+                                                   callback)))))

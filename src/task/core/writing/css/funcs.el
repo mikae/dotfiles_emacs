@@ -48,32 +48,32 @@
 (defun init ()
   "Configure `css'."
   (serika-c/eg/add-many-by-name 'css
-                        ("require")
-                        (lambda ()
-                          (require 'css-mode))
+                                ("require")
+                                (lambda ()
+                                  (require 'css-mode))
 
-                        ("keymap")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode)))
+                                ("keymap")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'css-mode "\\.css\\'"))
 
-                        ("settings")
-                        (lambda ()
-                          (func/keymap/save css-mode-map)
-                          (func/keymap/create css-mode-map
-                                                  "C-t e" #'yas-expand
-                                                  "C-t E" #'serika-f/emmet/expand
-                                                  "C-t =" #'evil-indent
-                                                  "C-t +" #'web-beautify-css
-                                                  "C-t /" #'evilnc-comment-or-uncomment-lines))
+                                ("settings")
+                                (lambda ()
+                                  (func/keymap/save css-mode-map)
+                                  (func/keymap/create css-mode-map
+                                                      "C-t e" #'yas-expand
+                                                      "C-t E" #'serika-f/emmet/expand
+                                                      "C-t =" #'evil-indent
+                                                      "C-t +" #'web-beautify-css
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
 
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list #'serika-l/css//evil
-                                                  #'serika-l/css//buffer-local-variables
-                                                  #'serika-l/css//snippet-engine
-                                                  #'serika-l/css//syntax-checking
-                                                  #'serika-l/css//auto-completion
-                                                  #'serika-f/eldoc/activate
-                                                  #'serika-l/css//interface))
-                            (func/hook/add 'css-mode-hook
-                                               callback)))))
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list #'serika-l/css//evil
+                                                          #'serika-l/css//buffer-local-variables
+                                                          #'serika-l/css//snippet-engine
+                                                          #'serika-l/css//syntax-checking
+                                                          #'serika-l/css//auto-completion
+                                                          #'serika-f/eldoc/activate
+                                                          #'serika-l/css//interface))
+                                    (func/hook/add 'css-mode-hook
+                                                   callback)))))

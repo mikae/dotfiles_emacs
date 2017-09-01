@@ -78,46 +78,46 @@
                                            virtualenvwrapper)
                            :name         'python)
   (serika-c/eg/add-many-by-name 'python
-                        ("require")
-                        (lambda ()
-                          (require 'anaconda-mode)
-                          (require 'virtualenvwrapper)
-                          (require 'company-anaconda)
-                          (require 'pyenv-mode))
+                                ("require")
+                                (lambda ()
+                                  (require 'anaconda-mode)
+                                  (require 'virtualenvwrapper)
+                                  (require 'company-anaconda)
+                                  (require 'pyenv-mode))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode)))
+                                ("settings")
+                                (lambda ()
+                                  (serika-f/settings/register-ft 'python-mode "\\.py\\'"))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save python-mode-map
-                                                anaconda-mode-map)
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save python-mode-map
+                                                    anaconda-mode-map)
 
-                          (func/keymap/create python-mode-map
-                                                  "C-c v w" #'venv-workon
-                                                  "C-c v d" #'venv-deactivate
-                                                  "C-c v m" #'venv-mkvirtualenv
-                                                  "C-c v r" #'venv-rmvirtualenv
-                                                  "C-c v l" #'venv-lsvirtualenv
-                                                  "C-c v c" #'venv-cdvirtualenv
-                                                  "C-c v y" #'venv-cpvirtualenv)
-                          (func/keymap/create anaconda-mode-map))
+                                  (func/keymap/create python-mode-map
+                                                      "C-c v w" #'venv-workon
+                                                      "C-c v d" #'venv-deactivate
+                                                      "C-c v m" #'venv-mkvirtualenv
+                                                      "C-c v r" #'venv-rmvirtualenv
+                                                      "C-c v l" #'venv-lsvirtualenv
+                                                      "C-c v c" #'venv-cdvirtualenv
+                                                      "C-c v y" #'venv-cpvirtualenv)
+                                  (func/keymap/create anaconda-mode-map))
 
-                        ("hook")
-                        (lambda ()
-                          (dolist (callback (list #'serika-l/python//evil
-                                                  #'serika-l/python//buffer-local-variables
-                                                  #'serika-l/python//buffer-local-mappings
-                                                  #'serika-l/python//minor-modes
+                                ("hook")
+                                (lambda ()
+                                  (dolist (callback (list #'serika-l/python//evil
+                                                          #'serika-l/python//buffer-local-variables
+                                                          #'serika-l/python//buffer-local-mappings
+                                                          #'serika-l/python//minor-modes
 
-                                                  #'serika-l/python//snippet-engine
-                                                  #'serika-l/python//syntax-checking
-                                                  #'serika-l/python//auto-completion
-                                                  #'serika-f/eldoc/activate
+                                                          #'serika-l/python//snippet-engine
+                                                          #'serika-l/python//syntax-checking
+                                                          #'serika-l/python//auto-completion
+                                                          #'serika-f/eldoc/activate
 
-                                                  #'serika-l/python//interface))
-                            (func/hook/add 'python-mode-hook callback))))
+                                                          #'serika-l/python//interface))
+                                    (func/hook/add 'python-mode-hook callback))))
 
   (serika-c/eg/add :parents '("settings python")
                    :name    'virtualenvwrapper

@@ -5,6 +5,7 @@
 (require 'core-package)
 (require 'core--execution)
 (require 'core-funcs)
+(require 'url)
 
 (defvar --serika-execution-graph nil
   "Execution graph for all tasks.")
@@ -76,7 +77,7 @@
            ((eq --type 'download) (when (stringp --src)
                                     (lambda ()
                                       (let ((--destination (func/path-join serika-plugin-directory
-                                                                           (func/string-parse-url (file-name-nondirectory --src)))))
+                                                                           (url-unhex-string (file-name-nondirectory --src)))))
                                         (unless (file-exists-p --destination)
                                           (url-copy-file --src
                                                          --destination))))))

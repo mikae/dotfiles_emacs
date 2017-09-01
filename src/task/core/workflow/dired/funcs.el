@@ -1,4 +1,4 @@
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -200,6 +200,16 @@ x0 - bit of omitted files.")
                     (shell-command --cmd)
                     (dired-revert))))))
 
+(defun serika-f/dired/create-path-visiter (path)
+  "Construct lambda that visits PATH.
+If PATH is invalid return nil."
+  (let ((--path path))
+    (if (f-dir-p --path)
+        (lambda ()
+          (interactive)
+          (dired --path))
+      nil)))
+
 ;; Local
 (defun serika-l/dired//setup-buffer ()
   "Configure `dired-mode' buffers."
@@ -261,9 +271,7 @@ x0 - bit of omitted files.")
                                                       "c o"   #'dired-do-chown
                                                       "c g"   #'dired-do-chgrp
 
-                                                      "o o"   (lambda ()
-                                                                (interactive)
-                                                                (dired org-directory))
+                                                      "o o"   (serika-f/dired/create-path-visiter "/home/isalinn")
 
                                                       "t h"   #'serika-f/dired/toggle-hidden
                                                       "t o"   #'serika-f/dired/toggle-omitted
