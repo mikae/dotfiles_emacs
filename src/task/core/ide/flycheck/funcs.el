@@ -33,6 +33,10 @@
   "Return t if any flycheck buffer is created."
   (func/buffer/not-exists-p 'flycheck-error-list-mode))
 
+(defun serika-f/flycheck/activated-p ()
+  "Return t if flycheck is activated in current buffer"
+  flycheck-mode)
+
 ;; Init
 (defun init ()
   "Configure `flycheck'."
@@ -40,31 +44,31 @@
                            :name         'flycheck)
 
   (serika-c/eg/add-many-by-name 'flycheck
-                        ("require")
-                        (lambda ()
-                          (require 'flycheck))
+                                ("require")
+                                (lambda ()
+                                  (require 'flycheck))
 
-                        ("settings")
-                        (lambda ()
-                          (add-to-list 'display-buffer-alist
-                                       `(,(rx bos "*Flycheck errors*" eos)
-                                         (display-buffer-reuse-window display-buffer-in-side-window)
-                                         (side            . bottom)
-                                         (reusable-frames . visible)
-                                         (window-height   . 0.2)))
-                          (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
-                          (setq flycheck-idle-change-delay 1))
+                                ("settings")
+                                (lambda ()
+                                  (add-to-list 'display-buffer-alist
+                                               `(,(rx bos "*Flycheck errors*" eos)
+                                                 (display-buffer-reuse-window display-buffer-in-side-window)
+                                                 (side            . bottom)
+                                                 (reusable-frames . visible)
+                                                 (window-height   . 0.2)))
+                                  (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
+                                  (setq flycheck-idle-change-delay 1))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save flycheck-error-list-mode-map)
-                          (func/keymap/create flycheck-error-list-mode-map
-                                              "A-n" #'evil-backward-char
-                                              "A-e" #'evil-next-visual-line
-                                              "A-i" #'evil-previous-visual-line
-                                              "A-o" #'evil-forward-char))
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save flycheck-error-list-mode-map)
+                                  (func/keymap/create flycheck-error-list-mode-map
+                                                      "A-n" #'evil-backward-char
+                                                      "A-e" #'evil-next-visual-line
+                                                      "A-i" #'evil-previous-visual-line
+                                                      "A-o" #'evil-forward-char))
 
-                        ("global-keymap")
-                        (lambda ()
-                          (func/keymap/define-global "C-, f s" 'serika-f/flycheck/create
-                                                     "C-, f h" 'serika-f/flycheck/remove))))
+                                ("global-keymap")
+                                (lambda ()
+                                  (func/keymap/define-global "C-, f s" 'serika-f/flycheck/create
+                                                             "C-, f h" 'serika-f/flycheck/remove))))

@@ -16,4 +16,7 @@
 
   (serika-c/eg/add-many-by-name 'company-tern
                                 ("keymap js2")
-                                (func/func/requirer 'company-tern)))
+                                ;; (func/func/requirer 'company-tern)
+                                (lambda ()
+                                  (require 'company-tern))
+                                ))

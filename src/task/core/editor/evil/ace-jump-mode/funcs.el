@@ -11,7 +11,9 @@
 
   (serika-c/eg/add-many-by-name 'ace-jump-mode
                                 ("require")
-                                (func/func/requirer 'ace-jump-mode)
+                                ;; (func/func/requirer 'ace-jump-mode)
+                                (lambda ()
+                                  (require 'ace-jump-mode))
 
                                 ("global-keymap evil")
                                 (lambda ()

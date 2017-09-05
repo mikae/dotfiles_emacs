@@ -11,7 +11,9 @@
 
   (serika-c/eg/add-many-by-name 'evil-visualstar
                                 ("require evil")
-                                (func/func/requirer 'evil-visualstar)
+                                ;; (func/func/requirer 'evil-visualstar)
+                                (lambda ()
+                                  (require 'evil-visualstar))
 
                                 ("keymap evil visual")
                                 (lambda ()

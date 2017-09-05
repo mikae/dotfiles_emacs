@@ -26,7 +26,9 @@
 
   (serika-c/eg/add-many-by-name 'org-wiki
                                 ("require org")
-                                (func/func/requirer 'org-wiki)
+                                ;; (func/func/requirer 'org-wiki)
+                                (lambda ()
+                                  (require 'org-wiki))
 
                                 ("settings org")
                                 (lambda ()

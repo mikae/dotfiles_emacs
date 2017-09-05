@@ -203,7 +203,9 @@ x0 - bit of omitted files.")
 (defun serika-f/dired/create-path-visiter (path)
   "Construct lambda that visits PATH.
 If PATH is invalid return nil."
-  (let ((--path path))
+  (let ((--path (if (symbolp path)
+                    (symbol-value path)
+                  path)))
     (if (f-dir-p --path)
         (lambda ()
           (interactive)
@@ -271,7 +273,7 @@ If PATH is invalid return nil."
                                                       "c o"   #'dired-do-chown
                                                       "c g"   #'dired-do-chgrp
 
-                                                      "o o"   (serika-f/dired/create-path-visiter "/home/isalinn")
+                                                      "o o"   (serika-f/dired/create-path-visiter org-directory)
 
                                                       "t h"   #'serika-f/dired/toggle-hidden
                                                       "t o"   #'serika-f/dired/toggle-omitted

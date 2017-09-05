@@ -9,5 +9,8 @@
                            :package-list '(company-shell))
   (serika-c/eg/add-many-by-name 'company-eshell
                                 ("require")
-                                (func/func/requirer 'company-shell))
+                                ;; (func/func/requirer 'company-shell)
+                                (lambda ()
+                                  (require 'company-shell))
+                                )
   )

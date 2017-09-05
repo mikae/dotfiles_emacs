@@ -36,9 +36,12 @@
     (serika-f/highlight-symbol/activate)
     (serika-f/prettify-symbols/activate :name "emacs-lisp")
 
-    (when (serika-f/flycheck/not-exists-p)
-      (serika-f/flycheck/create))
+    ;; ;; create flycheck window
+    ;; (when (and (serika-f/flycheck/activated-p)
+    ;;            (serika-f/flycheck/not-exists-p))
+    ;;   (serika-f/flycheck/create))
 
+    ;; autofocus to `emacs-lisp' buffer
     (when (not (func/buffer/check-modes 'emacs-lisp-mode
                                         'lisp-interaction-mode))
       (func/buffer/focus-to 'emacs-lisp-mode))

@@ -11,5 +11,8 @@
 
   (serika-c/eg/add-many-by-name 'xref-js2
                                 ("require js2")
-                                (func/func/requirer 'xref-js2))
+                                ;; (func/func/requirer 'xref-js2)
+                                (lambda ()
+                                  (require 'xref-js2))
+                                )
   )

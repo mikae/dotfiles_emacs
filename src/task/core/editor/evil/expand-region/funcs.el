@@ -10,7 +10,10 @@
                            :parents '("install evil"))
   (serika-c/eg/add-many-by-name 'expand-region
                                 ("require")
-                                (func/func/requirer 'expand-region)
+                                ;; (func/func/requirer 'expand-region)
+                                (lambda ()
+                                  (require 'expand-region))
+
 
                                 ("keymap evil visual")
                                 (lambda ()

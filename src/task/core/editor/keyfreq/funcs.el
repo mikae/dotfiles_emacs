@@ -17,7 +17,9 @@
 
   (serika-c/eg/add-many-by-name 'keyfreq
                                 ("require")
-                                (func/func/requirer 'keyfreq)
+                                ;; (func/func/requirer 'keyfreq)
+                                (lambda ()
+                                  (require 'keyfreq))
 
                                 ("settings")
                                 (lambda ()

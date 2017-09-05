@@ -10,7 +10,9 @@
 
   (serika-c/eg/add-many-by-name 'doom-themes
                                 ("require")
-                                (func/func/requirer 'doom-themes)
+                                ;; (func/func/requirer 'doom-themes)
+                                (lambda ()
+                                  (require 'doom-themes))
 
                                 ("interface")
                                 (lambda ()

@@ -15,7 +15,9 @@
 
   (serika-c/eg/add-many-by-name 'highlight-symbol
                                 ("require")
-                                (func/func/requirer 'highlight-symbol)
+                                ;; (func/func/requirer 'highlight-symbol)
+                                (lambda ()
+                                  (require 'highlight-symbol))
 
                                 ("settings")
                                 (lambda ()

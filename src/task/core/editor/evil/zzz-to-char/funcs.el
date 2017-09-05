@@ -11,7 +11,9 @@
 
   (serika-c/eg/add-many-by-name 'zzz-to-char
                                 ("require evil")
-                                (func/func/requirer 'zzz-to-char)
+                                ;; (func/func/requirer 'zzz-to-char)
+                                (lambda ()
+                                  (require 'zzz-to-char))
 
                                 ("keymap evil normal")
                                 (lambda ()

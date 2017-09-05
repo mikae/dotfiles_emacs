@@ -15,7 +15,9 @@
 
   (serika-c/eg/add-many-by-name 'js2-refactor
                                 ("require js2")
-                                (func/func/requirer 'js2-refactor)
+                                ;; (func/func/requirer 'js2-refactor)
+                                (lambda ()
+                                  (require 'js2-refactor))
 
                                 ("keymap js2")
                                 (lambda ()

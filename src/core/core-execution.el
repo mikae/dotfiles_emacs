@@ -52,6 +52,7 @@
           :parents parents
           :func    func
           :node    node))
+
 (cl-defun serika-c/eg/add-install (&key (type 'package)
                                         (package-list '())
                                         (name         '__unnamed__)

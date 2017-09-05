@@ -12,8 +12,11 @@
 
   (serika-c/eg/add-many-by-name 'visual-regexp
                                 ("require evil")
-                                (func/func/requirer 'visual-regexp
-                                                    'visual-regexp-steroids)
+                                ;; (func/func/requirer 'visual-regexp
+                                ;;                     'visual-regexp-steroids)
+                                (lambda ()
+                                  (require 'visual-regexp)
+                                  (require 'visual-regexp-steroids))
 
                                 ("global-keymap evil")
                                 (lambda ()
