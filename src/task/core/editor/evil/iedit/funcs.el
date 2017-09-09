@@ -27,12 +27,7 @@
                                   (evil-define-state iedit
                                     "Iedit state"
                                     :tag "<IE>"
-                                    :suppress-keymap t)
-
-                                  (evil-define-state iedit-input
-                                    "Iedit input state."
-                                    :tag "<IE-I>"
-                                    :input-method t))
+                                    :suppress-keymap t))
 
                                 ("keymap evil")
                                 (lambda ()
@@ -44,10 +39,7 @@
                                                       "W" #'iedit-next-occurrence
                                                       "f" #'iedit-toggle-selection
 
-                                                      "C-, C-n" #'evil-normal-state)
-
-                                  (func/keymap/define evil-iedit-input-state-map
-                                                      "C-, C-n" #'evil-iedit-state))
+                                                      "C-, C-n" #'evil-normal-state))
 
                                 ("keymap evil normal")
                                 (lambda ()

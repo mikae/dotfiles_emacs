@@ -86,8 +86,9 @@
 
 (defun serika-f/evil/change-whole-line (&optional count)
   (interactive "P")
+  (evil-beginning-of-line)
   (evil-visual-line)
-  (evil-next-visual-line (or count 1))
+  (evil-end-of-line)
   (evil-change (region-beginning) (region-end)))
 
 (defun serika-f/evil/mark-line (&optional count)
@@ -330,27 +331,27 @@
                            (evil-define-state metanormal
                              "Metanormal state."
                              :tag "<MN>"
-                             :enable (normal))
+                             :suppress-keymap t)
 
                            (evil-define-state char
                              "Char mode."
                              :tag "<c>"
-                             :enable (normal))
+                             :suppress-keymap t)
 
                            (evil-define-state word
                              "Word mode."
                              :tag "<w>"
-                             :enable (normal))
+                             :suppress-keymap t)
 
                            (evil-define-state line
                              "Line mode."
                              :tag "<l>"
-                             :enable (normal))
+                             :suppress-keymap t)
 
                            (evil-define-state paragraph
                              "Paragragh mode."
                              :tag "<p>"
-                             :enable (normal))
+                             :suppress-keymap t)
 
                            (evil-define-state buffer
                              "Buffer mode."
@@ -485,10 +486,6 @@
                                                          "W" #'evil-find-char-to-backward
                                                          "f" #'evil-ace-jump-char-mode
                                                          "F" #'evil-ace-jump-char-to-mode
-                                                         "p" #'ignore
-                                                         "P" #'ignore
-                                                         "g" #'ignore
-                                                         "G" #'ignore
                                                          "C-SPC" #'ignore
 
                                                          ;; arstd
@@ -511,6 +508,12 @@
                                                          "z" #'evil-delete-char
                                                          "x" #'serika-f/evil/yank-char
 
+                                                         ;; km,./
+                                                         "," #'evil-repeat
+                                                         "<" #'evil-use-register
+                                                         "." #'undo
+                                                         ">" #'redo
+
                                                          "SPC" #'evil-normal-state))
 
                                    'word
@@ -518,15 +521,6 @@
                                      (func/keymap/define evil-word-state-map
                                                          ;; qwfpg
                                                          "q" #'evil-forward-word-end
-                                                         "Q" #'ignore
-                                                         "w" #'ignore
-                                                         "W" #'ignore
-                                                         "f" #'ignore
-                                                         "F" #'ignore
-                                                         "p" #'ignore
-                                                         "P" #'ignore
-                                                         "g" #'ignore
-                                                         "G" #'ignore
                                                          "C-SPC" #'ignore
 
                                                          ;;arstd
@@ -543,6 +537,12 @@
                                                          "x" #'serika-f/evil/yank-word
                                                          "c" #'serika-f/evil/change-word
 
+                                                         ;; km,./
+                                                         "," #'evil-repeat
+                                                         "<" #'evil-use-register
+                                                         "." #'undo
+                                                         ">" #'redo
+
                                                          "SPC" 'evil-normal-state))
 
                                    'line
@@ -553,12 +553,6 @@
                                                          "Q" #'ace-jump-line-mode
                                                          "w" #'evil-scroll-page-down
                                                          "W" #'evil-scroll-page-up
-                                                         "f" #'ignore
-                                                         "F" #'ignore
-                                                         "p" #'ignore
-                                                         "P" #'ignore
-                                                         "g" #'ignore
-                                                         "G" #'ignore
                                                          "C-SPC" #'ignore
 
                                                          ;; arstd
@@ -585,7 +579,13 @@
                                                          "x" #'serika-f/evil/yank-line
                                                          "X" #'serika-f/evil/yank-whole-line
                                                          "c" #'serika-f/evil/change-line
-                                                         "c" #'serika-f/evil/change-line
+                                                         "C" #'serika-f/evil/change-whole-line
+
+                                                         ;; km,./
+                                                         "," #'evil-repeat
+                                                         "<" #'evil-use-register
+                                                         "." #'undo
+                                                         ">" #'redo
 
                                                          "SPC" #'evil-normal-state))
 
@@ -593,16 +593,6 @@
                                    (lambda ()
                                      (func/keymap/define evil-paragraph-state-map
                                                          ;; qwfpg
-                                                         "q" #'ignore
-                                                         "Q" #'ignore
-                                                         "w" #'ignore
-                                                         "W" #'ignore
-                                                         "f" #'ignore
-                                                         "F" #'ignore
-                                                         "p" #'ignore
-                                                         "P" #'ignore
-                                                         "g" #'ignore
-                                                         "G" #'ignore
                                                          "C-SPC" #'ignore
 
                                                          ;; arstd
@@ -622,22 +612,18 @@
                                                          "i" #'evil-backward-paragraph
                                                          "o" #'evil-forward-char
 
+                                                         ;; km,./
+                                                         "," #'evil-repeat
+                                                         "<" #'evil-use-register
+                                                         "." #'undo
+                                                         ">" #'redo
+
                                                          "SPC" #'evil-normal-state))
 
                                    'buffer
                                    (lambda ()
                                      (func/keymap/define evil-buffer-state-map
                                                          ;; qwfpg
-                                                         "q" #'ignore
-                                                         "Q" #'ignore
-                                                         "w" #'ignore
-                                                         "W" #'ignore
-                                                         "f" #'ignore
-                                                         "F" #'ignore
-                                                         "p" #'ignore
-                                                         "P" #'ignore
-                                                         "g" #'ignore
-                                                         "G" #'ignore
                                                          "C-SPC" #'ignore
 
                                                          ;; arst
@@ -655,15 +641,6 @@
                                      (func/keymap/define evil-window-state-map
                                                          ;; qwfpg
                                                          "q" #'ace-window
-                                                         "Q" #'ignore
-                                                         "w" #'ignore
-                                                         "W" #'ignore
-                                                         "f" #'ignore
-                                                         "F" #'ignore
-                                                         "p" #'ignore
-                                                         "P" #'ignore
-                                                         "g" #'ignore
-                                                         "G" #'ignore
                                                          "C-SPC" #'ignore
 
                                                          ;; arst
