@@ -7,16 +7,9 @@
   (serika-c/eg/add-install :type 'package
                            :name 'expand-region
                            :package-list '(expand-region)
-                           :parents '("install evil"))
+                           :parents '("install"))
+
   (serika-c/eg/add-many-by-name 'expand-region
                                 ("require")
-                                ;; (func/func/requirer 'expand-region)
                                 (lambda ()
-                                  (require 'expand-region))
-
-
-                                ("keymap evil visual")
-                                (lambda ()
-                                  (func/keymap/define evil-visual-state-map
-                                                      "TAB" #'er/expand-region)))
-  )
+                                  (require 'expand-region))))

@@ -16,12 +16,4 @@
                                 ("settings")
                                 (lambda ()
                                   (setq buffer-move-behavior 'swap)
-                                  (setq buffer-move-stay-after-swap nil))
-
-                                ("keymap evil window")
-                                (lambda ()
-                                  (func/keymap/define evil-window-map
-                                                      "N" 'buf-move-left
-                                                      "E" 'buf-move-down
-                                                      "I" 'buf-move-up
-                                                      "O" 'buf-move-right))))
+                                  (setq buffer-move-stay-after-swap nil))))

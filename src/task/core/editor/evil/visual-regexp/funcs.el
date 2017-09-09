@@ -8,21 +8,10 @@
                            :name 'visual-regexp
                            :package-list '(visual-regexp
                                            visual-regexp-steroids)
-                           :parents '("install evil"))
+                           :parents '("install"))
 
   (serika-c/eg/add-many-by-name 'visual-regexp
-                                ("require evil")
-                                ;; (func/func/requirer 'visual-regexp
-                                ;;                     'visual-regexp-steroids)
+                                ("require")
                                 (lambda ()
                                   (require 'visual-regexp)
-                                  (require 'visual-regexp-steroids))
-
-                                ("global-keymap evil")
-                                (lambda ()
-                                  (func/keymap/define-global
-                                   "A-2"     #'vr/isearch-forward
-                                   "A-@"     #'vr/isearch-backward
-                                   "A-3"     #'vr/replace
-                                   "A-#"     #'vr/query-replace)))
-  )
+                                  (require 'visual-regexp-steroids))))

@@ -11,8 +11,5 @@
 
   (serika-c/eg/add-many-by-name 'evil-nerd-commenter
                                 ("require evil")
-                                ;; (func/func/requirer 'evil-nerd-commenter)
                                 (lambda ()
-                                  (require 'evil-nerd-commenter))
-                                )
-  )
+                                  (require 'evil-nerd-commenter))))

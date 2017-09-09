@@ -1,11 +1,251 @@
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
+;; Functions
+;; Char-state
+(defun serika-f/evil/yank-char (&optional count)
+  "Yank char."
+  (interactive "P")
+  (evil-visual-char)
+  (evil-forward-char (or (1- count) 0))
+  (evil-yank)
+  (evil-char-state))
+
+(defun serika-f/evil/mark-char (&optional count)
+  "Mark COUNT chars."
+  (interactive "P")
+  (evil-visual-char)
+  (forward-char (or (1- count) 0)))
+
+;; Word-state
+(defun serika-f/evil/yank-word (&optional count)
+  "Yank word"
+  (interactive "P")
+  (save-excursion
+    (evil-visual-char)
+    (evil-inner-word (or count 1))
+    (evil-yank (region-beginning) (region-end))
+    (evil-exit-visual-state)))
+
+(defun serika-f/evil/change-word (&optional count)
+  "Yank word"
+  (interactive "P")
+  (evil-visual-char)
+  (evil-inner-word (or count 1))
+  (evil-change (region-beginning) (region-end)))
+
+(defun serika-f/evil/mark-word (&optional count)
+  "Mark COUNT words."
+  (interactive "P")
+  (evil-visual-char)
+  (evil-inner-word (or count 1)))
+
+(defun serika-f/evil/backward-word-at-previous-visual-line (&optional count)
+  "Move to the COUNT previous visual lines, and move to the previous word."
+  (interactive "P")
+  (evil-previous-visual-line (or count 1))
+  (evil-backward-word-begin))
+
+(defun serika-f/evil/forward-word-at-next-visual-line (&optional count)
+  "Move to the COUNT previous visual lines, and move to the previous word."
+  (interactive "P")
+  (evil-next-visual-line (or count 1))
+  (evil-next-word-begin))
+
+;; Line-state
+;; todo count?
+(defun serika-f/evil/clear-line ()
+  (interactive)
+  (call-interactively #'evil-delete-line)
+  (evil-line-state))
+
+(defun serika-f/evil/delete-line ()
+  (interactive)
+  (kill-whole-line)
+  (evil-line-state))
+
+(defun serika-f/evil/yank-line ()
+  (interactive)
+  (save-excursion
+    (evil-visual-char)
+    (evil-end-of-visual-line)
+    (evil-yank (region-beginning) (region-end)))
+  (evil-line-state))
+
+(defun serika-f/evil/yank-whole-line ()
+  (interactive)
+  (call-interactively 'evil-yank-line)
+  (evil-line-state))
+
+(defun serika-f/evil/change-line ()
+  (interactive)
+  (evil-visual-char)
+  (evil-end-of-visual-line)
+  (evil-change (region-beginning) (region-end)))
+
+(defun serika-f/evil/change-whole-line (&optional count)
+  (interactive "P")
+  (evil-visual-line)
+  (evil-next-visual-line (or count 1))
+  (evil-change (region-beginning) (region-end)))
+
+(defun serika-f/evil/mark-line (&optional count)
+  "Mark COUNT lines."
+  (interactive "P")
+  (evil-visual-line)
+  (forward-visible-line (or (1- count) 0)))
+
+;; Paragraph-state
+(defun serika-f/evil/kill-a-paragraph (&optional count)
+  "Kill paragragh."
+  (interactive "P")
+  (evil-visual-char)
+  (evil-a-paragraph (or count 1))
+  (evil-delete (region-beginning) (region-end))
+  (evil-exit-visual-state))
+
+(defun serika-f/evil/kill-inner-paragraph (&optional count)
+  "Kill paragragh."
+  (interactive "P")
+  (evil-visual-char)
+  (evil-inner-paragraph (or count 1))
+  (evil-delete (region-beginning) (region-end))
+  (evil-exit-visual-state))
+
+(defun serika-f/evil/yank-inner-paragraph (&optional count)
+  "Kill paragragh."
+  (interactive "P")
+  (save-excursion
+    (evil-visual-char)
+    (evil-inner-paragraph (or count 1))
+    (evil-yank (region-beginning) (region-end))
+    (evil-exit-visual-state)))
+
+(defun serika-f/evil/yank-a-paragraph (&optional count)
+  "Kill paragragh."
+  (interactive "P")
+  (save-excursion
+    (evil-visual-char)
+    (evil-a-paragraph (or count 1))
+    (evil-yank (region-beginning) (region-end))
+    (evil-exit-visual-state)))
+
+(defun serika-f/evil/change-inner-paragraph (&optional count)
+  "Change COUNT inner paragragh."
+  (interactive "P")
+  (evil-visual-char)
+  (evil-inner-paragraph (or count 1))
+  (evil-delete (region-beginning) (region-end))
+  (evil-insert 1))
+
+(defun serika-f/evil/change-a-paragraph (&optional count)
+  "Change COUNT paragragh."
+  (interactive "P")
+  (evil-visual-char)
+  (evil-a-paragraph (or count 1))
+  (evil-delete (region-beginning) (region-end))
+  (evil-insert 1))
+
+(defun serika-f/evil/mark-paragragh (&optional count)
+  "Mark paragraph"
+  (interactive "P")
+  (evil-visual-char)
+  (evil-inner-paragraph (or count 1)))
+
+;; Visual state
+(defun serika-f/evil/visual-n (&optional count)
+  "Visual n movement."
+  (interactive "P")
+  (cond
+   ((eq evil-previous-state
+        'char)
+    (backward-char (or count 1)))
+   ((eq evil-previous-state
+        'word)
+    (evil-backward-word-begin (or count 1)))
+   ((eq evil-previous-state
+        'sentence)
+    (ignore))
+   ((eq evil-previous-state
+        'line)
+    (ignore))
+   ((eq evil-previous-state
+        'paragragh)
+    (ignore))))
+
+(defun serika-f/evil/visual-e (&optional count)
+  "Visual n movement."
+  (interactive "P")
+  (cond
+   ((eq evil-previous-state
+        'char)
+    (evil-next-visual-line (or count 1)))
+   ((eq evil-previous-state
+        'word)
+    (serika-f/evil/forward-word-at-next-visual-line (or count 1)))
+   ((eq evil-previous-state
+        'sentence)
+    (ignore))
+   ((eq evil-previous-state
+        'line)
+    (evil-next-visual-line (or count 1)))
+   ((eq evil-previous-state
+        'paragragh)
+    (evil-forward-paragraph (or count 1)))))
+
+(defun serika-f/evil/visual-i (&optional count)
+  "Visual n movement."
+  (interactive "P")
+  (cond
+   ((eq evil-previous-state
+        'char)
+    (evil-previous-visual-line (or count 1)))
+   ((eq evil-previous-state
+        'word)
+    (serika-f/evil/backward-word-at-previous-visual-line (or count 1)))
+   ((eq evil-previous-state
+        'sentence)
+    (ignore))
+   ((eq evil-previous-state
+        'line)
+    (evil-previous-line (or count 1)))
+   ((eq evil-previous-state
+        'paragragh)
+    (evil-backward-paragraph (or count 1)))))
+
+(defun serika-f/evil/visual-o (&optional count)
+  "Visual n movement."
+  (interactive "P")
+  (cond
+   ((eq evil-previous-state
+        'char)
+    (forward-char (or count 1)))
+   ((eq evil-previous-state
+        'word)
+    (evil-forward-word-begin (or count 1)))
+   ((eq evil-previous-state
+        'sentence)
+    (ignore))
+   ((eq evil-previous-state
+        'line)
+    (ignore))
+   ((eq evil-previous-state
+        'paragragh)
+    (ignore))))
 
 ;; Functions
 (defun evil-mode-p ()
   "Return t if evil mode is active"
   (or evil-mode evil-local-mode))
+
+(defun serika-f/evil/change-to-previous-state ()
+  "Change to previous state. If previous state is visual, change again."
+  (interactive)
+  (evil-change-to-previous-state)
+  (when (eq evil-state
+            'visual)
+    (evil-change-to-previous-state)))
 
 (defun serika-f/evil/forward-char ()
   "Forward char if next char is not a \n char."
@@ -52,6 +292,7 @@
   (when --evil-shift-width-p
     (setq evil-shift-width --evil-shift-width)))
 
+;; todo: remove this
 (defun serika-f/evil/toggle ()
   "Toggle evil mode."
   (interactive)
@@ -64,6 +305,7 @@
     (evil-local-mode +1)
     (evil-normal-state))))
 
+;; Init
 (defun init ()
   "Configure `evil'."
   ;; Configuration
@@ -71,38 +313,60 @@
                            :name 'evil
                            :src "https://github.com/mikae/evil")
 
+  (serika-c/eg/add :parents '("require"
+                              "require ace-jump-mode"
+                              "require ace-window"
+                              "require buffer-move")
+                   :name 'evil
+                   :func (lambda ()
+                           (require 'evil)))
+
+  (serika-c/eg/add :parents '("settings"
+                              "settings ace-jump-mode"
+                              "settings ace-window"
+                              "settings buffer-move")
+                   :name 'evil
+                   :func (lambda ()
+                           (evil-define-state metanormal
+                             "Metanormal state."
+                             :tag "<MN>"
+                             :enable (normal))
+
+                           (evil-define-state char
+                             "Char mode."
+                             :tag "<c>"
+                             :enable (normal))
+
+                           (evil-define-state word
+                             "Word mode."
+                             :tag "<w>"
+                             :enable (normal))
+
+                           (evil-define-state line
+                             "Line mode."
+                             :tag "<l>"
+                             :enable (normal))
+
+                           (evil-define-state paragraph
+                             "Paragragh mode."
+                             :tag "<p>"
+                             :enable (normal))
+
+                           (evil-define-state buffer
+                             "Buffer mode."
+                             :tag "<b>"
+                             :suppress-keymap t)
+
+                           (evil-define-state window
+                             "Window mode."
+                             :tag "<Wi>"
+                             :suppress-keymap t)))
+
   (serika-c/eg/add-many-by-name 'evil
-                                ("require")
-                                ;; (func/func/requirer 'evil)
-                                (lambda ()
-                                  (require 'evil))
-
-                                ("settings")
-                                (lambda ()
-                                  (evil-define-state metanormal
-                                    "Metanormal state."
-                                    :tag "<MN>"
-                                    :suppress-keymap t)
-
-                                  (evil-define-state window
-                                    "Window state."
-                                    :tag "<W>"
-                                    :suppress-keymap t)
-
-                                  ;; (setq evil-metanormal-state-cursor '(box       "#666666")
-                                  ;;       evil-normal-state-cursor     '(box       "purple")
-                                  ;;       evil-visual-state-cursor     '(box       "green")
-                                  ;;       evil-replace-state-cursor    '(box       "red")
-                                  ;;       evil-emacs-state-cursor      '(box       "cyan")
-                                  ;;       evil-operator-state-cursor   '((bar . 2) "orange")
-                                  ;;       evil-insert-state-cursor     '((bar . 2) "yellow")
-                                  ;;       evil-motion-state-cursor     '((bar . 2) "orange"))
-                                  )
-
                                 ("global-keymap")
                                 (lambda ()
-                                  (func/keymap/define-global "M-s" 'evil-ex
-                                                             "C-x t e" #'serika-f/evil/toggle
+                                  (func/keymap/define-global "C-x t e" #'serika-f/evil/toggle
+                                                             "M-s" 'evil-ex
 
                                                              ;; Windows
                                                              "C-w v" #'split-window-right
@@ -122,7 +386,7 @@
                                                              "A-t" 'evil-goto-first-line
                                                              "A-T" 'evil-goto-line
 
-                                                             ;; qwfp
+                                                             ;; qwfpg
                                                              "A-q" 'evil-find-char
                                                              "A-Q" 'evil-find-char-backward
                                                              "A-w" 'evil-find-char-to
@@ -132,84 +396,300 @@
                                                              "A-p" 'evil-scroll-page-down
                                                              "A-P" 'evil-scroll-page-up
 
-                                                             ;; zxcv
+                                                             ;; zxcvb
                                                              "A-z"  'evil-search-next
                                                              "A-Z"  'evil-search-previous
                                                              "A-X"  'evil-jump-forward
                                                              "A-x"  'evil-jump-backward
+                                                             "A-c"  'ace-jump-word-mode
+                                                             "A-C"  'ace-jump-char-mode
+                                                             "A-v"  'ace-jump-line-mode
 
-                                                             ;; <Tab>!@
+                                                             ;; <Tab>123
                                                              "<A-tab>" #'evil-jump-item
                                                              "A-1"     #'evil-search-forward
                                                              "A-!"     #'evil-search-backward
+                                                             "A-2"     #'vr/isearch-forward
+                                                             "A-@"     #'vr/isearch-backward
+                                                             "A-3"     #'vr/replace
+                                                             "A-#"     #'vr/query-replace
 
                                                              ;; neio'
                                                              "A-n"  'evil-backward-char
-                                                             "A-N"  'evil-beginning-of-visual-line
                                                              "A-e"  'evil-next-visual-line
-                                                             "A-E"  'evil-window-bottom
                                                              "A-i"  'evil-previous-visual-line
-                                                             "A-I"  'evil-window-top
                                                              "A-o"  'evil-forward-char
+
+                                                             "A-N"  'evil-beginning-of-visual-line
+                                                             "A-E"  'evil-window-bottom
+                                                             "A-I"  'evil-window-top
                                                              "A-O"  'evil-end-of-visual-line
-                                                             "A-\"" 'evil-window-middle)))
+                                                             "A-\"" 'evil-window-middle
+
+                                                             "A-." #'undo
+                                                             "A-," #'redo)))
 
   (serika-c/eg/add-many-by-parents ("keymap evil")
                                    'metanormal
                                    (lambda ()
                                      (func/keymap/define evil-metanormal-state-map
                                                          "q" #'evil-normal-state
-                                                         "Q" #'evil-emacs-state
-                                                         "w" #'evil-window-state))
+                                                         "Q" #'evil-emacs-state))
                                    'emacs
                                    (lambda ()
                                      (func/keymap/define evil-emacs-state-map
-                                                         "C-, C-n" #'evil-metanormal-state))
+                                                         "SPC" #'evil-metanormal-state))
 
                                    'normal
                                    (lambda ()
                                      (func/keymap/define evil-normal-state-map
+                                                         ;; todo: find out why is it needed
                                                          "C-t" nil
 
-                                                         "q"   #'evil-open-below
-                                                         "Q"   #'evil-open-above
-                                                         "w"   #'evil-replace
-                                                         "W"   #'evil-replace-state
-                                                         "f"   #'evil-delete-char
-                                                         "F"   #'evil-invert-char
-                                                         "p"   #'evil-join
-                                                         "P"   #'evil-join-whitespace
+                                                         ;; qwfpg
+                                                         "q" #'evil-char-state
+                                                         "Q" #'evil-word-state
+                                                         "w" #'evil-line-state
+                                                         "W" #'evil-paragraph-state
+                                                         "f" #'evil-buffer-state
+                                                         "F" #'evil-window-state
 
-                                                         "a"   #'evil-append
-                                                         "A"   #'evil-append-line
-                                                         "r"   #'evil-insert
-                                                         "R"   #'evil-insert-line
-                                                         "s"   #'evil-change
-                                                         "S"   #'evil-change-line
-                                                         "t"   #'evil-substitute
-                                                         "T"   #'evil-change-whole-line
+                                                         ;; arstd
+                                                         ;; "d" #'evil-visual-block
 
-                                                         "z"   #'evil-delete
-                                                         "Z"   #'evil-delete-line
-                                                         "x"   #'evil-yank
-                                                         "X"   #'evil-yank-line
-                                                         "c"   #'evil-paste-after
-                                                         "C"   #'evil-paste-before
-                                                         "v"   #'evil-visual-char
-                                                         "V"   #'evil-visual-line
+                                                         ;; zxcvb
+                                                         "z" #'evil-delete
+                                                         "x" #'evil-yank
+                                                         "c" #'evil-change
+                                                         "v" #'evil-paste-after
+                                                         "V" #'evil-paste-before
 
-                                                         ","   #'evil-repeat
-                                                         "<"   #'evil-use-register
-                                                         "."   #'undo
-                                                         ">"   #'redo
+                                                         ;; km,./
+                                                         "," #'evil-repeat
+                                                         "<" #'evil-use-register
+                                                         "." #'undo
+                                                         ">" #'redo
 
-                                                         "C-v" #'evil-visual-block
+                                                         "C-SPC" #'evil-metanormal-state)
 
-                                                         "H-z" #'erase-buffer
-                                                         "H-x" #'serika-f/evil/replace-buffer
-                                                         "H-c" #'serika-f/evil/change-buffer
+                                     (func/keymap/bind-digits evil-normal-state-map
+                                                              #'digit-argument))
 
-                                                         "C-, C-n" 'evil-metanormal-state))
+                                   'char
+                                   (lambda ()
+                                     (func/keymap/define evil-char-state-map
+                                                         ;; qwfpg
+                                                         "q" #'evil-find-char
+                                                         "Q" #'evil-find-char-backward
+                                                         "w" #'evil-find-char-to
+                                                         "W" #'evil-find-char-to-backward
+                                                         "f" #'evil-ace-jump-char-mode
+                                                         "F" #'evil-ace-jump-char-to-mode
+                                                         "p" #'ignore
+                                                         "P" #'ignore
+                                                         "g" #'ignore
+                                                         "G" #'ignore
+                                                         "C-SPC" #'ignore
+
+                                                         ;; arstd
+                                                         "a" #'evil-insert
+                                                         "A" #'evil-insert-line
+                                                         "r" #'evil-append
+                                                         "R" #'evil-append-line
+                                                         "s" #'evil-replace
+                                                         "S" #'evil-replace-state
+                                                         "t" #'evil-invert-char
+                                                         "d" #'serika-f/evil/mark-char
+
+                                                         ;; neio
+                                                         "n" #'evil-backward-char
+                                                         "e" #'evil-next-visual-line
+                                                         "i" #'evil-previous-visual-line
+                                                         "o" #'evil-forward-char
+
+                                                         ;; zxcvb
+                                                         "z" #'evil-delete-char
+                                                         "x" #'serika-f/evil/yank-char
+
+                                                         "SPC" #'evil-normal-state))
+
+                                   'word
+                                   (lambda ()
+                                     (func/keymap/define evil-word-state-map
+                                                         ;; qwfpg
+                                                         "q" #'evil-forward-word-end
+                                                         "Q" #'ignore
+                                                         "w" #'ignore
+                                                         "W" #'ignore
+                                                         "f" #'ignore
+                                                         "F" #'ignore
+                                                         "p" #'ignore
+                                                         "P" #'ignore
+                                                         "g" #'ignore
+                                                         "G" #'ignore
+                                                         "C-SPC" #'ignore
+
+                                                         ;;arstd
+                                                         "d" #'serika-f/evil/mark-word
+
+                                                         ;; neio
+                                                         "n" #'evil-backward-word-begin
+                                                         "e" #'serika-f/evil/forward-word-at-next-visual-line
+                                                         "i" #'serika-f/evil/backward-word-at-previous-visual-line
+                                                         "o" #'evil-forward-word-begin
+
+                                                         ;; zxcvb
+                                                         "z" #'serika-f/evil/delete-word
+                                                         "x" #'serika-f/evil/yank-word
+                                                         "c" #'serika-f/evil/change-word
+
+                                                         "SPC" 'evil-normal-state))
+
+                                   'line
+                                   (lambda ()
+                                     (func/keymap/define evil-line-state-map
+                                                         ;; qwfpg
+                                                         "q" #'evil-window-middle
+                                                         "Q" #'ace-jump-line-mode
+                                                         "w" #'evil-scroll-page-down
+                                                         "W" #'evil-scroll-page-up
+                                                         "f" #'ignore
+                                                         "F" #'ignore
+                                                         "p" #'ignore
+                                                         "P" #'ignore
+                                                         "g" #'ignore
+                                                         "G" #'ignore
+                                                         "C-SPC" #'ignore
+
+                                                         ;; arstd
+                                                         "a" #'evil-join
+                                                         "A" #'evil-join-whitespace
+                                                         "r" #'evil-open-below
+                                                         "R" #'evil-open-above
+                                                         "d" #'serika-f/evil/mark-line
+
+                                                         ;; neio
+                                                         "n" #'evil-backward-char
+                                                         "e" #'evil-next-visual-line
+                                                         "i" #'evil-previous-visual-line
+                                                         "o" #'evil-forward-char
+
+                                                         "N" #'evil-beginning-of-visual-line
+                                                         "E" #'evil-window-bottom
+                                                         "I" #'evil-window-top
+                                                         "O" #'evil-end-of-visual-line
+
+                                                         ;; zxcvb
+                                                         "z" #'serika-f/evil/clear-line
+                                                         "Z" #'serika-f/evil/delete-line
+                                                         "x" #'serika-f/evil/yank-line
+                                                         "X" #'serika-f/evil/yank-whole-line
+                                                         "c" #'serika-f/evil/change-line
+                                                         "c" #'serika-f/evil/change-line
+
+                                                         "SPC" #'evil-normal-state))
+
+                                   'paragragh
+                                   (lambda ()
+                                     (func/keymap/define evil-paragraph-state-map
+                                                         ;; qwfpg
+                                                         "q" #'ignore
+                                                         "Q" #'ignore
+                                                         "w" #'ignore
+                                                         "W" #'ignore
+                                                         "f" #'ignore
+                                                         "F" #'ignore
+                                                         "p" #'ignore
+                                                         "P" #'ignore
+                                                         "g" #'ignore
+                                                         "G" #'ignore
+                                                         "C-SPC" #'ignore
+
+                                                         ;; arstd
+                                                         "d" #'serika-f/evil/mark-paragragh
+
+                                                         ;; zxcvb
+                                                         "z" #'serika-f/evil/kill-inner-paragraph
+                                                         "Z" #'serika-f/evil/kill-a-paragraph
+                                                         "x" #'serika-f/evil/yank-inner-paragraph
+                                                         "X" #'serika-f/evil/yank-a-paragraph
+                                                         "c" #'serika-f/evil/change-inner-paragraph
+                                                         "C" #'serika-f/evil/change-a-paragraph
+
+                                                         ;; neio
+                                                         "n" #'evil-backward-char
+                                                         "e" #'evil-forward-paragraph
+                                                         "i" #'evil-backward-paragraph
+                                                         "o" #'evil-forward-char
+
+                                                         "SPC" #'evil-normal-state))
+
+                                   'buffer
+                                   (lambda ()
+                                     (func/keymap/define evil-buffer-state-map
+                                                         ;; qwfpg
+                                                         "q" #'ignore
+                                                         "Q" #'ignore
+                                                         "w" #'ignore
+                                                         "W" #'ignore
+                                                         "f" #'ignore
+                                                         "F" #'ignore
+                                                         "p" #'ignore
+                                                         "P" #'ignore
+                                                         "g" #'ignore
+                                                         "G" #'ignore
+                                                         "C-SPC" #'ignore
+
+                                                         ;; arst
+                                                         "z" #'kill-buffer
+
+                                                         ;; neio
+                                                         "n" #'previous-buffer
+                                                         "e" #'previous-buffer
+                                                         "i" #'next-buffer
+                                                         "o" #'next-buffer
+
+                                                         "SPC" #'evil-normal-state))
+                                   'window
+                                   (lambda ()
+                                     (func/keymap/define evil-window-state-map
+                                                         ;; qwfpg
+                                                         "q" #'ace-window
+                                                         "Q" #'ignore
+                                                         "w" #'ignore
+                                                         "W" #'ignore
+                                                         "f" #'ignore
+                                                         "F" #'ignore
+                                                         "p" #'ignore
+                                                         "P" #'ignore
+                                                         "g" #'ignore
+                                                         "G" #'ignore
+                                                         "C-SPC" #'ignore
+
+                                                         ;; arst
+                                                         "a" #'evil-window-vsplit
+                                                         "A" #'evil-window-split
+
+                                                         ;; neio
+                                                         "n" #'evil-window-left
+                                                         "e" #'evil-window-down
+                                                         "i" #'evil-window-up
+                                                         "o" #'evil-window-right
+
+                                                         "N" #'buf-move-left
+                                                         "E" #'buf-move-down
+                                                         "I" #'buf-move-up
+                                                         "O" #'buf-move-right
+
+                                                         "C-n"   #'shrink-window-horizontally
+                                                         "C-e"   #'enlarge-window
+                                                         "C-i"   #'shrink-window
+                                                         "<C-o>" #'enlarge-window-horizontally
+
+                                                         ;; zxcvb
+                                                         "z" #'delete-window
+
+                                                         "SPC" #'evil-normal-state))
 
                                    'motion
                                    (lambda ()
@@ -220,90 +700,81 @@
                                    'insert
                                    (lambda ()
                                      (func/keymap/define evil-insert-state-map
-                                                         "A-n" 'serika-f/evil/backward-char
-                                                         "A-o" 'serika-f/evil/forward-char
+                                                         "A-n" #'serika-f/evil/backward-char
+                                                         "A-o" #'serika-f/evil/forward-char
 
                                                          ;; Ret with proper indentation
-                                                         "RET" 'newline
+                                                         "RET" #'newline
 
                                                          ;; Exit insert state
-                                                         "C-, C-n" 'evil-normal-state))
+                                                         "C-SPC" 'serika-f/evil/change-to-previous-state))
 
                                    'replace
                                    (lambda ()
                                      (func/keymap/define evil-replace-state-map
-                                                         "C-, C-n" 'evil-normal-state))
+                                                         "SPC" 'evil-change-to-previous-state))
 
                                    'operator-state
                                    (lambda ()
                                      (func/keymap/define evil-operator-state-map
-                                                         "C-, C-n" 'evil-normal-state
+                                                         "SPC" #'evil-change-to-previous-state
 
-                                                         "a"        evil-outer-text-objects-map
-                                                         "r"        evil-inner-text-objects-map))
+                                                         "a"     evil-outer-text-objects-map
+                                                         "r"     evil-inner-text-objects-map))
 
                                    'text-objects
                                    (lambda ()
                                      (func/keymap/define evil-outer-text-objects-map
-                                                         "a" 'evil-a-word
-                                                         "A" 'evil-a-WORD
-                                                         "r" 'evil-a-paren
-                                                         "R" 'evil-a-curly
-                                                         "s" 'evil-a-bracket
-                                                         "S" 'evil-an-angle
-                                                         "t" 'evil-a-single-quote
-                                                         "T" 'evil-a-double-quote
+                                                         "a" #'evil-a-word
+                                                         "A" #'evil-a-WORD
+                                                         "r" #'evil-a-paren
+                                                         "R" #'evil-a-curly
+                                                         "s" #'evil-a-bracket
+                                                         "S" #'evil-an-angle
+                                                         "t" #'evil-a-single-quote
+                                                         "T" #'evil-a-double-quote
 
-                                                         "z" 'evil-a-back-quote
-                                                         "Z" 'evil-a-tag
-                                                         "x" 'evil-a-sentence
-                                                         "X" 'evil-a-paragraph)
+                                                         "z" #'evil-a-back-quote
+                                                         "Z" #'evil-a-tag
+                                                         "x" #'evil-a-sentence
+                                                         "X" #'evil-a-paragraph)
 
                                      (func/keymap/define evil-inner-text-objects-map
-                                                         "a" 'evil-inner-word
-                                                         "A" 'evil-inner-WORD
-                                                         "r" 'evil-inner-paren
-                                                         "R" 'evil-inner-curly
-                                                         "s" 'evil-inner-bracket
-                                                         "S" 'evil-inner-angle
-                                                         "t" 'evil-inner-single-quote
-                                                         "T" 'evil-inner-double-quote
+                                                         "a" #'evil-inner-word
+                                                         "A" #'evil-inner-WORD
+                                                         "r" #'evil-inner-paren
+                                                         "R" #'evil-inner-curly
+                                                         "s" #'evil-inner-bracket
+                                                         "S" #'evil-inner-angle
+                                                         "t" #'evil-inner-single-quote
+                                                         "T" #'evil-inner-double-quote
 
-                                                         "z" 'evil-inner-back-quote
-                                                         "Z" 'evil-inner-tag
-                                                         "x" 'evil-inner-sentence
-                                                         "X" 'evil-inner-paragraph))
+                                                         "z" #'evil-inner-back-quote
+                                                         "Z" #'evil-inner-tag
+                                                         "x" #'evil-inner-sentence
+                                                         "X" #'evil-inner-paragraph))
 
                                    'ex-keymap
                                    (lambda ()
                                      (func/keymap/define evil-ex-completion-map
-                                                         "RET" 'exit-minibuffer))
+                                                         "RET" #'exit-minibuffer))
                                    'visual
                                    (lambda ()
                                      (func/keymap/define evil-visual-state-map
+                                                         "A-1" #'evil-visualstar/begin-search-forward
+                                                         "A-!" #'evil-visualstar/begin-search-forward
+
+                                                         "TAB" #'er/expand-region
+
                                                          "a"   evil-outer-text-objects-map
                                                          "r"   evil-inner-text-objects-map
 
                                                          "A"   #'evil-append
                                                          "R"   #'evil-insert
 
-                                                         "C-, C-n" 'evil-exit-visual-state))
+                                                         "n"   #'serika-f/evil/visual-n
+                                                         "e"   #'serika-f/evil/visual-e
+                                                         "i"   #'serika-f/evil/visual-i
+                                                         "o"   #'serika-f/evil/visual-o
 
-                                   'window
-                                   (lambda ()
-                                     (func/keymap/define evil-window-state-map
-                                                         "n"       #'evil-window-left
-                                                         "e"       #'evil-window-down
-                                                         "i"       #'evil-window-up
-                                                         "o"       #'evil-window-right
-
-                                                         "q"       #'evil-window-delete
-                                                         "v"       #'evil-window-vsplit
-                                                         "h"       #'evil-window-split
-
-                                                         "C-n"     #'shrink-window-horizontally
-                                                         "C-e"     #'enlarge-window
-                                                         "C-i"     #'shrink-window
-                                                         "<C-o>"   #'enlarge-window-horizontally
-
-                                                         "C-, C-n" #'evil-metanormal-state))))
+                                                         "SPC" #'evil-exit-visual-state))))

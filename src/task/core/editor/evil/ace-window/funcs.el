@@ -16,9 +16,4 @@
                                 ("settings")
                                 (lambda ()
                                   (setq aw-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o))
-                                  (setq aw-dispatch-always t))
-
-                                ("global-keymap")
-                                (lambda ()
-                                  (func/keymap/define evil-window-map
-                                                      "s" #'ace-window))))
+                                  (setq aw-dispatch-always t))))

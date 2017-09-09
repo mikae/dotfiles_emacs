@@ -7,16 +7,9 @@
   (serika-c/eg/add-install :type 'package
                            :name 'zzz-to-char
                            :package-list '(zzz-to-char)
-                           :parents '("install evil"))
+                           :parents '("install"))
 
   (serika-c/eg/add-many-by-name 'zzz-to-char
-                                ("require evil")
-                                ;; (func/func/requirer 'zzz-to-char)
+                                ("require")
                                 (lambda ()
-                                  (require 'zzz-to-char))
-
-                                ("keymap evil normal")
-                                (lambda ()
-                                  (func/keymap/define evil-normal-state-map
-                                                      "g"   #'zzz-to-char
-                                                      "G"   #'zzz-up-to-char))))
+                                  (require 'zzz-to-char))))
