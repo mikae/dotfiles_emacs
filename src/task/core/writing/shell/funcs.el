@@ -81,5 +81,4 @@
                                 ("hook")
                                 (lambda ()
                                   (func/hook/add 'sh-mode-hook
-                                                 #'serika-f/sh/setup-buffer)
-                                  )))
+                                                 #'serika-f/sh/setup-buffer))))

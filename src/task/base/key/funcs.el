@@ -101,9 +101,6 @@
   ;; changes
   (func/keymap/define-global "C-x c u"   #'serika-f/settings/change-user)
 
-  ;; text
-  (func/keymap/define-global "C-t w"     #'delete-trailing-whitespace)
-
   ;; macro
   (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter
                              "<C-m> r"   #'kmacro-end-or-call-macro)

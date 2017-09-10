@@ -682,6 +682,7 @@
 
                                                          ;; Ret with proper indentation
                                                          "RET" #'newline
+                                                         "TAB" #'self-insert-command
 
                                                          ;; Exit insert state
                                                          "C-SPC" 'serika-f/evil/change-to-previous-state))
