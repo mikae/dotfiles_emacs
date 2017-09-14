@@ -6,7 +6,7 @@
 (defun serika-f/which-key/activate ()
   "Activate `which-key'."
   (interactive)
-  (which-key-mode))
+  )
 
 
 (defmacro serika-f/which-key//define-keys (mode keymap-name &rest bindings)
@@ -79,7 +79,8 @@ Usage:
                                 ("settings")
                                 (lambda ()
                                   (setq which-key-idle-delay 0.2)
-                                  (setq which-key-popup-type 'side-window)
-                                  (setq which-key-side-window-location 'bottom)
-                                  (setq which-key-side-window-max-width 0.33)
-                                  (setq which-key-side-window-max-height 0.25))))
+                                  (which-key-setup-side-window-bottom))
+
+                                ("post activate")
+                                (lambda ()
+                                  (which-key-mode +1))))

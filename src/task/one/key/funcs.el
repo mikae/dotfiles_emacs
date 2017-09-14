@@ -67,6 +67,10 @@
   (global-unset-key [down])
   (global-unset-key [left]))
 
+(defun serika-g/key//clear-key-translation-map ()
+  "Clear `key-translation-map'."
+  (func/keymap/create key-translation-map))
+
 (defun serika-g/key//configure-input-decode-map ()
   "Configure `input-decode-map'."
   (define-key input-decode-map [?\C-m] [C-m])
@@ -116,6 +120,9 @@
   (serika-c/eg/add-many-by-parents ("global-keymap")
                                    'unset-bindings
                                    #'serika-g/key//unset-bindings
+
+                                   'clear-key-translation-map
+                                   #'serika-g/key//clear-key-translation-map
 
                                    'disable-arrows
                                    #'serika-g/key//disable-arrows
