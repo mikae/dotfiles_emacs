@@ -105,14 +105,6 @@ x0 - bit of omitted files.")
   (serika-f/dired/omit-header)
   (dired-move-to-filename))
 
-(defun serika-f/dired/move-to-window-middle ()
-  "Move cursor to the middle of the displayed content, except header and footer."
-  (interactive)
-  (evil-window-middle)
-  (serika-f/dired/omit-header)
-  (serika-f/dired/omit-footer)
-  (dired-move-to-filename))
-
 (defun serika-f/dired/move-to-window-bottom ()
   "Move cursor to the bottom of the displayed content, except footer."
   (interactive)
@@ -217,6 +209,7 @@ If PATH is invalid return nil."
   "Configure `dired-mode' buffers."
   ;; Enable evil in dired mode
   (serika-f/evil/activate :evil-state 'dired)
+  (serika-f/which-key/activate)
 
   ;; Enable line truncations
   (setq truncate-lines t)
@@ -274,59 +267,70 @@ If PATH is invalid return nil."
                                 (lambda ()
                                   (add-hook 'dired-mode-hook #'serika-l/dired//setup-buffer)))
 
-  (serika-c/eg/add-many-by-parents ("keymap evil")
-                                   'dired
-                                   (lambda ()
-                                     (func/keymap/create evil-dired-state-map
-                                                         "* m"   #'dired-mark
-                                                         "* u"   #'dired-unmark
-                                                         "* U"   #'dired-unmark-all-marks
+  (serika-c/eg/add-many-by-parents
+   ("keymap evil")
+   'dired
+   (lambda ()
+     (serika-f/which-key/create-keymap
+      dired-mode
+      evil-dired-state-map
+      ;; arstd
+      "a a"   #'dired-mark                                                  "Mark file"
+      "a A"   #'dired-mark-unmarked-files                                   "Mark unmarked"
+      "a r"   #'dired-unmark                                                "Unmark file"
+      "a R"   #'dired-unmark-all-marks                                      "Unmark all"
 
-                                                         "d d"   #'dired-do-delete
-                                                         "d r"   #'dired-do-rename
-                                                         "d c"   #'dired-do-copy
-                                                         "d l"   #'diredp-list-marked
-                                                         "d u"   #'serika-f/dired/uncompress-selected
+      "r a"   #'dired-do-delete                                             "Delete"
+      "r A"   #'dired-do-copy                                               "Copy"
+      "r r"   #'dired-do-rename                                             "Rename"
+      "r R"   #'diredp-list-marked                                          "List marked files"
+      "r s"   #'serika-f/dired/uncompress-selected                          "Uncompress"
 
-                                                         "n d"   #'serika-f/dired/create-directory
-                                                         "n f"   #'helm-find-files
-                                                         "n h"   #'dired-do-hardlink
-                                                         "n s"   #'dired-do-symlink
+      "s a"   #'helm-find-files                                             "Create file"
+      "s A"   #'serika-f/dired/create-directory                             "Create directory"
+      "s r"   #'dired-do-symlink                                            "Create symlink"
+      "s R"   #'dired-do-hardlink                                           "Create hardlink"
 
-                                                         "c o"   #'dired-do-chown
-                                                         "c g"   #'dired-do-chgrp
+      "t a"   #'dired-do-chown                                              "Change owner"
+      "t A"   #'dired-do-chgrp                                              "Change group"
 
-                                                         "o o"   (serika-f/dired/create-path-visiter org-directory)
+      "d a"   (serika-f/dired/create-path-visiter org-directory)            "Visit org directory"
 
-                                                         "t h"   #'serika-f/dired/toggle-hidden
-                                                         "t o"   #'serika-f/dired/toggle-omitted
-                                                         "t d"   (func/func/create-minor-mode-toggler dired-hide-details-mode)
+      ;; qwfpg
+      "q q"   #'serika-f/dired/toggle-hidden                                "Toggle hidden"
+      "q Q"   #'serika-f/dired/toggle-omitted                               "Toggle omitted"
+      "q w"   (func/func/create-minor-mode-toggler dired-hide-details-mode) "Toggle details")
 
-                                                         "q"     (lambda ()
-                                                                   (interactive)
-                                                                   (func/buffer/kill-by-major-mode 'dired-mode))
+     (func/keymap/define evil-dired-state-map
+                         ;; zxcvb
+                         "z"       #'evil-search-next
+                         "Z"       #'evil-search-previous
+                         "x"       #'serika-f/dired/scroll-page-down
+                         "X"       #'serika-f/dired/scroll-page-up
 
+                         ;; neio
+                         "n"       #'dired-up-directory
+                         "e"       #'serika-f/dired/next-visual-line
+                         "i"       #'serika-f/dired/previous-visual-line
+                         "o"       #'dired-find-file
 
-                                                         "A-n"     #'dired-up-directory
-                                                         "A-e"     #'serika-f/dired/next-visual-line
-                                                         "A-o"     #'dired-find-file
-                                                         "A-i"     #'serika-f/dired/previous-visual-line
+                         "I"       #'serika-f/dired/move-to-window-top
+                         "E"       #'serika-f/dired/move-to-window-bottom
 
+                         "A-i"     #'serika-f/dired/move-to-beginning
+                         "A-e"     #'serika-f/dired/move-to-end
 
-                                                         "A-1"     #'evil-search-forward
-                                                         "A-2"     #'evil-search-backward
-                                                         "A-z"     #'evil-search-next
-                                                         "A-Z"     #'evil-search-previous
+                         ;; 12345
+                         "A-1"     #'evil-search-forward
+                         "A-!"     #'evil-search-backward
 
-                                                         "A-t"     #'serika-f/dired/move-to-beginning
-                                                         "A-T"     #'serika-f/dired/move-to-end
+                         ;; ret
+                         "RET"     #'dired-run-associated-program
 
-                                                         "A-I"     #'serika-f/dired/move-to-window-top
-                                                         "A-E"     #'serika-f/dired/move-to-window-bottom
-                                                         "A-\""    #'serika-f/dired/move-to-window-middle
+                         ;; C-
+                         "C-q"     (lambda ()
+                                     (interactive)
+                                     (func/buffer/kill-by-major-mode 'dired-mode))
+                         "C-x C-s" #'ignore)
 
-                                                         "A-p"     #'serika-f/dired/scroll-page-down
-                                                         "A-P"     #'serika-f/dired/scroll-page-up
-
-                                                         "RET"     #'dired-run-associated-program
-                                                         "C-x C-s" #'ignore))))
+     (func/keymap/bind-digits evil-dired-state-map #'digit-argument))))

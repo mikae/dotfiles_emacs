@@ -1,14 +1,14 @@
 ;;; package --- Summary
-;;; Commentary:
-;;; Code:
+;;; Commentary: 
+;;; Code: 
 
 (defun init ()
-  "Configure last parts."
-  (serika-c/eg/add-many-by-name 'load-local-config
-                                ("inf")
+  "Pre configuration."
+  (serika-c/eg/add-many-by-name 'load-local-pre-config
+                                ("-inf")
                                 (lambda ()
                                   "Load local configuration."
                                   (let ((--local-file-path (f-join user-emacs-directory
-                                                                   "local-post.el")))
+                                                                   "local-pre.el")))
                                     (when (f-file-p --local-file-path)
                                       (load-file --local-file-path))))))

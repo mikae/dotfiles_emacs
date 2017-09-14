@@ -326,7 +326,8 @@ Supported keys:
   (serika-c/eg/add :parents '("require"
                               "require ace-jump-mode"
                               "require ace-window"
-                              "require buffer-move")
+                              "require buffer-move"
+                              "require evil-snipe")
                    :name 'evil
                    :func (lambda ()
                            (require 'evil)))
@@ -334,7 +335,8 @@ Supported keys:
   (serika-c/eg/add :parents '("settings"
                               "settings ace-jump-mode"
                               "settings ace-window"
-                              "settings buffer-move")
+                              "settings buffer-move"
+                              "settings evil-snipe")
                    :name 'evil
                    :func (lambda ()
                            (evil-define-state metanormal

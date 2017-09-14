@@ -10,10 +10,12 @@
   "Initialize `serika'."
   (serika-c/eg/create)
 
+  (serika-c/task/add "-inf")
   (serika-c/task/add "zero")
-  (serika-c/task/add "base")
-  (serika-c/task/add "core")
+  (serika-c/task/add "one")
+  (serika-c/task/add "two")
   (serika-c/task/add "inf")
+
   (serika-c/task/execute-all)
 
   (serika-c/eg/execute)
