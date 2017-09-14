@@ -378,6 +378,7 @@
                                                              "M-s" 'evil-ex
 
                                                              ;; Windows
+                                                             "C-w q" #'delete-window
                                                              "C-w v" #'split-window-right
                                                              "C-w h" #'split-window-down
                                                              "C-w n" #'evil-window-left
