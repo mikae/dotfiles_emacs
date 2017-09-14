@@ -19,6 +19,14 @@
   (forward-char (or (1- count) 0)))
 
 ;; Word-state
+(defun serika-f/evil/delete-word (&optional count)
+  "Delete COUNT words."
+  (interactive "P")
+  (evil-visual-char)
+  (evil-inner-word (or count 1))
+  (evil-delete (region-beginning) (region-end))
+  )
+
 (defun serika-f/evil/yank-word (&optional count)
   "Yank word"
   (interactive "P")
