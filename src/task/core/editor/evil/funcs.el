@@ -283,21 +283,22 @@
 
 (cl-defun serika-f/evil/activate (&key ((:evil-shift-width --evil-shift-width) 4           --evil-shift-width-p)
                                        ((:evil-state       --evil-state)       'metanormal --evil-state-p))
-  "Activate `evil' in current buffer."
+  "Activate `evil' in current buffer.
+Supported keys:
+  - evil-state:
+    Set initial evil state.
+    If wasn't provided, activate `evil-normal-state'.
+  - evil-shift-width:
+    If provided, change `evil-default-state' to its' value."
   (evil-local-mode +1)
   (if --evil-state-p
-      (cond
-       ((eq --evil-state
-            'normal)
-        (evil-normal-state))
-       ((eq --evil-state
-            'motion)
-        (evil-motion-state))
-       ((eq --evil-state
-            'emacs)
-        (evil-emacs-state))
-       (t (error "Strange state was proposed to `evil'.")))
-    (evil-metanormal-state))
+      (let ((--state-name (concat "evil-"
+                                  (symbol-name --evil-state)
+                                  "-state")))
+        (if (evil-state-p --evil-state)
+            (funcall (symbol-function (intern --state-name)))
+          (error "Strange state was proposed for evil")))
+    (evil-normal-state))
   (when --evil-shift-width-p
     (setq evil-shift-width --evil-shift-width)))
 
@@ -764,4 +765,5 @@
                                                          "i"   #'serika-f/evil/visual-i
                                                          "o"   #'serika-f/evil/visual-o
 
-                                                         "SPC" #'evil-exit-visual-state))))
+                                                         "SPC"   #'evil-exit-visual-state
+                                                         "C-SPC" #'ignore))))

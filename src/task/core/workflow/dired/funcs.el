@@ -215,6 +215,9 @@ If PATH is invalid return nil."
 ;; Local
 (defun serika-l/dired//setup-buffer ()
   "Configure `dired-mode' buffers."
+  ;; Enable evil in dired mode
+  (serika-f/evil/activate :evil-state 'dired)
+
   ;; Enable line truncations
   (setq truncate-lines t)
 
@@ -251,63 +254,17 @@ If PATH is invalid return nil."
                                   (setq dired-compress-file-suffixes
                                         '(("\\.zip\\'" ".zip" "unzip"))))
 
+                                ("settings evil")
+                                (lambda ()
+                                  (evil-define-state dired
+                                    "State for dired."
+                                    :tag "<Dired>"
+                                    :suppress-keymap t))
+
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/save dired-mode-map)
-                                  (func/keymap/create dired-mode-map
-                                                      "* m"   #'dired-mark
-                                                      "* u"   #'dired-unmark
-                                                      "* U"   #'dired-unmark-all-marks
-
-                                                      "d d"   #'dired-do-delete
-                                                      "d r"   #'dired-do-rename
-                                                      "d c"   #'dired-do-copy
-                                                      "d l"   #'diredp-list-marked
-                                                      "d u"   #'serika-f/dired/uncompress-selected
-
-                                                      "n d"   #'serika-f/dired/create-directory
-                                                      "n f"   #'helm-find-files
-                                                      "n h"   #'dired-do-hardlink
-                                                      "n s"   #'dired-do-symlink
-
-                                                      "c o"   #'dired-do-chown
-                                                      "c g"   #'dired-do-chgrp
-
-                                                      "o o"   (serika-f/dired/create-path-visiter org-directory)
-
-                                                      "t h"   #'serika-f/dired/toggle-hidden
-                                                      "t o"   #'serika-f/dired/toggle-omitted
-                                                      "t d"   (func/func/create-minor-mode-toggler dired-hide-details-mode)
-
-                                                      "q"     (lambda ()
-                                                                (interactive)
-                                                                (func/buffer/kill-by-major-mode 'dired-mode))
-
-
-                                                      "A-n"     #'dired-up-directory
-                                                      "A-e"     #'serika-f/dired/next-visual-line
-                                                      "A-o"     #'dired-find-file
-                                                      "A-i"     #'serika-f/dired/previous-visual-line
-
-
-                                                      "A-1"     #'evil-search-forward
-                                                      "A-2"     #'evil-search-backward
-                                                      "A-z"     #'evil-search-next
-                                                      "A-Z"     #'evil-search-previous
-
-                                                      "A-t"     #'serika-f/dired/move-to-beginning
-                                                      "A-T"     #'serika-f/dired/move-to-end
-
-                                                      "A-I"     #'serika-f/dired/move-to-window-top
-                                                      "A-E"     #'serika-f/dired/move-to-window-bottom
-                                                      "A-\""    #'serika-f/dired/move-to-window-middle
-
-                                                      "A-p"     #'serika-f/dired/scroll-page-down
-                                                      "A-P"     #'serika-f/dired/scroll-page-up
-
-                                                      "RET"     #'dired-run-associated-program
-                                                      "C-x C-s" #'ignore)
-                                  (func/keymap/bind-digits dired-mode-map #'digit-argument))
+                                  (func/keymap/create dired-mode-map))
 
                                 ("global-keymap")
                                 (lambda ()
@@ -315,4 +272,61 @@ If PATH is invalid return nil."
 
                                 ("hook")
                                 (lambda ()
-                                  (add-hook 'dired-mode-hook #'serika-l/dired//setup-buffer))))
+                                  (add-hook 'dired-mode-hook #'serika-l/dired//setup-buffer)))
+
+  (serika-c/eg/add-many-by-parents ("keymap evil")
+                                   'dired
+                                   (lambda ()
+                                     (func/keymap/create evil-dired-state-map
+                                                         "* m"   #'dired-mark
+                                                         "* u"   #'dired-unmark
+                                                         "* U"   #'dired-unmark-all-marks
+
+                                                         "d d"   #'dired-do-delete
+                                                         "d r"   #'dired-do-rename
+                                                         "d c"   #'dired-do-copy
+                                                         "d l"   #'diredp-list-marked
+                                                         "d u"   #'serika-f/dired/uncompress-selected
+
+                                                         "n d"   #'serika-f/dired/create-directory
+                                                         "n f"   #'helm-find-files
+                                                         "n h"   #'dired-do-hardlink
+                                                         "n s"   #'dired-do-symlink
+
+                                                         "c o"   #'dired-do-chown
+                                                         "c g"   #'dired-do-chgrp
+
+                                                         "o o"   (serika-f/dired/create-path-visiter org-directory)
+
+                                                         "t h"   #'serika-f/dired/toggle-hidden
+                                                         "t o"   #'serika-f/dired/toggle-omitted
+                                                         "t d"   (func/func/create-minor-mode-toggler dired-hide-details-mode)
+
+                                                         "q"     (lambda ()
+                                                                   (interactive)
+                                                                   (func/buffer/kill-by-major-mode 'dired-mode))
+
+
+                                                         "A-n"     #'dired-up-directory
+                                                         "A-e"     #'serika-f/dired/next-visual-line
+                                                         "A-o"     #'dired-find-file
+                                                         "A-i"     #'serika-f/dired/previous-visual-line
+
+
+                                                         "A-1"     #'evil-search-forward
+                                                         "A-2"     #'evil-search-backward
+                                                         "A-z"     #'evil-search-next
+                                                         "A-Z"     #'evil-search-previous
+
+                                                         "A-t"     #'serika-f/dired/move-to-beginning
+                                                         "A-T"     #'serika-f/dired/move-to-end
+
+                                                         "A-I"     #'serika-f/dired/move-to-window-top
+                                                         "A-E"     #'serika-f/dired/move-to-window-bottom
+                                                         "A-\""    #'serika-f/dired/move-to-window-middle
+
+                                                         "A-p"     #'serika-f/dired/scroll-page-down
+                                                         "A-P"     #'serika-f/dired/scroll-page-up
+
+                                                         "RET"     #'dired-run-associated-program
+                                                         "C-x C-s" #'ignore))))
