@@ -84,9 +84,9 @@
   ;; save/kill ... etc
   (func/keymap/define-global "C-x C-s"     #'save-buffer
                              "C-x C-S-s"   #'func/tramp/sudo-write
-                             "C-x C-x C-s" #'func/buffer/invoke-save-function
+                             ;; "C-x C-x C-s" #'func/buffer/invoke-save-function
                              "C-x C-c"     #'func/buffer/kill
-                             "C-x C-x C-c" #'func/buffer/kill
+                             ;; "C-x C-x C-c" #'func/buffer/kill
                              "C-x C-h"     #'previous-buffer
                              "C-x C-g"     #'revert-buffer)
 
@@ -109,10 +109,6 @@
   (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter
                              "<C-m> r"   #'kmacro-end-or-call-macro)
 
-  ;; windows
-  (func/keymap/define-global "C-w f"     #'delete-other-windows
-                             "C-w F"     #'serika-f/window/delete-but-scratch)
-
   (func/keymap/define-global "M-r"       #'eval-expression))
 
 (defun init ()
@@ -130,5 +126,5 @@
                                    'input-decode-map
                                    #'serika-g/key//configure-input-decode-map
 
-                                   'create-new-bindings
+                                   'create-new
                                    #'serika-g/key//create-bindings))

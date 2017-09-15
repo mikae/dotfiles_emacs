@@ -442,8 +442,7 @@
     (should (eq node
                 (en/child (en/child (car (eg/roots graph))
                                     :index 0)
-                          :index 0)))
-    ))
+                          :index 0)))))
 
 (ert-deftest eg|execute-1 ()
   (let ((graph (eg/create))
@@ -550,8 +549,7 @@
                     (setq test (concat test "d"))))
     (eg/execute graph)
     (should (string= test
-                     "abcd"))
-    ))
+                     "abcd"))))
 
 (ert-deftest eg|execute-order-2 ()
   (let ((graph (eg/create))
@@ -586,8 +584,7 @@
                     (setq test (concat test "c"))))
     (eg/execute graph)
     (should (string= test
-                     "abcd"))
-    ))
+                     "abcd"))))
 
 (ert-deftest eg|event-node ()
   (let ((graph   (eg/create))
@@ -609,14 +606,13 @@
     (funcall emit-event)
 
     (should (en/executed (eg/get graph
-                                  "nya")))
+                                 "nya")))
     (should (en/executed (eg/get graph
-                                  "nya nyan-1")))
+                                 "nya nyan-1")))
     (should (en/executed (eg/get graph
-                                  "nya nyan-2")))
+                                 "nya nyan-2")))
     (should (en/executed (eg/get graph
-                                 "nya nyan-1 nyan-1-1")))
-    ))
+                                 "nya nyan-1 nyan-1-1")))))
 
 (ert-deftest eg|event-node-2 ()
   (let ((graph   (eg/create))
@@ -670,7 +666,7 @@
     (should (en/executed (eg/get graph
                                  "nyak nyak-1")))
     (should (en/executed (eg/get graph
-                                     "nyak nyak-2")))
+                                 "nyak nyak-2")))
     (should (en/executed (eg/get graph
                                  "major-mode-c")))
     (should (en/executed (eg/get graph

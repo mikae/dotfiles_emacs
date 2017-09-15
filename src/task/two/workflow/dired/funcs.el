@@ -271,35 +271,36 @@ If PATH is invalid return nil."
    'dired
    (lambda ()
      (func/keymap/create evil-dired-state-map)
-     ;; (serika-f/which-key/create-keymap
-     ;;  dired-mode
-     ;;  evil-dired-state-map
-     ;;  ;; arstd
-     ;;  "a a"   #'dired-mark                                                  "Mark file"
-     ;;  "a A"   #'dired-mark-unmarked-files                                   "Mark unmarked"
-     ;;  "a r"   #'dired-unmark                                                "Unmark file"
-     ;;  "a R"   #'dired-unmark-all-marks                                      "Unmark all"
 
-     ;;  "r a"   #'dired-do-delete                                             "Delete"
-     ;;  "r A"   #'dired-do-copy                                               "Copy"
-     ;;  "r r"   #'dired-do-rename                                             "Rename"
-     ;;  "r R"   #'diredp-list-marked                                          "List marked files"
-     ;;  "r s"   #'serika-f/dired/uncompress-selected                          "Uncompress"
+     (serika-f/which-key/create-keymap
+      dired-mode
+      evil-dired-state-map
+      ;; arstd
+      "a a"   #'dired-mark                                                  "Mark file"
+      "a A"   #'dired-mark-unmarked-files                                   "Mark unmarked"
+      "a r"   #'dired-unmark                                                "Unmark file"
+      "a R"   #'dired-unmark-all-marks                                      "Unmark all"
 
-     ;;  "s a"   #'helm-find-files                                             "Create file"
-     ;;  "s A"   #'serika-f/dired/create-directory                             "Create directory"
-     ;;  "s r"   #'dired-do-symlink                                            "Create symlink"
-     ;;  "s R"   #'dired-do-hardlink                                           "Create hardlink"
+      "r a"   #'dired-do-delete                                             "Delete"
+      "r A"   #'dired-do-copy                                               "Copy"
+      "r r"   #'dired-do-rename                                             "Rename"
+      "r R"   #'diredp-list-marked                                          "List marked files"
+      "r s"   #'serika-f/dired/uncompress-selected                          "Uncompress"
 
-     ;;  "t a"   #'dired-do-chown                                              "Change owner"
-     ;;  "t A"   #'dired-do-chgrp                                              "Change group"
+      "s a"   #'helm-find-files                                             "Create file"
+      "s A"   #'serika-f/dired/create-directory                             "Create directory"
+      "s r"   #'dired-do-symlink                                            "Create symlink"
+      "s R"   #'dired-do-hardlink                                           "Create hardlink"
 
-     ;;  "d a"   (serika-f/dired/create-path-visiter org-directory)            "Visit org directory"
+      "t a"   #'dired-do-chown                                              "Change owner"
+      "t A"   #'dired-do-chgrp                                              "Change group"
 
-     ;;  ;; qwfpg
-     ;;  "q q"   #'serika-f/dired/toggle-hidden                                "Toggle hidden"
-     ;;  "q Q"   #'serika-f/dired/toggle-omitted                               "Toggle omitted"
-     ;;  "q w"   (func/func/create-minor-mode-toggler dired-hide-details-mode) "Toggle details")
+      "d a"   (serika-f/dired/create-path-visiter org-directory)            "Visit org directory"
+
+      ;; qwfpg
+      "q q"   #'serika-f/dired/toggle-hidden                                "Toggle hidden"
+      "q Q"   #'serika-f/dired/toggle-omitted                               "Toggle omitted"
+      "q w"   (func/func/create-minor-mode-toggler dired-hide-details-mode) "Toggle details")
 
      (func/keymap/define evil-dired-state-map
                          ;; zxcvb

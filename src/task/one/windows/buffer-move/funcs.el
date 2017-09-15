@@ -15,5 +15,5 @@
 
                                 ("settings")
                                 (lambda ()
-                                  (setq buffer-move-behavior 'swap)
+                                  (setq buffer-move-behavior 'move)
                                   (setq buffer-move-stay-after-swap nil))))
