@@ -37,13 +37,13 @@ test: test-all
 test-all: test-core test-task
 
 test-core:
-	$(EMACS) -batch -l ert -L src/core -l test/core/core--execution.el -f ert-run-tests-batch-and-exit
+	cask exec buttercup -L src/core test/core
 
 test-task: test-task-zero test-task-core
 
 test-task-zero:
-	#$(EMACS) -batch -l ert -l src/task/zero/util/cond/funcs.el         -l test/task/zero/util/cond/funcs.el         -f ert-run-tests-batch-and-exit
-	#$(EMACS) -batch -l ert -l src/task/zero/util/keymap/funcs.el       -l test/task/zero/util/keymap/funcs.el       -f ert-run-tests-batch-and-exit
+	@#$(EMACS) -batch -l ert -l src/task/zero/util/cond/funcs.el         -l test/task/zero/util/cond/funcs.el         -f ert-run-tests-batch-and-exit
+	@#$(EMACS) -batch -l ert -l src/task/zero/util/keymap/funcs.el       -l test/task/zero/util/keymap/funcs.el       -f ert-run-tests-batch-and-exit
 
 test-task-core:
-	$(EMACS) -batch -l ert -l src/task/core/interface/emojify/funcs.el -l test/task/core/interface/emojify/funcs.el -f ert-run-tests-batch-and-exit
+	@#$(EMACS) -batch -l ert -l src/task/core/interface/emojify/funcs.el -l test/task/core/interface/emojify/funcs.el -f ert-run-tests-batch-and-exit
