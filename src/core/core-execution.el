@@ -4,7 +4,7 @@
 
 (require 'core-package)
 (require '--execution-graph)
-(require 'core-funcs)
+(require 'core-util)
 (require 'url)
 
 (defvar --serika-execution-graph nil
@@ -83,14 +83,14 @@
            ;; todo: add directory download
            ((eq --type 'download) (when (stringp --src)
                                     (lambda ()
-                                      (let ((--destination (func/path-join serika-plugin-directory
+                                      (let ((--destination (util/path-join serika-plugin-directory
                                                                            (url-unhex-string (file-name-nondirectory --src)))))
                                         (unless (file-exists-p --destination)
                                           (url-copy-file --src
                                                          --destination))))))
            ((eq --type 'git) (when (stringp --src)
                                (lambda ()
-                                 (let ((--destination (func/path-join serika-plugin-directory
+                                 (let ((--destination (util/path-join serika-plugin-directory
                                                                       (file-name-nondirectory --src))))
                                    (unless (file-exists-p --destination)
                                      (shell-command-to-string (format "git clone %s %s"
@@ -106,9 +106,9 @@
 
                                      (cl-loop for --ep in --extra-path
                                               do
-                                              (when (file-accessible-directory-p (func/path-join --destination
+                                              (when (file-accessible-directory-p (util/path-join --destination
                                                                                                  --ep))
-                                                (add-to-list 'load-path (func/path-join --destination --ep)))))))))
+                                                (add-to-list 'load-path (util/path-join --destination --ep)))))))))
            (t nil)))
 
     (when --lambda

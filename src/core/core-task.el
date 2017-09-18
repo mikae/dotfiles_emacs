@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+;; (require 'core-util)
+
 ;; Vars
 (defvar serika-tasks (list)
   "List of tasks that will be executed.")
@@ -21,7 +23,10 @@
                            (goto-char (point-max))
                            (backward-sexp)
                            (eval (sexp-at-point)))))
-    (let* ((funcs-path (func/path-join serika-task-directory
+    (let* ((module-path (util/path-join serika-task-directory
+                                        task
+                                        "module"))
+           (funcs-path (util/path-join serika-task-directory
                                        task
                                        "funcs.el")))
       (when (file-exists-p funcs-path)
@@ -38,16 +43,35 @@
         (when (fboundp '--temp-init)
           (fset 'init '--temp-init)
           (fmakunbound '--temp-init)))
-      (dolist (dir (directory-files (func/path-join serika-task-directory
-                                                    task)
-                                    t))
-        (if (and (file-directory-p dir)
-                 (not (string-match "\/\\.$" dir))
-                 (not (string-match "\/\\.\\.$" dir)))
-            (add-to-list 'serika-tasks (func/path-join task
-                                                       (file-name-nondirectory (directory-file-name dir))))
-          (when (file-directory-p dir)
-            (message dir)))))))
+      (let ((--temporary-tasks ())
+            (--module-info     nil)
+            (--temp))
+        (dolist (dir (directory-files (util/path-join serika-task-directory
+                                                      task)
+                                      t))
+          (when (and (file-directory-p dir)
+                     (not (string-match "\/\\.$" dir))
+                     (not (string-match "\/\\.\\.$" dir)))
+            (add-to-list '--temporary-tasks
+                         (util/path-join task
+                                         (file-name-nondirectory (directory-file-name dir))))))
+
+        ;; todo: describe code below
+        (when (file-exists-p module-path)
+          (setq --module-info
+                (split-string (util/read-file-as-string module-path)))
+          (cl-loop for --task in --module-info
+                   do
+                   (setq --temp (util/path-join task
+                                                --task))
+                   (when (cl-member --temp --temporary-tasks
+                                    :test 'equal)
+                     ;; todo: somehow avoid copying of `--temporary-tasks'
+                     (setq --temporary-tasks
+                           (cons --temp (delete --temp --temporary-tasks))))))
+
+        (setq serika-tasks (nconc --temporary-tasks serika-tasks)))
+      )))
 
 (defun serika-c/task/execute-all ()
   "Execute all task defined by `serika-tasks'."
