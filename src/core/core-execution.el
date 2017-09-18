@@ -3,7 +3,7 @@
 ;;; Code:
 
 (require 'core-package)
-(require 'core--execution)
+(require '--execution-graph)
 (require 'core-funcs)
 (require 'url)
 
@@ -14,6 +14,9 @@
   (setq --serika-execution-graph (eg/create))
 
   (dolist (task '(
+                  ;; pretasks
+                  "-inf"
+
                   ;; zero tasks
                   "zero require"
                   "zero configure"
@@ -42,18 +45,21 @@
                   "inf"))
     (eg/create-path --serika-execution-graph task)))
 
-(cl-defun serika-c/eg/add (&key name         (last '__unnamed__)
-                                &key parents (last nil)
-                                &key func    (last nil)
-                                &key node    (last nil))
+(cl-defun serika-c/eg/add (&key (parents nil)
+                                (name    '__unnamed__)
+                                (func    nil)
+                                (node    nil node-p))
   "Add new execution node."
-  (eg/add --serika-execution-graph
-          :name    name
-          :parents parents
-          :func    func
-          :node    node))
+  (if node-p
+      (eg/add --serika-execution-graph
+              :parents parents
+              :node    node)
+    (eg/add --serika-execution-graph
+            :parents parents
+            :name    name
+            :func    func)))
 
-(cl-defun serika-c/eg/add-install (&key (type 'package)
+(cl-defun serika-c/eg/add-install (&key (type         'package)
                                         (package-list '())
                                         (name         '__unnamed__)
                                         (parents      nil)
@@ -107,9 +113,9 @@
 
     (when --lambda
       (eg/add --serika-execution-graph
-              :name    --name
               :parents --parents
-              :func --lambda))))
+              :name    --name
+              :func    --lambda))))
 
 
 
@@ -132,14 +138,16 @@ Example:
               (eg/add --serika-execution-graph
                       :name    --name
                       :parents --parents
-                      :func    (cond
-                                ((eq (car --elem) 'function)
-                                 (car (cdr --elem)))
-                                ((eq (car --elem) 'lambda)
-                                 --elem)
-                                ((macrop (car --elem))
-                                 (macroexpand (car --elem)))
-                                (t --elem))))))
+                      :func
+(cond
+ ((eq (car --elem)
+      'function)
+  (car (cdr --elem)))
+ ((eq (car --elem)
+      'lambda)
+  (eval --elem))
+ (t --elem))
+))))
 
 (defmacro serika-c/eg/add-many-by-parents (parents &rest args)
   "Add many execution nodes at once.
@@ -159,14 +167,16 @@ Example:
               (eg/add --serika-execution-graph
                       :name    (car (cdr --name))
                       :parents --parents
-                      :func    (cond
-                                ((eq (car --elem) 'function)
-                                 (car (cdr --elem)))
-                                ((eq (car --elem) 'lambda)
-                                 --elem)
-                                ((macrop (car --elem))
-                                 (macroexpand (car --elem)))
-                                (t --elem))))))
+                      :func
+(cond
+ ((eq (car --elem)
+      'function)
+  (car (cdr --elem)))
+ ((eq (car --elem)
+      'lambda)
+  (eval --elem))
+ (t --elem))
+))))
 
 (defun serika-c/eg/execute ()
   "Execute execution graph."

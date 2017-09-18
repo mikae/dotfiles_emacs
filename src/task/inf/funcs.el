@@ -8,7 +8,7 @@
                                 ("inf")
                                 (lambda ()
                                   "Load local configuration."
-                                  (let ((--local-file-path (f-join user-emacs-directory
+                                  (let ((--local-file-path (concat user-emacs-directory
                                                                    "local-post.el")))
-                                    (when (f-file-p --local-file-path)
+                                    (when (file-exists-p --local-file-path)
                                       (load-file --local-file-path))))))
