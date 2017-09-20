@@ -24,7 +24,7 @@
     (serika-f/flycheck/activate :disabled-checkers '(emacs-lisp-checkdoc))
     (flycheck-cask-setup)
 
-    (serika-f/company/activate :backends '(company-elisp))
+    (serika-f/company/activate)
 
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)

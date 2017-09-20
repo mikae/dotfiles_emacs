@@ -8,6 +8,7 @@
 
 (defun serika-f/whitespace/toggle ()
   "Toggle `whitespace-mode'."
+  (interactive)
   (whitespace-mode (if whitespace-mode -1 +1)))
 
 (defun init ()
