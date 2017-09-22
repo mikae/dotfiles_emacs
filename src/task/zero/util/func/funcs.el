@@ -13,13 +13,11 @@
      (setq ,var (not ,var))))
 
 
-(defmacro func/func/create-minor-mode-toggler (mmode)
+(defmacro func/func/toggle-minor-mode (mmode)
   "Toggle VAR."
-  `(lambda ()
-     (interactive)
-     (,mmode (if ,mmode
-                 -1
-               +1))))
+  `(,mmode (if ,mmode
+               -1
+             +1)))
 
 (defun func/func/create-ander (&rest funcs)
   "Return function that returns t if all FUNCS returned t."

@@ -41,8 +41,13 @@ test-core:
 
 test-task: test-task-zero test-task-core
 
-test-task-zero:
-	cask exec buttercup -L src/task/zero src/task/zero
+test-task-zero: test-task-zero-util-keymap test-task-zero-util-func
+
+test-task-zero-util-keymap:
+	cask exec buttercup --eval "(load-file \"src/task/zero/util/keymap/funcs.el\")" test/task/zero/util/keymap/
+
+test-task-zero-util-func:
+	cask exec buttercup --eval "(load-file \"src/task/zero/util/func/funcs.el\")" test/task/zero/util/func/
 
 test-task-core:
 	@#$(EMACS) -batch -l ert -l src/task/core/interface/emojify/funcs.el -l test/task/core/interface/emojify/funcs.el -f ert-run-tests-batch-and-exit

@@ -18,6 +18,9 @@
                                   (setq associated-program-alist
                                         '(("animate" "\\.gif$")
                                           ("smplayer" "\\.webm$")
+                                          ("smplayer" "\\.mp4")
+                                          ("smplayer" "\\.mkv")
+                                          ("smplayer" "\\.avi")
                                           ((lambda (file)
                                              (browse-url (concat "file:///"
                                                                  (expand-file-name file)))) "\\.html?$"))))))

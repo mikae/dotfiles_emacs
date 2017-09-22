@@ -1,4 +1,4 @@
-;;; package --- Summary -*- lexical-binding: t -*-
+;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
 
@@ -192,17 +192,11 @@ x0 - bit of omitted files.")
                     (shell-command --cmd)
                     (dired-revert))))))
 
-(defun serika-f/dired/create-path-visiter (path)
+(defun serika-f/dired/visit-path (path)
   "Construct lambda that visits PATH.
 If PATH is invalid return nil."
-  (let ((--path (if (symbolp path)
-                    (symbol-value path)
-                  path)))
-    (if (f-dir-p --path)
-        (lambda ()
-          (interactive)
-          (dired --path))
-      nil)))
+  (interactive)
+  (dired path))
 
 ;; Local
 (defun serika-l/dired//setup-buffer ()
@@ -295,12 +289,12 @@ If PATH is invalid return nil."
       "t a"   #'dired-do-chown                                              "Change owner"
       "t A"   #'dired-do-chgrp                                              "Change group"
 
-      "d a"   (serika-f/dired/create-path-visiter org-directory)            "Visit org directory"
+      "d a"   (serika-f/dired/visit-path org-directory)                     "Visit org directory"
 
       ;; qwfpg
       "q q"   #'serika-f/dired/toggle-hidden                                "Toggle hidden"
       "q Q"   #'serika-f/dired/toggle-omitted                               "Toggle omitted"
-      "q w"   (func/func/create-minor-mode-toggler dired-hide-details-mode) "Toggle details")
+      "q w"   (func/func/toggle-minor-mode dired-hide-details-mode)         "Toggle details")
 
      (func/keymap/define evil-dired-state-map
                          ;; zxcvb
