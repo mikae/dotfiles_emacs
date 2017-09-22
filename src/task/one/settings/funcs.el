@@ -70,16 +70,6 @@ setups `prettify-symbols-alist'."
            do
            (add-to-list 'auto-mode-alist `(,--pattern . ,mode))))
 
-(defun serika-f/settings/change-user ()
-  "Change user settings."
-  (interactive)
-  (let ((--user-name (read-string "Enter user name: " user-full-name))
-        (--user-mail (read-string "Enter user f-mail: " user-mail-address)))
-    (when (stringp --user-name)
-      (setq user-full-name --user-name))
-    (when (stringp --user-mail)
-      (setq user-mail-address --user-mail))))
-
 ;; `trailing-whitespaces'
 (defun serika-f/settings/show-trailing-whitespaces (&optional turn-on)
   "Show/disable trailing whitespaces in current buffer."

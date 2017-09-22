@@ -140,17 +140,17 @@ x0 - bit of omitted files.")
   (serika-f/dired/omit-header)
   (dired-move-to-filename))
 
-(defun serika-f/dired/next-visual-line (&optional count)
+(defun serika-f/dired/next-line (&optional count)
   "Move cursor to COUNT lines down."
   (interactive "P")
-  (evil-next-visual-line (or count 1))
+  (evil-next-line (or count 1))
   (serika-f/dired/omit-footer)
   (dired-move-to-filename))
 
-(defun serika-f/dired/previous-visual-line (&optional count)
+(defun serika-f/dired/previous-line (&optional count)
   "Move cursor to COUNT lines down."
   (interactive "P")
-  (evil-previous-visual-line (or count 1))
+  (evil-previous-line (or count 1))
   (serika-f/dired/omit-header)
   (dired-move-to-filename))
 
@@ -305,8 +305,8 @@ If PATH is invalid return nil."
 
                          ;; neio
                          "n"       #'dired-up-directory
-                         "e"       #'serika-f/dired/next-visual-line
-                         "i"       #'serika-f/dired/previous-visual-line
+                         "e"       #'serika-f/dired/next-line
+                         "i"       #'serika-f/dired/previous-line
                          "o"       #'dired-find-file
 
                          "I"       #'serika-f/dired/move-to-window-top

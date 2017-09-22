@@ -48,16 +48,16 @@
   (evil-visual-char)
   (evil-inner-word (or count 1)))
 
-(defun serika-f/evil/backward-word-at-previous-visual-line (&optional count)
+(defun serika-f/evil/backward-word-at-previous-line (&optional count)
   "Move to the COUNT previous visual lines, and move to the previous word."
   (interactive "P")
-  (evil-previous-visual-line (or count 1))
+  (evil-previous-line (or count 1))
   (evil-backward-word-begin))
 
-(defun serika-f/evil/forward-word-at-next-visual-line (&optional count)
+(defun serika-f/evil/forward-word-at-next-line (&optional count)
   "Move to the COUNT previous visual lines, and move to the previous word."
   (interactive "P")
-  (evil-next-visual-line (or count 1))
+  (evil-next-line (or count 1))
   (evil-next-word-begin))
 
 ;; Line-state
@@ -67,16 +67,17 @@
   (call-interactively #'evil-delete-line)
   (evil-line-state))
 
-(defun serika-f/evil/delete-line ()
-  (interactive)
-  (kill-whole-line)
+(defun serika-f/evil/delete-line (&optional count)
+  (interactive "P")
+  (kill-whole-line (or count 1))
+  (forward-line -1)
   (evil-line-state))
 
 (defun serika-f/evil/yank-line ()
   (interactive)
   (save-excursion
     (evil-visual-char)
-    (evil-end-of-visual-line)
+    (evil-end-of-line)
     (evil-yank (region-beginning) (region-end)))
   (evil-line-state))
 
@@ -88,7 +89,7 @@
 (defun serika-f/evil/change-line ()
   (interactive)
   (evil-visual-char)
-  (evil-end-of-visual-line)
+  (evil-end-of-line)
   (evil-change (region-beginning) (region-end)))
 
 (defun serika-f/evil/change-whole-line (&optional count)
@@ -102,7 +103,7 @@
   "Mark COUNT lines."
   (interactive "P")
   (evil-visual-line)
-  (evil-next-visual-line (or (and count (1- count)) 0)))
+  (evil-next-line (or (and count (1- count)) 0)))
 
 (defun serika-f/evil/insert-blank-line-after (&optional count)
   "Insert COUNT blank lines after current line."
@@ -205,16 +206,16 @@
   (cond
    ((eq evil-previous-state
         'char)
-    (evil-next-visual-line (or count 1)))
+    (evil-next-line (or count 1)))
    ((eq evil-previous-state
         'word)
-    (serika-f/evil/forward-word-at-next-visual-line (or count 1)))
+    (serika-f/evil/forward-word-at-next-line (or count 1)))
    ((eq evil-previous-state
         'sentence)
     (ignore))
    ((eq evil-previous-state
         'line)
-    (evil-next-visual-line (or count 1)))
+    (evil-next-line (or count 1)))
    ((eq evil-previous-state
         'paragragh)
     (evil-forward-paragraph (or count 1)))))
@@ -225,10 +226,10 @@
   (cond
    ((eq evil-previous-state
         'char)
-    (evil-previous-visual-line (or count 1)))
+    (evil-previous-line (or count 1)))
    ((eq evil-previous-state
         'word)
-    (serika-f/evil/backward-word-at-previous-visual-line (or count 1)))
+    (serika-f/evil/backward-word-at-previous-line (or count 1)))
    ((eq evil-previous-state
         'sentence)
     (ignore))
@@ -435,14 +436,14 @@ Supported keys:
 
                                 ;; neio'
                                 "A-n"  'evil-backward-char
-                                "A-e"  'evil-next-visual-line
-                                "A-i"  'evil-previous-visual-line
+                                "A-e"  'evil-next-line
+                                "A-i"  'evil-previous-line
                                 "A-o"  'evil-forward-char
 
-                                "A-N"  'evil-beginning-of-visual-line
+                                "A-N"  'evil-beginning-of-line
                                 "A-E"  'evil-window-bottom
                                 "A-I"  'evil-window-top
-                                "A-O"  'evil-end-of-visual-line
+                                "A-O"  'evil-end-of-line
                                 "A-\"" 'evil-window-middle
 
                                 "A-." #'undo
@@ -519,8 +520,8 @@ Supported keys:
 
                          ;; neio
                          "n" #'evil-backward-char
-                         "e" #'evil-next-visual-line
-                         "i" #'evil-previous-visual-line
+                         "e" #'evil-next-line
+                         "i" #'evil-previous-line
                          "o" #'evil-forward-char
 
                          ;; zxcvb
@@ -549,8 +550,8 @@ Supported keys:
 
                          ;; neio
                          "n" #'evil-backward-word-begin
-                         "e" #'serika-f/evil/forward-word-at-next-visual-line
-                         "i" #'serika-f/evil/backward-word-at-previous-visual-line
+                         "e" #'serika-f/evil/forward-word-at-next-line
+                         "i" #'serika-f/evil/backward-word-at-previous-line
                          "o" #'evil-forward-word-begin
 
                          ;; zxcvb
@@ -586,14 +587,14 @@ Supported keys:
 
                          ;; neio
                          "n" #'evil-backward-char
-                         "e" #'evil-next-visual-line
-                         "i" #'evil-previous-visual-line
+                         "e" #'evil-next-line
+                         "i" #'evil-previous-line
                          "o" #'evil-forward-char
 
-                         "N" #'evil-beginning-of-visual-line
+                         "N" #'evil-beginning-of-line
                          "E" #'evil-window-bottom
                          "I" #'evil-window-top
-                         "O" #'evil-end-of-visual-line
+                         "O" #'evil-end-of-line
 
                          ;; zxcvb
                          "z" #'serika-f/evil/clear-line

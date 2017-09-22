@@ -32,8 +32,7 @@
     (when buffer-file-name
       (serika-f/flycheck/activate))
     (serika-f/company/activate :backends '(company-tern
-                                           company-gtags
-                                           company-yasnippet))
+                                           company-gtags))
     (serika-f/tern/activate)
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)

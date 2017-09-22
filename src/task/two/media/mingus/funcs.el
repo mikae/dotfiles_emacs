@@ -96,8 +96,8 @@
                                                                                        ","   #'serika-f/mingus/seek-backward
                                                                                        "."   #'serika-f/mingus/seek-forward
 
-                                                                                       "A-e" #'evil-next-visual-line
-                                                                                       "A-i" #'evil-previous-visual-line
+                                                                                       "A-e" #'evil-next-line
+                                                                                       "A-i" #'evil-previous-line
 
                                                                                        "c"   #'serika-f/mingus/clear
                                                                                        "q"   #'mingus-git-out

@@ -64,8 +64,8 @@
                                   (func/keymap/save flycheck-error-list-mode-map)
                                   (func/keymap/create flycheck-error-list-mode-map
                                                       "A-n" #'evil-backward-char
-                                                      "A-e" #'evil-next-visual-line
-                                                      "A-i" #'evil-previous-visual-line
+                                                      "A-e" #'evil-next-line
+                                                      "A-i" #'evil-previous-line
                                                       "A-o" #'evil-forward-char))
 
                                 ("global-keymap")

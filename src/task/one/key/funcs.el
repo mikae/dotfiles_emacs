@@ -103,7 +103,7 @@
                              "C-x h k"   #'describe-key)
 
   ;; changes
-  (func/keymap/define-global "C-x c u"   #'serika-f/settings/change-user)
+  ;; (func/keymap/define-global "C-x c u"   #'serika-f/settings/change-user)
 
   ;; macro
   (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter

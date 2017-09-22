@@ -28,6 +28,11 @@ Supported keys:
                                                     'company-quickhelp
                                                     'company-statistics)
 
+                                ("interface theme")
+                                (lambda ()
+                                  (setq company-quickhelp-color-background "#282c34")
+                                  (setq company-quickhelp-color-foreground "#bbc2cf"))
+
                                 ("settings")
                                 (lambda ()
                                   ;; company
@@ -44,8 +49,7 @@ Supported keys:
                                   (setq company-show-numbers t)
 
                                   ;;company-quickhelp
-                                  (setq company-quickhelp-delay nil)
-                                  )
+                                  (setq company-quickhelp-delay 0.1))
 
                                 ("keymap")
                                 (lambda ()

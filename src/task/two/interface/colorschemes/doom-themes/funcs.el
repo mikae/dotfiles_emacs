@@ -8,7 +8,7 @@
                            :name 'doom-themes
                            :package-list '(doom-themes))
 
-  (serika-c/eg/add-many-by-name 'doom-themes
+  (serika-c/eg/add-many-by-name 'theme
                                 ("require")
                                 ;; (func/func/requirer 'doom-themes)
                                 (lambda ()
