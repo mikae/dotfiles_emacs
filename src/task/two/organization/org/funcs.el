@@ -12,6 +12,10 @@
             map))
 
 ;; Some goodies
+(defmacro serika-f/org/create-table (&rest args)
+  "Create org table with list of arguments ARGS."
+  (error "Not implemented"))
+
 (defun serika-f/org/create-answer-table (&optional question-count)
   "Create question-answer-correct?-correction table."
   (interactive "P")

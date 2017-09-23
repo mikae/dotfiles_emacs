@@ -12,6 +12,9 @@
 
     (serika-f/evil/activate :evil-shift-width 2
                             :evil-state       'normal)
+    ;; merge it into `serika-f/evil/activate'
+    (evil-local-set-key 'insert (kbd "TAB") #'self-insert-command)
+
     (serika-f/smartparens/activate)
     ;; (serika-f/aggressive-indent/activate)
 
