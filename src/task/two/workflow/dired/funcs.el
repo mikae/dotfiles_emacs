@@ -219,7 +219,13 @@ If PATH is invalid return nil."
   "Configure `dired'."
   (serika-c/eg/add-install :type 'download
                            :name 'dired+
-                           :src "https://raw.githubusercontent.com/mikae/emacswiki.org/master/dired%2B.el")
+                           :src "https://raw.githubusercontent.com/mikae/emacswiki.org/master/dired%2B.el"
+                           :parents '("install dired"))
+
+  (serika-c/eg/add-install :type 'git
+                           :name 'dired-helm-locations
+                           :src  "https://github.com/mikae/dired-helm-locations"
+                           :parents '("install dired"))
 
   (serika-c/eg/add-many-by-name 'dired
                                 ("require")
@@ -227,6 +233,7 @@ If PATH is invalid return nil."
                                   (require 'dired)
                                   (require 'dired-x)
                                   (require 'dired+)
+                                  (require 'dired-helm-locations)
                                   (require 'evil))
 
                                 ("settings")
@@ -238,7 +245,10 @@ If PATH is invalid return nil."
                                   (setq dired-omit-verbose nil)
 
                                   (setq dired-compress-file-suffixes
-                                        '(("\\.zip\\'" ".zip" "unzip"))))
+                                        '(("\\.zip\\'" ".zip" "unzip")))
+
+                                  ;; `dired-helm-locations'
+                                  (dired-helm-locations-add "Org directory" org-directory))
 
                                 ("settings evil")
                                 (lambda ()
@@ -270,31 +280,31 @@ If PATH is invalid return nil."
       dired-mode
       evil-dired-state-map
       ;; arstd
-      "a a"   #'dired-mark                                                  "Mark file"
-      "a A"   #'dired-mark-unmarked-files                                   "Mark unmarked"
-      "a r"   #'dired-unmark                                                "Unmark file"
-      "a R"   #'dired-unmark-all-marks                                      "Unmark all"
+      "a a"   #'dired-mark                                          "Mark file"
+      "a A"   #'dired-mark-unmarked-files                           "Mark unmarked"
+      "a r"   #'dired-unmark                                        "Unmark file"
+      "a R"   #'dired-unmark-all-marks                              "Unmark all"
 
-      "r a"   #'dired-do-delete                                             "Delete"
-      "r A"   #'dired-do-copy                                               "Copy"
-      "r r"   #'dired-do-rename                                             "Rename"
-      "r R"   #'diredp-list-marked                                          "List marked files"
-      "r s"   #'serika-f/dired/uncompress-selected                          "Uncompress"
+      "r a"   #'dired-do-delete                                     "Delete"
+      "r A"   #'dired-do-copy                                       "Copy"
+      "r r"   #'dired-do-rename                                     "Rename"
+      "r R"   #'diredp-list-marked                                  "List marked files"
+      "r s"   #'serika-f/dired/uncompress-selected                  "Uncompress"
 
-      "s a"   #'helm-find-files                                             "Create file"
-      "s A"   #'serika-f/dired/create-directory                             "Create directory"
-      "s r"   #'dired-do-symlink                                            "Create symlink"
-      "s R"   #'dired-do-hardlink                                           "Create hardlink"
+      "s a"   #'helm-find-files                                     "Create file"
+      "s A"   #'serika-f/dired/create-directory                     "Create directory"
+      "s r"   #'dired-do-symlink                                    "Create symlink"
+      "s R"   #'dired-do-hardlink                                   "Create hardlink"
 
-      "t a"   #'dired-do-chown                                              "Change owner"
-      "t A"   #'dired-do-chgrp                                              "Change group"
-
-      "d a"   (serika-f/dired/visit-path org-directory)                     "Visit org directory"
+      "t a"   #'dired-do-chown                                      "Change owner"
+      "t A"   #'dired-do-chgrp                                      "Change group"
 
       ;; qwfpg
-      "q q"   #'serika-f/dired/toggle-hidden                                "Toggle hidden"
-      "q Q"   #'serika-f/dired/toggle-omitted                               "Toggle omitted"
-      "q w"   (func/func/toggle-minor-mode dired-hide-details-mode)         "Toggle details")
+      "q q"   #'serika-f/dired/toggle-hidden                        "Toggle hidden"
+      "q Q"   #'serika-f/dired/toggle-omitted                       "Toggle omitted"
+      "q w"   (func/func/toggle-minor-mode dired-hide-details-mode) "Toggle details"
+
+      "w"     #'dired-helm-locations-open                           "Open location")
 
      (func/keymap/define evil-dired-state-map
                          ;; zxcvb

@@ -1,5 +1,5 @@
 # name: package-end
 # key: pe
 # --
-(provide '${1:package-name})
+(provide '${1:`(file-name-nondirectory buffer-file-name)`})
 ;;; $1.el ends here
