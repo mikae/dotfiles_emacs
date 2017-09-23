@@ -9,8 +9,8 @@
   (interactive "P")
   (evil-visual-char)
   (evil-forward-char (or (1- count) 0))
-  (evil-yank)
-  (evil-char-state))
+  (evil-yank (region-beginning) (region-end))
+  (evil-exit-visual-state))
 
 (defun serika-f/evil/mark-char (&optional count)
   "Mark COUNT chars."
@@ -61,42 +61,49 @@
   (evil-next-word-begin))
 
 ;; Line-state
-;; todo count?
-(defun serika-f/evil/clear-line ()
-  (interactive)
-  (call-interactively #'evil-delete-line)
-  (evil-line-state))
+(defun serika-f/evil/clear-line (&optional count)
+  (interactive "P")
+  (evil-visual-char)
+  (end-of-line (or count 1))
+  (evil-delete (region-beginning) (region-end))
+  (evil-exit-visual-state))
 
 (defun serika-f/evil/delete-line (&optional count)
   (interactive "P")
-  (kill-whole-line (or count 1))
-  (forward-line -1)
-  (evil-line-state))
+  (beginning-of-line)
+  (evil-visual-char)
+  (end-of-line (or count 1))
+  (evil-delete (region-beginning) (region-end))
+  (evil-exit-visual-state)
+  (forward-line -1))
 
-(defun serika-f/evil/yank-line ()
-  (interactive)
+(defun serika-f/evil/yank-line (&optional count)
+  (interactive "P")
   (save-excursion
     (evil-visual-char)
-    (evil-end-of-line)
+    (end-of-line (or count 1))
     (evil-yank (region-beginning) (region-end)))
-  (evil-line-state))
+  (evil-exit-visual-state))
 
-(defun serika-f/evil/yank-whole-line ()
-  (interactive)
-  (call-interactively 'evil-yank-line)
-  (evil-line-state))
+(defun serika-f/evil/yank-whole-line (&optional count)
+  (interactive "P")
+  (save-excursion
+    (evil-visual-char)
+    (end-of-line (or count 1))
+    (evil-yank (region-beginning) (region-end)))
+  (evil-exit-visual-state))
 
-(defun serika-f/evil/change-line ()
-  (interactive)
+(defun serika-f/evil/change-line (&optional count)
+  (interactive "P")
   (evil-visual-char)
-  (evil-end-of-line)
+  (end-of-line (or count 1))
   (evil-change (region-beginning) (region-end)))
 
 (defun serika-f/evil/change-whole-line (&optional count)
   (interactive "P")
   (evil-beginning-of-line)
   (evil-visual-line)
-  (evil-end-of-line)
+  (end-of-line (or count 1))
   (evil-change (region-beginning) (region-end)))
 
 (defun serika-f/evil/mark-line (&optional count)
@@ -443,7 +450,7 @@ Supported keys:
                                 "A-N"  'evil-beginning-of-line
                                 "A-E"  'evil-window-bottom
                                 "A-I"  'evil-window-top
-                                "A-O"  'evil-end-of-line
+                                "A-O"  'end-of-line
                                 "A-\"" 'evil-window-middle
 
                                 "A-." #'undo
@@ -594,7 +601,7 @@ Supported keys:
                          "N" #'evil-beginning-of-line
                          "E" #'evil-window-bottom
                          "I" #'evil-window-top
-                         "O" #'evil-end-of-line
+                         "O" #'end-of-line
 
                          ;; zxcvb
                          "z" #'serika-f/evil/clear-line
