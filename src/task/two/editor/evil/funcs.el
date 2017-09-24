@@ -75,7 +75,7 @@
   (end-of-line (or count 1))
   (evil-delete (region-beginning) (region-end))
   (evil-exit-visual-state)
-  (forward-line -1))
+  (delete-char -1))
 
 (defun serika-f/evil/yank-line (&optional count)
   (interactive "P")
@@ -88,6 +88,7 @@
 (defun serika-f/evil/yank-whole-line (&optional count)
   (interactive "P")
   (save-excursion
+    (beginning-of-line)
     (evil-visual-char)
     (end-of-line (or count 1))
     (evil-yank (region-beginning) (region-end)))

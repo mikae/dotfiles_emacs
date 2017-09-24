@@ -299,12 +299,14 @@ If PATH is invalid return nil."
       "t a"   #'dired-do-chown                                      "Change owner"
       "t A"   #'dired-do-chgrp                                      "Change group"
 
-      ;; qwfpg
-      "q q"   #'serika-f/dired/toggle-hidden                        "Toggle hidden"
-      "q Q"   #'serika-f/dired/toggle-omitted                       "Toggle omitted"
-      "q w"   (func/func/toggle-minor-mode dired-hide-details-mode) "Toggle details"
+      "d q"   #'serika-f/dired/toggle-hidden                        "Toggle hidden"
+      "d Q"   #'serika-f/dired/toggle-omitted                       "Toggle omitted"
+      "d w"   (func/func/toggle-minor-mode dired-hide-details-mode) "Toggle details"
 
-      "w"     #'dired-helm-locations-open                           "Open location")
+      ;; qwfpg
+      "w"     #'dired-helm-locations-open                           "Open location"
+
+      "f"     #'func/buffer/kill                                    "Close")
 
      (func/keymap/define evil-dired-state-map
                          ;; zxcvb
