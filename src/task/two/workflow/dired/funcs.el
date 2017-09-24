@@ -304,9 +304,8 @@ If PATH is invalid return nil."
       "d w"   (func/func/toggle-minor-mode dired-hide-details-mode) "Toggle details"
 
       ;; qwfpg
-      "w"     #'dired-helm-locations-open                           "Open location"
-
-      "f"     #'func/buffer/kill                                    "Close")
+      "q"     #'func/buffer/kill                                    "Close"
+      "w"     #'dired-helm-locations-open                           "Open location")
 
      (func/keymap/define evil-dired-state-map
                          ;; zxcvb

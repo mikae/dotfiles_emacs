@@ -36,8 +36,11 @@ Usage:
                     collect --desc))
      (eval `(func/keymap/define ,--keymap-name
                                 ,@--keymap-bindings))
-     (eval `(which-key-add-major-mode-key-based-replacements ',--mode
-                                                             ,@--binding-descriptions))))
+     (if --mode
+         (eval `(which-key-add-major-mode-key-based-replacements ',--mode
+                  ,@--binding-descriptions))
+       (eval `(which-key-add-key-based-replacements
+                ,@--binding-descriptions)))))
 
 (defmacro serika-f/which-key/create-keymap (mode keymap-name &rest bindings)
   "Create new keymap KEYMAP-NAME with keys in BINDINGS with `which-key' descriptions in MODE.
@@ -63,6 +66,12 @@ Usage:
   `(serika-f/which-key//define-keys ,mode
                                     ,keymap-name
                                     ,@bindings))
+
+(defmacro serika-f/which-key/define-global-keys (&rest bindings)
+  `(serika-f/which-key//define-keys nil
+                                    global-map
+                                    ,@bindings))
+
 
 ;; Init
 (defun init ()
