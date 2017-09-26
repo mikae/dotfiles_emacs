@@ -12,9 +12,9 @@
             map))
 
 ;; Some goodies
-(defmacro serika-f/org/create-table (&rest args)
+(defmacro serika-f/org/create-table (columns rows &rest args)
   "Create org table with list of arguments ARGS."
-  (error "Not implemented"))
+  (org-table-create (format "%dx%d" columns rows)))
 
 (defun serika-f/org/create-answer-table (&optional question-count)
   "Create question-answer-correct?-correction table."
@@ -221,7 +221,8 @@
                           :evil-shift-width 4)
   ;; (serika-f/aggressive-indent/activate)
   (serika-f/smartparens/activate)
-  (serika-f/prettify-symbols/activate :name "org"))
+  (serika-f/prettify-symbols/activate :name "org")
+  (serika-f/yasnippet/activate))
 
 ;; Init
 (defun init ()
@@ -393,6 +394,9 @@
                          "TAB"       #'org-cycle
                          "<C-tab>"   #'org-global-cycle
                          "RET"       #'org-open-at-point
+
+                         ;;
+                         "C-t e"     #'yas-expand
 
                          ;; Movements
                          "C-c C-n"   #'serika-f/org/ctrl-c-ctrl-n

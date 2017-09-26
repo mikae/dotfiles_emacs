@@ -22,22 +22,27 @@
                                 (lambda ()
                                   (func/keymap/save   pdf-view-mode-map)
                                   (func/keymap/create pdf-view-mode-map
-                                                      "q"     #'func/buffer/kill-current
+                                                      ;; qwfpg
+                                                      "q" #'func/buffer/kill-current
 
-                                                      ;; Move
-                                                      "A-e"   #'pdf-view-next-line-or-next-page
-                                                      "A-i"   #'pdf-view-previous-line-or-previous-page
-                                                      "A-E"   #'pdf-view-scroll-up-or-next-page
-                                                      "A-I"   #'pdf-view-scroll-down-or-previous-page
-                                                      "A-p"   #'pdf-view-next-page
-                                                      "A-P"   #'pdf-view-previous-page
-                                                      "A-t"   #'pdf-view-first-page
-                                                      "A-T"   #'pdf-view-last-page
+                                                      ;; arstd
+                                                      "a" #'pdf-view-next-page
+                                                      "A" #'pdf-view-previous-page
+                                                      "r" #'pdf-view-first-page
+                                                      "R" #'pdf-view-last-page
+                                                      "s" #'pdf-view-goto-page
+                                                      "S" #'pdf-view-goto-label
 
-                                                      "C-c p" #'pdf-view-goto-page
-                                                      "C-c l" #'pdf-view-goto-label
+                                                      ;; neio
+                                                      "e" #'pdf-view-next-line-or-next-page
+                                                      "i" #'pdf-view-previous-line-or-previous-page
+                                                      "E" #'pdf-view-scroll-up-or-next-page
+                                                      "I" #'pdf-view-scroll-down-or-previous-page
 
                                                       ;; Scale
-                                                      "-"     #'pdf-view-shrink
-                                                      "+"     #'pdf-view-enlarge
-                                                      "0"     #'pdf-view-scale-reset))))
+                                                      "-" #'pdf-view-shrink
+                                                      "+" #'pdf-view-enlarge
+                                                      "0" #'pdf-view-scale-reset)
+
+                                  (func/keymap/save pdf-misc-minor-mode-map)
+                                  (func/keymap/create pdf-misc-minor-mode-map))))

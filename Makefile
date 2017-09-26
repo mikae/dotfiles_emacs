@@ -39,7 +39,12 @@ test-all: test-core test-task
 test-core:
 	cask exec buttercup -L src/core test/core
 
-test-task: test-task-zero test-task-core
+test-task: test-task-zero test-task-two
+
+test-task-two: test-task-two-org
+
+test-task-two-org:
+	@#cask exec buttercup --eval "(load-file \"src/task/two/organization/org/funcs.el\")" test/task/two/organization/org/
 
 test-task-zero: test-task-zero-util-keymap test-task-zero-util-func
 

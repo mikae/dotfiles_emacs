@@ -18,10 +18,15 @@
    ((and name-p
          (symbolp name))
     ;; todo: optimize(?)
-    (cl-find-if (lambda (item)
-                  (string= name
-                           (en/name item)))
-                node-list))
+    (let ((--node-list node-list)
+          (--found))
+      (while (and (not --found)
+                  --node-list)
+        (when (string= name
+                       (en/name (car --node-list)))
+          (setq --found (car --node-list)))
+        (setq --node-list (cdr --node-list)))
+      --found))
    ((and index-p
          (numberp index))
     ;; Enumeration is from the end of node-list

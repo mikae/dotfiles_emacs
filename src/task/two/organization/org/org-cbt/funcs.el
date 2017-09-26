@@ -1,7 +1,7 @@
-;; test-org.el --- Tests for org-mode functions
+;; funcs.el --- org-cbt configuration
 ;;
 ;; Author: Minae Yui <minae.yui.sain@gmail.com>
-;; Version: 0.1-0
+;; Version: 0.1
 ;; URL: todo
 ;; Keywords:
 ;; Compatibility:
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Tests for functions defined in module 'two/organization/org/funcs.el'.
+;;             .
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,20 +32,17 @@
 ;;
 ;;; Code:
 
-(require 'buttercup)
-(require 'org)
+(defun init ()
+  "Configure `org-cbt'."
+  (serika-c/eg/add-install :type 'git
+                           :name 'org-cbt
+                           :src  "https://github.com/mikae/org-cbt")
 
-(describe "serika-f/org/create-table"
-  (it "Creates 1x1 table"
-    (let ((--buffer (generate-new-buffer "test"))
-          (--text))
-      (with-current-buffer --buffer
-        (serika-f/org/create-table 1 1)
-        (setq --text (buffer-substring-no-properties (point-min) (point-max))))
-      (expect --text
-              :to-equal "|   |"))))
+  (serika-c/eg/add-many-by-name 'org-cbt
+                                ("require org")
+                                (func/func/requirer 'org-cbt)
 
-;; Local Variables:
-;; eval: (put 'describe 'lisp-indent-function 'defun)
-;; eval: (put 'it       'lisp-indent-function 'defun)
-;; End:
+                                ("settings org")
+                                (lambda ()
+                                  (org-cbt-set-home (f-join org-directory
+                                                            "cbt")))))

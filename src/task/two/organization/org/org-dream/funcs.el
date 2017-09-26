@@ -9,9 +9,7 @@
                            :src  "https://github.com/mikae/org-dream")
   (serika-c/eg/add-many-by-name 'org-dream
                                 ("require org")
-                                ;; (func/func/requirer 'org-dream)
-                                (lambda ()
-                                  (require 'org-dream))
+                                (func/func/requirer 'org-dream)
 
                                 ("settings org")
                                 (lambda ()

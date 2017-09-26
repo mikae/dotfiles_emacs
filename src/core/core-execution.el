@@ -117,9 +117,6 @@
               :name    --name
               :func    --lambda))))
 
-
-
-;; todo: merge these functions?
 (defmacro serika-c/eg/add-many-by-name (name &rest args)
   "Add many execution nodes at once.
 Example:

@@ -328,7 +328,6 @@ Supported keys:
   (when --evil-shift-width-p
     (setq evil-shift-width --evil-shift-width)))
 
-;; todo: remove this
 (defun serika-f/evil/toggle ()
   "Toggle evil mode."
   (interactive)
@@ -473,9 +472,6 @@ Supported keys:
    'normal
    (lambda ()
      (func/keymap/define evil-normal-state-map
-                         ;; todo: find out why is it needed
-                         "C-t" nil
-
                          ;; qwfpg
                          "q" #'evil-char-state
                          "Q" #'evil-word-state
