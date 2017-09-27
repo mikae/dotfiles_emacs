@@ -13,3 +13,8 @@
     (func/func/toggle-minor-mode test-mode-1)
     (expect test-mode-1
             :to-be nil)))
+
+;; Local Variables:
+;; eval: (put 'describe 'lisp-indent-function 'defun)
+;; eval: (put 'it       'lisp-indent-function 'defun)
+;; End:

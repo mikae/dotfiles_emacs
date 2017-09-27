@@ -1,5 +1,5 @@
-# name: package-begin
-# key: pb
+# name: buttercup-define-package
+# key: bdp
 # --
 ;; ${1:`(file-name-nondirectory (buffer-file-name))`} --- $2
 ;;
@@ -12,7 +12,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             $6.
+;; $6.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -34,4 +34,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
+
+(require 'buttercup)
+
 $0
+
+;; Local Variables:
+;; eval: (put 'describe    'lisp-indent-function 'defun)
+;; eval: (put 'it          'lisp-indent-function 'defun)
+;; eval: (put 'before-each 'lisp-indent-function 'defun)
+;; eval: (put 'after-each  'lisp-indent-function 'defun)
+;; eval: (put 'before-all  'lisp-indent-function 'defun)
+;; eval: (put 'after-all   'lisp-indent-function 'defun)
+;; End:

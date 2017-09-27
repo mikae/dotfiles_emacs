@@ -331,7 +331,8 @@
 (defun serika-g/key//configure-input-decode-map ()
   "Configure `input-decode-map'."
   (define-key input-decode-map [?\C-m] [C-m])
-  (define-key input-decode-map [?\C-o] [C-o]))
+  (define-key input-decode-map [?\C-o] [C-o])
+  )
 
 (defun serika-g/key//create-bindings ()
   "Create global bindings."
@@ -358,9 +359,6 @@
   (func/keymap/define-global "C-x h v"   #'describe-variable
                              "C-x h f"   #'describe-function
                              "C-x h k"   #'describe-key)
-
-  ;; changes
-  ;; (func/keymap/define-global "C-x c u"   #'serika-f/settings/change-user)
 
   ;; macro
   (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter
