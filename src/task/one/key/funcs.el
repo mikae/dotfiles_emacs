@@ -364,7 +364,10 @@
   (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter
                              "<C-m> r"   #'kmacro-end-or-call-macro)
 
-  (func/keymap/define-global "M-r"       #'eval-expression))
+  (func/keymap/define-global "M-r"       #'eval-expression)
+
+  ;; (cm-define-global "control-q" #'func/buffer/kill)
+  )
 
 (defun init ()
   "Configure keys."
