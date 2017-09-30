@@ -43,8 +43,9 @@
   "Configure minor modes for `python' mode."
   (eldoc-mode          +1)
 
-  (anaconda-mode       +1)
-  (anaconda-eldoc-mode +1))
+  ;; (anaconda-mode       +1)
+  ;; (anaconda-eldoc-mode +1)
+  )
 
 (defun serika-l/python//snippet-engine ()
   "Configure snippet engine for `python' mode."

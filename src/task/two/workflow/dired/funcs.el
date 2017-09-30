@@ -185,6 +185,8 @@ x0 - bit of omitted files.")
              do (let ((--cmd (format (cond
                                       ((string-match "\\.zip$" --item)
                                        "unzip -d %s \"%s\"")
+                                      ((string-match "\\.tar.gz" --item)
+                                       "cd %s && tar xvf \"%s\"")
                                       (t (error "Unsupported archive format.")))
                                      (s-replace "\"" "\\\"" default-directory)
                                      --item)))

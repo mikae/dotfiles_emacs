@@ -8,8 +8,8 @@
 Supported keys:
   - `backends': add backends to `company-backends' and make it local variable."
   (when backends-provided-p
-    (add-to-list (make-local-variable 'company-backends)
-                 backends))
+    (set (make-local-variable 'company-backends)
+         backends))
   (company-mode            +1)
   (company-statistics-mode +1)
   (company-quickhelp-mode  +1))
@@ -36,7 +36,7 @@ Supported keys:
                                 ("settings")
                                 (lambda ()
                                   ;; company
-                                  (setq company-minimum-prefix-length 2)
+                                  (setq company-minimum-prefix-length 1)
                                   (setq company-mode/enable-yas t)
                                   (setq company-idle-delay 0.1)
                                   (setq company-backends

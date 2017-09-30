@@ -62,11 +62,13 @@
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/save flycheck-error-list-mode-map)
+                                  (func/keymap/save flycheck-mode-map)
                                   (func/keymap/create flycheck-error-list-mode-map
                                                       "A-n" #'evil-backward-char
                                                       "A-e" #'evil-next-line
                                                       "A-i" #'evil-previous-line
-                                                      "A-o" #'evil-forward-char))
+                                                      "A-o" #'evil-forward-char)
+                                  (func/keymap/create flycheck-mode-map))
 
                                 ("global-keymap")
                                 (lambda ()

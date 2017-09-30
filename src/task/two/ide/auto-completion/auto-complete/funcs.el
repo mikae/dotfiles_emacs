@@ -5,13 +5,14 @@
 ;; Functions
 (defun serika-f/auto-complete/activate ()
   "Activate `auto-complete' in current buffer."
+  (interactive)
   (auto-complete-mode +1))
-
 
 ;; Init
 (defun init ()
   "Configure `auto-complete'."
-  (serika-c/eg/add-install :package-list '(auto-complete)
+  (serika-c/eg/add-install :type 'package
+                           :package-list '(auto-complete)
                            :name         'auto-complete)
 
   (serika-c/eg/add-many-by-name 'auto-complete
@@ -22,8 +23,8 @@
                                 ("settings")
                                 (lambda ()
                                   (setq ac-delay 0.1)
-                                  (setq ac-quick-help-delay 2)
-                                  (setq ac-auto-start 2)
+                                  (setq ac-quick-help-delay 0.1)
+                                  (setq ac-auto-start 1)
                                   (setq ac-use-quick-help t)
                                   (setq ac-menu-height 20)
                                   (setq ac-ignore-case t)
@@ -34,8 +35,8 @@
 
                                 ("keymap")
                                 (lambda ()
-                                  (setq --ac-mode-map       ac-mode-map)
-                                  (setq --ac-completing-map ac-completing-map)
+                                  (func/keymap/save ac-mode-map)
+                                  (func/keymap/save ac-completing-map)
 
                                   (func/keymap/create ac-completing-map
                                                       "A-n" #'ac-stop

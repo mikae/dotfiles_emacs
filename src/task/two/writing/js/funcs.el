@@ -12,6 +12,8 @@
 
     (serika-f/evil/activate :evil-shift-width 2
                             :evil-state       'normal)
+    (serika-f/yasnippet/activate)
+
     (serika-f/smartparens/activate)
     (serika-f/aggressive-indent/activate)
 
@@ -37,7 +39,7 @@
                                   (sp-local-pair 'js-mode "\""   "\"")
                                   (sp-local-pair 'js-mode "'"    "'")
                                   (sp-local-pair 'js-mode "\\\"" "\\\"")
-                                  (sp-local-pair 'js-mode "\\'" "\\'"))
+                                  (sp-local-pair 'js-mode "\\'"  "\\'"))
 
                                 ("keymap")
                                 (lambda ()
