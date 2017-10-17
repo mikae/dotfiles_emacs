@@ -20,13 +20,27 @@
                   ;; zero tasks
                   "zero require"
                   "zero configure"
+
+                  ;; these tasks replaces Emacs' built-ins
+                  "zero opt install"
+                  "zero opt require"
+                  "zero opt configure"
+
+                  ;; these tasks add new libraries to Emacs
                   "zero lib install"
                   "zero lib require"
+
+                  ;; these tasks contain utility functions
+                  "zero util"
+
+                  ;; some configuration
+                  "zero post"
 
                   ;; base tasks
                   "base require"
                   "base configure"
                   "base interface"
+
                   "base post install"
                   "base post require"
 

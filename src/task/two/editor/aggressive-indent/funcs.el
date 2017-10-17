@@ -27,8 +27,10 @@
 
                                 ("settings")
                                 (lambda ()
-                                  (setq aggressive-indent-dont-indent-if ()))
+                                  (setq aggressive-indent-dont-indent-if
+                                        (list 'custom-modifiers-mode)))
 
                                 ("global-keymap")
                                 (lambda ()
-                                  (func/keymap/define-global "C-x t a" #'serika-f/aggressive-indent/toggle))))
+                                  (func/keymap/define-global "C-x t a" #'serika-f/aggressive-indent/toggle)))
+  )

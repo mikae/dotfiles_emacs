@@ -5,7 +5,7 @@
 ;; Funcs
 (defun serika-f/help/setup-buffer ()
   "Setup `help' buffer."
-  )
+  (serika-f/evil/activate :evil-state 'metamotion))
 
 ;; Init
 (defun init ()

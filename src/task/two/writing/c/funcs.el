@@ -39,8 +39,8 @@
     (setq tab-width      4
           truncate-lines t)
 
-    (serika-f/settings/ensure-local 'c-default-style "linux"
-                                    'c-basic-offset  4)
+    (func/var/ensure-local c-default-style "linux"
+                           c-basic-offset  4)
 
     (serika-f/evil/activate :evil-shift-width 4
                             :evil-state       'normal)
@@ -51,7 +51,6 @@
     (serika-f/ycmd/activate)
     (serika-f/company/activate :backends '(company-ycmd))
     (serika-f/flycheck/activate)
-    (flycheck-ycmd-setup)
 
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)
@@ -93,7 +92,11 @@
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines
                                                       "C-t e" #'yas-expand
 
-                                                      "C-c s" #'ff-find-other-file))
+                                                      ;; arstd
+                                                      ;; goto-like
+                                                      "C-c a a" #'ff-find-other-file
+                                                      "C-c a r" #'dumb-jump-go
+                                                      "C-c a R" #'dumb-jump-back))
 
                                 ("hook")
                                 (lambda ()

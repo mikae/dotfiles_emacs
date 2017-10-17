@@ -28,6 +28,7 @@ install:
 	mkdir -p ~/.emacs.d/extension
 	mkdir -p ~/.emacs.d/lib
 	mkdir -p ~/.emacs.d/.save
+	mkdir -p ~/.local-data/.virtualenvs
 
 	#curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 	cp -Rv src/* ~/.emacs.d

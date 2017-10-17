@@ -3,43 +3,68 @@
 ;;; Code:
 
 ;; Funcs
+(defun serika-f/sh/execute ()
+  "Execute marked text or line."
+  (interactive)
+  (let ((--proc        (get-process "shell"))
+        (--proc-buffer  nil)
+        (--min          nil)
+        (--max          nil)
+        (--command      nil))
+    (unless --proc
+      (let ((--current-buffer (current-buffer)))
+        (shell)
+        (switch-to-buffer --current-buffer)
+        (setq --proc
+              (get-process "shell"))))
+    (setq --proc-buffer (process-buffer --proc))
+    (if (not (use-region-p))
+        (setq --min (point-at-bol)
+              --max (point-at-eol))
+      (setq --min (region-beginning)
+            --max (region-end))
+      (deactivate-mark))
+    (setq --command (concat (buffer-substring --min
+                                              --max)
+                            "\n"))
+    (with-current-buffer --proc-buffer
+      (goto-char (process-mark --proc))
+      (insert --command)
+      (move-marker (process-mark --proc)
+                   (point)))
+    (process-send-string --proc
+                         --command)
+    (other-window 1)
+    (display-buffer (process-buffer --proc) t)))
 
 (defun serika-f/sh/setup-buffer ()
   "Configure sh buffers."
   (when (eq major-mode
             'sh-mode)
-    (setq tab-width        2
-          truncate-lines   t
-          evil-shift-width 2)
+    (func/var/ensure-local tab-width      2
+                           truncate-lines t)
     (serika-f/evil/activate :evil-shift-width 2
                             :evil-state       'normal)
-
     (serika-f/smartparens/activate)
     (serika-f/aggressive-indent/activate)
 
     (serika-f/yasnippet/activate)
-    (when buffer-file-name
-      (serika-f/flycheck/activate))
+    (serika-f/flycheck/activate)
 
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)
-    ;; (serika-f/projectile/try-activate)
 
     (serika-f/company/activate :backends '(company-shell
                                            company-shell-env))
-
-    (when yas-minor-mode
-      (serika-f/flycheck/create))
-
-    (unless (func/buffer/check-modes 'sh-mode)
-      (func/buffer/focus-to 'sh-mode))
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
     (serika-f/highlight-symbol/activate)
+    (serika-f/prettify-symbols/activate :name "sh")
 
-    (serika-f/prettify-symbols/activate :name "sh")))
+    (unless (func/buffer/check-modes 'sh-mode)
+      (func/buffer/focus-to 'sh-mode))))
 
 ;; Init
 (defun init ()
@@ -72,7 +97,8 @@
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/create sh-mode-map
-                                                      "C-c C-c e" #'multi-compile-run
+                                                      "C-c a" #'serika-f/sh/execute
+                                                      "C-c A" #'multi-compile-run
 
                                                       "C-t =" #'evil-indent
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines

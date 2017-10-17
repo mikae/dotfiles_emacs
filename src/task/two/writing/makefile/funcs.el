@@ -16,7 +16,6 @@
     (evil-local-set-key 'insert (kbd "TAB") #'self-insert-command)
 
     (serika-f/smartparens/activate)
-    ;; (serika-f/aggressive-indent/activate)
 
     (serika-f/whitespace/enable)
     (serika-f/linum-relative/activate)

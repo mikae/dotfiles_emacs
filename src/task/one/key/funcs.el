@@ -339,21 +339,24 @@
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
     (global-set-key (kbd elem) 'digit-argument))
 
-  ;; save/kill ... etc
+  ;; save/kill
   (func/keymap/define-global "C-x C-s"     #'save-buffer
                              "C-x C-S-s"   #'func/tramp/sudo-write
                              ;; "C-x C-x C-s" #'func/buffer/invoke-save-function
                              "C-x C-c"     #'func/buffer/kill
+                             "C-x C-q"   #'save-buffers-kill-terminal
                              ;; "C-x C-x C-c" #'func/buffer/kill
                              "C-x C-h"     #'previous-buffer
                              "C-x C-g"     #'revert-buffer)
 
   ;; narrowing
-  (func/keymap/define-global "C-x C-q"   #'save-buffers-kill-terminal
-                             "C-x C-w"   #'widen)
+  (func/keymap/define-global "C-x C-w"   #'widen)
 
   ;; toggles
-  (func/keymap/define-global "C-x t r"   #'read-only-mode)
+  (func/keymap/define-global "C-x t r"   #'read-only-mode
+                             "C-x t c"   #'serika-f/custom-modifiers/toggle)
+
+  (func/keymap/define-global "C-x C-t v" #'yank)
 
   ;; describes
   (func/keymap/define-global "C-x h v"   #'describe-variable
@@ -363,6 +366,9 @@
   ;; macro
   (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter
                              "<C-m> r"   #'kmacro-end-or-call-macro)
+
+  ;; misc
+  (func/keymap/define-global "C-g" #'keyboard-quit)
 
   (func/keymap/define-global "M-r"       #'eval-expression)
 

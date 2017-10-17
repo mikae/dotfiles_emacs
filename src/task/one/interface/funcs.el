@@ -57,7 +57,9 @@
         visible-cursor                 nil
         x-stretch-cursor               nil
         ring-bell-function             #'ignore
-        visible-bell                   nil))
+        visible-bell                   nil)
+
+  (blink-cursor-mode -1))
 
 ;; Init
 (defun init ()

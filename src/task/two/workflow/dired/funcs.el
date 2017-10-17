@@ -250,7 +250,21 @@ If PATH is invalid return nil."
                                         '(("\\.zip\\'" ".zip" "unzip")))
 
                                   ;; `dired-helm-locations'
-                                  (dired-helm-locations-add "Org directory" org-directory))
+                                  (dired-helm-locations-add "org"      org-directory)
+                                  (dired-helm-locations-add "wiki"     org-wikinyan-location)
+                                  (dired-helm-locations-add "home"     (func/system/user-home))
+                                  (dired-helm-locations-add "projects" (let ((--path (cond
+                                                                                      ((func/system/path-exists 'user-project-directory)
+                                                                                       (func/system/path-get    'user-project-directory))
+                                                                                      (t
+                                                                                       (f-join (func/system/user-home)
+                                                                                               "Projects")))))
+                                                                         (unless (f-exists-p --path)
+                                                                           (f-mkdir --path))
+                                                                         (if (f-dir-p --path)
+                                                                             --path
+                                                                           (error "Path \"%s\" is not valid"))))
+                                  )
 
                                 ("settings evil")
                                 (lambda ()

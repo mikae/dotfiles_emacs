@@ -20,30 +20,30 @@
 ;; Init
 (defun init ()
   "Configure `emojify'."
-  (serika-c/eg/add-install :type 'package
+  (serika-c/eg/add-install :type 'git
                            :name 'emojify
-                           :package-list '(emojify))
+                           :src  "https://github.com/mikae/emacs-emojify")
 
   (serika-c/eg/add-many-by-name 'emojify
-                        ("require")
-                        (lambda ()
-                          (require 'emojify))
+                                ("require")
+                                (lambda ()
+                                  (require 'emojify))
 
-                        ("settings")
-                        (lambda ()
-                          (setq emojify-emojis-dir
-                                (f-join serika-conf-directory
-                                        "emojis"))
-                          (setq emojify-program-contexts
-                                '(comments string)))
+                                ("settings")
+                                (lambda ()
+                                  (setq emojify-emojis-dir
+                                        (f-join serika-conf-directory
+                                                "emojis"))
+                                  (setq emojify-program-contexts
+                                        '(comments string)))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save emojify-emoji-keymap)
-                          (func/keymap/create emojify-emoji-keymap
-                                              "C-c e i" #'emojify-insert-emoji
-                                              "C-c e d" #'emojify-delete-emoji))
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/save emojify-emoji-keymap)
+                                  (func/keymap/create emojify-emoji-keymap
+                                                      "C-c e i" #'emojify-insert-emoji
+                                                      "C-c e d" #'emojify-delete-emoji))
 
-                        ("post")
-                        (lambda ()
-                          (emojify-download-emoji-maybe))))
+                                ("post")
+                                (lambda ()
+                                  (emojify-download-emoji-maybe))))

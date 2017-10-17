@@ -17,7 +17,8 @@
                                 ("require")
                                 (lambda ()
                                   (require 'helm-lib)
-                                  (require 'helm-config))
+                                  (require 'helm-config)
+                                  (require 'helm-source))
 
                                 ("settings")
                                 (lambda ()

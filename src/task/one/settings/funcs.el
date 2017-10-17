@@ -70,14 +70,6 @@ setups `prettify-symbols-alist'."
            do
            (add-to-list 'auto-mode-alist `(,--pattern . ,mode))))
 
-(defun serika-f/settings/ensure-local (&rest args)
-  "Ensure that VAR will be local variable with VALUE"
-  (cl-loop for var   in args       by #'cddr
-           for value in (cdr args) by #'cddr
-           do
-           (unless (local-variable-p var)
-             (set (make-local-variable var) value))))
-
 ;; `trailing-whitespaces'
 (defun serika-f/settings/show-trailing-whitespaces (&optional turn-on)
   "Show/disable trailing whitespaces in current buffer."

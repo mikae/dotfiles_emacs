@@ -13,8 +13,8 @@
 (defun serika-f/js2/setup-buffer ()
   "Configure `js2-mode' buffer."
   (when (eq major-mode 'js2-mode)
-    (setq tab-width        2
-          truncate-lines   t)
+    (func/var/ensure-local tab-width        2
+                           truncate-lines   t)
 
     (setq js2-global-externs '("define" "require" "app")
           js2-pretty-multiline-declarations nil
@@ -31,8 +31,8 @@
     (serika-f/yasnippet/activate)
     (when buffer-file-name
       (serika-f/flycheck/activate))
-    (serika-f/company/activate :backends '(company-tern
-                                           company-gtags))
+    (serika-f/company/activate :backends '((company-tern)
+                                           (company-gtags company-files company-keywords)))
     (serika-f/tern/activate)
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)
@@ -68,7 +68,8 @@
 
                                 ("settings")
                                 (lambda ()
-                                  (serika-f/settings/register-ft 'js2-mode "\\.js\\'"))
+                                  (serika-f/settings/register-ft 'js2-mode
+                                                                 "\\.js\\'"))
 
                                 ("settings multi-compile")
                                 (serika-f/multi-compile/configure 'js2-mode

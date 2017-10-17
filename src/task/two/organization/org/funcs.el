@@ -297,6 +297,9 @@
                                                               (js         . t)))
      (setq org-confirm-babel-evaluate nil)
 
+     ;; src blocks
+     (setq org-src-fontify-natively t)
+
      ;; `todos'
      (setq org-todo-keywords
            '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -397,6 +400,10 @@
 
                          ;;
                          "C-t e"     #'yas-expand
+
+                         ;; Toggles
+                         "C-c C-t i" #'org-toggle-inline-images
+                         "C-c C-t l" #'org-toggle-link-display
 
                          ;; Movements
                          "C-c C-n"   #'serika-f/org/ctrl-c-ctrl-n

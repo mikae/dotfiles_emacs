@@ -195,19 +195,21 @@
   (cond
    ((eq evil-previous-state
         'char)
-    (backward-char (or count 1)))
+    (evil-backward-char (or count 1)))
    ((eq evil-previous-state
         'word)
     (evil-backward-word-begin (or count 1)))
    ((eq evil-previous-state
         'sentence)
-    (ignore))
+    (evil-backward-sentence-begin (or count 1)))
    ((eq evil-previous-state
         'line)
     (ignore))
    ((eq evil-previous-state
         'paragragh)
-    (ignore))))
+    (ignore))
+   (t
+    (evil-backward-char (or count 1)))))
 
 (defun serika-f/evil/visual-e (&optional count)
   "Visual n movement."
@@ -221,13 +223,15 @@
     (serika-f/evil/forward-word-at-next-line (or count 1)))
    ((eq evil-previous-state
         'sentence)
-    (ignore))
+    (evil-forward-sentence-begin))
    ((eq evil-previous-state
         'line)
     (evil-next-line (or count 1)))
    ((eq evil-previous-state
         'paragragh)
-    (evil-forward-paragraph (or count 1)))))
+    (evil-forward-paragraph (or count 1)))
+   (t
+    (evil-next-line (or count 1)))))
 
 (defun serika-f/evil/visual-i (&optional count)
   "Visual n movement."
@@ -247,7 +251,9 @@
     (evil-previous-line (or count 1)))
    ((eq evil-previous-state
         'paragragh)
-    (evil-backward-paragraph (or count 1)))))
+    (evil-backward-paragraph (or count 1)))
+   (t
+    (evil-previous-line (or count 1)))))
 
 (defun serika-f/evil/visual-o (&optional count)
   "Visual n movement."
@@ -267,7 +273,9 @@
     (ignore))
    ((eq evil-previous-state
         'paragragh)
-    (ignore))))
+    (ignore))
+   (t
+    (forward-char (or count 1)))))
 
 ;; Functions
 (defun evil-mode-p ()
@@ -362,6 +370,10 @@ Supported keys:
                               "settings evil-snipe")
                    :name 'evil
                    :func (lambda ()
+                           (evil-define-state metamotion
+                             "Metamotion state."
+                             :tag "<MM>"
+                             :suppress-keymap t)
                            (evil-define-state metanormal
                              "Metanormal state."
                              :tag "<MN>"
@@ -442,23 +454,24 @@ Supported keys:
                                 "A-3"     #'vr/replace
                                 "A-#"     #'vr/query-replace
 
-                                ;; neio'
-                                "A-n"  'evil-backward-char
-                                "A-e"  'evil-next-line
-                                "A-i"  'evil-previous-line
-                                "A-o"  'evil-forward-char
-
-                                "A-N"  'evil-beginning-of-line
-                                "A-E"  'evil-window-bottom
-                                "A-I"  'evil-window-top
-                                "A-O"  'end-of-line
-                                "A-\"" 'evil-window-middle
-
+                                ;; km,/.
                                 "A-." #'undo
                                 "A-," #'redo)))
 
   (serika-c/eg/add-many-by-parents
    ("keymap evil")
+   'metamotion
+   (lambda ()
+     (func/keymap/define evil-metamotion-state-map
+                         "n" #'serika-f/evil/backward-char
+                         "e" #'evil-next-line
+                         "i" #'evil-previous-line
+                         "o" #'serika-f/evil/forward-char
+
+                         "N" #'evil-beginning-of-line
+                         "E" #'evil-window-bottom
+                         "I" #'evil-window-top
+                         "O" #'evil-end-of-line))
    'metanormal
    (lambda ()
      (func/keymap/define evil-metanormal-state-map
@@ -481,7 +494,7 @@ Supported keys:
                          "F" #'evil-window-state
 
                          ;; arstd
-                         ;; "d" #'evil-visual-block
+                         "d" #'evil-visual-block
 
                          ;; zxcvb
                          "z" #'evil-delete
@@ -489,6 +502,16 @@ Supported keys:
                          "c" #'evil-change
                          "v" #'evil-paste-after
                          "V" #'evil-paste-before
+
+                         ;; neio'
+                         "n" #'evil-backward-char
+                         "e" #'evil-next-line
+                         "i" #'evil-previous-line
+                         "o" #'evil-forward-char
+                         "N" #'beginning-of-line
+                         "E" #'evil-window-bottom
+                         "I" #'evil-window-top
+                         "O" #'end-of-line
 
                          ;; km,./
                          "," #'evil-repeat
@@ -528,6 +551,10 @@ Supported keys:
                          "e" #'evil-next-line
                          "i" #'evil-previous-line
                          "o" #'evil-forward-char
+                         "N" #'evil-beginning-of-line
+                         "E" #'evil-window-bottom
+                         "I" #'evil-window-top
+                         "O" #'evil-end-of-line
 
                          ;; zxcvb
                          "z" #'evil-delete-char
@@ -558,6 +585,10 @@ Supported keys:
                          "e" #'serika-f/evil/forward-word-at-next-line
                          "i" #'serika-f/evil/backward-word-at-previous-line
                          "o" #'evil-forward-word-begin
+                         "N" #'evil-beginning-of-line
+                         "E" #'evil-window-bottom
+                         "I" #'evil-window-top
+                         "O" #'evil-end-of-line
 
                          ;; zxcvb
                          "z" #'serika-f/evil/delete-word
@@ -644,6 +675,10 @@ Supported keys:
                          "e" #'evil-forward-paragraph
                          "i" #'evil-backward-paragraph
                          "o" #'evil-forward-char
+                         "N" #'evil-beginning-of-line
+                         "E" #'evil-window-bottom
+                         "I" #'evil-window-top
+                         "O" #'evil-end-of-line
 
                          ;; km,./
                          "," #'evil-repeat
@@ -711,7 +746,14 @@ Supported keys:
    (lambda ()
      (func/keymap/define evil-insert-state-map
                          "A-n" #'serika-f/evil/backward-char
+                         "A-e" #'evil-next-line
+                         "A-i" #'evil-previous-line
                          "A-o" #'serika-f/evil/forward-char
+
+                         "A-N" #'beginning-of-line
+                         "A-E" #'evil-window-bottom
+                         "A-I" #'evil-window-top
+                         "A-O" #'end-of-line
 
                          ;; Ret with proper indentation
                          "RET" #'newline

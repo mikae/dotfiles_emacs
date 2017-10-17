@@ -41,21 +41,26 @@
 ;; Init
 (defun init ()
   "Configure ycmd"
-  (serika-c/eg/add-install :type 'package
-                           :name 'ycmd
-                           :package-list '(ycmd
-                                           company-ycmd
-                                           flycheck-ycmd))
+  ;; (serika-c/eg/add-install :type 'package
+  ;;                          :name 'ycmd
+  ;;                          :package-list '(ycmd
+  ;;                                          company-ycmd
+  ;;                                          flycheck-ycmd))
+
+  (serika-c/eg/add-install :type    'git
+                           :name    'emacs-ycmd
+                           :src     "https://github.com/abingham/emacs-ycmd"
+                           :parents '("install ycmd"))
 
   (serika-c/eg/add-many-by-name 'ycmd
                                 ("require")
                                 (func/func/requirer 'ycmd
-                                                    'company-ycmd
-                                                    'flycheck-ycmd)
+                                                    'company-ycmd)
 
                                 ("settings")
                                 (lambda ()
                                   (setq ycmd-server-command '("python" "/home/yui/git_other/ycmd/ycmd"))
                                   (setq ycmd-global-config  (f-join serika-conf-directory
                                                                     ".global_config.py"))
-                                  (setq ycmd-force-semantic-completion t))))
+                                  (setq ycmd-force-semantic-completion t)
+                                  )))

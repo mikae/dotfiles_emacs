@@ -1,4 +1,4 @@
-;; funcs.el --- `custom-modifiers.el' configuration
+;; funcs.el --- `custom-modifiers.el' configuration -*- lexical-binding: t -*-
 ;;
 ;; Author: Minae Yui <minae.yui.sain@gmail.com>
 ;; Version: 0.1
@@ -45,6 +45,10 @@
                              -1
                            +1)))
 
+(defun test-cm ()
+  ""
+  )
+
 (defun init ()
   "Configure custom modifiers"
   (serika-c/eg/add-install :type    'git
@@ -55,8 +59,17 @@
   (serika-c/eg/add-many-by-name 'custom-modifiers
                                 ("zero lib require")
                                 (lambda ()
-                                  (require 'custom-modifiers))
+                                  (require 'custom-modifiers)
+                                  (require 'custom-modifiers-layout))
 
-                                ;; ("post activate")
-                                ;; #'serika-f/custom-modifiers/activate
-                                ))
+                                ("settings")
+                                (lambda ()
+                                  (custom-modifiers-layout-use-colemak)
+                                  (custom-modifiers-modifiers-use-default)
+                                  (custom-modifiers-global-map-configure)
+
+                                  (cm-define-global "C-q"   #'func/buffer/kill)
+                                  (cm-define-global "C-w"   #'custom-modifiers-command-loop-end)
+                                  (cm-define-global "C-f"   #'test-cm)
+                                  (cm-define-global "ESC-q" #'save-buffers-kill-emacs)
+                                  )))

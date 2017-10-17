@@ -3,49 +3,26 @@
 ;;; Code:
 
 ;; Local
-(defun serika-l/html//evil ()
-  "Configure `evil' for `html'."
-  (setq evil-shift-width 2)
-  (evil-local-mode +1)
-  (evil-normal-state))
+(defun serika-f/html/setup-buffer ()
+  "Setup html buffer."
+  (when (eq major-mode
+            'html-mode)
+    (func/var/ensure-local tab-width 2
+                           truncate-lines t)
+    (serika-f/evil/activate :evil-shift-width 2
+                            :evil-state 'normal)
+    (serika-f/emmet/activate)
+    (serika-f/yasnippet/activate)
+    (serika-f/company/activate :backends '((company-html)
+                                           (company-files)))
 
-(defun serika-l/html//buffer-local-variables ()
-  "Configure buffer-local variables for `html' files."
-  (setq evil-shift-width 2)
-  (setq truncate-lines t))
-
-(defun serika-l/html//snippet-engine ()
-  "Configure snippet engine for `web-mode' buffers with `html' engine."
-  (serika-f/emmet/activate)
-  (serika-f/yasnippet/activate))
-
-(defun serika-l/html//auto-completion ()
-  "Configure auto completion for `web-mode' buffers with `html' engine."
-  (auto-complete-mode      +1)
-
-  (setq ac-sources '(
-                     ac-source-abbrev
-                     ac-source-dictionary
-                     ac-source-words-in-same-mode-buffers
-                     )))
-
-(defun serika-l/html//syntax-checking ()
-  "Configure syntax checking for `web-mode' buffers with `html' engine."
-  ;; (flycheck-mode +1)
-  ())
-
-
-(defun serika-l/html//interface ()
-  "Configure interface for `web-mode' buffers with `html' engine."
-  (setq show-trailing-whitespace +1)
-
-  (rainbow-delimiters-mode       +1)
-  (rainbow-mode                  +1)
-  (serika-f/linum-relative/activate)
-
-  (prettify-symbols-mode   +1)
-
-  (setq prettify-symbols-alist ()))
+    (serika-f/mmm-mode//activate)
+    (serika-f/settings/show-trailing-whitespaces)
+    (serika-f/rainbow-delimiters/activate)
+    (serika-f/rainbow-mode/activate)
+    (serika-f/linum-relative/activate)
+    ;; (serika-f/prettify-symbols/activate :name "")
+    ))
 
 ;; Init
 (defun init ()
@@ -87,15 +64,5 @@
 
                                 ("hook")
                                 (lambda ()
-                                  (dolist (callback (list #'serika-l/html//evil
-                                                          #'serika-l/html//buffer-local-variables
-
-                                                          #'serika-l/html//snippet-engine
-                                                          #'serika-l/html//auto-completion
-                                                          #'serika-l/html//syntax-checking
-                                                          #'serika-f/eldoc/activate
-                                                          #'serika-l/mmm-mode//activate
-
-                                                          #'serika-l/html//interface))
-                                    (func/hook/add 'html-mode-hook
-                                                   callback)))))
+                                  (func/hook/add 'html-mode-hook
+                                                 #'serika-f/html/setup-buffer))))

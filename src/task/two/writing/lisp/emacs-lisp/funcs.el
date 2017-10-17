@@ -12,8 +12,8 @@
   "Setup `emacs-lisp' buffer."
   (when (eq major-mode
             'emacs-lisp-mode)
-    (setq tab-width      2
-          truncate-lines t)
+    (func/var/ensure-local tab-width      2
+                           truncate-lines t)
 
     (serika-f/evil/activate :evil-shift-width 2
                             :evil-state       'normal)
@@ -79,7 +79,8 @@
                                   (func/keymap/create emacs-lisp-mode-map
                                                       "C-t =" #'evil-indent
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand))
+                                                      "C-t e" #'yas-expand
+                                                      ))
 
                                 ("hook")
                                 (lambda ()

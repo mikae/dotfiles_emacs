@@ -59,7 +59,8 @@
                                                         line-column)
                                                        buffer-modified
                                                        buffer-position
-                                                       evil-state)
+                                                       evil-state
+                                                       anzu)
                                                      '(version-control
                                                        projectile-root
                                                        major-mode))
