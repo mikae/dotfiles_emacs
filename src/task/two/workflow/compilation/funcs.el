@@ -36,7 +36,7 @@
   "Configure `compilation-mode'."
   (serika-c/eg/add-many-by-name 'compilation
                                 ("require")
-                                (func/func/requirer 'compile)
+                                (func/func/require 'compile)
 
                                 ("settings")
                                 (lambda ()

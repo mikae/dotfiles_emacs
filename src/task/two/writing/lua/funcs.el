@@ -3,44 +3,27 @@
 ;;; Code:
 
 ;; Local
-(defun serika-l/lua//evil ()
-  "Configure `evil' for `lua-mode'."
-  (setq evil-shift-width 4)
-  (evil-local-mode +1)
-  (evil-normal-state))
+(defun serika-f/lua//setup-buffer ()
+  "Setup `lua' buffer."
+  (when (eq major-mode
+            'lua-mode)
+    (func/var/ensure-local tab-width      4
+                           truncate-lines t)
 
-(defun serika-l/lua//buffer-local-variables()
-  "Configure buffer-local variables for `lua'."
-  (setq tab-width 4)
-  (setq truncate-lines t))
+    (serika-f/evil/activate :evil-state       'normal
+                            :evil-shift-width 4)
 
-(defun serika-l/lua//snippet-engine ()
-  "Configure snippet engine for `lua'."
-  (serika-f/yasnippet/activate))
+    (serika-f/yasnippet/activate)
+    (serika-f/flycheck/activate)
+    (serika-f/company/activate :backends-set '(company-lua))
+    (serika-f/eldoc/activate)
+    (serika-f/flycheck/activate)
 
-(defun serika-l/lua//syntax-checking ()
-  "Configure syntax checking for `lua'."
-  (flycheck-mode +1))
-
-(defun serika-l/lua//auto-completion ()
-  "Configure auto completion for `lua'."
-  (setq-local company-backends '(company-lua))
-
-  (company-mode +1))
-
-;; Interface
-(defun serika-l/lua//interface ()
-  "Configure interface for `lua'."
-  (rainbow-delimiters-mode +1)
-  (serika-f/linum-relative/activate)
-
-  (setq show-trailing-whitespace 1))
-
-(defun serika-l/lua//prettify-symbols ()
-  "Configure `prettify-symbols' for `lua'."
-  (prettify-symbols-mode   +1)
-
-  (setq prettify-symbols-alist ()))
+    (serika-f/rainbow-delimiters/activate)
+    (serika-f/linum-relative/activate)
+    (serika-f/settings/show-trailing-whitespaces)
+    ;; (serika-f/prettify-symbols/activate)
+    ))
 
 (defun init ()
   "Configure `lua-mode'."
@@ -77,17 +60,4 @@
                                                       "C-t e" #'yas-expand))
                                 ("hook")
                                 (lambda ()
-                                  (dolist (callback (list #'serika-l/lua//evil
-                                                          #'serika-l/lua//buffer-local-variables
-
-                                                          #'serika-l/lua//syntax-checking
-                                                          #'serika-l/lua//snippet-engine
-                                                          #'serika-l/lua//auto-completion
-                                                          #'serika-f/eldoc/activate
-                                                          #'serika-f/flycheck/activate
-
-                                                          #'serika-l/lua//interface
-                                                          #'serika-l/lua//prettify-symbols
-                                                          ))
-                                    (func/hook/add 'lua-mode-hook callback))
-                                  )))
+                                  (func/hook/add 'lua-mode-hook #'serika-f/lua//setup-buffer))))

@@ -34,7 +34,7 @@ If name is nil, just create and return new lambda."
 
 
 
-(defmacro func/func/requirer (&rest modules)
+(defmacro func/func/require (&rest modules)
   "Create lambda that requires modules."
   `(cl-loop for --module in ',modules
             do

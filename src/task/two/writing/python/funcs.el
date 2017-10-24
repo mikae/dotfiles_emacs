@@ -29,7 +29,7 @@
 
       (serika-f/ycmd/activate)
       (serika-f/flycheck/activate)
-      (serika-f/company/activate :backends '(company-ycmd))
+      (serika-f/company/activate :backends-set '(company-ycmd))
       ;; (serika-f/anaconda/activate)
 
       (serika-f/eldoc/activate)
@@ -59,11 +59,11 @@
 
   (serika-c/eg/add-many-by-name 'python
                                 ("require")
-                                (func/func/requirer 'virtualenvwrapper
-                                                    'pyenv-mode
-                                                    ;; 'anaconda-mode
-                                                    ;; 'company-anaconda
-                                                    )
+                                (func/func/require 'virtualenvwrapper
+                                                   'pyenv-mode
+                                                   ;; 'anaconda-mode
+                                                   ;; 'company-anaconda
+                                                   )
 
                                 ("settings")
                                 (lambda ()

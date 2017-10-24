@@ -41,21 +41,20 @@
 ;; Init
 (defun init ()
   "Configure ycmd"
-  ;; (serika-c/eg/add-install :type 'package
-  ;;                          :name 'ycmd
-  ;;                          :package-list '(ycmd
-  ;;                                          company-ycmd
-  ;;                                          flycheck-ycmd))
-
   (serika-c/eg/add-install :type    'git
                            :name    'emacs-ycmd
                            :src     "https://github.com/abingham/emacs-ycmd"
                            :parents '("install ycmd"))
 
+  (serika-c/eg/add-install :type 'package
+                           :name 'emacs-ycmd
+                           :package-list '(request
+                                           request-deferred))
+
   (serika-c/eg/add-many-by-name 'ycmd
                                 ("require")
-                                (func/func/requirer 'ycmd
-                                                    'company-ycmd)
+                                (func/func/require 'ycmd
+                                                   'company-ycmd)
 
                                 ("settings")
                                 (lambda ()

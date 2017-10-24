@@ -40,4 +40,4 @@
 
   (serika-c/eg/add-many-by-name 'htmlize
                                 ("require")
-                                (func/func/requirer 'htmlize)))
+                                (func/func/require 'htmlize)))

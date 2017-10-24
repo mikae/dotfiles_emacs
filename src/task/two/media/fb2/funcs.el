@@ -10,9 +10,7 @@
 
   (serika-c/eg/add-many-by-name 'fb2-mode
                                 ("require")
-                                ;; (func/func/requirer 'fb2-mode)
-                                (lambda ()
-                                  (require 'fb2-mode))
+                                (func/func/require 'fb2-mode)
 
                                 ("settings")
                                 (lambda ()

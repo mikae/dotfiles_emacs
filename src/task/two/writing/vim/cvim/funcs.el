@@ -60,7 +60,7 @@
 
   (serika-c/eg/add-many-by-name 'vimrc-mode
                                 ("require")
-                                (func/func/requirer 'vimrc-mode)
+                                (func/func/require 'vimrc-mode)
 
                                 ("settings")
                                 (serika-f/settings/register-ft 'vimrc-mode

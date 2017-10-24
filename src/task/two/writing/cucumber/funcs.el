@@ -55,7 +55,7 @@
 
   (serika-c/eg/add-many-by-name 'cucumber
                                 ("require")
-                                (func/func/requirer 'feature-mode)
+                                (func/func/require 'feature-mode)
 
                                 ("settings")
                                 (lambda ()

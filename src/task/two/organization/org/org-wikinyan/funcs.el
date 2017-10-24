@@ -12,7 +12,7 @@
 
   (serika-c/eg/add-many-by-name 'org-wiki
                                 ("require org")
-                                (func/func/requirer 'org-wikinyan)
+                                (func/func/require 'org-wikinyan)
 
                                 ("settings org")
                                 (lambda ()

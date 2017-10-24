@@ -16,7 +16,7 @@
     (serika-f/aggressive-indent/activate)
 
     (serika-f/flycheck/activate)
-    (serika-f/company/activate :backends '((company-keywords company-files)))
+    (serika-f/company/activate :backends-set '((company-keywords company-files)))
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)

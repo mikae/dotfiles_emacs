@@ -19,11 +19,10 @@
                             :evil-state       'normal)
     (serika-f/smartparens/activate)
     (serika-f/aggressive-indent/activate)
-    (serika-f/yasnippet/activate)
 
     (serika-f/flycheck/activate :disabled-checkers '(emacs-lisp-checkdoc))
+    (serika-f/yasnippet/activate)
     (flycheck-cask-setup)
-
     (serika-f/company/activate)
 
     (serika-f/eldoc/activate)
@@ -42,9 +41,9 @@
     ;;   (serika-f/flycheck/create))
 
     ;; autofocus to `emacs-lisp' buffer
-    (when (not (func/buffer/check-modes 'emacs-lisp-mode
-                                        'lisp-interaction-mode))
-      (func/buffer/focus-to 'emacs-lisp-mode))
+    ;; (when (not (func/buffer/check-modes 'emacs-lisp-mode
+    ;; 'lisp-interaction-mode))
+    ;; (func/buffer/focus-to 'emacs-lisp-mode))
     )
   )
 
@@ -79,8 +78,7 @@
                                   (func/keymap/create emacs-lisp-mode-map
                                                       "C-t =" #'evil-indent
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand
-                                                      ))
+                                                      "C-t e" #'yas-expand))
 
                                 ("hook")
                                 (lambda ()

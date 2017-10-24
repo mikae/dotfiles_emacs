@@ -2,47 +2,27 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Local
-(defun serika-l/scheme//buffer-local-variables ()
-  "Configure local variables for `scheme' mode."
-  (setq tab-width 2)
-  (setq truncate-lines t))
+;; Hook
+(defun serika-f/scheme//setup-buffer ()
+  "Setup scheme buffers"
+  (when (eq major-mode
+            'scheme-mode)
+    (func/var/ensure-local tab-width 2
+                           truncate-lines t)
+    (serika-f/evil/activate :evil-state       'normal
+                            :evil-shift-width 2)
+    (serika-f/smartparens/activate)
+    (serika-f/aggressive-indent/activate)
 
-(defun serika-l/scheme//buffer-local-mappings ()
-  "Configure local mappings for `scheme' mode."
-  )
+    (serika-f/flycheck/activate)
+    (serika-f/yasnippet/activate)
+    (serika-f/company/activate)
 
-(defun serika-l/scheme//evil ()
-  "Configure `evil' for `scheme-mode'."
-  (setq evil-shift-width 2)
-  (evil-local-mode +1)
-  (evil-normal-state))
-
-(defun serika-l/scheme//auto-completion ()
-  "Configure auto completion for `scheme' mode."
-  (auto-complete-mode      +1)
-
-  (setq ac-sources '(
-                     ac-source-abbrev
-                     ac-source-dictionary
-                     ac-source-words-in-same-mode-buffers
-                     )))
-
-(defun serika-l/scheme//interface ()
-  "Configure interface for `scheme' mode."
-  (rainbow-delimiters-mode       +1)
-  (serika-f/linum-relative/activate)
-
-  (setq show-trailing-whitespace +1))
-
-(defun serika-l/scheme//prettify-symbols ()
-  "Configure prettify symbols for `scheme' mode."
-  (prettify-symbols-mode +1)
-
-  (setq prettify-symbols-alist ())
-
-  (push '(">="     . ?≤) prettify-symbols-alist)
-  (push '("<="     . ?≥) prettify-symbols-alist))
+    (serika-f/prettify-symbols/activate :name "scheme")
+    (serika-f/settings/show-trailing-whitespaces)
+    (serika-f/linum-relative/activate)
+    (serika-f/rainbow-delimiters/activate)
+    (serika-f/highlight-symbol/activate)))
 
 ;; Init
 (defun init ()
@@ -56,24 +36,29 @@
                                 (lambda ()
                                   (serika-f/settings/register-ft 'scheme-mode "\\.scm\\'"))
 
+                                ("settings multi-compile")
+                                (lambda ()
+                                  (add-to-list 'multi-compile-alist '(scheme-mode . (("mit-scheme" . "scheme")))))
+
+                                ("settings smartparens")
+                                (lambda ()
+                                  (sp-local-pair 'scheme-mode "("    ")")
+                                  (sp-local-pair 'scheme-mode "{"    "}")
+                                  (sp-local-pair 'scheme-mode "["    "]")
+                                  (sp-local-pair 'scheme-mode "\""   "\"")
+                                  (sp-local-pair 'scheme-mode "`"    "'")
+                                  (sp-local-pair 'scheme-mode "\\\"" "\\\""))
+
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/create scheme-mode-map
+                                                      "C-c A" #'multi-compile-run
+
                                                       "C-t =" 'evil-indent
                                                       "C-t /" 'evilnc-comment-or-uncomment-lines
                                                       "C-t e" 'yas-expand))
 
                                 ("hook")
                                 (lambda ()
-                                  (dolist (callback (list
-                                                     'serika-l/scheme//evil
-                                                     'serika-l/scheme//buffer-local-variables
-                                                     'serika-l/scheme//buffer-local-mappings
-
-                                                     'serika-f/yasnippet/activate
-                                                     'serika-f/flycheck/activate
-                                                     'serika-l/scheme//auto-completion
-
-                                                     'serika-l/scheme//interface
-                                                     'serika-l/scheme//prettify-symbols))
-                                    (func/hook/add 'scheme-mode-hook callback)))))
+                                  (func/hook/add 'scheme-mode-hook
+                                                 #'serika-f/scheme//setup-buffer))))

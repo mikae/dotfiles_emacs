@@ -2,113 +2,53 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun serika-g/js2//keymap ()
-  "Configure `js2-mode-map'."
-  )
+(defun serika-f/js/setup-buffer ()
+  "Configure `js-mode' buffer."
+  (when (eq major-mode 'js-mode)
+    (setq tab-width        2
+          truncate-lines   t)
 
-;; Local
-(defun serika-l/js2//evil ()
-  "Configure `evil' for `js'."
-  (setq evil-shift-width 2)
-  (evil-local-mode +1)
-  (evil-normal-state))
+    (setq js-indent-level 2)
 
-(defun serika-l/js2//buffer-local-variables ()
-  "Configure snippet engine for `js' mode."
-  (setq tab-width 2)
-  (setq js-indent-level 2)
-  (setq truncate-lines t))
+    (serika-f/evil/activate :evil-shift-width 2
+                            :evil-state       'normal)
+    (serika-f/yasnippet/activate)
 
-(defun serika-l/js2//syntax-checking ()
-  "Configure syntax checking for `js' mode."
-  (flycheck-mode           +1))
+    (serika-f/smartparens/activate)
+    (serika-f/aggressive-indent/activate)
 
-(defun serika-l/js2//snippet-engine ()
-  "Configure snippet engine for `js' mode."
-  (serika-f/yasnippet/activate)
-  (serika-f/emmet/activate))
+    (serika-f/eldoc/activate)
 
-(defun serika-l/js2//auto-completion ()
-  "Configure auto completion for `js' mode."
-  (setq ac-sources '(
-                      ac-source-filename
-                      ac-source-dictionary
-                      ac-source-files-in-current-dir))
-  (ac-js2-mode))
+    (serika-f/settings/show-trailing-whitespaces)
+    (serika-f/linum-relative/activate)
+    (serika-f/rainbow-delimiters/activate)
+    (serika-f/highlight-symbol/activate)
 
-;; Interface
-(defun serika-l/js2//interface ()
-  "Configure interface for `js' mode."
-  (setq show-trailing-whitespace +1)
+    (serika-f/prettify-symbols/activate :name "js")))
 
-  (rainbow-delimiters-mode       +1)
-  (serika-f/linum-relative/activate))
 
-(defun serika-l/js2//prettify-symbols ()
-  "Configure prettify symbols for `js' mode."
-  (prettify-symbols-mode +1)
-
-  (setq prettify-symbols-alist ()))
-
+;; Init
 (defun init ()
-  "Configure Emacs for `js'-programming."
-  (serika-c/eg/add-install :package-list '(js2-mode
-                                           ac-js2)
-                           :name         'js2)
-  (serika-c/eg/add-many-by-name 'js2
-                                ("require")
+  "Configure `emacs-lisp-mode'."
+  (serika-c/eg/add-many-by-name 'js
+                                ("settings smartparens")
                                 (lambda ()
-                                  (require 'js2-mode)
-                                  (require 'skewer-mode)
-                                  (require 'ac-js2))
-
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'js2-mode "\\.js\\'"))
-
-                                ("settings multi-compile")
-                                (lambda ()
-                                  (add-to-list 'multi-compile-alist '(js2-mode . (("Execute" . "node %path")))))
+                                  (sp-local-pair 'js-mode "("    ")")
+                                  (sp-local-pair 'js-mode "{"    "}")
+                                  (sp-local-pair 'js-mode "["    "]")
+                                  (sp-local-pair 'js-mode "\""   "\"")
+                                  (sp-local-pair 'js-mode "'"    "'")
+                                  (sp-local-pair 'js-mode "\\\"" "\\\"")
+                                  (sp-local-pair 'js-mode "\\'"  "\\'"))
 
                                 ("keymap")
                                 (lambda ()
-                                  (func/keymap/save js2-mode-map)
-                                  (func/keymap/create js2-mode-map
-                                                      "C-c e e" 'skewer-eval-last-expression
-                                                      "C-c e d" 'skewer-eval-defun
-                                                      "C-c e a" 'skewer-load-buffer
-                                                      "C-c e r" 'run-skewer
+                                  (func/keymap/save   js-mode-map)
+                                  (func/keymap/create js-mode-map
+                                                      "C-t ="     #'evil-indent
+                                                      "C-t /"     #'evilnc-comment-or-uncomment-lines))
 
-                                                      "C-c c c" 'multi-compile-run
-                                                      "C-c c d" (lambda ()
-                                                                  (interactive)
-                                                                  (func/buffer/kill-by-major-mode 'compilation-mode))
-
-                                                      "C-t ="   'evil-indent
-                                                      "C-t +"   'web-beautify-js
-                                                      "C-t /"   'evilnc-comment-or-uncomment-lines
-                                                      "C-t e"   'yas-expand
-                                                      "C-t E"   'serika-f/emmet/expand))
                                 ("hook")
                                 (lambda ()
-                                  (dolist (callback (list
-                                                     #'serika-l/js2//evil
-                                                     #'serika-l/js2//buffer-local-variables
-
-                                                     #'serika-l/js2//syntax-checking
-                                                     #'serika-l/js2//snippet-engine
-                                                     #'serika-f/skewer/activate
-                                                     #'serika-f/eldoc/activate
-                                                     #'serika-f/flycheck/create
-
-                                                     ;; bug:
-                                                     ;; `https://github.com/ScottyB/ac-js2/issues/18'
-                                                     ;; (add-hook 'js2-mode-hook #'serika-l/js2//auto-completion)
-
-                                                     #'serika-l/js2//interface
-                                                     #'serika-l/js2//prettify-symbols
-
-                                                     #'serika-f/flycheck/create))
-                                    (func/hook/add 'js2-mode-hook callback))
-
-                                  )))
+                                  (func/hook/add 'js-mode-hook
+                                                 #'serika-f/js/setup-buffer))))

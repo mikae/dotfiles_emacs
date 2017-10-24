@@ -43,7 +43,7 @@
   "Configure `eww'."
   (serika-c/eg/add-many-by-name 'eww
                                 ("require")
-                                (func/func/requirer 'eww)
+                                (func/func/require 'eww)
 
                                 ("settings")
                                 (lambda ()

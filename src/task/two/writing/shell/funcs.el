@@ -54,17 +54,14 @@
     (serika-f/eldoc/activate)
     (serika-f/ggtags/activate)
 
-    (serika-f/company/activate :backends '(company-shell
-                                           company-shell-env))
+    (serika-f/company/activate :backends-set '(company-shell
+                                               company-shell-env))
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
     (serika-f/highlight-symbol/activate)
-    (serika-f/prettify-symbols/activate :name "sh")
-
-    (unless (func/buffer/check-modes 'sh-mode)
-      (func/buffer/focus-to 'sh-mode))))
+    (serika-f/prettify-symbols/activate :name "sh")))
 
 ;; Init
 (defun init ()

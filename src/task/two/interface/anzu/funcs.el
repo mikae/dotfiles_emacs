@@ -49,10 +49,10 @@
 
   (serika-c/eg/add-many-by-name 'anzu
                                 ("require")
-                                (func/func/requirer 'anzu)
+                                (func/func/require 'anzu)
 
                                 ("require evil")
-                                (func/func/requirer 'evil-anzu)
+                                (func/func/require 'evil-anzu)
 
                                 ("settings")
                                 (lambda ()

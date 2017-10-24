@@ -40,7 +40,7 @@
 
   (serika-c/eg/add-many-by-name 'org-cbt
                                 ("require org")
-                                (func/func/requirer 'org-cbt)
+                                (func/func/require 'org-cbt)
 
                                 ("settings org")
                                 (lambda ()

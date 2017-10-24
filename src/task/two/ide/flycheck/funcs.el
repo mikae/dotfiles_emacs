@@ -3,7 +3,8 @@
 ;;; Code:
 
 ;; Functions
-(cl-defun serika-f/flycheck/activate (&key ((:disabled-checkers --fdc) '() --fdc-p))
+(cl-defun serika-f/flycheck/activate (&key ((:disabled-checkers --fdc) '() --fdc-p)
+                                           ((:eval --eval) nil --eval-p))
   "Enable flycheck in current buffer."
   (when --fdc-p
     (setq flycheck-disabled-checkers
@@ -13,7 +14,11 @@
            ((symbolp --fdc-p)
             (setq flycheck-disabled-checkers (list --fdc)))
            (t (error "Unexpected disabled checkers declaration.")))))
-  (flycheck-mode +1))
+
+  (flycheck-mode +1)
+
+  (when --eval-p
+    (eval --eval)))
 
 (defun serika-f/flycheck/create ()
   "Create `flycheck' buffer."

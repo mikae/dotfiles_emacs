@@ -39,6 +39,9 @@
       (it "Passes if function arg is a function invocation."
         (en/create :func '(functionp 'test)))
 
+      (it "Passes if function arg is a special form invocation."
+        (en/create :func '(progn (+ 1 2 3 4 5))))
+
       (it "Passes if function arg is just a list"
         (en/create :func '(abra test)))))
 
@@ -347,6 +350,13 @@
         (expect (functionp #'--test-function)
                 :to-be t))
       (fmakunbound '--test-function))
+
+    (it "Executes a special form call."
+      (let* ((sync nil)
+             (node (en/create :func '(progn (setq sync t)))))
+        (en/execute node)
+        (expect sync
+                :to-be t)))
 
     (it "Executes all children if they are executable"
       (let ((parent-1 (en/create :name 'parent-1))

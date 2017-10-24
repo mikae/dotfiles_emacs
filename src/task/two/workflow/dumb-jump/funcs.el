@@ -40,7 +40,7 @@
 
   (serika-c/eg/add-many-by-name 'dumb-jump
                                 ("require")
-                                (func/func/requirer 'dumb-jump)
+                                (func/func/require 'dumb-jump)
 
                                 ("settings")
                                 (lambda ()

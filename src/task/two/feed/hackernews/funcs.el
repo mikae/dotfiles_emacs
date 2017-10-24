@@ -47,7 +47,7 @@
 
   (serika-c/eg/add-many-by-name 'hackernews
                                 ("require")
-                                (func/func/requirer 'hackernews)
+                                (func/func/require 'hackernews)
 
                                 ("settings")
                                 (lambda ()

@@ -49,7 +49,7 @@
     (serika-f/yasnippet/activate)
 
     (serika-f/ycmd/activate)
-    (serika-f/company/activate :backends '(company-ycmd))
+    (serika-f/company/activate :backends-set '(company-ycmd))
     (serika-f/flycheck/activate)
     (flycheck-ycmd-setup)
 
@@ -60,16 +60,11 @@
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
-    (serika-f/highlight-symbol/activate)
-
-    ;; autofocus to `emacs-lisp' buffer
-    (when (not (func/buffer/check-modes 'c++-mode))
-      (func/buffer/focus-to 'c++-mode))))
+    (serika-f/highlight-symbol/activate)))
 
 ;; Init
 (defun init ()
   "Configure Emacs for editing c++-files."
-
   (serika-c/eg/add-many-by-name 'cpp
                                 ("settings")
                                 (serika-f/settings/register-ft 'c++-mode
@@ -94,7 +89,9 @@
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines
                                                       "C-t e" #'yas-expand
 
-                                                      "C-c s" #'ff-find-other-file))
+                                                      "C-c a a" #'dumb-jump-go
+                                                      "C-c a A" #'dumb-jump-back
+                                                      "C-c a r" #'ff-find-other-file))
 
                                 ("hook")
                                 (lambda ()

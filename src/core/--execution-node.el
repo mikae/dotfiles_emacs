@@ -54,7 +54,8 @@
 (defun --en/execute-list-func (--func)
   ""
   (cond
-   ((functionp (car --func))
+   ((or (functionp      (car --func))
+        (special-form-p (car --func)))
     (eval --func))
    ((macrop (car --func))
     (eval (macroexpand --func)))
@@ -200,8 +201,7 @@
     (setf (nth 4 node) t)
     (--en/execute node)
     (dolist (--child (reverse (en/children node)))
-      (en/execute --child))
-    ))
+      (en/execute --child))))
 
 (defun en/log (node &optional diff)
   (message (concat (or diff "")

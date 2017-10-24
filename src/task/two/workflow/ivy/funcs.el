@@ -41,7 +41,7 @@
 
   (serika-c/eg/add-many-by-name 'ivy
                                 ("require")
-                                (func/func/requirer 'ivy)
+                                (func/func/require 'ivy)
 
                                 ("settings")
                                 (lambda ()

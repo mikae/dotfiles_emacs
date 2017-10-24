@@ -3,13 +3,21 @@
 ;;; Code:
 
 ;; Functions
-(cl-defun serika-f/company/activate (&key (backends nil backends-provided-p))
-  "Activate `company-mode' in current buffer.
-Supported keys:
-  - `backends': add backends to `company-backends' and make it local variable."
-  (when backends-provided-p
+(cl-defun serika-f/company/activate (&key (backends-add nil backends-add-p)
+                                          (backends-set nil backends-set-p))
+  ""
+  (when (and backends-add-p
+             backends-set-p)
+    (error "`backends-add' and `backends-set' was provided simultaneously"))
+
+  (when backends-add-p
     (set (make-local-variable 'company-backends)
-         backends))
+         (cons backends-add company-backends)))
+
+  (when backends-set-p
+    (set (make-local-variable 'company-backends)
+         backends-set))
+
   (company-mode            +1)
   (company-statistics-mode +1)
   (company-quickhelp-mode  +1))
@@ -24,9 +32,9 @@ Supported keys:
 
   (serika-c/eg/add-many-by-name 'company
                                 ("require")
-                                (func/func/requirer 'company
-                                                    'company-quickhelp
-                                                    'company-statistics)
+                                (func/func/require 'company
+                                                   'company-quickhelp
+                                                   'company-statistics)
 
                                 ("interface theme")
                                 (lambda ()

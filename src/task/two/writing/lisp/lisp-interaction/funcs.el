@@ -16,7 +16,7 @@
     (serika-f/aggressive-indent/activate)
     (serika-f/yasnippet/activate)
 
-    (serika-f/company/activate :backends '(company-elisp))
+    (serika-f/company/activate)
 
     (serika-f/eldoc/activate)
 

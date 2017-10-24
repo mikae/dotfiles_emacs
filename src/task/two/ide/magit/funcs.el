@@ -17,7 +17,8 @@
                                 ("global-keymap")
                                 (lambda ()
                                   (func/keymap/define-global "C-x m i" 'magit-init
-                                                             "C-x m s" 'magit-status))
+                                                             "C-x m s" 'magit-status
+                                                             "C-x m c" 'magit-clone))
 
                                 ("hook")
                                 (lambda ()

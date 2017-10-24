@@ -8,7 +8,7 @@
   "Yank char."
   (interactive "P")
   (evil-visual-char)
-  (evil-forward-char (or (1- count) 0))
+  (evil-forward-char (1- (or count 1)))
   (evil-yank (region-beginning) (region-end))
   (evil-exit-visual-state))
 
@@ -16,7 +16,7 @@
   "Mark COUNT chars."
   (interactive "P")
   (evil-visual-char)
-  (forward-char (or (1- count) 0)))
+  (forward-char (1- (or count 1))))
 
 ;; Word-state
 (defun serika-f/evil/delete-word (&optional count)
@@ -225,13 +225,10 @@
         'sentence)
     (evil-forward-sentence-begin))
    ((eq evil-previous-state
-        'line)
-    (evil-next-line (or count 1)))
-   ((eq evil-previous-state
         'paragragh)
     (evil-forward-paragraph (or count 1)))
    (t
-    (evil-next-line (or count 1)))))
+    (call-interactively 'evil-next-line (or count 1)))))
 
 (defun serika-f/evil/visual-i (&optional count)
   "Visual n movement."
@@ -247,13 +244,10 @@
         'sentence)
     (ignore))
    ((eq evil-previous-state
-        'line)
-    (evil-previous-line (or count 1)))
-   ((eq evil-previous-state
         'paragragh)
     (evil-backward-paragraph (or count 1)))
    (t
-    (evil-previous-line (or count 1)))))
+    (call-interactively 'evil-previous-line (or count 1)))))
 
 (defun serika-f/evil/visual-o (&optional count)
   "Visual n movement."
@@ -370,10 +364,6 @@ Supported keys:
                               "settings evil-snipe")
                    :name 'evil
                    :func (lambda ()
-                           (evil-define-state metamotion
-                             "Metamotion state."
-                             :tag "<MM>"
-                             :suppress-keymap t)
                            (evil-define-state metanormal
                              "Metanormal state."
                              :tag "<MN>"
@@ -460,18 +450,7 @@ Supported keys:
 
   (serika-c/eg/add-many-by-parents
    ("keymap evil")
-   'metamotion
-   (lambda ()
-     (func/keymap/define evil-metamotion-state-map
-                         "n" #'serika-f/evil/backward-char
-                         "e" #'evil-next-line
-                         "i" #'evil-previous-line
-                         "o" #'serika-f/evil/forward-char
 
-                         "N" #'evil-beginning-of-line
-                         "E" #'evil-window-bottom
-                         "I" #'evil-window-top
-                         "O" #'evil-end-of-line))
    'metanormal
    (lambda ()
      (func/keymap/define evil-metanormal-state-map
@@ -739,6 +718,22 @@ Supported keys:
    'motion
    (lambda ()
      (func/keymap/define evil-motion-state-map
+                         "n" #'serika-f/evil/backward-char
+                         "e" #'evil-next-line
+                         "i" #'evil-previous-line
+                         "o" #'serika-f/evil/forward-char
+
+                         ;; todo: make it work when visual selection
+                         ;; "n"   #'serika-f/evil/visual-n
+                         ;; "e"   #'serika-f/evil/visual-e
+                         ;; "i"   #'serika-f/evil/visual-i
+                         ;; "o"   #'serika-f/evil/visual-o
+
+                         "N" #'evil-beginning-of-line
+                         "E" #'evil-window-bottom
+                         "I" #'evil-window-top
+                         "O" #'evil-end-of-line
+
                          "<deletechar>" 'ignore
                          "DEL"          'ignore))
 
@@ -823,11 +818,6 @@ Supported keys:
 
                          "A"   #'evil-append
                          "R"   #'evil-insert
-
-                         "n"   #'serika-f/evil/visual-n
-                         "e"   #'serika-f/evil/visual-e
-                         "i"   #'serika-f/evil/visual-i
-                         "o"   #'serika-f/evil/visual-o
 
                          "SPC"   #'evil-exit-visual-state
                          "C-SPC" #'ignore))))

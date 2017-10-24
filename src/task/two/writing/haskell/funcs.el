@@ -11,9 +11,7 @@
 
   (serika-c/eg/add-many-by-name 'haskell
                                 ("require")
-                                ;; (func/func/requirer 'haskell-mode)
-                                (lambda ()
-                                  (require 'haskell-mode))
+                                (func/func/require 'haskell-mode)
 
                                 ("settings")
                                 (lambda ()

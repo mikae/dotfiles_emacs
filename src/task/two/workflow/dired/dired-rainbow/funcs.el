@@ -11,7 +11,7 @@
 
   (serika-c/eg/add-many-by-name 'dired-rainbow
                                 ("require")
-                                (func/func/requirer 'dired-rainbow)
+                                (func/func/require 'dired-rainbow)
 
                                 ("settings")
                                 (lambda ()

@@ -13,11 +13,12 @@
                             :evil-state 'normal)
     (serika-f/emmet/activate)
     (serika-f/yasnippet/activate)
-    (serika-f/company/activate :backends '((company-html)
-                                           (company-files)))
+    (serika-f/company/activate :backends-set '((company-html)
+                                               (company-files)))
 
     (serika-f/mmm-mode//activate)
     (serika-f/settings/show-trailing-whitespaces)
+    (serika-f/aggressive-indent/activate)
     (serika-f/rainbow-delimiters/activate)
     (serika-f/rainbow-mode/activate)
     (serika-f/linum-relative/activate)
@@ -38,10 +39,10 @@
                                   (serika-f/settings/register-ft 'html-mode "\\.html\\'"))
 
                                 ("settings multi-compile")
-                                (lambda ()
-                                  (add-to-list 'multi-compile-alist '(html-mode . (("Firefox"     . "firefox     %path")
-                                                                                   ("Firefox-esr" . "firefox-esr %path")
-                                                                                   ("Chromium"    . "chromium    %path")))))
+                                (serika-f/multi-compile/configure 'html-mode
+                                                                  "Firefox"     "firefox     %path"
+                                                                  "Firefox-esr" "firefox-esr %path"
+                                                                  "Chromium"    "chromium    %path")
 
                                 ("settings mmm-mode")
                                 (lambda ()
