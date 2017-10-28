@@ -67,5 +67,8 @@
       (cm-define-global "C-q"   #'func/buffer/kill)
       (cm-define-global "C-w"   #'custom-modifiers-command-loop-end)
 
-      (cm-define-global "ESC-q" #'save-buffers-kill-emacs)
-      )))
+      (cm-define-global "ESC-q" #'save-buffers-kill-emacs))
+
+    ("post activate")
+    (serika-f/custom-modifiers/activate)
+    ))
