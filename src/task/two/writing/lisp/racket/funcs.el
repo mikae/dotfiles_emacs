@@ -81,6 +81,8 @@
                                 (lambda ()
                                   (func/keymap/save racket-mode-map)
                                   (func/keymap/create racket-mode-map
+                                                      "TAB"   #'yas-expand
+
                                                       "C-c a"   #'racket-run
                                                       "C-c A"   #'racket-repl
                                                       "C-c r"   #'racket-send-last-sexp
@@ -88,8 +90,7 @@
                                                       "C-c C-r" #'racket-send-definition
 
                                                       "C-t ="   #'evil-indent
-                                                      "C-t /"   #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e"   #'yas-expand)
+                                                      "C-t /"   #'evilnc-comment-or-uncomment-lines)
 
                                   ;; (func/keymap/save racket-repl-mode-map)
                                   (func/keymap/define racket-repl-mode-map

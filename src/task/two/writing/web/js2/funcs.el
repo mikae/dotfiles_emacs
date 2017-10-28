@@ -39,16 +39,12 @@
     (when buffer-file-name
       (serika-f/flycheck/activate))
 
-    (unless (func/buffer/check-modes 'js2-mode)
-      (func/buffer/focus-to 'js2-mode))
-
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
     (serika-f/highlight-symbol/activate)
 
     (serika-f/prettify-symbols/activate :name "js2")))
-
 
 ;; Init
 (defun init ()
@@ -112,25 +108,26 @@
                                   ;; `js2-mode'
                                   (func/keymap/save   js2-mode-map)
                                   (func/keymap/create js2-mode-map
-                                                      "C-t ="     #'evil-indent
-                                                      "C-t +"     #'web-beautify-js
-                                                      "C-t /"     #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e"     #'yas-expand
-                                                      "C-t E"     #'serika-f/emmet/expand
+                                                      "TAB"     #'yas-expand
+
+                                                      "C-t ="   #'evil-indent
+                                                      "C-t +"   #'web-beautify-js
+                                                      "C-t /"   #'evilnc-comment-or-uncomment-lines
+                                                      "C-t E"   #'serika-f/emmet/expand
 
                                                       ;; "C-c a a"   #'find-other-file
-                                                      "C-c a r"   #'dumb-jump-go
-                                                      "C-c a R"   #'dumb-jump-back
+                                                      "C-c a r" #'dumb-jump-go
+                                                      "C-c a R" #'dumb-jump-back
 
-                                                      "C-c A a"   #'skewer-eval-last-expression
-                                                      "C-c A r"   #'skewer-eval-defun
-                                                      "C-c A s"   #'skewer-load-buffer
-                                                      "C-c A t"   #'run-skewer
+                                                      "C-c A a" #'skewer-eval-last-expression
+                                                      "C-c A r" #'skewer-eval-defun
+                                                      "C-c A s" #'skewer-load-buffer
+                                                      "C-c A t" #'run-skewer
 
-                                                      "C-c r a"   #'multi-compile-run
-                                                      "C-c r A"   (lambda ()
-                                                                    (interactive)
-                                                                    (func/buffer/kill-by-major-mode 'compilation-mode)))
+                                                      "C-c r a" #'multi-compile-run
+                                                      "C-c r A" (lambda ()
+                                                                  (interactive)
+                                                                  (func/buffer/kill-by-major-mode 'compilation-mode)))
 
                                   ;; `refactor-mode'
                                   (func/keymap/save   js2-refactor-mode-map)

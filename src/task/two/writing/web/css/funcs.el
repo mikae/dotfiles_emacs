@@ -43,7 +43,8 @@
                                 (lambda ()
                                   (func/keymap/save css-mode-map)
                                   (func/keymap/create css-mode-map
-                                                      "C-t e" #'yas-expand
+                                                      "TAB" #'yas-expand
+
                                                       "C-t E" #'serika-f/emmet/expand
                                                       "C-t =" #'evil-indent
                                                       "C-t +" #'web-beautify-css

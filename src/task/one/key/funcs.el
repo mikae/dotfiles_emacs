@@ -334,6 +334,11 @@
   (define-key input-decode-map [?\C-o] [C-o])
   )
 
+(defun serika-g/key//configure-outline-mode-map ()
+  "Configure `outline-mode-map'"
+  (func/keymap/save   outline-mode-map)
+  (func/keymap/create outline-mode-map))
+
 (defun serika-g/key//create-bindings ()
   "Create global bindings."
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
@@ -378,20 +383,23 @@
 (defun init ()
   "Configure keys."
   (serika-c/eg/add-many-by-parents ("global-keymap")
-                                   'unset-bindings
-                                   #'serika-g/key//unset-bindings
+    'unset-bindings
+    #'serika-g/key//unset-bindings
 
-                                   'clear-key-translation-map
-                                   #'serika-g/key//clear-key-translation-map
+    'clear-key-translation-map
+    #'serika-g/key//clear-key-translation-map
 
-                                   'clear-function-key-map
-                                   #'serika-g/key//clear-function-key-map
+    'clear-function-key-map
+    #'serika-g/key//clear-function-key-map
 
-                                   'disable-arrows
-                                   #'serika-g/key//disable-arrows
+    'disable-arrows
+    #'serika-g/key//disable-arrows
 
-                                   'input-decode-map
-                                   #'serika-g/key//configure-input-decode-map
+    'input-decode-map
+    #'serika-g/key//configure-input-decode-map
 
-                                   'create-new
-                                   #'serika-g/key//create-bindings))
+    'configure-outline-mode-map
+    #'serika-g/key//configure-outline-mode-map
+
+    'create-new
+    #'serika-g/key//create-bindings))

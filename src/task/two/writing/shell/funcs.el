@@ -94,12 +94,13 @@
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/create sh-mode-map
+                                                      "TAB" #'yas-expand
+
                                                       "C-c a" #'serika-f/sh/execute
                                                       "C-c A" #'multi-compile-run
 
                                                       "C-t =" #'evil-indent
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand))
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
 
                                 ("hook")
                                 (lambda ()

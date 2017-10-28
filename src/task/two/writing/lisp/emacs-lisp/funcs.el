@@ -76,9 +76,10 @@
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/create emacs-lisp-mode-map
+                                                      "TAB" #'yas-expand
+
                                                       "C-t =" #'evil-indent
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand))
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
 
                                 ("hook")
                                 (lambda ()

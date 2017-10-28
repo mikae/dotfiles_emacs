@@ -6,10 +6,10 @@
 
 (defun serika-f/text/setup-buffer ()
   "Configure `text-mode' buffers."
-  (setq tab-width 4)
-  (serika-f/linum-relative/activate)
+  (func/var/ensure-local tab-width 4)
   (serika-f/evil/activate :evil-shift-width 4
-                          :evil-state 'normal))
+                          :evil-state 'normal)
+  (serika-f/linum-relative/activate))
 
 ;; Init
 (defun init ()

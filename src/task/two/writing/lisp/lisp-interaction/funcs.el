@@ -30,25 +30,26 @@
 (defun init ()
   "Configure `lisp-interaction-mode'."
   (serika-c/eg/add-many-by-name 'lisp-interaction
-                        ("settings smartparens")
-                        (lambda ()
-                          (sp-local-pair 'lisp-interaction-mode "("    ")")
-                          (sp-local-pair 'lisp-interaction-mode "{"    "}")
-                          (sp-local-pair 'lisp-interaction-mode "["    "]")
-                          (sp-local-pair 'lisp-interaction-mode "\""   "\"")
-                          (sp-local-pair 'lisp-interaction-mode "`"    "'")
-                          (sp-local-pair 'lisp-interaction-mode "\\\"" "\\\""))
+                                ("settings smartparens")
+                                (lambda ()
+                                  (sp-local-pair 'lisp-interaction-mode "("    ")")
+                                  (sp-local-pair 'lisp-interaction-mode "{"    "}")
+                                  (sp-local-pair 'lisp-interaction-mode "["    "]")
+                                  (sp-local-pair 'lisp-interaction-mode "\""   "\"")
+                                  (sp-local-pair 'lisp-interaction-mode "`"    "'")
+                                  (sp-local-pair 'lisp-interaction-mode "\\\"" "\\\""))
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/create lisp-interaction-mode-map
-                                              "C-t ="    #'evil-indent
-                                              "C-t /"    #'evilnc-comment-or-uncomment-lines
-                                              "C-t e"    #'yas-expand
-                                              "C-c e"    #'eval-last-sexp
-                                              "C-x C-s"  #'ignore))
+                                ("keymap")
+                                (lambda ()
+                                  (func/keymap/create lisp-interaction-mode-map
+                                                      "TAB"      #'yas-expand
 
-                        ("hook")
-                        (lambda ()
-                          (func/hook/add 'lisp-interaction-mode-hook
-                                         #'serika-f/lisp-interaction/setup-buffer))))
+                                                      "C-t ="    #'evil-indent
+                                                      "C-t /"    #'evilnc-comment-or-uncomment-lines
+                                                      "C-c e"    #'eval-last-sexp
+                                                      "C-x C-s"  #'ignore))
+
+                                ("hook")
+                                (lambda ()
+                                  (func/hook/add 'lisp-interaction-mode-hook
+                                                 #'serika-f/lisp-interaction/setup-buffer))))

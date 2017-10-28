@@ -54,10 +54,11 @@
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/create lua-mode-map
+                                                      "TAB" #'yas-expand
+
                                                       "C-c c" #'multi-compile-run
                                                       "C-t =" #'evil-indent
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand))
+                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
                                 ("hook")
                                 (lambda ()
                                   (func/hook/add 'lua-mode-hook #'serika-f/lua//setup-buffer))))

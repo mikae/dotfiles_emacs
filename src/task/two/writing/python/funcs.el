@@ -92,9 +92,10 @@
                                                     )
 
                                   (func/keymap/create python-mode-map
+                                                      "TAB" #'yas-expand
+
                                                       "C-t =" #'evil-indent
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand
                                                       ;; "C-c v w" #'venv-workon
                                                       ;; "C-c v d" #'venv-deactivate
                                                       ;; "C-c v m" #'venv-mkvirtualenv

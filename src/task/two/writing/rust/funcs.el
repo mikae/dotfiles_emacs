@@ -78,6 +78,16 @@
                                 (serika-f/settings/register-ft 'rust-mode
                                                                "\\.rs\\'")
 
+                                ("settings smartparens")
+                                (lambda ()
+                                  (sp-local-pair 'rust-mode "("    ")")
+                                  (sp-local-pair 'rust-mode "{"    "}")
+                                  (sp-local-pair 'rust-mode "["    "]")
+                                  (sp-local-pair 'rust-mode "\""   "\"")
+                                  (sp-local-pair 'rust-mode "'"    "'")
+                                  (sp-local-pair 'rust-mode "\\\"" "\\\"")
+                                  (sp-local-pair 'rust-mode "\\'"  "\\'"))
+
                                 ("settings multi-compile")
                                 (serika-f/multi-compile/configure 'rust-mode
                                                                   "rust-debug"   "cargo run"
@@ -87,9 +97,10 @@
                                 (progn
                                   (func/keymap/save   rust-mode-map)
                                   (func/keymap/create rust-mode-map
+                                                      "TAB" #'yas-expand
+
                                                       "C-t =" #'evil-indent
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand
                                                       "C-t b" #'rust-format-buffer
 
                                                       ;; arstd

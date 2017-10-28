@@ -85,9 +85,10 @@
                                 (lambda ()
                                   (func/keymap/save   c++-mode-map)
                                   (func/keymap/create c++-mode-map
+                                                      "TAB" #'yas-expand
+
                                                       "C-t =" #'evil-indent
                                                       "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" #'yas-expand
 
                                                       "C-c a a" #'dumb-jump-go
                                                       "C-c a A" #'dumb-jump-back

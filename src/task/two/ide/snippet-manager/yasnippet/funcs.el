@@ -34,8 +34,7 @@
                                   (func/keymap/create yas-keymap
                                                       "A-O"   #'yas-next-field
                                                       "A-N"   #'yas-prev-field)
-                                  (func/keymap/create snippet-mode-map
-                                                      "C-t e" #'yas-expand)
+                                  (func/keymap/create snippet-mode-map)
 
                                   (require 'yasnippet)
 

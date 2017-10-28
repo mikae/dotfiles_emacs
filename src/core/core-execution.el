@@ -193,5 +193,9 @@ Example:
   "Execute execution graph."
   (eg/execute --serika-execution-graph))
 
+;; Better indentation
+(put 'serika-c/eg/add-many-by-name    'lisp-indent-function 'defun)
+(put 'serika-c/eg/add-many-by-parents 'lisp-indent-function 'defun)
+
 (provide 'core-execution)
 ;;; core-execution.el ends here

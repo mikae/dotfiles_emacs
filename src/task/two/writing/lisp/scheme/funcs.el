@@ -52,11 +52,12 @@
                                 ("keymap")
                                 (lambda ()
                                   (func/keymap/create scheme-mode-map
+                                                      "TAB" 'yas-expand
+
                                                       "C-c A" #'multi-compile-run
 
                                                       "C-t =" 'evil-indent
-                                                      "C-t /" 'evilnc-comment-or-uncomment-lines
-                                                      "C-t e" 'yas-expand))
+                                                      "C-t /" 'evilnc-comment-or-uncomment-lines))
 
                                 ("hook")
                                 (lambda ()

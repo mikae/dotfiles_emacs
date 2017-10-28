@@ -45,10 +45,6 @@
                              -1
                            +1)))
 
-(defun test-cm ()
-  ""
-  )
-
 (defun init ()
   "Configure custom modifiers"
   (serika-c/eg/add-install :type    'git
@@ -57,19 +53,19 @@
                            :parents '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'custom-modifiers
-                                ("zero lib require")
-                                (lambda ()
-                                  (require 'custom-modifiers)
-                                  (require 'custom-modifiers-layout))
+    ("zero lib require")
+    (lambda ()
+      (require 'custom-modifiers)
+      (require 'custom-modifiers-layout))
 
-                                ("settings")
-                                (lambda ()
-                                  (custom-modifiers-layout-use-colemak)
-                                  (custom-modifiers-modifiers-use-default)
-                                  (custom-modifiers-global-map-configure)
+    ("settings")
+    (lambda ()
+      (custom-modifiers-layout-use-colemak)
+      (custom-modifiers-modifiers-use-default)
+      (custom-modifiers-global-map-configure)
 
-                                  (cm-define-global "C-q"   #'func/buffer/kill)
-                                  (cm-define-global "C-w"   #'custom-modifiers-command-loop-end)
-                                  (cm-define-global "C-f"   #'test-cm)
-                                  (cm-define-global "ESC-q" #'save-buffers-kill-emacs)
-                                  )))
+      (cm-define-global "C-q"   #'func/buffer/kill)
+      (cm-define-global "C-w"   #'custom-modifiers-command-loop-end)
+      (cm-define-global "C-f"   #'test-cm)
+      (cm-define-global "ESC-q" #'save-buffers-kill-emacs)
+      )))

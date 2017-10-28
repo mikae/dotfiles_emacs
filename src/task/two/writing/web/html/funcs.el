@@ -56,8 +56,9 @@
                                 (lambda ()
                                   (func/keymap/save html-mode-map)
                                   (func/keymap/create html-mode-map
+                                                      "TAB" #'yas-expand
+
                                                       "C-c c" #'multi-compile-run
-                                                      "C-t e" #'yas-expand
                                                       "C-t E" #'serika-f/emmet/expand
                                                       "C-t =" #'evil-indent
                                                       "C-t +" #'web-beautify-html
