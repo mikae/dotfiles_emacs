@@ -86,33 +86,37 @@ setups `prettify-symbols-alist'."
 (defun init ()
   "Configure Emacs settings."
   (serika-c/eg/add-many-by-name 'settings
-                                ("base configure")
-                                (lambda ()
-                                  (setq gc-cons-threshold 50000000)
-                                  (setq large-file-warning-threshold 100000000)
+    ("base configure")
+    (progn
+      (setq gc-cons-threshold 50000000)
+      (setq large-file-warning-threshold 100000000)
 
-                                  ;; Disable backup
-                                  (setq make-backup-files        nil
-                                        auto-save-list-file-name nil
-                                        auto-save-default        nil)
+      ;; Disable backup
+      (setq make-backup-files        nil
+            auto-save-list-file-name nil
+            auto-save-default        nil)
 
-                                  (setq auto-save-list-file-prefix
-                                        (f-join serika-tmp-directory
-                                                "auto-save-list"
-                                                ".saves-"))
+      (setq auto-save-list-file-prefix
+            (f-join serika-tmp-directory
+                    "auto-save-list"
+                    ".saves-"))
 
-                                  ;; Disable all default mode selection.
-                                  (setq auto-mode-alist ())
+      ;; Disable all default mode selection.
+      (setq auto-mode-alist ())
 
-                                  ;; Disable verbose messages of auto revert mode
-                                  (setq auto-revert-verbose nil)
+      ;; Disable verbose messages of auto revert mode
+      (setq auto-revert-verbose nil)
 
-                                  ;; Use spaces instead of tabs
-                                  (setq-default indent-tabs-mode nil
-                                                tab-width        4)
+      ;; Use spaces instead of tabs
+      (setq-default indent-tabs-mode nil
+                    tab-width        4)
 
-                                  (setq word-wrap t)
+      (setq word-wrap t)
 
-                                  (electric-pair-mode -1)
-                                  (electric-indent-mode -1)
-                                  (auto-revert-mode   -1))))
+      ;; Enable ocal variables
+      (setq enable-local-eval      t
+            enable-local-variables t)
+
+      (electric-pair-mode -1)
+      (electric-indent-mode -1)
+      (auto-revert-mode   -1))))

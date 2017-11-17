@@ -32,18 +32,24 @@
 ;;
 ;;; Code:
 
-(defun init ()
-  "Define lib functions"
-  (serika-c/eg/add
-   :parents '("zero util")
-   :name    'var
-   :func    (lambda ()
-              (defmacro func/var/ensure-local (&rest args)
-                "Ensure that VAR will be local variable with VALUE"
-                `(cl-loop for var   in ',args       by #'cddr
-                          for value in (cdr ',args) by #'cddr
-                          do
-                          (if (local-variable-p var)
-                              (set var (eval value))
-                            (set (make-local-variable var) (eval value)))))
-              )))
+;; (cl-defun serika-f/auto-indent-mode/activate (&key (style 'conservative style-p))
+;;   "Activate auto indent mode."
+;;   (when style-p
+;;     (func/var/ensure-local auto-indent-indent-style style))
+;;   (auto-indent-mode +1))
+
+;; (defun init ()
+;;   "Configure `auto-indent-mode'."
+;;   (serika-c/eg/add-install :type 'git
+;;                            :name 'auto-indent-mode
+;;                            :src "https://github.com/mikae/auto-indent-mode.el")
+
+;;   (serika-c/eg/add-many-by-name 'auto-indent-mode
+;;     ("require")
+;;     (func/func/require 'auto-indent-mode)
+
+;;     ("settings")
+;;     ()
+
+;;     ("global-keymap")
+;;     (func/keymap/define-global "C-x t i" #'auto-indent-mode)))

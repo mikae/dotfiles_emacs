@@ -2,6 +2,27 @@
 ;;; Commentary:
 ;;; Code:
 
+;;
+(defun serika-f/org/load-railroad-diagrams ()
+  ""
+  (func/var/ensure-local
+   org-html-head-include-scripts t
+   org-html-scripts (concat org-html-scripts
+                            "<script "
+                            "type=\"text/javascript\""
+                            "src="
+                            (f-join org-directory
+                                    "scripts"
+                                    "railroad-diagrams"
+                                    "railroad-diagrams.js")
+                            "></script>")
+   org-html-head-extra (format "<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
+                               (f-join org-directory
+                                       "scripts"
+                                       "railroad-diagrams"
+                                       "railroad-diagrams.css")))
+  )
+
 ;; Shadower
 (define-minor-mode org-edit-src-shadower-mode
   "Minor mode for shadowing some keys."
@@ -50,43 +71,68 @@
 (defun serika-f/org/edit-src ()
   "Narrow to src block, excludes BEGIN_SRC and END_SRC."
   (interactive)
-  (let* ((case-fold-search t)
-         (blockp (org-between-regexps-p "^[ \t]*#\\+begin_src.*"
-                                        "^[ \t]*#\\+end_src.*")))
+  (let ((case-fold-search t)
+        (blockp (org-between-regexps-p "^[ \t]*#\\+begin_src.*"
+                                       "^[ \t]*#\\+end_src.*")))
     (if blockp
-        (let* ((--block-beg (car blockp))
-               (--block-end (cdr blockp))
-               (--beg (save-excursion
-                        (goto-char --block-beg)
-                        (search-forward-regexp "\n")
-                        (point)))
-               (--end (save-excursion
-                        (goto-char --block-end)
-                        (search-backward-regexp "\n")
-                        (point)))
-               (--block-beg-line-end (progn
+        (let* ((--block-beg      (car blockp))
+               (--block-end      (cdr blockp))
+               (--beg-end            (save-excursion
                                        (goto-char --block-beg)
                                        (search-forward-regexp "\n")
                                        (point)))
-               (--block-beg-line (buffer-substring --block-beg --block-beg-line-end))
-               (--text (buffer-substring --beg --end))
-               (--source-buffer (current-buffer))
-               (--buffer (generate-new-buffer "edit src"))
-               (--language (nth 1 (split-string --block-beg-line))))
+               (--end-beg            (save-excursion
+                                       (goto-char --block-end)
+                                       (search-backward-regexp "\n")
+                                       (point)))
+               (--block-beg-line (buffer-substring --block-beg --beg-end))
+               (--text           (buffer-substring --beg-end --end-beg))
+               (--source-buffer  (current-buffer))
+               (--buffer         (generate-new-buffer "edit src"))
+               (--org-langs      org-src-lang-modes)
+               (--language       (nth 1 (split-string --block-beg-line)))
+               (--language-mode  nil))
+
+          ;; Check if the mode from src block is derived mode in `org-src-lang-modes'
+          (while (and (null --language-mode)
+                      --org-langs)
+            (when (string= --language
+                           (caar --org-langs))
+              (setq --language-mode (intern (concat (symbol-name (cdar --org-langs))
+                                                    "-mode"))))
+            (setq --org-langs (cdr --org-langs)))
+
+          ;; Otherwise, try to add "-mode" to language from src block
+          (unless --language-mode
+            (setq --language-mode (intern (concat --language
+                                                  "-mode"))))
+
           (with-current-buffer --buffer
             (switch-to-buffer --buffer)
             (insert --text)
-            (funcall (intern (concat --language "-mode")))
+            (when (symbol-function --language-mode)
+              (funcall --language-mode))
             (org-edit-src-shadower-mode +1)
             (func/buffer/save-function
              (lambda ()
                (let ((--new-text (buffer-substring (point-min) (point-max))))
                  (with-current-buffer --source-buffer
-                   (kill-region --beg
-                                --end)
-                   (goto-char --beg)
-                   (insert --new-text)))
-               (kill-buffer (current-buffer))))))
+                   ;; Replace old src block with newer one
+                   (kill-region --block-beg
+                                --block-end)
+                   (goto-char --block-beg)
+                   (insert --block-beg-line)
+                   (insert --new-text)
+                   (insert "\n#+END_SRC")
+
+                   ;; Update src block' beg and end points
+                   (forward-line -1)
+                   (setq blockp (org-between-regexps-p "^[ \t]*#\\+begin_src.*"
+                                                       "^[ \t]*#\\+end_src.*"))
+                   (if blockp
+                       (setq --block-beg (car blockp)
+                             --block-end (cdr blockp))
+                     (user-error "Error replacing scr block"))))))))
       (user-error "Not in a src block"))))
 
 ;; Org wrapper functions
@@ -216,9 +262,9 @@
 
     (serika-f/evil/activate :evil-state       'normal
                             :evil-shift-width 4)
+    ;; (serika-f/auto-indent-mode/activate :style 'conservative)
     (serika-f/smartparens/activate)
     (serika-f/yasnippet/activate)
-    ;; (serika-f/aggressive-indent/activate)
 
     (serika-f/prettify-symbols/activate :name "org")
     (serika-f/linum-relative/activate)))
@@ -230,9 +276,11 @@
                            :name 'org
                            :src  "git://orgmode.org/org-mode.git"
                            :parents '("install org")
+                           :extra-path '("lisp")
                            :post-hook "make")
 
-  (dolist (elem '((ob-rust . "https://github.com/mikae/ob-rust")))
+  (dolist (elem '((ob-rust   . "https://github.com/mikae/ob-rust")
+                  (ob-fsharp . "https://github.com/mikae/ob-fsharp")))
     (serika-c/eg/add-install :type 'git
                              :name (car elem)
                              :src  (cdr elem)
@@ -240,10 +288,15 @@
 
   (serika-c/eg/add-many-by-name 'org
     ("require")
-    (lambda ()
+    (progn
       (require 'org)
       (require 'org-capture)
-      (require 'ob-rust))
+
+      (require 'ob-ebnf)
+      (require 'ob-haskell)
+      (require 'ob-rust)
+      (require 'ob-fsharp)
+      (require 'ob-shell))
 
     ("settings")
     (lambda ()
@@ -281,6 +334,37 @@
                                  ("=" org-verbatim verbatim)
                                  ("~" org-code verbatim)))
 
+      ;; `latex'
+      (setq org-highlight-latex-and-related '(latex entities))
+
+      ;; `html'
+      (setq org-html-mathjax-options `((path ,(concat (f-join org-directory
+                                                              "scripts"
+                                                              "MathJax"
+                                                              "MathJax.js")
+                                                      "?config=TeX-AMS_HTML"))
+                                       (scale "110")
+                                       (align "left")))
+      (setq org-html-preamble         nil
+            org-html-postamble        nil)
+
+      ;; scripts
+      (setq org-html-head-include-scripts t
+            org-html-scripts              org-html-scripts)
+
+      ;; extra head
+      (setq org-html-head-extra "")
+
+      ;; `inline-js'
+      (add-to-list 'org-src-lang-modes '("inline-js" . javascript))
+
+      (defvar org-babel-default-header-args:inline-js
+        '((:results . "html")
+          (:exports . "results")))
+
+      (defun org-babel-execute:inline-js (body _params)
+        (format "<script type=\"text/javascript\">\n%s\n</script>" body))
+
       ;; `startup'
       (setq org-log-done         'note
             org-startup-folded    nil
@@ -288,22 +372,36 @@
 
       ;; `templates'
       (setq org-structure-template-alist
-            '(("e"
-               "#+BEGIN_EXAMPLE\n?\n#+END_EXAMPLE"
-               "<example>\n?\n</example>")
-              ("r"
-               "#+BEGIN_RULE\n?\n#+END_RULE"
-               "<div class=\"rule\">\n?\n</div>")
-              ("s" "#+BEGIN_SRC ?\n#+END_SRC")
-              ("sr" "#+BEGIN_SRC rust?\n#+END_SRC")
-              ("js" "#+BEGIN_SRC js\n?\n#+END_SRC")
-              ("ps" ":PROPERTIES:\n:header-args: :results silent\n:END:")))
+            '(
+              ("ps"    ":PROPERTIES:\n:header-args: :results silent\n:END:")
+              ("e"     "#+BEGIN_EXAMPLE\n?\n#+END_EXAMPLE" "<example>\n?\n</example>")
+              ("r"     "#+BEGIN_RULE\n?\n#+END_RULE" "<div class=\"rule\">\n?\n</div>")
+              ("s"     "#+BEGIN_SRC ?\n#+END_SRC")
+              ("sr"    "#+BEGIN_SRC rust?\n#+END_SRC")
+              ("sj"    "#+BEGIN_SRC js\n?\n#+END_SRC")
+              ("sh"    "#+BEGIN_SRC haskell\n?\n#+END_SRC")
+              ("sss"   "#+BEGIN_SRC shell\n?\n#+END_SRC")
+              ("ssb"   "#+BEGIN_SRC bash\n?\n#+END_SRC")
+              ("sfs"   "#+BEGIN_SRC fsharp\n?\n#+END_SRC")
+              ("sij"   "#+BEGIN_SRC inline-js\n?\n#+END_SRC")
+              ("sijrr" "#+BEGIN_SRC inline-js\nComplexDiagram(\n?\n).addTo();\n#+END_SRC")
+
+              ("mpa"   "#+BEGIN_AXIOM\n?\n#+END_AXIOM")
+              ("mde"   "#+BEGIN_DEFINITION\n?\n#+END_DEFINITION")
+              ("mpp"   "#+BEGIN_PROPOSITION\n?\n#+END_PROPOSITION")
+              ("mth"   "#+BEGIN_THEOREM\n?\n#+END_THEOREM")
+              ("mpf"   "#+BEGIN_PROOF\n?\n#+END_PROOF")
+
+              ("ebnfy" "#+BEGIN_SRC ebnf :style yacc :file ?\n\n#+END_SRC")
+              ("ebnfe" "#+BEGIN_SRC ebnf :style ebnf :file ?\n\n#+END_SRC")
+              ("ebnfi" "#+BEGIN_SRC ebnf :style iso-ebnf :file ?\n\n#+END_SRC")))
 
       ;; `org-babel'
       (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
                                                                (js         . t)
                                                                (python     . t)
-                                                               (rust       . t)))
+                                                               (rust       . t)
+                                                               (ebnf       . t)))
       (setq org-confirm-babel-evaluate nil)
 
       ;; src blocks
@@ -349,16 +447,18 @@
               )
             ))
 
-    ;; ("settings smartparens")
-    ;; (lambda ()
-    ;;   ;; todo: make it smarter
-    ;;   (sp-local-pair 'org-mode "*" "*"
-    ;;                  :unless '(sp-point-at-bol-p))
-    ;;   (sp-local-pair 'org-mode "/" "/")
-    ;;   (sp-local-pair 'org-mode "_" "_")
-    ;;   (sp-local-pair 'org-mode "=" "=")
-    ;;   (sp-local-pair 'org-mode "~" "~")
-    ;;   (sp-local-pair 'org-mode "+" "+"))
+    ("settings smartparens")
+    (lambda ()
+      ;; todo: make it smarter
+      ;; (sp-local-pair 'org-mode "*" "*"
+      ;;                :unless '(sp-point-at-bol-p))
+      ;; (sp-local-pair 'org-mode "/" "/")
+      ;; (sp-local-pair 'org-mode "_" "_")
+      ;; (sp-local-pair 'org-mode "=" "=")
+      ;; (sp-local-pair 'org-mode "~" "~")
+      ;; (sp-local-pair 'org-mode "+" "+")
+      (sp-local-pair 'org-mode "\\[" "\\]")
+      )
 
     ("keymap")
     (lambda ()

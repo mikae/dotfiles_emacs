@@ -1,8 +1,8 @@
-;; funcs.el ---
+;; funcs.el --- 
 ;;
 ;; Author: Minae Yui <minae.yui.sain@gmail.com>
 ;; Version: 0.1
-;; URL:
+;; URL: 
 ;; Keywords:
 ;; Compatibility:
 ;;
@@ -32,70 +32,50 @@
 ;;
 ;;; Code:
 
-;; Funcs
-(defun serika-f/c/setup-buffer ()
-  "Setup `c-mode' buffer"
-  (when (func/buffer/check-modes 'c-mode)
+(defun serika-f/nasm/setup-buffer ()
+  "Setup buffers for `nasm-mode'"
+  (when (func/buffer/check-modes 'nasm-mode)
     (setq tab-width      4
           truncate-lines t)
-
-    (func/var/ensure-local c-default-style "linux"
-                           c-basic-offset  4)
 
     (serika-f/evil/activate :evil-shift-width 4
                             :evil-state       'normal)
     (serika-f/smartparens/activate)
     (serika-f/aggressive-indent/activate)
+
     (serika-f/yasnippet/activate)
-
-    (serika-f/ycmd/activate)
-    (serika-f/company/activate :backends-set '(company-ycmd))
     (serika-f/flycheck/activate)
-
     (serika-f/eldoc/activate)
-    (serika-f/ggtags/activate)
-    ;; (serika-f/projectile/try-activate)
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
-    (serika-f/highlight-symbol/activate)
-    ))
+    (serika-f/highlight-symbol/activate)))
 
-;; Init
 (defun init ()
-  "Configure Emacs for editing c-files."
+  "Configure Emacs for NASM."
+  (serika-c/eg/add-install :type 'git
+                           :name 'nasm-mode
+                           :src  "https://github.com/mikae/nasm-mode")
 
-  (serika-c/eg/add-many-by-name 'c
+  (serika-c/eg/add-many-by-name 'nasm
+    ("require")
+    (func/func/require 'nasm-mode)
+
     ("settings")
-    (serika-f/settings/register-ft 'c-mode
-                                   "\\.c$")
-
-    ("settings smartparens")
-    (progn
-      (sp-local-pair 'c-mode "("    ")")
-      (sp-local-pair 'c-mode "{"    "}")
-      (sp-local-pair 'c-mode "["    "]")
-      (sp-local-pair 'c-mode "\""   "\"")
-      (sp-local-pair 'c-mode "'"    "'")
-      (sp-local-pair 'c-mode "\\\"" "\\\"")
-      (sp-local-pair 'c-mode "\\'"  "\\'"))
+    (serika-f/settings/register-ft 'nasm-mode
+                                   "\\.nasm\\'")
 
     ("keymap")
     (progn
-      (func/keymap/save   c-mode-map)
-      (func/keymap/create c-mode-map
+      (func/keymap/save nasm-mode-map)
+      (func/keymap/create nasm-mode-map
                           "TAB" #'yas-expand
 
                           "C-t =" #'evil-indent
                           "C-t /" #'evilnc-comment-or-uncomment-lines
-
-                          ;; arstd
-                          ;; goto-like
-                          "C-c a a" #'dumb-jump-go
-                          "C-c a A" #'dumb-jump-back
-                          "C-c a r" #'ff-find-other-file))
+                          ))
 
     ("hook")
-    (func/hook/add 'c-mode-hook
-                   #'serika-f/c/setup-buffer)))
+    (func/hook/add 'nasm-mode-hook
+                   #'serika-f/nasm/setup-buffer)))

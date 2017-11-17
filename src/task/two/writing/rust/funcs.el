@@ -68,46 +68,45 @@
                              :parents '("install rust")))
 
   (serika-c/eg/add-many-by-name 'rust
-                                ("require")
-                                (func/func/require 'rust-mode
-                                                   'flycheck-rust
-                                                   'racer
-                                                   'company-racer)
+    ("require")
+    (func/func/require 'rust-mode
+                       'flycheck-rust
+                       'racer
+                       'company-racer)
 
-                                ("settings")
-                                (serika-f/settings/register-ft 'rust-mode
-                                                               "\\.rs\\'")
+    ("settings")
+    (serika-f/settings/register-ft 'rust-mode
+                                   "\\.rs\\'")
 
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'rust-mode "("    ")")
-                                  (sp-local-pair 'rust-mode "{"    "}")
-                                  (sp-local-pair 'rust-mode "["    "]")
-                                  (sp-local-pair 'rust-mode "\""   "\"")
-                                  (sp-local-pair 'rust-mode "'"    "'")
-                                  (sp-local-pair 'rust-mode "\\\"" "\\\"")
-                                  (sp-local-pair 'rust-mode "\\'"  "\\'"))
+    ("settings smartparens")
+    (lambda ()
+      (sp-local-pair 'rust-mode "("    ")")
+      (sp-local-pair 'rust-mode "{"    "}")
+      (sp-local-pair 'rust-mode "["    "]")
+      (sp-local-pair 'rust-mode "\""   "\"")
+      (sp-local-pair 'rust-mode "\\\"" "\\\"")
+      (sp-local-pair 'rust-mode "\\'"  "\\'"))
 
-                                ("settings multi-compile")
-                                (serika-f/multi-compile/configure 'rust-mode
-                                                                  "rust-debug"   "cargo run"
-                                                                  "rust-release" "cargo run --release"
-                                                                  "rest-test"    "cargo test")
-                                ("keymap")
-                                (progn
-                                  (func/keymap/save   rust-mode-map)
-                                  (func/keymap/create rust-mode-map
-                                                      "TAB" #'yas-expand
+    ("settings multi-compile")
+    (serika-f/multi-compile/configure 'rust-mode
+                                      "rust-debug"   "cargo run"
+                                      "rust-release" "cargo run --release"
+                                      "rest-test"    "cargo test")
+    ("keymap")
+    (progn
+      (func/keymap/save   rust-mode-map)
+      (func/keymap/create rust-mode-map
+                          "TAB" #'yas-expand
 
-                                                      "C-t =" #'evil-indent
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
-                                                      "C-t b" #'rust-format-buffer
+                          "C-t =" #'evil-indent
+                          "C-t /" #'evilnc-comment-or-uncomment-lines
+                          "C-t b" #'rust-format-buffer
 
-                                                      ;; arstd
-                                                      "C-c a a" #'dumb-jump-go
-                                                      "C-c a A" #'dumb-jump-back
-                                                      "C-c z z" #'multi-compile-run))
+                          ;; arstd
+                          "C-c a a" #'dumb-jump-go
+                          "C-c a A" #'dumb-jump-back
+                          "C-c z z" #'multi-compile-run))
 
-                                ("hook")
-                                (func/hook/add 'rust-mode-hook
-                                               #'serika-f/rust//setup-buffer)))
+    ("hook")
+    (func/hook/add 'rust-mode-hook
+                   #'serika-f/rust//setup-buffer)))

@@ -185,6 +185,8 @@ x0 - bit of omitted files.")
              do (let ((--cmd (format (cond
                                       ((string-match "\\.zip$" --item)
                                        "unzip -d %s \"%s\"")
+                                      ((string-match "\\.rar$" --item)
+                                       "cd %s && unrar x \"%s\"")
                                       ((string-match "\\.tar.gz" --item)
                                        "cd %s && tar xvf \"%s\"")
                                       (t (error "Unsupported archive format.")))
@@ -192,7 +194,8 @@ x0 - bit of omitted files.")
                                      --item)))
                   (when --cmd
                     (shell-command --cmd)
-                    (dired-revert))))))
+                    (dired-revert)
+                    (dired-unmark-all-marks))))))
 
 (defun serika-f/dired/visit-path (path)
   "Construct lambda that visits PATH.

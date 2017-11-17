@@ -69,6 +69,6 @@
 
       (cm-define-global "ESC-q" #'save-buffers-kill-emacs))
 
-    ("post activate")
-    (serika-f/custom-modifiers/activate)
+    ;;("post activate")
+    ;;(serika-f/custom-modifiers/activate)
     ))

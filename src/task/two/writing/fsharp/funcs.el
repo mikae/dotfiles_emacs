@@ -1,8 +1,8 @@
-;; funcs.el ---
+;; funcs.el --- 
 ;;
 ;; Author: Minae Yui <minae.yui.sain@gmail.com>
 ;; Version: 0.1
-;; URL:
+;; URL: 
 ;; Keywords:
 ;; Compatibility:
 ;;
@@ -32,70 +32,62 @@
 ;;
 ;;; Code:
 
-;; Funcs
-(defun serika-f/c/setup-buffer ()
-  "Setup `c-mode' buffer"
-  (when (func/buffer/check-modes 'c-mode)
-    (setq tab-width      4
-          truncate-lines t)
+(defun serika-f/fsharp/setup-buffer ()
+  "Setup fsharp buffers"
+  (when (func/buffer/check-modes 'fsharp-mode)
+    (func/var/ensure-local tab-width            2
+                           fsharp-indent-offset 2
+                           truncate-lines       t)
 
-    (func/var/ensure-local c-default-style "linux"
-                           c-basic-offset  4)
-
-    (serika-f/evil/activate :evil-shift-width 4
+    (serika-f/evil/activate :evil-shift-width 2
                             :evil-state       'normal)
     (serika-f/smartparens/activate)
     (serika-f/aggressive-indent/activate)
-    (serika-f/yasnippet/activate)
 
-    (serika-f/ycmd/activate)
-    (serika-f/company/activate :backends-set '(company-ycmd))
     (serika-f/flycheck/activate)
-
-    (serika-f/eldoc/activate)
-    (serika-f/ggtags/activate)
-    ;; (serika-f/projectile/try-activate)
+    (serika-f/yasnippet/activate)
+    (serika-f/company/activate)
+    ;; (serika-f/eldoc/activate)
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
     (serika-f/highlight-symbol/activate)
-    ))
+    ;; (serika-f/prettify-symbols/activate :name "fsharp")
 
-;; Init
+    (call-interactively 'fsharp-ac/load-project)))
+
 (defun init ()
-  "Configure Emacs for editing c-files."
+  "Configure fsharp support"
+  (serika-c/eg/add-install :type      'git
+                           :name      'fsharp-mode
+                           :src       "https://github.com/mikae/emacs-fsharp-mode")
 
-  (serika-c/eg/add-many-by-name 'c
+  (serika-c/eg/add-many-by-name 'fsharp
+    ("require")
+    (func/func/require 'fsharp-mode)
+
     ("settings")
-    (serika-f/settings/register-ft 'c-mode
-                                   "\\.c$")
-
-    ("settings smartparens")
     (progn
-      (sp-local-pair 'c-mode "("    ")")
-      (sp-local-pair 'c-mode "{"    "}")
-      (sp-local-pair 'c-mode "["    "]")
-      (sp-local-pair 'c-mode "\""   "\"")
-      (sp-local-pair 'c-mode "'"    "'")
-      (sp-local-pair 'c-mode "\\\"" "\\\"")
-      (sp-local-pair 'c-mode "\\'"  "\\'"))
+      (serika-f/settings/register-ft 'fsharp-mode
+                                     "\\\.fs[iylx]?$")
+
+      (setq inferior-fsharp-program        "/usr/bin/fsharpi --readline-"
+            fsharp-compiler                "/usr/bin/fsharpc"
+            fsharp-ac-intellisence-enabled t)
+      )
 
     ("keymap")
     (progn
-      (func/keymap/save   c-mode-map)
-      (func/keymap/create c-mode-map
+      (func/keymap/save fsharp-mode-map)
+      (func/keymap/create fsharp-mode-map
                           "TAB" #'yas-expand
 
                           "C-t =" #'evil-indent
                           "C-t /" #'evilnc-comment-or-uncomment-lines
-
-                          ;; arstd
-                          ;; goto-like
-                          "C-c a a" #'dumb-jump-go
-                          "C-c a A" #'dumb-jump-back
-                          "C-c a r" #'ff-find-other-file))
+                          ))
 
     ("hook")
-    (func/hook/add 'c-mode-hook
-                   #'serika-f/c/setup-buffer)))
+    (progn
+      (func/hook/add 'fsharp-mode-hook #'serika-f/fsharp/setup-buffer))
+    ))
