@@ -20,120 +20,7 @@
                                (f-join org-directory
                                        "scripts"
                                        "railroad-diagrams"
-                                       "railroad-diagrams.css")))
-  )
-
-;; Shadower
-(define-minor-mode org-edit-src-shadower-mode
-  "Minor mode for shadowing some keys."
-  :init-value nil
-  :keymap (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "C-x C-s") #'func/buffer/invoke-save-function)
-            (define-key map (kbd "C-x C-c") #'func/buffer/kill)
-            map))
-
-;; Some goodies
-(defun serika-f/org/create-answer-table (&optional question-count)
-  "Create question-answer-correct?-correction table."
-  (interactive "P")
-  (let ((--question-count (or question-count 1)))
-    (org-table-create (format "5x%d" (+ 2 (or question-count 1))))
-    ;; header content
-    (dolist (--elem '("" "Q" "A" "OK?" "Correction"))
-      (org-cycle)
-      (insert --elem))
-    (org-cycle)
-    ;; number of answer
-    (dotimes (--i (1- --question-count))
-      (insert "#")
-      (org-cycle)
-      (insert (format "%d)" (1+ --i)))
-      (dotimes (_ 4)
-        (org-cycle)))
-    ;; last row
-    (insert "#")
-    (org-cycle)
-    (insert (format "%d)" --question-count))
-    (org-table-insert-hline)
-    (forward-line 2)
-    (dotimes (_ 4)
-      (org-cycle))
-    (insert "0%")
-    (org-table-align)
-    (forward-line)
-    (let ((--format (format "#+TBLFM: @%d$4='(format \"%%.2f%%%%\" (* (let ((--s (concat  @2$4..@%d$4))) (/ (s-count-matches \"v\" --s) %.1f)) 100))"
-                            (+ 2 --question-count)
-                            (+ 1 --question-count)
-                            (* --question-count 1.0)
-                            )))
-      (insert --format))))
-
-(defun serika-f/org/edit-src ()
-  "Narrow to src block, excludes BEGIN_SRC and END_SRC."
-  (interactive)
-  (let ((case-fold-search t)
-        (blockp (org-between-regexps-p "^[ \t]*#\\+begin_src.*"
-                                       "^[ \t]*#\\+end_src.*")))
-    (if blockp
-        (let* ((--block-beg      (car blockp))
-               (--block-end      (cdr blockp))
-               (--beg-end            (save-excursion
-                                       (goto-char --block-beg)
-                                       (search-forward-regexp "\n")
-                                       (point)))
-               (--end-beg            (save-excursion
-                                       (goto-char --block-end)
-                                       (search-backward-regexp "\n")
-                                       (point)))
-               (--block-beg-line (buffer-substring --block-beg --beg-end))
-               (--text           (buffer-substring --beg-end --end-beg))
-               (--source-buffer  (current-buffer))
-               (--buffer         (generate-new-buffer "edit src"))
-               (--org-langs      org-src-lang-modes)
-               (--language       (nth 1 (split-string --block-beg-line)))
-               (--language-mode  nil))
-
-          ;; Check if the mode from src block is derived mode in `org-src-lang-modes'
-          (while (and (null --language-mode)
-                      --org-langs)
-            (when (string= --language
-                           (caar --org-langs))
-              (setq --language-mode (intern (concat (symbol-name (cdar --org-langs))
-                                                    "-mode"))))
-            (setq --org-langs (cdr --org-langs)))
-
-          ;; Otherwise, try to add "-mode" to language from src block
-          (unless --language-mode
-            (setq --language-mode (intern (concat --language
-                                                  "-mode"))))
-
-          (with-current-buffer --buffer
-            (switch-to-buffer --buffer)
-            (insert --text)
-            (when (symbol-function --language-mode)
-              (funcall --language-mode))
-            (org-edit-src-shadower-mode +1)
-            (func/buffer/save-function
-             (lambda ()
-               (let ((--new-text (buffer-substring (point-min) (point-max))))
-                 (with-current-buffer --source-buffer
-                   ;; Replace old src block with newer one
-                   (kill-region --block-beg
-                                --block-end)
-                   (goto-char --block-beg)
-                   (insert --block-beg-line)
-                   (insert --new-text)
-                   (insert "\n#+END_SRC")
-
-                   ;; Update src block' beg and end points
-                   (forward-line -1)
-                   (setq blockp (org-between-regexps-p "^[ \t]*#\\+begin_src.*"
-                                                       "^[ \t]*#\\+end_src.*"))
-                   (if blockp
-                       (setq --block-beg (car blockp)
-                             --block-end (cdr blockp))
-                     (user-error "Error replacing scr block"))))))))
-      (user-error "Not in a src block"))))
+                                       "railroad-diagrams.css"))))
 
 ;; Org wrapper functions
 (defun serika-f/org/recalculate-table ()
@@ -176,38 +63,38 @@
 3)"
   (interactive)
   (cond
-   ((org-at-heading-p)   (call-interactively 'org-promote-subtree))
-   ((org-at-table-p)     (call-interactively 'org-table-previous-field))
-   ((org-at-item-p)      (call-interactively 'org-outdent-item-tree))
-   ((org-at-timestamp-p) (call-interactively 'org-timestamp-down-day))))
+   ((org-at-heading-p)          (call-interactively 'org-promote-subtree))
+   ((org-at-table-p)            (call-interactively 'org-table-previous-field))
+   ((org-at-item-p)             (call-interactively 'org-outdent-item-tree))
+   ((org-kokoro-at-timestamp-p) (call-interactively 'org-timestamp-down-day))))
 
 (defun serika-f/org/ctrl-c-ctrl-e ()
   "When cursor at:
 "
   (interactive)
   (cond
-   ((org-at-heading-p)   (call-interactively 'org-forward-heading-same-level))
-   ((org-at-item-p)      (call-interactively 'org-shiftdown))
-   ((org-at-timestamp-p) (call-interactively 'org-timestamp-down))))
+   ((org-at-heading-p)          (call-interactively 'org-forward-heading-same-level))
+   ((org-at-item-p)             (call-interactively 'org-shiftdown))
+   ((org-kokoro-at-timestamp-p) (call-interactively 'org-timestamp-down))))
 
 (defun serika-f/org/ctrl-c-ctrl-i ()
   "When cursor at:
 "
   (interactive)
   (cond
-   ((org-at-heading-p)   (call-interactively 'org-backward-heading-same-level))
-   ((org-at-item-p)      (call-interactively 'org-shiftup))
-   ((org-at-timestamp-p) (call-interactively 'org-timestamp-up))))
+   ((org-at-heading-p)          (call-interactively 'org-backward-heading-same-level))
+   ((org-at-item-p)             (call-interactively 'org-shiftup))
+   ((org-kokoro-at-timestamp-p) (call-interactively 'org-timestamp-up))))
 
 (defun serika-f/org/ctrl-c-ctrl-o ()
   "When cursor at:
 "
   (interactive)
   (cond
-   ((org-at-heading-p)   (call-interactively 'org-demote-subtree))
-   ((org-at-table-p)     (call-interactively 'org-table-next-field))
-   ((org-at-item-p)      (call-interactively 'org-indent-item-tree))
-   ((org-at-timestamp-p) (call-interactively 'org-timestamp-up-day))))
+   ((org-at-heading-p)          (call-interactively 'org-demote-subtree))
+   ((org-at-table-p)            (call-interactively 'org-table-next-field))
+   ((org-at-item-p)             (call-interactively 'org-indent-item-tree))
+   ((org-kokoro-at-timestamp-p) (call-interactively 'org-timestamp-up-day))))
 
 (defun serika-f/org/ctrl-c-ctrl-shift-n ()
   "When cursor at:
@@ -272,15 +159,16 @@
 ;; Init
 (defun init ()
   "Configure `org-mode'."
-  (serika-c/eg/add-install :type 'git
-                           :name 'org
-                           :src  "git://orgmode.org/org-mode.git"
-                           :parents '("install org")
+  (serika-c/eg/add-install :type       'git
+                           :name       'org
+                           :src        "git://orgmode.org/org-mode.git"
+                           :parents    '("install org")
                            :extra-path '("lisp")
-                           :post-hook "make")
+                           :post-hook  "make")
 
-  (dolist (elem '((ob-rust   . "https://github.com/mikae/ob-rust")
-                  (ob-fsharp . "https://github.com/mikae/ob-fsharp")))
+  (dolist (elem '((ob-rust    . "https://github.com/mikae/ob-rust")
+                  (ob-fsharp  . "https://github.com/mikae/ob-fsharp")
+                  (org-kokoro . "https://github.com/mikae/org-kokoro")))
     (serika-c/eg/add-install :type 'git
                              :name (car elem)
                              :src  (cdr elem)
@@ -288,24 +176,25 @@
 
   (serika-c/eg/add-many-by-name 'org
     ("require")
-    (progn
-      (require 'org)
-      (require 'org-capture)
+    (func/func/require 'org
+                       'org-capture
 
-      (require 'ob-ebnf)
-      (require 'ob-haskell)
-      (require 'ob-rust)
-      (require 'ob-fsharp)
-      (require 'ob-shell))
+                       'org-kokoro
+
+                       'ob-ebnf
+                       'ob-haskell
+                       'ob-rust
+                       'ob-fsharp
+                       'ob-shell)
 
     ("settings")
-    (lambda ()
+    (progn
       ;;`auto-mode-alist'
       (serika-f/settings/register-ft 'org-mode "\\.org\\'")
 
       ;; `directories'
       (setq org-directory          (f-join (f-root)
-                                           "home"
+                                           "home2"
                                            "data"
                                            "Data"
                                            "org")
@@ -371,30 +260,7 @@
             org-startup-truncated nil)
 
       ;; `templates'
-      (setq org-structure-template-alist
-            '(
-              ("ps"    ":PROPERTIES:\n:header-args: :results silent\n:END:")
-              ("e"     "#+BEGIN_EXAMPLE\n?\n#+END_EXAMPLE" "<example>\n?\n</example>")
-              ("r"     "#+BEGIN_RULE\n?\n#+END_RULE" "<div class=\"rule\">\n?\n</div>")
-              ("s"     "#+BEGIN_SRC ?\n#+END_SRC")
-              ("sr"    "#+BEGIN_SRC rust?\n#+END_SRC")
-              ("sj"    "#+BEGIN_SRC js\n?\n#+END_SRC")
-              ("sh"    "#+BEGIN_SRC haskell\n?\n#+END_SRC")
-              ("sss"   "#+BEGIN_SRC shell\n?\n#+END_SRC")
-              ("ssb"   "#+BEGIN_SRC bash\n?\n#+END_SRC")
-              ("sfs"   "#+BEGIN_SRC fsharp\n?\n#+END_SRC")
-              ("sij"   "#+BEGIN_SRC inline-js\n?\n#+END_SRC")
-              ("sijrr" "#+BEGIN_SRC inline-js\nComplexDiagram(\n?\n).addTo();\n#+END_SRC")
-
-              ("mpa"   "#+BEGIN_AXIOM\n?\n#+END_AXIOM")
-              ("mde"   "#+BEGIN_DEFINITION\n?\n#+END_DEFINITION")
-              ("mpp"   "#+BEGIN_PROPOSITION\n?\n#+END_PROPOSITION")
-              ("mth"   "#+BEGIN_THEOREM\n?\n#+END_THEOREM")
-              ("mpf"   "#+BEGIN_PROOF\n?\n#+END_PROOF")
-
-              ("ebnfy" "#+BEGIN_SRC ebnf :style yacc :file ?\n\n#+END_SRC")
-              ("ebnfe" "#+BEGIN_SRC ebnf :style ebnf :file ?\n\n#+END_SRC")
-              ("ebnfi" "#+BEGIN_SRC ebnf :style iso-ebnf :file ?\n\n#+END_SRC")))
+      (setq org-structure-template-alist ())
 
       ;; `org-babel'
       (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
@@ -409,14 +275,16 @@
 
       ;; `todos'
       (setq org-todo-keywords
-            '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-              (sequence "|" "CANCELLED(c@/!)")))
+            '((sequence "TODO(a)" "NEXT(r)" "|" "DONE(s)")
+              (sequence                     "|" "CANCELLED(q@/!)")
+              (sequence "FAILED(z@/!)"      "|")))
 
       (setq org-todo-keyword-faces
-            (quote (("TODO" :foreground "red" :weight bold)
-                    ("NEXT" :foreground "blue" :weight bold)
-                    ("DONE" :foreground "forest green" :weight bold)
-                    ("CANCELLED" :foreground "forest green" :weight bold))))
+            (quote (("TODO"      :foreground "orange"       :weight bold)
+                    ("NEXT"      :foreground "blue"         :weight bold)
+                    ("DONE"      :foreground "forest green" :weight bold)
+                    ("CANCELLED" :foreground "forest green" :weight bold)
+                    ("FAILED"    :foreground "red"          :weight bold))))
 
       (setq org-enforce-todo-dependencies          t
             org-enforce-todo-checkbox-dependencies t
@@ -448,7 +316,7 @@
             ))
 
     ("settings smartparens")
-    (lambda ()
+    (progn
       ;; todo: make it smarter
       ;; (sp-local-pair 'org-mode "*" "*"
       ;;                :unless '(sp-point-at-bol-p))
@@ -457,20 +325,19 @@
       ;; (sp-local-pair 'org-mode "=" "=")
       ;; (sp-local-pair 'org-mode "~" "~")
       ;; (sp-local-pair 'org-mode "+" "+")
-      (sp-local-pair 'org-mode "\\[" "\\]")
-      )
+      (sp-local-pair 'org-mode "\\[" "\\]"))
 
     ("keymap")
-    (lambda ()
+    (progn
       (func/keymap/save org-mode-map)
       (func/keymap/create org-mode-map
                           ;; Cycling
                           "TAB"       #'org-cycle
-                          "<C-tab>"   #'org-global-cycle
+                          "<S-tab>"   #'org-global-cycle
                           "RET"       #'org-open-at-point
 
-                          ;;
-                          "C-t e"     #'yas-expand
+                          ;; Snippets
+                          "<C-tab>"   #'yas-expand
 
                           ;; Toggles
                           "C-c C-t i" #'org-toggle-inline-images
@@ -559,7 +426,7 @@
 
                           ;; Babel execute
                           "C-c C-c c" #'org-babel-execute-src-block
-                          "C-c C-c e" #'serika-f/org/edit-src
+                          "C-c C-c e" #'org-kokoro-edit-src
 
                           ;; Refile
                           "C-c C-c r" #'org-refile
@@ -578,24 +445,25 @@
                           "C-c a d"   #'org-remove-file
 
                           ;; Notes
-                          "C-c n s"   #'serika-f/org/store-note))
-    ;; todo: fix it
-    ;; ("settings aggressive-indent")
-    ;; (lambda ()
-    ;;   (add-to-list 'aggressive-indent-dont-indent-if
-    ;;                '(and (derived-mode-p 'org-mode)
-    ;;                      (let ((item (org-element-at-point)))
-    ;;                        (and item
-    ;;                             (eq 'src-block
-    ;;                                 (car item)))))))
+                          "C-c n s"   #'serika-f/org/store-note)
+
+      ;;agenda
+      (func/keymap/save org-agenda-mode-map)
+      (func/keymap/create org-agenda-mode-map
+                          ;; neio
+                          "e" #'org-agenda-next-item
+                          "i" #'org-agenda-previous-item
+
+                          ;;arst
+                          "a" #'org-agenda-todo
+                          ))
 
     ("hook")
-    (lambda ()
-      (add-hook 'org-mode-hook #'serika-f/org//setup-buffer))
+    (func/hook/add 'org-mode-hook
+                   #'serika-f/org//setup-buffer)
 
     ("global-keymap")
-    (lambda ()
-      (func/keymap/define-global "C-x <C-o> C-a" #'org-agenda)))
+    (func/keymap/define-global "C-x <C-o> C-a" #'org-agenda))
 
   ;; todo: Doesn't work
   ;; (serika-c/eg/add :name    'org-evil-insert

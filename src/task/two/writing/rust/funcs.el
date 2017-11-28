@@ -79,7 +79,7 @@
                                    "\\.rs\\'")
 
     ("settings smartparens")
-    (lambda ()
+    (progn
       (sp-local-pair 'rust-mode "("    ")")
       (sp-local-pair 'rust-mode "{"    "}")
       (sp-local-pair 'rust-mode "["    "]")

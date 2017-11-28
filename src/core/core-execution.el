@@ -141,6 +141,7 @@ Example:
                               lambda-2."
   `(when (cl-oddp (length ',args))
      (error "Length of ARGS must be even."))
+
   `(let ((--name ,name)
          (--args ',args))
      (cl-loop for --parents in --args       by #'cddr
@@ -149,16 +150,16 @@ Example:
               (eg/add --serika-execution-graph
                       :name    --name
                       :parents --parents
-                      :func
-(cond
- ((eq (car --elem)
-      'function)
-  (car (cdr --elem)))
- ((eq (car --elem)
-      'lambda)
-  (eval --elem))
- (t --elem))
-))))
+                      :func (cond
+                              ((eq (car --elem)
+                                   'function)
+                               (car (cdr --elem)))
+
+                              ((eq (car --elem)
+                                   'lambda)
+                               (eval --elem))
+
+                              (t --elem))))))
 
 (defmacro serika-c/eg/add-many-by-parents (parents &rest args)
   "Add many execution nodes at once.

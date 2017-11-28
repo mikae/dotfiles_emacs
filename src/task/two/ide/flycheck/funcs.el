@@ -49,33 +49,31 @@
                            :name         'flycheck)
 
   (serika-c/eg/add-many-by-name 'flycheck
-                                ("require")
-                                (lambda ()
-                                  (require 'flycheck))
+    ("require")
+    (func/func/require 'flycheck)
 
-                                ("settings")
-                                (lambda ()
-                                  (add-to-list 'display-buffer-alist
-                                               `(,(rx bos "*Flycheck errors*" eos)
-                                                 (display-buffer-reuse-window display-buffer-in-side-window)
-                                                 (side            . bottom)
-                                                 (reusable-frames . visible)
-                                                 (window-height   . 0.2)))
-                                  (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
-                                  (setq flycheck-idle-change-delay 1))
+    ("settings")
+    (progn
+      (add-to-list 'display-buffer-alist
+                   `(,(rx bos "*Flycheck errors*" eos)
+                     (display-buffer-reuse-window display-buffer-in-side-window)
+                     (side            . bottom)
+                     (reusable-frames . visible)
+                     (window-height   . 0.2)))
+      (setq flycheck-check-syntax-automatically '(mode-enabled save idle-change))
+      (setq flycheck-idle-change-delay 1))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save flycheck-error-list-mode-map)
-                                  (func/keymap/save flycheck-mode-map)
-                                  (func/keymap/create flycheck-error-list-mode-map
-                                                      "A-n" #'evil-backward-char
-                                                      "A-e" #'evil-next-line
-                                                      "A-i" #'evil-previous-line
-                                                      "A-o" #'evil-forward-char)
-                                  (func/keymap/create flycheck-mode-map))
+    ("keymap")
+    (progn
+      (func/keymap/save flycheck-error-list-mode-map)
+      (func/keymap/save flycheck-mode-map)
+      (func/keymap/create flycheck-error-list-mode-map
+                          "A-n" #'evil-backward-char
+                          "A-e" #'evil-next-line
+                          "A-i" #'evil-previous-line
+                          "A-o" #'evil-forward-char)
+      (func/keymap/create flycheck-mode-map))
 
-                                ("global-keymap")
-                                (lambda ()
-                                  (func/keymap/define-global "C-, f s" 'serika-f/flycheck/create
-                                                             "C-, f h" 'serika-f/flycheck/remove))))
+    ("global-keymap")
+    (func/keymap/define-global "C-x s s" 'serika-f/flycheck/create
+                               "C-x s h" 'serika-f/flycheck/remove)))

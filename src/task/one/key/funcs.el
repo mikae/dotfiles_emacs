@@ -343,6 +343,7 @@
   "Create global bindings."
   (dolist (elem '("C-0" "C-1" "C-2" "C-3" "C-4" "C-5" "C-6" "C-7" "C-8" "C-9"))
     (global-set-key (kbd elem) 'digit-argument))
+  (func/keymap/define-global "C-`" #'universal-argument)
 
   ;; save/kill
   (func/keymap/define-global "C-x C-s"     #'save-buffer

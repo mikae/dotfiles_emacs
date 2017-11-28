@@ -32,35 +32,48 @@
 ;;
 ;;; Code:
 
-;; Functions
-(defun serika-f/ycmd/activate ()
-  "Activate ycmd mode in current buffer."
-  (interactive)
-  (ycmd-mode +1))
+(defun serika-f/prolog/setup-buffer ()
+  "Setup prolog buffer"
+  (when (eq major-mode
+            'prolog-mode)
+    (func/var/ensure-local tab-width      2
+                           truncate-lines t)
+
+    (serika-f/evil/activate :evil-shift-width 2
+                            :evil-state       'normal)
+    (serika-f/smartparens/activate)
+    (serika-f/aggressive-indent/activate)
+
+    (serika-f/flycheck/activate)
+    (serika-f/yasnippet/activate)
+    (serika-f/company/activate)
+
+    (serika-f/settings/show-trailing-whitespaces)
+    (serika-f/linum-relative/activate)
+    (serika-f/rainbow-delimiters/activate)
+    (serika-f/highlight-symbol/activate)
+    ))
 
 ;; Init
 (defun init ()
-  "Configure ycmd"
-  (serika-c/eg/add-install :type    'git
-                           :name    'emacs-ycmd
-                           :src     "https://github.com/mikae/emacs-ycmd"
-                           :parents '("install ycmd"))
-
-  (serika-c/eg/add-install :type 'package
-                           :name 'emacs-ycmd
-                           :package-list '(request
-                                           request-deferred))
-
-  (serika-c/eg/add-many-by-name 'ycmd
+  "Configure Emacs for programming in prolog."
+  (serika-c/eg/add-many-by-name 'prolog
     ("require")
-    (func/func/require 'ycmd
-                       'company-ycmd
-                       'flycheck-ycmd)
+    (func/func/require 'prolog)
 
     ("settings")
+    (serika-f/settings/register-ft 'prolog-mode
+                                   "\\.pl\\'")
+
+    ("settings smartparens")
     (progn
-      (setq ycmd-server-command '("python" "/home/yui/git_other/ycmd/ycmd"))
-      (setq ycmd-global-config  (f-join serika-conf-directory
-                                        ".global_config.py"))
-      (setq ycmd-force-semantic-completion t)
-      )))
+      (sp-local-pair 'prolog-mode "(" ")"))
+
+    ("keymap")
+    (progn
+      (func/keymap/save prolog-mode-map)
+      (func/keymap/create prolog-mode-map))
+
+    ("hook")
+    (func/hook/add 'prolog-mode-hook
+                   #'serika-f/prolog/setup-buffer)))

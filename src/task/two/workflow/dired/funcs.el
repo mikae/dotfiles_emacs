@@ -6,7 +6,9 @@
 (defvar --serika-dired-omit-mode-hidden-patterns '("^\\\.")
   "Rules for hidden patterns.")
 
-(defvar --serika-dired-omit-mode-omitted-patterns '("^flycheck_\.+\\.el$")
+(defvar --serika-dired-omit-mode-omitted-patterns '("^flycheck_\.+\\.el$"
+                                                    "\\.$"
+                                                    "\\.\\.$")
   "Rules for omitted patterns.")
 
 (defvar --serika-dired-omit-mode-bits 0

@@ -17,7 +17,9 @@
 
     (serika-f/flycheck/activate)
     (serika-f/yasnippet/activate)
-    (serika-f/company/activate)
+    (serika-f/company/activate :backends-set '((company-ghc :with company-dabbrev-code)
+                                               (company-files
+                                                company-yasnippet)))
     ;; (serika-f/eldoc/activate)
 
     (serika-f/settings/show-trailing-whitespaces)
@@ -34,13 +36,38 @@
                            :package-list '(haskell-mode)
                            :parents      '("install haskell"))
 
+  (serika-c/eg/add-install :type       'git
+                           :name       'hindent
+                           :src        "https://github.com/mikae/hindent"
+                           :extra-path '("elisp")
+                           :parents    '("install haskell"))
+
+  (add-to-list 'load-path "~/.cabal/share/x86_64-linux-ghc-8.0.2/ghc-mod-5.8.0.0/elisp")
+
+  (serika-c/eg/add-install :type       'git
+                           :name       'company-ghc
+                           :src        "https://github.com/mikae/company-ghc"
+                           :parents    '("install haskell"))
+
   (serika-c/eg/add-many-by-name 'haskell
     ("require")
-    (func/func/require 'haskell-mode)
+    (func/func/require 'haskell-mode
+                       'hindent
+                       'ghc
+                       'company-ghc)
 
     ("settings")
     (serika-f/settings/register-ft 'haskell-mode
                                    "\\.hs\\'")
+
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'haskell-mode "("    ")")
+      (sp-local-pair 'haskell-mode "{"    "}")
+      (sp-local-pair 'haskell-mode "["    "]")
+      (sp-local-pair 'haskell-mode "\""   "\"")
+      (sp-local-pair 'haskell-mode "\\\"" "\\\"")
+      (sp-local-pair 'haskell-mode "\\'"  "\\'"))
 
     ("keymap")
     (progn
@@ -48,8 +75,9 @@
       (func/keymap/create haskell-mode-map
                           "TAB" #'yas-expand
 
-                          "C-t =" #'evil-indent
-                          "C-t /" #'evilnc-comment-or-uncomment-lines))
+                          "C-t ="   #'hindent-reformat-decl
+                          "C-t C-=" #'haskell-mode-stylish-buffer
+                          "C-t /"   #'evilnc-comment-or-uncomment-lines))
 
     ("hook")
     (func/hook/add 'haskell-mode-hook
