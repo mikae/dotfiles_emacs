@@ -14,43 +14,43 @@
                            :name         'helm)
 
   (serika-c/eg/add-many-by-name 'helm
-                                ("require")
-                                (lambda ()
-                                  (require 'helm-lib)
-                                  (require 'helm-config)
-                                  (require 'helm-source))
+    ("require")
+    (progn
+      (require 'helm-lib)
+      (require 'helm-config)
+      (require 'helm-source))
 
-                                ("settings")
-                                (lambda ()
-                                  (when (executable-find "curl")
-                                    (setq helm-google-suggest-use-curl-p t))
+    ("settings")
+    (progn
+      (when (executable-find "curl")
+        (setq helm-google-suggest-use-curl-p t))
 
-                                  (setq helm-split-window-in-side-p           t)
-                                  (setq helm-buffers-fuzzy-matching           t)
-                                  (setq helm-move-to-line-cycle-in-source     t)
-                                  (setq helm-ff-search-library-in-sexp        t)
-                                  (setq helm-ff-file-name-history-use-recentf t))
+      (setq helm-split-window-in-side-p           t)
+      (setq helm-buffers-fuzzy-matching           t)
+      (setq helm-move-to-line-cycle-in-source     t)
+      (setq helm-ff-search-library-in-sexp        t)
+      (setq helm-ff-file-name-history-use-recentf t))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   helm-map)
-                                  (func/keymap/create helm-map
-                                                      "A-e" 'helm-next-line
-                                                      "A-i" 'helm-previous-line
-                                                      "A-E" 'helm-next-source
-                                                      "A-I" 'helm-previous-source
-                                                      "RET" 'helm-maybe-exit-minibuffer
-                                                      "TAB" 'helm-select-action)
+    ("keymap")
+    (progn
+      (func/keymap/save   helm-map)
+      (func/keymap/create helm-map
+                          "A-e" 'helm-next-line
+                          "A-i" 'helm-previous-line
+                          "A-E" 'helm-next-source
+                          "A-I" 'helm-previous-source
+                          "RET" 'helm-maybe-exit-minibuffer
+                          "TAB" 'helm-select-action)
 
-                                  (func/keymap/save   helm-buffer-map)
-                                  (func/keymap/create helm-buffer-map))
+      (func/keymap/save   helm-buffer-map)
+      (func/keymap/create helm-buffer-map))
 
-                                ("global-keymap")
-                                (lambda ()
-                                  (func/keymap/define-global "M-a"   #'helm-M-x
+    ("global-keymap")
+    (progn
+      (func/keymap/define-global "M-a"   #'helm-M-x
 
-                                                             "C-x f" #'helm-find-files
-                                                             "C-x y" #'helm-show-kill-ring))
+                                 "C-x f" #'helm-find-files
+                                 "C-x h y" #'helm-show-kill-ring))
 
-                                ("post activate")
-                                #'serika-f/helm/activate))
+    ("post activate")
+    #'serika-f/helm/activate))

@@ -26,26 +26,14 @@
     (serika-f/company/activate)
 
     (serika-f/eldoc/activate)
-    (serika-f/ggtags/activate)
+    ;; (serika-f/ggtags/activate)
     ;; (serika-f/projectile/try-activate)
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
     (serika-f/highlight-symbol/activate)
-    (serika-f/prettify-symbols/activate :name "emacs-lisp")
-
-    ;; ;; create flycheck window
-    ;; (when (and (serika-f/flycheck/activated-p)
-    ;;            (serika-f/flycheck/not-exists-p))
-    ;;   (serika-f/flycheck/create))
-
-    ;; autofocus to `emacs-lisp' buffer
-    ;; (when (not (func/buffer/check-modes 'emacs-lisp-mode
-    ;; 'lisp-interaction-mode))
-    ;; (func/buffer/focus-to 'emacs-lisp-mode))
-    )
-  )
+    (serika-f/prettify-symbols/activate :name "emacs-lisp")))
 
 ;; Init
 (defun init ()

@@ -3,12 +3,6 @@
 ;;; Code:
 
 ;; Functions
-(defun serika-f/which-key/activate ()
-  "Activate `which-key'."
-  (interactive)
-  )
-
-
 (defmacro serika-f/which-key//define-keys (mode keymap-name &rest bindings)
   "Define keys in KEYMAP-NAME with `which-key' descriptions in MODE.
 Usage:
@@ -72,24 +66,28 @@ Usage:
                                     global-map
                                     ,@bindings))
 
+(defun serika-f/which-key/activate ()
+  "Activate `which-key-mode'."
+  (which-key-mode +1))
 
 ;; Init
 (defun init ()
   "Configure `which-key'."
+  ;; Indentation setup
+  (put 'serika-f/which-key/create-keymap 'lisp-indent-function 'defun)
+
   (serika-c/eg/add-install :type 'package
                            :name 'which-key
                            :package-list '(which-key))
 
   (serika-c/eg/add-many-by-name 'which-key
-                                ("require")
-                                (lambda ()
-                                  (require 'which-key))
+    ("require")
+    (func/func/require 'which-key)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq which-key-idle-delay 0.2)
-                                  (which-key-setup-side-window-bottom))
+    ("settings")
+    (progn
+      (setq which-key-idle-delay 0.2)
+      (which-key-setup-side-window-bottom))
 
-                                ("post activate")
-                                (lambda ()
-                                  (which-key-mode +1))))
+    ("post activate")
+    (serika-f/which-key/activate)))

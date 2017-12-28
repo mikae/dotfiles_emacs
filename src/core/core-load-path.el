@@ -58,6 +58,12 @@
                             (file-name-as-directory "images")))
   "Directory for asset files.")
 
+(defconst serika-sounds-directory
+  (expand-file-name (concat serika-start-directory
+                            (file-name-as-directory "assets")
+                            (file-name-as-directory "sounds")))
+  "Directory for asset files.")
+
 ;; Change load-path
 (let ((add-to-load-path (lambda (dir)
                           (add-to-list 'load-path dir))))

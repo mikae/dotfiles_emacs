@@ -168,7 +168,8 @@ x0 - bit of omitted files.")
       (error "2 marked files are required for `shn-split'"))))
 
 (defun serika-f/dired/uncompress-selected ()
-  "Uncompress selected files."
+  "Uncompress selected archive files in dired buffer.
+Supports: rar, zip, tar.gz archives."
   (interactive)
   (let ((--input (read-string "Path: " nil default-directory))
         (--target))
@@ -192,7 +193,9 @@ x0 - bit of omitted files.")
                                       ((string-match "\\.tar.gz" --item)
                                        "cd %s && tar xvf \"%s\"")
                                       (t (error "Unsupported archive format.")))
-                                     (s-replace "\"" "\\\"" default-directory)
+                                     (s-replace-all '(("\"" . "\\\"")
+                                                      (" "  . "\\ "))
+                                                    default-directory)
                                      --item)))
                   (when --cmd
                     (shell-command --cmd)
@@ -235,129 +238,111 @@ If PATH is invalid return nil."
                            :parents '("install dired"))
 
   (serika-c/eg/add-many-by-name 'dired
-                                ("require")
-                                (lambda ()
-                                  (require 'dired)
-                                  (require 'dired-x)
-                                  (require 'dired+)
-                                  (require 'dired-helm-locations)
-                                  (require 'evil))
+    ("require")
+    (func/func/require 'dired
+                       'dired-x
+                       'dired+
+                       'dired-helm-locations
+                       'evil)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq dired-recursive-deletes 'always
-                                        dired-dwim-target       t)
+    ("settings")
+    (progn
+      (setq dired-recursive-deletes 'always
+            dired-dwim-target       t)
 
-                                  ;; Omit some files with patterns
-                                  (setq dired-omit-verbose nil)
+      ;; Omit some files with patterns
+      (setq dired-omit-verbose nil)
 
-                                  (setq dired-compress-file-suffixes
-                                        '(("\\.zip\\'" ".zip" "unzip")))
+      (setq dired-compress-file-suffixes
+            '(("\\.zip\\'" ".zip" "unzip")))
 
-                                  ;; `dired-helm-locations'
-                                  (dired-helm-locations-add "org"      org-directory)
-                                  (dired-helm-locations-add "wiki"     org-wikinyan-location)
-                                  (dired-helm-locations-add "home"     (func/system/user-home))
-                                  (dired-helm-locations-add "projects" (let ((--path (cond
-                                                                                      ((func/system/path-exists 'user-project-directory)
-                                                                                       (func/system/path-get    'user-project-directory))
-                                                                                      (t
-                                                                                       (f-join (func/system/user-home)
-                                                                                               "Projects")))))
-                                                                         (unless (f-exists-p --path)
-                                                                           (f-mkdir --path))
-                                                                         (if (f-dir-p --path)
-                                                                             --path
-                                                                           (error "Path \"%s\" is not valid"))))
-                                  )
+      ;; `dired-helm-locations'
+      (dired-helm-locations-add "home" (func/system/user-home)
+                                "org"  org-directory
+                                "wiki" org-wikinyan-location))
 
-                                ("settings evil")
-                                (lambda ()
-                                  (evil-define-state dired
-                                    "State for dired."
-                                    :tag "<Dired>"
-                                    :suppress-keymap t))
+    ("settings evil")
+    (evil-define-state dired
+      "State for dired."
+      :tag "<Dired>"
+      :suppress-keymap t)
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save dired-mode-map)
-                                  (func/keymap/create dired-mode-map))
+    ("keymap")
+    (progn
+      (func/keymap/save dired-mode-map)
+      (func/keymap/create dired-mode-map))
 
-                                ("global-keymap")
-                                (lambda ()
-                                  (func/keymap/define-global "C-x d" #'serika-f/dired/open-this-directory))
+    ("global-keymap")
+    (func/keymap/define-global "C-x d" #'serika-f/dired/open-this-directory)
 
-                                ("hook")
-                                (lambda ()
-                                  (add-hook 'dired-mode-hook #'serika-l/dired//setup-buffer)))
+    ("hook")
+    (func/hook/add 'dired-mode-hook
+                   #'serika-l/dired//setup-buffer))
 
-  (serika-c/eg/add-many-by-parents
-   ("keymap evil")
-   'dired
-   (lambda ()
-     (func/keymap/create evil-dired-state-map)
+  (serika-c/eg/add-many-by-parents ("keymap evil")
+    'dired
+    (progn
+      (func/keymap/create evil-dired-state-map)
 
-     (serika-f/which-key/create-keymap
-      dired-mode
-      evil-dired-state-map
-      ;; arstd
-      "a a"   #'dired-mark                                          "Mark file"
-      "a A"   #'dired-mark-unmarked-files                           "Mark unmarked"
-      "a r"   #'dired-unmark                                        "Unmark file"
-      "a R"   #'dired-unmark-all-marks                              "Unmark all"
+      (serika-f/which-key/create-keymap dired-mode evil-dired-state-map
+        ;; arstd
+        "a a"   #'dired-mark                                          "Mark file"
+        "a A"   #'dired-mark-unmarked-files                           "Mark unmarked"
+        "a r"   #'dired-unmark                                        "Unmark file"
+        "a R"   #'dired-unmark-all-marks                              "Unmark all"
 
-      "r a"   #'dired-do-delete                                     "Delete"
-      "r A"   #'dired-do-copy                                       "Copy"
-      "r r"   #'dired-do-rename                                     "Rename"
-      "r R"   #'diredp-list-marked                                  "List marked files"
-      "r s"   #'serika-f/dired/uncompress-selected                  "Uncompress"
+        "r a"   #'dired-do-delete                                     "Delete"
+        "r A"   #'dired-do-copy                                       "Copy"
+        "r r"   #'dired-do-rename                                     "Rename"
+        "r R"   #'diredp-list-marked                                  "List marked files"
+        "r s"   #'serika-f/dired/uncompress-selected                  "Uncompress"
 
-      "s a"   #'helm-find-files                                     "Create file"
-      "s A"   #'serika-f/dired/create-directory                     "Create directory"
-      "s r"   #'dired-do-symlink                                    "Create symlink"
-      "s R"   #'dired-do-hardlink                                   "Create hardlink"
+        "s a"   #'helm-find-files                                     "Create file"
+        "s A"   #'serika-f/dired/create-directory                     "Create directory"
+        "s r"   #'dired-do-symlink                                    "Create symlink"
+        "s R"   #'dired-do-hardlink                                   "Create hardlink"
 
-      "t a"   #'dired-do-chown                                      "Change owner"
-      "t A"   #'dired-do-chgrp                                      "Change group"
+        "t a"   #'dired-do-chown                                      "Change owner"
+        "t A"   #'dired-do-chgrp                                      "Change group"
 
-      "d q"   #'serika-f/dired/toggle-hidden                        "Toggle hidden"
-      "d Q"   #'serika-f/dired/toggle-omitted                       "Toggle omitted"
-      "d w"   (func/func/toggle-minor-mode dired-hide-details-mode) "Toggle details"
+        "d q"   #'serika-f/dired/toggle-hidden                        "Toggle hidden"
+        "d Q"   #'serika-f/dired/toggle-omitted                       "Toggle omitted"
+        "d w"   (func/func/toggle-minor-mode dired-hide-details-mode) "Toggle details"
 
-      ;; qwfpg
-      "q"     #'func/buffer/kill                                    "Close"
-      "w"     #'dired-helm-locations-open                           "Open location")
+        ;; qwfpg
+        "q"     #'func/buffer/kill                                    "Close"
+        "w"     #'dired-helm-locations-open                           "Open location")
 
-     (func/keymap/define evil-dired-state-map
-                         ;; zxcvb
-                         "z"       #'evil-search-next
-                         "Z"       #'evil-search-previous
-                         "x"       #'serika-f/dired/scroll-page-down
-                         "X"       #'serika-f/dired/scroll-page-up
+      (func/keymap/define evil-dired-state-map
+        ;; zxcvb
+        "z"       #'evil-search-next
+        "Z"       #'evil-search-previous
+        "x"       #'serika-f/dired/scroll-page-down
+        "X"       #'serika-f/dired/scroll-page-up
 
-                         ;; neio
-                         "n"       #'dired-up-directory
-                         "e"       #'serika-f/dired/next-line
-                         "i"       #'serika-f/dired/previous-line
-                         "o"       #'dired-find-file
+        ;; neio
+        "n"       #'dired-up-directory
+        "e"       #'serika-f/dired/next-line
+        "i"       #'serika-f/dired/previous-line
+        "o"       #'dired-find-file
 
-                         "I"       #'serika-f/dired/move-to-window-top
-                         "E"       #'serika-f/dired/move-to-window-bottom
+        "I"       #'serika-f/dired/move-to-window-top
+        "E"       #'serika-f/dired/move-to-window-bottom
 
-                         "A-i"     #'serika-f/dired/move-to-beginning
-                         "A-e"     #'serika-f/dired/move-to-end
+        "S-i"     #'serika-f/dired/move-to-beginning
+        "S-e"     #'serika-f/dired/move-to-end
 
-                         ;; 12345
-                         "A-1"     #'evil-search-forward
-                         "A-!"     #'evil-search-backward
+        ;; 12345
+        "A-1"     #'evil-search-forward
+        "A-!"     #'evil-search-backward
 
-                         ;; ret
-                         "RET"     #'dired-run-associated-program
+        ;; ret
+        "RET"     #'dired-run-associated-program
 
-                         ;; C-
-                         "C-q"     (lambda ()
-                                     (interactive)
-                                     (func/buffer/kill-by-major-mode 'dired-mode))
-                         "C-x C-s" #'ignore)
+        ;; C-
+        "C-q"     (lambda ()
+                    (interactive)
+                    (func/buffer/kill-by-major-mode 'dired-mode))
+        "C-x C-s" #'ignore)
 
-     (func/keymap/bind-digits evil-dired-state-map #'digit-argument))))
+      (func/keymap/bind-digits evil-dired-state-map #'digit-argument))))

@@ -33,13 +33,18 @@
 ;;; Code:
 
 ;; Functions
+(defun serika-f/tex/indent-buffer ()
+  "Indent buffer."
+  (interactive)
+  (indent-region (poin-min) (point-max)))
+
 (defun serika-f/tex/setup-buffer ()
   "Configure tex buffers"
   (when (func/buffer/check-modes 'latex-mode)
     (func/var/ensure-local tab-width 4)
 
     (serika-f/evil/activate :evil-shift-width 4
-                            :evil-state 'normal)
+                            :evil-state       'normal)
 
     (serika-f/company/activate :backends-set '(company-auctex))
     (serika-f/flycheck/activate)
@@ -55,23 +60,28 @@
                                            company-auctex))
 
   (serika-c/eg/add-many-by-name 'tex
-                                ("require")
-                                (progn
-                                  ;; todo: change this
-                                  (load "~/.emacs.d/elpa/auctex-11.91.0/auctex.el")
-                                  (load "~/.emacs.d/elpa/auctex-11.91.0/preview.el")
-                                  (func/func/require 'company-auctex))
+    ("require")
+    (progn
+      ;; todo: change this
+      (load "~/.emacs.d/elpa/auctex-12.1.0/auctex.el")
+      (load "~/.emacs.d/elpa/auctex-12.1.0/preview.el")
+      (func/func/require 'company-auctex))
 
-                                ("settings")
-                                (progn
-                                  (serika-f/settings/register-ft 'TeX-mode
-                                                                 "\\.tex\\'")
-                                  (setq TeX-auto-save  t
-                                        TeX-parse-self t
-                                        TeX-save-query nil)
+    ("settings")
+    (progn
+      (serika-f/settings/register-ft 'LaTeX-mode
+                                     "\\.tex\\'")
+      (setq TeX-auto-save  t
+            TeX-parse-self t
+            TeX-save-query nil))
 
-                                  )
+    ;; ("keymap")
+    ;; (progn
+    ;;   (func/keymap/save latex-mode-map)
+    ;;   (func/keymap/create LaTeX-mode-map
+    ;;                       "C-t ="   #'LaTeX-indent-line
+    ;;                       "C-t C-=" #'serika-f/tex/indent-buffer))
 
-                                ("hook")
-                                (func/hook/add 'TeX-mode-hook
-                                               #'serika-f/tex/setup-buffer)))
+    ("hook")
+    (func/hook/add 'TeX-mode-hook
+                   #'serika-f/tex/setup-buffer)))

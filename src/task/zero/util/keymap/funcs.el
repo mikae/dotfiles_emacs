@@ -132,3 +132,9 @@ Example:
      (set (intern (format funcs-keymap-saved-pattern
                           (symbol-name --keymap)))
           (symbol-value --keymap))))
+
+;; Configure indentation
+(dolist (item '(func/keymap/define
+                func/keymap/define-global
+                func/keymap/create))
+  (put item 'lisp-indent-function 'defun))

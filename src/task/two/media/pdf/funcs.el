@@ -9,40 +9,36 @@
                            :name         'pdf)
 
   (serika-c/eg/add-many-by-name 'pdf
-                                ("require")
-                                (lambda ()
-                                  (require 'pdf-tools)
-                                  (pdf-tools-install))
+    ("require")
+    (progn
+      (require 'pdf-tools)
+      (pdf-tools-install))
 
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'pdf-view-mode "\\.pdf\\'"))
+    ("settings")
+    (progn
+      (serika-f/settings/register-ft 'pdf-view-mode "\\.pdf\\'"))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   pdf-view-mode-map)
-                                  (func/keymap/create pdf-view-mode-map
-                                                      ;; qwfpg
-                                                      "q" #'func/buffer/kill-current
+    ("keymap")
+    (progn
+      (func/keymap/save   pdf-view-mode-map)
+      (func/keymap/create pdf-view-mode-map
+                          ;; qwfpg
+                          "q" #'func/buffer/kill-current
+                          "w" #'pdf-view-shrink
+                          "W" #'pdf-view-enlarge
+                          "C-w" #'pdf-view-scale-reset
 
-                                                      ;; arstd
-                                                      "a" #'pdf-view-next-page
-                                                      "A" #'pdf-view-previous-page
-                                                      "r" #'pdf-view-first-page
-                                                      "R" #'pdf-view-last-page
-                                                      "s" #'pdf-view-goto-page
-                                                      "S" #'pdf-view-goto-label
+                          ;; arstd
+                          "a" #'pdf-view-goto-page
+                          "r" #'pdf-view-goto-label
+                          "A-t" #'pdf-view-first-page
+                          "A-T" #'pdf-view-last-page
 
-                                                      ;; neio
-                                                      "e" #'pdf-view-next-line-or-next-page
-                                                      "i" #'pdf-view-previous-line-or-previous-page
-                                                      "E" #'pdf-view-scroll-up-or-next-page
-                                                      "I" #'pdf-view-scroll-down-or-previous-page
+                          ;; neio
+                          "e" #'pdf-view-next-line-or-next-page
+                          "i" #'pdf-view-previous-line-or-previous-page
+                          "E" #'pdf-view-next-page
+                          "I" #'pdf-view-previous-page)
 
-                                                      ;; Scale
-                                                      "-" #'pdf-view-shrink
-                                                      "+" #'pdf-view-enlarge
-                                                      "0" #'pdf-view-scale-reset)
-
-                                  (func/keymap/save pdf-misc-minor-mode-map)
-                                  (func/keymap/create pdf-misc-minor-mode-map))))
+      (func/keymap/save pdf-misc-minor-mode-map)
+      (func/keymap/create pdf-misc-minor-mode-map))))

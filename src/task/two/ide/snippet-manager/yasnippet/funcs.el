@@ -10,6 +10,13 @@
   (yas-recompile-all)
   (yas-reload-all))
 
+(defun serika-f/yasnippet/recompile-reload ()
+  "Recompile and reload snippets."
+  (interactive)
+  (yas-recompile-all)
+  (yas-reload-all))
+
+;; Setup buffer
 (defun serika-f/snippet-mode/setup-buffer ()
   "Setup `snippet-mode' buffer."
   (when (eq major-mode
@@ -28,27 +35,29 @@
                            :package-list '(yasnippet))
 
   (serika-c/eg/add-many-by-name 'yasnippet
-                                ("settings")
-                                (lambda ()
-                                  (func/keymap/create yas-minor-mode-map)
-                                  (func/keymap/create yas-keymap
-                                                      "A-O"   #'yas-next-field
-                                                      "A-N"   #'yas-prev-field)
-                                  (func/keymap/create snippet-mode-map)
+    ("settings")
+    (progn
+      (func/keymap/create yas-minor-mode-map
+                          "C-x y r" #'serika-f/yasnippet/recompile-reload)
 
-                                  (require 'yasnippet)
+      (func/keymap/create yas-keymap
+                          "A-O"   #'yas-next-field
+                          "A-N"   #'yas-prev-field)
 
-                                  (setq yas-snippet-dirs
-                                        (f-join serika-conf-directory
-                                                "yasnippet"
-                                                "snippets"))))
+      (func/keymap/create snippet-mode-map)
+
+      (require 'yasnippet)
+
+      (setq yas-snippet-dirs
+            (f-join serika-conf-directory
+                    "yasnippet"
+                    "snippets"))))
 
   (serika-c/eg/add-many-by-name 'yasnippet-snippet
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'snippet-mode
-                                                                 "\\.yasnippet\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'snippet-mode
+                                   "\\.yasnippet\\'")
 
-                                ("hook")
-                                (lambda ()
-                                  (add-hook 'snippet-mode-hook #'serika-f/snippet-mode/setup-buffer))))
+    ("hook")
+    (progn
+      (add-hook 'snippet-mode-hook #'serika-f/snippet-mode/setup-buffer))))

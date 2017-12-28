@@ -33,7 +33,7 @@
     (serika-f/company/activate :backends-set '((company-ycmd)
                                                (company-files company-yasnippet)))
     (serika-f/eldoc/activate)
-    (serika-f/ggtags/activate)
+    ;; (serika-f/ggtags/activate)
     ;; (serika-f/projectile/try-activate)
 
     (when buffer-file-name

@@ -52,8 +52,6 @@
     (serika-f/flycheck/activate)
 
     (serika-f/eldoc/activate)
-    (serika-f/ggtags/activate)
-
     (serika-f/company/activate :backends-set '(company-shell
                                                company-shell-env))
 
