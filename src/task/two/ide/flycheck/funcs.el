@@ -45,8 +45,9 @@
 ;; Init
 (defun init ()
   "Configure `flycheck'."
-  (serika-c/eg/add-install :package-list '(flycheck)
-                           :name         'flycheck)
+  (serika-c/eg/add-install :type    'git
+                           :name    'flycheck
+                           :src     "https://github.com/shinkiley/flycheck")
 
   (serika-c/eg/add-many-by-name 'flycheck
     ("require")
@@ -68,12 +69,12 @@
       (func/keymap/save flycheck-error-list-mode-map)
       (func/keymap/save flycheck-mode-map)
       (func/keymap/create flycheck-error-list-mode-map
-                          "A-n" #'evil-backward-char
-                          "A-e" #'evil-next-line
-                          "A-i" #'evil-previous-line
-                          "A-o" #'evil-forward-char)
+        "A-n" #'evil-backward-char
+        "A-e" #'evil-next-line
+        "A-i" #'evil-previous-line
+        "A-o" #'evil-forward-char)
       (func/keymap/create flycheck-mode-map))
 
     ("global-keymap")
     (func/keymap/define-global "C-x s s" 'serika-f/flycheck/create
-                               "C-x s h" 'serika-f/flycheck/remove)))
+      "C-x s h" 'serika-f/flycheck/remove)))

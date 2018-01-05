@@ -64,43 +64,46 @@
 ;; Init
 (defun init ()
   "Configure `sh-mode'."
+  (serika-c/eg/add-install :type 'git
+                           :name 'company-shell
+                           :src  "https://github.com/shinkiley/company-shell")
+
   (serika-c/eg/add-many-by-name 'sh
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'sh-mode
-                                                                 "\\.sh\\'"
-                                                                 "\\.zsh\\'"
-                                                                 "\\.zshrc\\'"
-                                                                 "\\.zshenv\\'"
-                                                                 "\\.zshprofile\\'"
-                                                                 "\\.xinit\\'"))
+    ("require")
+    (func/func/require 'company-shell)
 
-                                ("settings multi-compile")
-                                (lambda ()
-                                  (add-to-list 'multi-compile-alist '(sh-mode . (("bash" . "bash  %path")
-                                                                                 ("zsh"  . "zsh   %path")))))
+    ("settings")
+    (serika-f/settings/register-ft 'sh-mode
+                                   "\\.sh\\'"
+                                   "\\.zsh\\'"
+                                   "\\.zshrc\\'"
+                                   "\\.zshenv\\'"
+                                   "\\.zshprofile\\'"
+                                   "\\.xinit\\'")
 
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'sh-mode "("    ")")
-                                  (sp-local-pair 'sh-mode "{"    "}")
-                                  (sp-local-pair 'sh-mode "["    "]")
-                                  (sp-local-pair 'sh-mode "\""   "\"")
-                                  (sp-local-pair 'sh-mode "'"    "'")
-                                  (sp-local-pair 'sh-mode "\\\"" "\\\""))
+    ("settings multi-compile")
+    (add-to-list 'multi-compile-alist '(sh-mode . (("bash" . "bash  %path")
+                                                   ("zsh"  . "zsh   %path"))))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/create sh-mode-map
-                                                      "TAB" #'yas-expand
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'sh-mode "("    ")")
+      (sp-local-pair 'sh-mode "{"    "}")
+      (sp-local-pair 'sh-mode "["    "]")
+      (sp-local-pair 'sh-mode "\""   "\"")
+      (sp-local-pair 'sh-mode "'"    "'")
+      (sp-local-pair 'sh-mode "\\\"" "\\\""))
 
-                                                      "C-c a" #'serika-f/sh/execute
-                                                      "C-c A" #'multi-compile-run
+    ("keymap")
+    (func/keymap/create sh-mode-map
+      "TAB" #'yas-expand
 
-                                                      "C-t =" #'evil-indent
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
+      "C-c a" #'serika-f/sh/execute
+      "C-c A" #'multi-compile-run
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'sh-mode-hook
-                                                 #'serika-f/sh/setup-buffer))))
+      "C-t =" #'evil-indent
+      "C-t /" #'evilnc-comment-or-uncomment-lines)
+
+    ("hook")
+    (func/hook/add 'sh-mode-hook
+                   #'serika-f/sh/setup-buffer)))

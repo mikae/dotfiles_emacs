@@ -25,49 +25,48 @@
 (defun init ()
   "Configure `eshell'."
   (serika-c/eg/add-many-by-name 'eshell
-                                ("settings")
-                                (lambda ()
-                                  (setq eshell-visual-commands '(
-                                                                 "screen" "top" "less" "more" "lynx"
-                                                                 "vi" "vim" "emacsclient" "emacs"))
+    ("settings")
+    (progn
+      (setq eshell-visual-commands '(
+                                     "screen" "top" "less" "more" "lynx"
+                                     "vi" "vim" "emacsclient" "emacs"))
 
-                                  (setq eshell-history-file-name
-                                        (f-join serika-tmp-directory
-                                                "eshell"
-                                                "history"))
+      (setq eshell-history-file-name
+            (f-join serika-tmp-directory
+                    "eshell"
+                    "history"))
 
-                                  (setq eshell-last-dir-ring-file-name
-                                        (f-join serika-tmp-directory
-                                                "eshell"
-                                                "lastdir"))
+      (setq eshell-last-dir-ring-file-name
+            (f-join serika-tmp-directory
+                    "eshell"
+                    "lastdir"))
 
-                                  (setq eshell-aliases-file
-                                        (f-join serika-conf-directory
-                                                "eshell"
-                                                "aliases"))
+      (setq eshell-aliases-file
+            (f-join serika-conf-directory
+                    "eshell"
+                    "aliases"))
 
-                                  (setq eshell-banner-message
-                                        '(car (nthcdr
-                                               (random (length serika-eshell-intro-messages))
-                                               serika-eshell-intro-messages)))
+      (setq eshell-banner-message
+            '(car (nthcdr
+                   (random (length serika-eshell-intro-messages))
+                   serika-eshell-intro-messages)))
 
-                                  (setq eshell-prompt-function (lambda ()
-                                                                 (concat "{"
-                                                                         (current-time-string)
-                                                                         "}"
-                                                                         system-name
-                                                                         ":"
-                                                                         (eshell/pwd)
-                                                                         " "
-                                                                         (eshell/whoami)
-                                                                         " $ ")))
+      (setq eshell-prompt-function (lambda ()
+                                     (concat "{"
+                                             (current-time-string)
+                                             "}"
+                                             system-name
+                                             ":"
+                                             (eshell/pwd)
+                                             " "
+                                             (eshell/whoami)
+                                             " $ ")))
 
-                                  (setq eshell-prompt-regexp "^[^$#\n]* [#$] "))
+      (setq eshell-prompt-regexp "^[^$#\n]* [#$] "))
 
-                                ("global-keymap")
-                                (lambda ()
-                                  (func/keymap/define-global  "<C-m> s h" 'eshell))
+    ("global-keymap")
+    (func/keymap/define-global  "<C-m> s h" 'eshell)
 
-                                ("hook")
-                                (lambda ()
-                                  (add-hook 'eshell-mode-hook 'serika-l/eshell//local-mappings))))
+    ("hook")
+    (func/hook/add 'eshell-mode-hook
+                   #'serika-l/eshell//local-mappings)))

@@ -40,30 +40,29 @@
                            :post-hook "make compile")
 
   (serika-c/eg/add-many-by-name 'ivy
-                                ("require")
-                                (func/func/require 'ivy)
+    ("require")
+    (func/func/require 'ivy)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq ivy-height 10))
+    ("settings")
+    (setq ivy-height 10)
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   ivy-mode-map)
-                                  (func/keymap/save   ivy-minibuffer-map)
-                                  (func/keymap/save   ivy-occur-grep-mode-map)
-                                  (func/keymap/save   ivy-switch-buffer-map)
-                                  (func/keymap/save   ivy-occur-mode-map)
+    ("keymap")
+    (progn
+      (func/keymap/save   ivy-mode-map)
+      (func/keymap/save   ivy-minibuffer-map)
+      (func/keymap/save   ivy-occur-grep-mode-map)
+      (func/keymap/save   ivy-switch-buffer-map)
+      (func/keymap/save   ivy-occur-mode-map)
 
-                                  (func/keymap/create ivy-mode-map)
-                                  (func/keymap/create ivy-minibuffer-map
-                                                      "A-n" #'minibuffer-keyboard-quit
-                                                      "A-e" #'ivy-next-line
-                                                      "A-i" #'ivy-previous-line
-                                                      "A-o" #'ivy-done
+      (func/keymap/create ivy-mode-map)
+      (func/keymap/create ivy-minibuffer-map
+        "A-n" #'minibuffer-keyboard-quit
+        "A-e" #'ivy-next-line
+        "A-i" #'ivy-previous-line
+        "A-o" #'ivy-done
 
-                                                      "A-E" #'ivy-end-of-buffer
-                                                      "A-I" #'ivy-beginning-of-buffer)
-                                  (func/keymap/create ivy-occur-grep-mode-map)
-                                  (func/keymap/create ivy-switch-buffer-map)
-                                  (func/keymap/create ivy-occur-mode-map))))
+        "A-E" #'ivy-end-of-buffer
+        "A-I" #'ivy-beginning-of-buffer)
+      (func/keymap/create ivy-occur-grep-mode-map)
+      (func/keymap/create ivy-switch-buffer-map)
+      (func/keymap/create ivy-occur-mode-map))))

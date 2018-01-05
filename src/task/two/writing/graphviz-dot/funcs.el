@@ -52,7 +52,7 @@
   "Configure Emacs for writing dot files."
   (serika-c/eg/add-install :type 'git
                            :name 'dot
-                           :src  "https://github.com/mikae/graphviz-dot-mode")
+                           :src  "https://github.com/shinkiley/graphviz-dot-mode")
 
   (serika-c/eg/add-many-by-name 'dot
     ("require")
@@ -70,5 +70,4 @@
 
     ("hook")
     (func/hook/add 'graphviz-dot-mode-hook
-                   #'serika-f/graphviz-dot/setup-buffer)
-    ))
+                   #'serika-f/graphviz-dot/setup-buffer)))

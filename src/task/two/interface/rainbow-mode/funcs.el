@@ -10,10 +10,10 @@
 ;; Init
 (defun init ()
   "Configure `rainbow-mode'."
-  (serika-c/eg/add-install :package-list '(rainbow-mode)
-                           :name         'rainbow-mode)
+  (serika-c/eg/add-install :type    'git
+                           :name    'rainbow-mode
+                           :src     "https://github.com/shinkiley/rainbow-mode")
 
   (serika-c/eg/add-many-by-name 'rainbow-mode
-                        ("require")
-                        (lambda ()
-                          (require 'rainbow-mode))))
+    ("require")
+    (func/func/require 'rainbow-mode)))

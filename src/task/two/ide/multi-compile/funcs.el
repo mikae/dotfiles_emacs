@@ -23,14 +23,14 @@
 ;; Init
 (defun init ()
   "Configure `multi-compile'."
-  (serika-c/eg/add-install :package-list '(multi-compile)
-                           :name         'multi-compile)
-  (serika-c/eg/add-many-by-name 'multi-compile
-                                ("require")
-                                (lambda ()
-                                  (require 'multi-compile))
+  (serika-c/eg/add-install :type    'git
+                           :name    'multi-compile
+                           :src     "https://github.com/shinkiley/emacs-multi-compile")
 
-                                ("settings")
-                                (lambda ()
-                                  (setq multi-compile-alist ())
-                                  (setq multi-compile-completion-system 'helm))))
+  (serika-c/eg/add-many-by-name 'multi-compile
+    ("require")
+    (func/func/require 'multi-compile)
+
+    ("settings")
+    (setq multi-compile-alist             ()
+          multi-compile-completion-system 'helm)))

@@ -36,13 +36,12 @@
   "Configure `emacs-ef'."
   (serika-c/eg/add-install :type    'git
                            :name    'emacs-ef
-                           :src     "https://github.com/mikae/emacs-ef"
+                           :src     "https://github.com/shinkiley/emacs-ef"
                            :parents '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'emacs-ef
     ("zero lib require")
-    (progn
-      (require 'emacs-ef))
+    (require 'emacs-ef)
 
     ("zero post")
     (ef-infect-language)))

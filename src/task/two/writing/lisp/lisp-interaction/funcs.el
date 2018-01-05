@@ -30,26 +30,24 @@
 (defun init ()
   "Configure `lisp-interaction-mode'."
   (serika-c/eg/add-many-by-name 'lisp-interaction
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'lisp-interaction-mode "("    ")")
-                                  (sp-local-pair 'lisp-interaction-mode "{"    "}")
-                                  (sp-local-pair 'lisp-interaction-mode "["    "]")
-                                  (sp-local-pair 'lisp-interaction-mode "\""   "\"")
-                                  (sp-local-pair 'lisp-interaction-mode "`"    "'")
-                                  (sp-local-pair 'lisp-interaction-mode "\\\"" "\\\""))
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'lisp-interaction-mode "("    ")")
+      (sp-local-pair 'lisp-interaction-mode "{"    "}")
+      (sp-local-pair 'lisp-interaction-mode "["    "]")
+      (sp-local-pair 'lisp-interaction-mode "\""   "\"")
+      (sp-local-pair 'lisp-interaction-mode "`"    "'")
+      (sp-local-pair 'lisp-interaction-mode "\\\"" "\\\""))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/create lisp-interaction-mode-map
-                                                      "TAB"      #'yas-expand
+    ("keymap")
+    (func/keymap/create lisp-interaction-mode-map
+      "TAB"      #'yas-expand
 
-                                                      "C-t ="    #'evil-indent
-                                                      "C-t /"    #'evilnc-comment-or-uncomment-lines
-                                                      "C-c e"    #'eval-last-sexp
-                                                      "C-x C-s"  #'ignore))
+      "C-t ="    #'evil-indent
+      "C-t /"    #'evilnc-comment-or-uncomment-lines
+      "C-c e"    #'eval-last-sexp
+      "C-x C-s"  #'ignore)
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'lisp-interaction-mode-hook
-                                                 #'serika-f/lisp-interaction/setup-buffer))))
+    ("hook")
+    (func/hook/add 'lisp-interaction-mode-hook
+                   #'serika-f/lisp-interaction/setup-buffer)))

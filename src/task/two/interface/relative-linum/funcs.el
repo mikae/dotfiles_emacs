@@ -11,15 +11,13 @@
 ;; Init
 (defun init ()
   "Configure `linum'."
-  (serika-c/eg/add-install :type         'package
-                           :package-list '(linum-relative)
-                           :name         'linum-relative)
+  (serika-c/eg/add-install :type    'git
+                           :name    'linum-relative
+                           :src     "https://github.com/shinkiley/linum-relative")
 
   (serika-c/eg/add-many-by-name 'linum-relative
-                        ("require")
-                        (lambda ()
-                          (require 'linum-relative))
+    ("require")
+    (func/func/require 'linum-relative)
 
-                        ("settings")
-                        (lambda ()
-                          (setq linum-relative-current-symbol ""))))
+    ("settings")
+    (setq linum-relative-current-symbol "")))

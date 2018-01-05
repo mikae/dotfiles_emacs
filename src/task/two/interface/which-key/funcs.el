@@ -73,16 +73,16 @@ Usage:
 ;; Init
 (defun init ()
   "Configure `which-key'."
-  ;; Indentation setup
-  (put 'serika-f/which-key/create-keymap 'lisp-indent-function 'defun)
-
-  (serika-c/eg/add-install :type 'package
-                           :name 'which-key
-                           :package-list '(which-key))
+  (serika-c/eg/add-install :type    'git
+                           :name    'which-key
+                           :src     "https://github.com/shinkiley/emacs-which-key")
 
   (serika-c/eg/add-many-by-name 'which-key
     ("require")
-    (func/func/require 'which-key)
+    (progn
+      (func/func/require 'which-key)
+      ;; Indentation setup
+      (put 'serika-f/which-key/create-keymap 'lisp-indent-function 'defun))
 
     ("settings")
     (progn

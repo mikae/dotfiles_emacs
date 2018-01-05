@@ -9,14 +9,13 @@
 ;; Init
 (defun init ()
   "Configure `undo-tree'."
-  (serika-c/eg/add-install :type 'package
-                           :package-list '(undo-tree)
-                           :name 'undo-tree)
-  (serika-c/eg/add-many-by-name 'undo-tree
-                        ("require")
-                        (lambda ()
-                          (require 'undo-tree))
+  (serika-c/eg/add-install :type 'git
+                           :name 'undo-tree
+                           :src  "https://github.com/shinkiley/undo-tree")
 
-                        ("post activate")
-                        (lambda ()
-                          (global-undo-tree-mode +1))))
+  (serika-c/eg/add-many-by-name 'undo-tree
+    ("require")
+    (func/func/require 'undo-tree)
+
+    ("post activate")
+    (serika-f/undo-tree//activate)))

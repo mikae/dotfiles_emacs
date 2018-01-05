@@ -51,30 +51,28 @@
   "Configure `cucumber'."
   (serika-c/eg/add-install :type 'git
                            :name 'cucumber
-                           :src "https://github.com/mikae/cucumber.el")
+                           :src "https://github.com/shinkiley/cucumber.el")
 
   (serika-c/eg/add-many-by-name 'cucumber
-                                ("require")
-                                (func/func/require 'feature-mode)
+    ("require")
+    (func/func/require 'feature-mode)
 
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'feature-mode
-                                                                 "\\.feature\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'feature-mode
+                                   "\\.feature\\'")
 
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'emacs-lisp-mode "("  ")")
-                                  (sp-local-pair 'emacs-lisp-mode "{"  "}")
-                                  (sp-local-pair 'emacs-lisp-mode "["  "]")
-                                  (sp-local-pair 'emacs-lisp-mode "\"" "\""))
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'emacs-lisp-mode "("  ")")
+      (sp-local-pair 'emacs-lisp-mode "{"  "}")
+      (sp-local-pair 'emacs-lisp-mode "["  "]")
+      (sp-local-pair 'emacs-lisp-mode "\"" "\""))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   feature-mode-map)
-                                  (func/keymap/create feature-mode-map))
+    ("keymap")
+    (progn
+      (func/keymap/save   feature-mode-map)
+      (func/keymap/create feature-mode-map))
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'feature-mode-hook
-                                                 #'serika-f/cucumber/setup-buffer))))
+    ("hook")
+    (func/hook/add 'feature-mode-hook
+                   #'serika-f/cucumber/setup-buffer)))

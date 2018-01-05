@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'core-package)
 (require '--execution-graph)
 (require 'core-util)
 (require 'url)
@@ -91,9 +90,6 @@
         (--extra-path   extra-path))
     (setq --lambda
           (cond
-           ((eq --type 'package) (lambda ()
-                                   (mapcar #'serika-f/package/make-sure-installed
-                                           --package-list)))
            ;; todo: add directory download
            ((eq --type 'download) (when (stringp --src)
                                     (lambda ()

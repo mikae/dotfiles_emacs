@@ -9,14 +9,13 @@
 ;; Init
 (defun init ()
   "Configure `highlight-symbol'."
-  (serika-c/eg/add-install :type 'package
-                           :name 'highlight-symbol
-                           :package-list '(highlight-symbol))
+  (serika-c/eg/add-install :type    'git
+                           :name    'highlight-symbol
+                           :src     "https://github.com/shinkiley/highlight-symbol.el")
 
   (serika-c/eg/add-many-by-name 'highlight-symbol
-                                ("require")
-                                (func/func/require 'highlight-symbol)
+    ("require")
+    (func/func/require 'highlight-symbol)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq highlight-symbol-idle-delay 0.1))))
+    ("settings")
+    (setq highlight-symbol-idle-delay 0.1)))

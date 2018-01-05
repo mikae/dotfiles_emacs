@@ -49,17 +49,17 @@
   "Configure custom modifiers"
   (serika-c/eg/add-install :type    'git
                            :name    'custom-modifiers
-                           :src     "https://github.com/mikae/custom-modifiers"
+                           :src     "https://github.com/shinkiley/custom-modifiers"
                            :parents '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'custom-modifiers
     ("zero lib require")
-    (lambda ()
+    (progn
       (require 'custom-modifiers)
       (require 'custom-modifiers-layout))
 
     ("settings")
-    (lambda ()
+    (progn
       (custom-modifiers-layout-use-colemak)
       (custom-modifiers-modifiers-use-default)
       (custom-modifiers-global-map-configure)

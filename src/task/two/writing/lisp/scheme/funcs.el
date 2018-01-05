@@ -28,38 +28,33 @@
 (defun init ()
   "Configure `scheme-mode'."
   (serika-c/eg/add-many-by-name 'scheme
-                                ("require")
-                                (lambda ()
-                                  (require 'scheme))
+    ("require")
+    (func/func/require 'scheme)
 
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'scheme-mode "\\.scm\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'scheme-mode "\\.scm\\'")
 
-                                ("settings multi-compile")
-                                (lambda ()
-                                  (add-to-list 'multi-compile-alist '(scheme-mode . (("mit-scheme" . "scheme")))))
+    ("settings multi-compile")
+    (add-to-list 'multi-compile-alist '(scheme-mode . (("mit-scheme" . "scheme"))))
 
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'scheme-mode "("    ")")
-                                  (sp-local-pair 'scheme-mode "{"    "}")
-                                  (sp-local-pair 'scheme-mode "["    "]")
-                                  (sp-local-pair 'scheme-mode "\""   "\"")
-                                  (sp-local-pair 'scheme-mode "`"    "'")
-                                  (sp-local-pair 'scheme-mode "\\\"" "\\\""))
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'scheme-mode "("    ")")
+      (sp-local-pair 'scheme-mode "{"    "}")
+      (sp-local-pair 'scheme-mode "["    "]")
+      (sp-local-pair 'scheme-mode "\""   "\"")
+      (sp-local-pair 'scheme-mode "`"    "'")
+      (sp-local-pair 'scheme-mode "\\\"" "\\\""))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/create scheme-mode-map
-                                                      "TAB" 'yas-expand
+    ("keymap")
+    (func/keymap/create scheme-mode-map
+      "TAB" 'yas-expand
 
-                                                      "C-c A" #'multi-compile-run
+      "C-c A" #'multi-compile-run
 
-                                                      "C-t =" 'evil-indent
-                                                      "C-t /" 'evilnc-comment-or-uncomment-lines))
+      "C-t =" 'evil-indent
+      "C-t /" 'evilnc-comment-or-uncomment-lines)
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'scheme-mode-hook
-                                                 #'serika-f/scheme//setup-buffer))))
+    ("hook")
+    (func/hook/add 'scheme-mode-hook
+                   #'serika-f/scheme//setup-buffer)))

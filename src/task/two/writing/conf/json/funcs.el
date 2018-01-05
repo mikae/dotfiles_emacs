@@ -26,9 +26,12 @@
 ;; Init
 (defun init ()
   "Configure `json-mode'."
-  (serika-c/eg/add-install :type 'package
-                           :package-list '(json-mode)
-                           :name         'json)
+  (dolist (--package '((json-mode     . "https://github.com/shinkiley/json-mode")
+                       (json-snatcher . "https://github.com/shinkiley/json-snatcher")
+                       (json-reformat . "https://github.com/shinkiley/json-reformat")))
+    (serika-c/eg/add-install :type 'git
+                             :name (car --package)
+                             :src  (cdr --package)))
 
   (serika-c/eg/add-many-by-name 'json
     ("require")
@@ -54,8 +57,8 @@
     (progn
       (func/keymap/save   json-mode-map)
       (func/keymap/create json-mode-map
-                          "C-t ="   #'evil-indent
-                          "C-t C-=" #'web-beautify-js))
+        "C-t ="   #'evil-indent
+        "C-t C-=" #'web-beautify-js))
 
     ("hook")
     (func/hook/add 'json-mode-hook #'serika-f/json//setup-buffer)))

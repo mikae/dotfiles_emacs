@@ -25,12 +25,10 @@
 (defun init ()
   "Configure `makefile' buffers."
   (serika-c/eg/add-many-by-name 'makefile
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'makefile-mode
-                                                                 "Makefile$"))
+    ("settings")
+    (serika-f/settings/register-ft 'makefile-mode
+                                   "Makefile$")
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'makefile-mode-hook
-                                                 #'serika-f/makefile/setup-buffer))))
+    ("hook")
+    (func/hook/add 'makefile-mode-hook
+                   #'serika-f/makefile/setup-buffer)))

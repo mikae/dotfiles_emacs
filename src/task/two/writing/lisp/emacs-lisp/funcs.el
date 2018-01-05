@@ -26,8 +26,6 @@
     (serika-f/company/activate)
 
     (serika-f/eldoc/activate)
-    ;; (serika-f/ggtags/activate)
-    ;; (serika-f/projectile/try-activate)
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
@@ -38,19 +36,17 @@
 ;; Init
 (defun init ()
   "Configure `emacs-lisp-mode'."
-  (serika-c/eg/add-install :type 'package
-                           :package-list '(flycheck-cask)
-                           :name         'emacs-lisp)
+  (serika-c/eg/add-install :type    'git
+                           :name    'flycheck-cask
+                           :src     "https://github.com/shinkiley/flycheck-cask"
+                           :parents '("install emacs-lisp"))
 
   (serika-c/eg/add-many-by-name 'emacs-lisp
     ("require")
-    (progn
-      (require 'flycheck-cask))
+    (func/func/require 'flycheck-cask)
 
     ("settings")
-    (progn
-      (serika-f/settings/register-ft 'emacs-lisp-mode "\\.el\\'"))
-
+    (serika-f/settings/register-ft 'emacs-lisp-mode "\\.el\\'")
 
     ("settings smartparens")
     (progn
@@ -63,13 +59,13 @@
 
     ("keymap")
     (progn
+      (func/keymap/save emacs-lisp-mode-map)
       (func/keymap/create emacs-lisp-mode-map
-                          "TAB" #'yas-expand
+        "TAB" #'yas-expand
 
-                          "C-t =" #'evil-indent
-                          "C-t /" #'evilnc-comment-or-uncomment-lines))
+        "C-t =" #'evil-indent
+        "C-t /" #'evilnc-comment-or-uncomment-lines))
 
     ("hook")
-    (progn
-      (func/hook/add-oncely 'emacs-lisp-mode-hook
-                            #'serika-f/emacs-lisp/setup-buffer))))
+    (func/hook/add-oncely 'emacs-lisp-mode-hook
+                          #'serika-f/emacs-lisp/setup-buffer)))

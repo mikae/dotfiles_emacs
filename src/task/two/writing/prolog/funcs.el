@@ -51,8 +51,7 @@
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
-    (serika-f/highlight-symbol/activate)
-    ))
+    (serika-f/highlight-symbol/activate)))
 
 ;; Init
 (defun init ()

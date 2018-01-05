@@ -58,10 +58,10 @@
 
 (defun init ()
   "Configure Emacs for editing Rust files."
-  (dolist (elem '((rust-mode     . "https://github.com/mikae/rust-mode")
-                  (flycheck-rust . "https://github.com/mikae/flycheck-rust")
-                  (emacs-racer   . "https://github.com/mikae/emacs-racer")
-                  (company-racer . "https://github.com/mikae/company-racer")))
+  (dolist (elem '((rust-mode     . "https://github.com/shinkiley/rust-mode")
+                  (flycheck-rust . "https://github.com/shinkiley/flycheck-rust")
+                  (emacs-racer   . "https://github.com/shinkiley/emacs-racer")
+                  (company-racer . "https://github.com/shinkiley/company-racer")))
     (serika-c/eg/add-install :type    'git
                              :name    (car elem)
                              :src     (cdr elem)
@@ -96,16 +96,16 @@
     (progn
       (func/keymap/save   rust-mode-map)
       (func/keymap/create rust-mode-map
-                          "TAB" #'yas-expand
+        "TAB" #'yas-expand
 
-                          "C-t =" #'evil-indent
-                          "C-t /" #'evilnc-comment-or-uncomment-lines
-                          "C-t b" #'rust-format-buffer
+        "C-t =" #'evil-indent
+        "C-t /" #'evilnc-comment-or-uncomment-lines
+        "C-t b" #'rust-format-buffer
 
-                          ;; arstd
-                          "C-c a a" #'dumb-jump-go
-                          "C-c a A" #'dumb-jump-back
-                          "C-c z z" #'multi-compile-run))
+        ;; arstd
+        "C-c a a" #'dumb-jump-go
+        "C-c a A" #'dumb-jump-back
+        "C-c z z" #'multi-compile-run))
 
     ("hook")
     (func/hook/add 'rust-mode-hook

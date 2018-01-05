@@ -36,12 +36,12 @@
   "Configure `cyon'"
   (serika-c/eg/add-install :type    'git
                            :name    'cyon
-                           :src     "https://github.com/mikae/custom-yes-or-no"
+                           :src     "https://github.com/shinkiley/custom-yes-or-no"
                            :parents '("zero opt install"))
 
   (serika-c/eg/add-many-by-name 'cyon
-                                ("zero opt require")
-                                (require 'custom-yes-or-no)
+    ("zero opt require")
+    (require 'custom-yes-or-no)
 
-                                ("zero opt configure")
-                                (cyon-replace-defaults)))
+    ("zero opt configure")
+    (cyon-replace-defaults)))

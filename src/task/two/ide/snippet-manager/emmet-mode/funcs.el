@@ -23,17 +23,16 @@
 ;; Init
 (defun init ()
   "Configure `emmet-mode'."
-  (serika-c/eg/add-install :type 'package
-                           :package-list '(emmet-mode)
-                           :name         'emmet-mode)
+  (serika-c/eg/add-install :type    'git
+                           :name    'emmet-mode
+                           :src     "https://github.com/shinkiley/emmet-mode")
 
   (serika-c/eg/add-many-by-name 'emmet-mode
-                        ("require")
-                        (lambda ()
-                          (defvar emmet-mode-keymap (make-sparse-keymap))
-                          ;; Because `emmet' uses keymap as local variable
-                          (require 'emmet-mode) )
+    ("require")
+    (progn
+      (defvar emmet-mode-keymap (make-sparse-keymap))
+      ;; Because `emmet' uses keymap as local variable
+      (require 'emmet-mode) )
 
-                        ("settings")
-                        (lambda ()
-                          (setq emmet-preview-default nil))))
+    ("settings")
+    (setq emmet-preview-default nil)))

@@ -36,9 +36,9 @@
   "Configure `ht'."
   (serika-c/eg/add-install :type 'git
                            :name 'ht
-                           :src  "https://github.com/mikae/ht.el")
+                           :src  "https://github.com/shinkiley/ht.el"
+                           :parents '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'ht
-                                ("require")
-                                (lambda ()
-                                  (require 'ht))))
+    ("require")
+    (require 'ht)))

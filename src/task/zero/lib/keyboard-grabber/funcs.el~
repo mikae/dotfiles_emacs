@@ -39,10 +39,10 @@
   "Configure `keyboard-grabber'."
   ;; (serika-c/eg/add-install :type      'git
   ;;                          :name      'keyboard-grabber
-  ;;                          :src       "https://github.com/mikae/emacs-keyboard-grabber"
+  ;;                          :src       "https://github.com/shinkiley/emacs-keyboard-grabber"
   ;;                          :parents   '("zero lib install")
   ;;                          :post-hook "make all")
 
   (serika-c/eg/add-many-by-name 'keyboard-grabber
-                                ("zero lib require")
-                                (require 'keyboard-grabber)))
+    ("zero lib require")
+    (require 'keyboard-grabber)))

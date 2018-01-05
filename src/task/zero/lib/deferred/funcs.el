@@ -34,11 +34,7 @@
 
 (defun init ()
   "Configure `deferred'."
-  (serika-c/eg/add-install :type 'package
+  (serika-c/eg/add-install :type 'git
                            :name 'deferred
-                           :package-list '(deferred)
-                           :parents '("zero lib install"))
-
-  (serika-c/eg/add-many-by-name 'deferred
-                                ("require")
-                                (require 'deferred)))
+                           :src  "https://github.com/shinkiley/emacs-deferred"
+                           :parents '("zero lib install")))

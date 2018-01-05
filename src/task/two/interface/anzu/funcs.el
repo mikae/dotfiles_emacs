@@ -40,23 +40,23 @@
   "Configure `anzu'."
   (serika-c/eg/add-install :type 'git
                            :name 'anzu
-                           :src  "https://github.com/mikae/emacs-anzu")
+                           :src  "https://github.com/shinkiley/emacs-anzu")
 
   (serika-c/eg/add-install :type 'git
                            :name 'evil-anzu
                            :parents '("install anzu")
-                           :src  "https://github.com/mikae/emacs-evil-anzu")
+                           :src  "https://github.com/shinkiley/emacs-evil-anzu")
 
   (serika-c/eg/add-many-by-name 'anzu
-                                ("require")
-                                (func/func/require 'anzu)
+    ("require")
+    (func/func/require 'anzu)
 
-                                ("require evil")
-                                (func/func/require 'evil-anzu)
+    ("require evil")
+    (func/func/require 'evil-anzu)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq anzu-cons-mode-line-p nil))
+    ("settings")
+    (progn
+      (setq anzu-cons-mode-line-p nil))
 
-                                ("post activate")
-                                #'serika-f/anzu/activate-global))
+    ("post activate")
+    (serika-f/anzu/activate-global)))

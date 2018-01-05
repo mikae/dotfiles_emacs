@@ -166,16 +166,16 @@
                            :extra-path '("lisp")
                            :post-hook  "make")
 
-  (serika-c/eg/add-install :type 'package
+  (serika-c/eg/add-install :type 'git
                            :name 'org-pomodoro
-                           :parents '("install org")
-                           :package-list '(org-pomodoro))
+                           :src  "https://github.com/shinkiley/org-pomodoro"
+                           :parents '("install org"))
 
-  (dolist (elem '((ob-rust      . "https://github.com/mikae/ob-rust")
-                  (ob-fsharp    . "https://github.com/mikae/ob-fsharp")
-                  (ob-racket    . "https://github.com/mikae/ob-racket")
-                  (org-kokoro   . "https://github.com/mikae/org-kokoro")
-                  (org-pomodoro . "https://github.com/mikae/org-pomodoro")))
+  (dolist (elem '((ob-rust      . "https://github.com/shinkiley/ob-rust")
+                  (ob-fsharp    . "https://github.com/shinkiley/ob-fsharp")
+                  (ob-racket    . "https://github.com/shinkiley/ob-racket")
+                  (org-kokoro   . "https://github.com/shinkiley/org-kokoro")
+                  (org-pomodoro . "https://github.com/shinkiley/org-pomodoro")))
     (serika-c/eg/add-install :type 'git
                              :name (car elem)
                              :src  (cdr elem)
@@ -287,24 +287,24 @@
       (setq org-structure-template-alist ())
 
       ;; `org-babel'
-      (org-babel-do-load-languages 'org-babel-load-languages '((ebnf       . t)
+      (org-babel-do-load-languages 'org-babel-load-languages '(;; (ebnf       . t)
                                                                (haskell    . t)
-                                                               (shell      . t)
+                                                               ;; (shell      . t)
                                                                (emacs-lisp . t)
                                                                (js         . t)
                                                                (python     . t)
                                                                (rust       . t)
-                                                               (fsharp     . t)
                                                                (racket     . t)
                                                                (dot        . t)
-                                                               (lua        . t)))
+                                                               ;; (lua        . t)
+                                                               ))
       (setq org-confirm-babel-evaluate nil)
 
       ;; add zsh support to `ob-shell'
-      (setq org-babel-shell-names
-            (cons "zsh" org-babel-shell-names))
-      (add-to-list 'org-src-lang-modes '("zsh" . sh))
-      (org-babel-shell-initialize)
+      ;; (setq org-babel-shell-names
+      ;;       (cons "zsh" org-babel-shell-names))
+      ;; (add-to-list 'org-src-lang-modes '("zsh" . sh))
+      ;; (org-babel-shell-initialize)
 
       ;; src blocks
       (setq org-src-fontify-natively t)

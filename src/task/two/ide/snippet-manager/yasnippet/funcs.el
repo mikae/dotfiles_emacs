@@ -30,19 +30,19 @@
 ;; Init
 (defun init ()
   "Configure `yasnippet'."
-  (serika-c/eg/add-install :type         'package
-                           :name         'yasnippet
-                           :package-list '(yasnippet))
+  (serika-c/eg/add-install :type    'git
+                           :name    'yasnippet
+                           :src     "https://github.com/shinkiley/yasnippet")
 
   (serika-c/eg/add-many-by-name 'yasnippet
     ("settings")
     (progn
       (func/keymap/create yas-minor-mode-map
-                          "C-x y r" #'serika-f/yasnippet/recompile-reload)
+        "C-x y r" #'serika-f/yasnippet/recompile-reload)
 
       (func/keymap/create yas-keymap
-                          "A-O"   #'yas-next-field
-                          "A-N"   #'yas-prev-field)
+        "A-O"   #'yas-next-field
+        "A-N"   #'yas-prev-field)
 
       (func/keymap/create snippet-mode-map)
 
@@ -59,5 +59,5 @@
                                    "\\.yasnippet\\'")
 
     ("hook")
-    (progn
-      (add-hook 'snippet-mode-hook #'serika-f/snippet-mode/setup-buffer))))
+    (func/hook/add 'snippet-mode-hook
+                   #'serika-f/snippet-mode/setup-buffer)))

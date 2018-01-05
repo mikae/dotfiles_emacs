@@ -22,28 +22,26 @@
   "Configure `emojify'."
   (serika-c/eg/add-install :type 'git
                            :name 'emojify
-                           :src  "https://github.com/mikae/emacs-emojify")
+                           :src  "https://github.com/shinkiley/emacs-emojify")
 
   (serika-c/eg/add-many-by-name 'emojify
-                                ("require")
-                                (lambda ()
-                                  (require 'emojify))
+    ("require")
+    (func/func/require 'emojify)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq emojify-emojis-dir
-                                        (f-join serika-conf-directory
-                                                "emojis"))
-                                  (setq emojify-program-contexts
-                                        '(comments string)))
+    ("settings")
+    (progn
+      (setq emojify-emojis-dir
+            (f-join serika-conf-directory
+                    "emojis"))
+      (setq emojify-program-contexts
+            '(comments string)))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save emojify-emoji-keymap)
-                                  (func/keymap/create emojify-emoji-keymap
-                                                      "C-c e i" #'emojify-insert-emoji
-                                                      "C-c e d" #'emojify-delete-emoji))
+    ("keymap")
+    (progn
+      (func/keymap/save emojify-emoji-keymap)
+      (func/keymap/create emojify-emoji-keymap
+        "C-c e i" #'emojify-insert-emoji
+        "C-c e d" #'emojify-delete-emoji))
 
-                                ("post")
-                                (lambda ()
-                                  (emojify-download-emoji-maybe))))
+    ("post")
+    (emojify-download-emoji-maybe)))

@@ -34,21 +34,19 @@
 
 (defun init ()
   "Configure `dumb-jump'"
-  (serika-c/eg/add-install :type 'package
-                           :name 'dumb-jump
-                           :package-list '(dumb-jump))
+  (serika-c/eg/add-install :type    'git
+                           :name    'dumb-jump
+                           :src     "https://github.com/shinkiley/dumb-jump")
 
   (serika-c/eg/add-many-by-name 'dumb-jump
-                                ("require")
-                                (func/func/require 'dumb-jump)
+    ("require")
+    (func/func/require 'dumb-jump)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq dumb-jump-selector        'ivy
-                                        dumb-jump-prefer-searcher 'ag))
+    ("settings")
+    (setq dumb-jump-selector        'ivy
+          dumb-jump-prefer-searcher 'ag)
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   dumb-jump-mode-map)
-                                  (func/keymap/create dumb-jump-mode-map)))
-  )
+    ("keymap")
+    (progn
+      (func/keymap/save   dumb-jump-mode-map)
+      (func/keymap/create dumb-jump-mode-map))))

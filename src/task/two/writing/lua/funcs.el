@@ -21,15 +21,13 @@
 
     (serika-f/rainbow-delimiters/activate)
     (serika-f/linum-relative/activate)
-    (serika-f/settings/show-trailing-whitespaces)
-    ;; (serika-f/prettify-symbols/activate)
-    ))
+    (serika-f/settings/show-trailing-whitespaces)))
 
 (defun init ()
   "Configure `lua-mode'."
   (serika-c/eg/add-install :type   'git
                            :name   'lua-mode
-                           :src    "https://github.com/mikae/lua-mode"
+                           :src    "https://github.com/shinkiley/lua-mode"
                            :parents '("install lua"))
 
   (serika-c/eg/add-install :type   'git
@@ -38,27 +36,24 @@
                            :parents '("install lua"))
 
   (serika-c/eg/add-many-by-name 'lua
-                                ("require")
-                                (lambda ()
-                                  (require 'lua-mode)
-                                  (require 'company-lua))
+    ("require")
+    (func/func/require 'lua-mode
+                       'company-lua)
 
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'lua-mode "\\.lua\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'lua-mode "\\.lua\\'")
 
-                                ("settings multi-compile")
-                                (lambda ()
-                                  (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path")))))
+    ("settings multi-compile")
+    (add-to-list 'multi-compile-alist '(lua-mode . (("Execute" . "lua %path"))))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/create lua-mode-map
-                                                      "TAB" #'yas-expand
+    ("keymap")
+    (progn
+      (func/keymap/create lua-mode-map
+        "TAB" #'yas-expand
 
-                                                      "C-c c" #'multi-compile-run
-                                                      "C-t =" #'evil-indent
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'lua-mode-hook #'serika-f/lua//setup-buffer))))
+        "C-c c" #'multi-compile-run
+        "C-t =" #'evil-indent
+        "C-t /" #'evilnc-comment-or-uncomment-lines))
+
+    ("hook")
+    (func/hook/add 'lua-mode-hook #'serika-f/lua//setup-buffer)))

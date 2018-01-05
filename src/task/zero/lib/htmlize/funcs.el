@@ -36,8 +36,9 @@
   "Install `htmlize'."
   (serika-c/eg/add-install :type 'git
                            :name 'htmlize
-                           :src  "https://github.com/mikae/emacs-htmlize")
+                           :src  "https://github.com/shinkiley/emacs-htmlize"
+                           :parents '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'htmlize
-                                ("require")
-                                (func/func/require 'htmlize)))
+    ("require")
+    (func/func/require 'htmlize)))

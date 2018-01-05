@@ -33,14 +33,13 @@
 ;; Global
 (defun init ()
   "Configure `mingus'."
-  (serika-c/eg/add-install :type         'package
-                           :package-list '(mingus)
-                           :name         'mingus)
+  (serika-c/eg/add-install :type 'git
+                           :name 'mingus
+                           :src  "https://github.com/shinkiley/mingus")
 
   (serika-c/eg/add-many-by-name 'mingus
     ("require")
-    (progn
-      (require 'mingus))
+    (func/func/require 'mingus)
 
     ("settings")
     (progn
@@ -83,59 +82,59 @@
       (cl-macrolet ((configure-keymap (map)
                                       `(func/keymap/save ,map)
                                       `(func/keymap/create ,map
-                                                           ;; arstd
-                                                           "a a" #'mingus-del-dwim2
-                                                           "a r" #'mingus-shuffle
-                                                           "a s" #'serika-f/mingus/clear
-                                                           "a t" #'mingus-update
+                                         ;; arstd
+                                         "a a" #'mingus-del-dwim2
+                                         "a r" #'mingus-shuffle
+                                         "a s" #'serika-f/mingus/clear
+                                         "a t" #'mingus-update
 
-                                                           "r a" #'mingus-repeat
-                                                           "r r" #'mingus-single
-                                                           "r s" #'mingus-random
-                                                           "r t" #'mingus-pause
+                                         "r a" #'mingus-repeat
+                                         "r r" #'mingus-single
+                                         "r s" #'mingus-random
+                                         "r t" #'mingus-pause
 
-                                                           "s a" #'mingus-help
-                                                           "s r" #'mingus
-                                                           "s s" #'mingus-browse
+                                         "s a" #'mingus-help
+                                         "s r" #'mingus
+                                         "s s" #'mingus-browse
 
-                                                           ;; qwfpg
-                                                           "t a" #'mingus-git-out
+                                         ;; qwfpg
+                                         "t a" #'mingus-git-out
 
-                                                           ;; km,./
-                                                           ","   #'serika-f/mingus/seek-backward
-                                                           "."   #'serika-f/mingus/seek-forward
+                                         ;; km,./
+                                         ","   #'serika-f/mingus/seek-backward
+                                         "."   #'serika-f/mingus/seek-forward
 
-                                                           ;; neio
-                                                           "e"   #'evil-next-line
-                                                           "i"   #'evil-previous-line
+                                         ;; neio
+                                         "e"   #'evil-next-line
+                                         "i"   #'evil-previous-line
 
-                                                           "A-1" #'evil-search-forward
-                                                           "A-2" #'evil-search-backward
-                                                           "A-z" #'evil-search-next
-                                                           "A-Z" #'evil-search-previous)))
+                                         "A-1" #'evil-search-forward
+                                         "A-2" #'evil-search-backward
+                                         "A-z" #'evil-search-next
+                                         "A-Z" #'evil-search-previous)))
         ;; `mingus-help-map'
         (configure-keymap mingus-help-map)
         (func/keymap/define mingus-help-map
-                            ;; neio
-                            "n" #'backward-char
-                            "o" #'forward-char)
+          ;; neio
+          "n" #'backward-char
+          "o" #'forward-char)
 
         ;; `mingus-playlist-map'
         (configure-keymap mingus-playlist-map)
         (func/keymap/define mingus-playlist-map
-                            "RET" #'mingus-play)
+          "RET" #'mingus-play)
 
         ;; `mingus-browse-map'
         (configure-keymap mingus-browse-map)
         (func/keymap/define mingus-browse-map
-                            "RET" #'mingus-insert-and-play
+          "RET" #'mingus-insert-and-play
 
-                            ;; qwfpg
-                            "q q" #'mingus-insert
+          ;; qwfpg
+          "q q" #'mingus-insert
 
-                            ;; neio
-                            "n"   #'mingus-open-parent
-                            "o"   #'mingus-down-dir-or-play-song)
+          ;; neio
+          "n"   #'mingus-open-parent
+          "o"   #'mingus-down-dir-or-play-song)
 
         (func/keymap/save   mingus-global-map)
         (func/keymap/create mingus-global-map)))

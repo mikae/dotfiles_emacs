@@ -4,13 +4,14 @@
 
 (defun init ()
   "Configure `dasboard'."
-  (serika-c/eg/add-install :type 'package
-                           :name 'dashboard
-                           :package-list '(dashboard))
+
+  (serika-c/eg/add-install :type    'git
+                           :name    'dashboard
+                           :src     "https://github.com/shinkiley/emacs-dashboard")
+
   (serika-c/eg/add-many-by-name 'dashboard
     ("require")
-    (progn
-      (require 'dashboard))
+    (func/func/require 'dashboard)
 
     ("settings")
     (progn
@@ -25,9 +26,9 @@
     (progn
       (func/keymap/save dashboard-mode-map)
       (func/keymap/define dashboard-mode-map
-                          "i" #'widget-backward
-                          "e" #'widget-forward
-                          "o" #'widget-button-press
+        "i" #'widget-backward
+        "e" #'widget-forward
+        "o" #'widget-button-press
 
-                          "I" #'dashboard-previous-section
-                          "E" #'dashboard-next-section))))
+        "I" #'dashboard-previous-section
+        "E" #'dashboard-next-section))))

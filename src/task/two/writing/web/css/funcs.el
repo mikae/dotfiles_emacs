@@ -17,40 +17,35 @@
   (serika-f/rainbow-delimiters/activate)
   (serika-f/rainbow-mode/activate)
   (serika-f/linum-relative/activate)
-  (serika-f/settings/show-trailing-whitespaces)
-  ;; (serika-f/prettify-symbols/activate)
-  )
+  (serika-f/settings/show-trailing-whitespaces))
 
 ;; Init
 (defun init ()
   "Configure `css'."
   (serika-c/eg/add-many-by-name 'css
-                                ("require")
-                                (lambda ()
-                                  (require 'css-mode))
+    ("require")
+    (func/func/require 'css-mode)
 
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'css-mode "\\.css\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'css-mode "\\.css\\'")
 
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'js2-mode "{"    "}")
-                                  (sp-local-pair 'js2-mode "\""   "\"")
-                                  (sp-local-pair 'js2-mode "'"    "'"))
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'js2-mode "{"    "}")
+      (sp-local-pair 'js2-mode "\""   "\"")
+      (sp-local-pair 'js2-mode "'"    "'"))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save css-mode-map)
-                                  (func/keymap/create css-mode-map
-                                                      "TAB" #'yas-expand
+    ("keymap")
+    (progn
+      (func/keymap/save css-mode-map)
+      (func/keymap/create css-mode-map
+        "TAB" #'yas-expand
 
-                                                      "C-t E" #'serika-f/emmet/expand
-                                                      "C-t =" #'evil-indent
-                                                      "C-t +" #'web-beautify-css
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines))
+        "C-t E" #'serika-f/emmet/expand
+        "C-t =" #'evil-indent
+        "C-t +" #'web-beautify-css
+        "C-t /" #'evilnc-comment-or-uncomment-lines))
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'css-mode-hook
-                                                 #'serika-f/css/setup-buffer))))
+    ("hook")
+    (func/hook/add 'css-mode-hook
+                   #'serika-f/css/setup-buffer)))

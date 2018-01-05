@@ -23,94 +23,100 @@
   "Configure `markdown'."
   (serika-c/eg/add-install :package-list '(markdown-mode markdown-mode+)
                            :name         'markdown)
+  (dolist (--package (list (cons 'markdown-mode
+                                 "https://github.com/shinkiley/markdown-mode")
+                           (cons 'markdown-mode+
+                                 "https://github.com/shinkiley/markdown-mode-plus")))
+    (serika-c/eg/add-install :type 'git
+                             :name (car --package)
+                             :src  (cdr --package)))
 
   (serika-c/eg/add-many-by-name
-   'markdown
-   ("require")
-   (lambda ()
-     (require 'markdown-mode))
+    'markdown
+    ("require")
+    (func/func/require 'markdown-mode
+                       'markdown-mode+)
 
-   ("settings")
-   (lambda ()
-     (serika-f/settings/register-ft 'markdown-mode
-                                    "\\.markdown\\'"
-                                    "\\.md\\'")
-     (serika-f/settings/register-ft 'gfm-mode "README\\.md\\'"))
+    ("settings")
+    (progn
+      (serika-f/settings/register-ft 'markdown-mode
+                                     "\\.markdown\\'"
+                                     "\\.md\\'")
+      (serika-f/settings/register-ft 'gfm-mode "README\\.md\\'"))
 
-   ("keymap")
-   (lambda ()
-     (cl-macrolet ((--setup-markdown-keymap
-                    (map)
-                    `(progn
-                       (setq ,map (make-sparse-keymap))
+    ("keymap")
+    (progn
+      (cl-macrolet ((--setup-markdown-keymap
+                     (map)
+                     `(progn
+                        (setq ,map (make-sparse-keymap))
 
-                       ;; `Anchors'
-                       (define-key ,map (kbd "C-c a l")    #'markdown-insert-link)
-                       (define-key ,map (kbd "C-c a u")    #'markdown-insert-uri)
-                       (define-key ,map (kbd "C-c a f")    #'markdown-insert-footnote)
-                       (define-key ,map (kbd "C-c a w")    #'markdown-insert-wiki-link)
+                        ;; `Anchors'
+                        (define-key ,map (kbd "C-c a l")    #'markdown-insert-link)
+                        (define-key ,map (kbd "C-c a u")    #'markdown-insert-uri)
+                        (define-key ,map (kbd "C-c a f")    #'markdown-insert-footnote)
+                        (define-key ,map (kbd "C-c a w")    #'markdown-insert-wiki-link)
 
-                       ;; `image'
-                       (define-key ,map (kbd "C-c i i")    #'markdown-insert-image)
-                       (define-key ,map (kbd "C-c i t")    #'markdown-toggle-inline-images)
+                        ;; `image'
+                        (define-key ,map (kbd "C-c i i")    #'markdown-insert-image)
+                        (define-key ,map (kbd "C-c i t")    #'markdown-toggle-inline-images)
 
-                       ;; `style'
-                       (define-key ,map (kbd "C-c s e")    #'markdown-insert-italic)
-                       (define-key ,map (kbd "C-c s b")    #'markdown-insert-bold)
-                       (define-key ,map (kbd "C-c s c")    #'markdown-insert-code)
-                       (define-key ,map (kbd "C-c s C")    #'markdown-insert-gfm-code-block)
-                       (define-key ,map (kbd "C-c s -")    #'markdown-insert-strike-through)
+                        ;; `style'
+                        (define-key ,map (kbd "C-c s e")    #'markdown-insert-italic)
+                        (define-key ,map (kbd "C-c s b")    #'markdown-insert-bold)
+                        (define-key ,map (kbd "C-c s c")    #'markdown-insert-code)
+                        (define-key ,map (kbd "C-c s C")    #'markdown-insert-gfm-code-block)
+                        (define-key ,map (kbd "C-c s -")    #'markdown-insert-strike-through)
 
-                       ;; `hr'
-                       (define-key ,map (kbd "C-c -")      #'markdown-insert-hr)
+                        ;; `hr'
+                        (define-key ,map (kbd "C-c -")      #'markdown-insert-hr)
 
-                       ;; `headers',
-                       (define-key ,map (kbd "C-c t !")    #'markdown-insert-header-setext-1)
-                       (define-key ,map (kbd "C-c t @")    #'markdown-insert-header-setext-2)
-                       (define-key ,map (kbd "C-c t 1")    #'markdown-insert-header-atx-1)
-                       (define-key ,map (kbd "C-c t 2")    #'markdown-insert-header-atx-2)
-                       (define-key ,map (kbd "C-c t 3")    #'markdown-insert-header-atx-3)
-                       (define-key ,map (kbd "C-c t 4")    #'markdown-insert-header-atx-4)
-                       (define-key ,map (kbd "C-c t 5")    #'markdown-insert-header-atx-5)
-                       (define-key ,map (kbd "C-c t 6")    #'markdown-insert-header-atx-6)
+                        ;; `headers',
+                        (define-key ,map (kbd "C-c t !")    #'markdown-insert-header-setext-1)
+                        (define-key ,map (kbd "C-c t @")    #'markdown-insert-header-setext-2)
+                        (define-key ,map (kbd "C-c t 1")    #'markdown-insert-header-atx-1)
+                        (define-key ,map (kbd "C-c t 2")    #'markdown-insert-header-atx-2)
+                        (define-key ,map (kbd "C-c t 3")    #'markdown-insert-header-atx-3)
+                        (define-key ,map (kbd "C-c t 4")    #'markdown-insert-header-atx-4)
+                        (define-key ,map (kbd "C-c t 5")    #'markdown-insert-header-atx-5)
+                        (define-key ,map (kbd "C-c t 6")    #'markdown-insert-header-atx-6)
 
-                       ;; `regions',
-                       (define-key ,map (kbd "C-c r p")    #'markdown-pre-region)
-                       (define-key ,map (kbd "C-c r q")    #'markdown-blockquote-region)
+                        ;; `regions',
+                        (define-key ,map (kbd "C-c r p")    #'markdown-pre-region)
+                        (define-key ,map (kbd "C-c r q")    #'markdown-blockquote-region)
 
-                       ;; `compile',
-                       (define-key ,map (kbd "C-c c b")    #'markdown-other-window)
-                       (define-key ,map (kbd "C-c c p")    #'markdown-preview)
-                       (define-key ,map (kbd "C-c c e")    #'markdown-export)
-                       (define-key ,map (kbd "C-c c v")    #'markdown-export-and-preview)
-                       (define-key ,map (kbd "C-c c l")    #'markdown-live-preview-mode)
+                        ;; `compile',
+                        (define-key ,map (kbd "C-c c b")    #'markdown-other-window)
+                        (define-key ,map (kbd "C-c c p")    #'markdown-preview)
+                        (define-key ,map (kbd "C-c c e")    #'markdown-export)
+                        (define-key ,map (kbd "C-c c v")    #'markdown-export-and-preview)
+                        (define-key ,map (kbd "C-c c l")    #'markdown-live-preview-mode)
 
-                       ;; `open'
-                       (define-key ,map (kbd "C-c o")      #'markdown-follow-thing-at-point)
+                        ;; `open'
+                        (define-key ,map (kbd "C-c o")      #'markdown-follow-thing-at-point)
 
-                       ;; `promotion'
-                       (define-key ,map (kbd "C-c -")      #'markdown-promote)
-                       (define-key ,map (kbd "C-c =")      #'markdown-demote)
+                        ;; `promotion'
+                        (define-key ,map (kbd "C-c -")      #'markdown-promote)
+                        (define-key ,map (kbd "C-c =")      #'markdown-demote)
 
-                       ;; `completion'
-                       (define-key ,map (kbd "C-c RET")    #'markdown-complete)
+                        ;; `completion'
+                        (define-key ,map (kbd "C-c RET")    #'markdown-complete)
 
-                       ;; `list'
-                       (define-key ,map (kbd "<C-return>") #'markdown-insert-list-item)
+                        ;; `list'
+                        (define-key ,map (kbd "<C-return>") #'markdown-insert-list-item)
 
-                       ;; `kill'
-                       (define-key ,map (kbd "C-c k")      #'markdown-kill-thing-at-point))))
+                        ;; `kill'
+                        (define-key ,map (kbd "C-c k")      #'markdown-kill-thing-at-point))))
 
-       (func/keymap/save markdown-mode-map
-                         gfm-mode-map)
+        (func/keymap/save markdown-mode-map
+                          gfm-mode-map)
 
-       ;; Use new keymaps
-       (--setup-markdown-keymap markdown-mode-map)
-       (--setup-markdown-keymap gfm-mode-map)))
+        ;; Use new keymaps
+        (--setup-markdown-keymap markdown-mode-map)
+        (--setup-markdown-keymap gfm-mode-map)))
 
-   ("hook")
-   (lambda ()
-     (add-hook 'markdown-mode-hook #'serika-l/markdown//evil)
-     (add-hook 'markdown-mode-hook #'serika-l/markdown//buffer-local-variables)
-     (add-hook 'markdown-mode-hook #'serika-l/markdown//interface
-               ))))
+    ("hook")
+    (progn
+      (func/hook/add 'markdown-mode-hook #'serika-l/markdown//evil)
+      (func/hook/add 'markdown-mode-hook #'serika-l/markdown//buffer-local-variables)
+      (func/hook/add 'markdown-mode-hook #'serika-l/markdown//interface))))

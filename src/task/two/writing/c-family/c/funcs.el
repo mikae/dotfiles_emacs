@@ -53,8 +53,6 @@
     (serika-f/flycheck/activate)
 
     (serika-f/eldoc/activate)
-    ;; (serika-f/ggtags/activate)
-    ;; (serika-f/projectile/try-activate)
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)

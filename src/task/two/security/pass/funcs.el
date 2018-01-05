@@ -34,9 +34,9 @@
 
 (defun init ()
   "Configure pass."
-  (serika-c/eg/add-install :type 'package
+  (serika-c/eg/add-install :type 'git
                            :name 'pass
-                           :package-list '(pass))
+                           :src  "https://github.com/shinkiley/pass")
 
   (serika-c/eg/add-many-by-name 'pass
     ("require")

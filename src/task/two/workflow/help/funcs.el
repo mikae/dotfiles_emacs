@@ -11,12 +11,12 @@
 (defun init ()
   "Configure `help-mode'."
   (serika-c/eg/add-many-by-name 'help
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save   help-mode-map)
-                          (func/keymap/create help-mode-map
-                                              "q" #'func/buffer/kill))
+    ("keymap")
+    (progn
+      (func/keymap/save   help-mode-map)
+      (func/keymap/create help-mode-map
+        "q" #'func/buffer/kill))
 
-                        ("hook")
-                        (lambda ()
-                          (add-hook 'help-mode-hook #'serika-f/help/setup-buffer))))
+    ("hook")
+    (func/hook/add 'help-mode-hook
+                   #'serika-f/help/setup-buffer)))

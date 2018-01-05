@@ -48,32 +48,29 @@
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
     (serika-f/rainbow-delimiters/activate)
-    (serika-f/highlight-symbol/activate)
-    ;; (serika-f/prettify-symbols/activate :name "vimrc")
-    ))
+    (serika-f/highlight-symbol/activate)))
 
 (defun init ()
   "Configure `vimrc-mode'."
   (serika-c/eg/add-install :type 'git
                            :name 'vimrc-mode
-                           :src  "https://github.com/mikae/vimrc-mode")
+                           :src  "https://github.com/shinkiley/vimrc-mode")
 
   (serika-c/eg/add-many-by-name 'vimrc-mode
-                                ("require")
-                                (func/func/require 'vimrc-mode)
+    ("require")
+    (func/func/require 'vimrc-mode)
 
-                                ("settings")
-                                (serika-f/settings/register-ft 'vimrc-mode
-                                                               "\\.vim\\(rc\\)?\\'"
-                                                               "\\.nvim\\(rc\\)?\\'"
-                                                               "\\.cvim\\(rc\\)?\\'")
+    ("settings")
+    (serika-f/settings/register-ft 'vimrc-mode
+                                   "\\.vim\\(rc\\)?\\'"
+                                   "\\.nvim\\(rc\\)?\\'"
+                                   "\\.cvim\\(rc\\)?\\'")
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   vimrc-mode-map)
-                                  (func/keymap/create vimrc-mode-map))
+    ("keymap")
+    (progn
+      (func/keymap/save   vimrc-mode-map)
+      (func/keymap/create vimrc-mode-map))
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'vimrc-mode-hook
-                                                 #'serika-f/vimrc/setup-buffer))))
+    ("hook")
+    (func/hook/add 'vimrc-mode-hook
+                   #'serika-f/vimrc/setup-buffer)))

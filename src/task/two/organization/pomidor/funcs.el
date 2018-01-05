@@ -10,27 +10,25 @@
                            :src  "https://github.com/TatriX/pomidor")
 
   (serika-c/eg/add-many-by-name 'pomidor
-                        ("require")
-                        (lambda ()
-                          (require 'pomidor))
+    ("require")
+    (func/func/require 'pomidor)
 
-                        ("settings")
-                        (lambda ()
-                          (setq pomidor-sound-tick     nil
-                                pomidor-sound-tack     nil
-                                pomidor-sound-overwork t
-                                pomidor-seconds        2250))
+    ("settings")
+    (setq pomidor-sound-tick     nil
+          pomidor-sound-tack     nil
+          pomidor-sound-overwork t
+          pomidor-seconds        2250)
 
-                        ("keymap")
-                        (lambda ()
-                          (func/keymap/save   pomidor-mode-map)
-                          (func/keymap/create pomidor-mode-map
-                                              "n" #'pomidor-stop
-                                              "b" #'pomidor-break
-                                              "r" #'pomidor-reset
-                                              "q" #'quit-window
-                                              "s" #'pomidor-quit))
+    ("keymap")
+    (progn
+      (func/keymap/save   pomidor-mode-map)
+      (func/keymap/create pomidor-mode-map
+        "n" #'pomidor-stop
+        "b" #'pomidor-break
+        "r" #'pomidor-reset
+        "q" #'quit-window
+        "s" #'pomidor-quit))
 
-                        ("global-keymap")
-                        (lambda ()
-                          (func/keymap/define-global  "<C-m> p" #'pomidor))))
+    ("global-keymap")
+    (func/keymap/define-global
+      "<C-m> p" #'pomidor)))

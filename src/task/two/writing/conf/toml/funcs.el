@@ -55,7 +55,7 @@
   "Configure Emacs for `toml' writing."
   (serika-c/eg/add-install :type    'git
                            :name    'toml-mode
-                           :src     "https://github.com/mikae/toml-mode.el"
+                           :src     "https://github.com/shinkiley/toml-mode.el"
                            :parents '("install toml"))
 
   (serika-c/eg/add-many-by-name 'toml
@@ -80,9 +80,9 @@
     (progn
       (func/keymap/save   toml-mode-map)
       (func/keymap/create toml-mode-map
-                          "C-t =" #'evil-indent
-                          "C-t /" #'evilnc-comment-or-uncomment-lines
-                          ))
+        "C-t =" #'evil-indent
+        "C-t /" #'evilnc-comment-or-uncomment-lines
+        ))
 
     ("hook")
     (func/hook/add 'toml-mode-hook

@@ -36,10 +36,9 @@
   "Configure state-machine"
   (serika-c/eg/add-install :type    'git
                            :name    'state-machine
-                           :src     "https://github.com/mikae/emacs-state-machine"
+                           :src     "https://github.com/shinkiley/emacs-state-machine"
                            :parents '("zero lib install"))
 
   (serika-c/eg/add-many-by-name 'state-machine
-                                ("zero lib require")
-                                (lambda ()
-                                  (require 'state-machine))))
+    ("zero lib require")
+    (func/func/require 'state-machine)))

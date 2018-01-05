@@ -57,55 +57,52 @@
   "Configure `racket'."
   (serika-c/eg/add-install :type 'git
                            :name 'racket
-                           :src  "https://github.com/mikae/racket-mode")
+                           :src  "https://github.com/shinkiley/racket-mode")
 
   (serika-c/eg/add-many-by-name 'racket
-                                ("require")
-                                (lambda ()
-                                  (require 'racket-mode))
+    ("require")
+    (func/func/require 'racket-mode)
 
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'racket-mode "\\.rkt\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'racket-mode "\\.rkt\\'")
 
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'racket-mode "("    ")")
-                                  (sp-local-pair 'racket-mode "{"    "}")
-                                  (sp-local-pair 'racket-mode "["    "]")
-                                  (sp-local-pair 'racket-mode "\""   "\"")
-                                  (sp-local-pair 'racket-mode "`"    "'")
-                                  (sp-local-pair 'racket-mode "\\\"" "\\\""))
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'racket-mode "("    ")")
+      (sp-local-pair 'racket-mode "{"    "}")
+      (sp-local-pair 'racket-mode "["    "]")
+      (sp-local-pair 'racket-mode "\""   "\"")
+      (sp-local-pair 'racket-mode "`"    "'")
+      (sp-local-pair 'racket-mode "\\\"" "\\\""))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save racket-mode-map)
-                                  (func/keymap/create racket-mode-map
-                                                      "TAB"   #'yas-expand
+    ("keymap")
+    (progn
+      (func/keymap/save racket-mode-map)
+      (func/keymap/create racket-mode-map
+        "TAB"   #'yas-expand
 
-                                                      "C-c a"   #'racket-run
-                                                      "C-c A"   #'racket-repl
-                                                      "C-c r"   #'racket-send-last-sexp
-                                                      "C-c R"   #'racket-send-region
-                                                      "C-c C-r" #'racket-send-definition
+        "C-c a"   #'racket-run
+        "C-c A"   #'racket-repl
+        "C-c r"   #'racket-send-last-sexp
+        "C-c R"   #'racket-send-region
+        "C-c C-r" #'racket-send-definition
 
-                                                      "C-t ="   #'evil-indent
-                                                      "C-t /"   #'evilnc-comment-or-uncomment-lines)
+        "C-t ="   #'evil-indent
+        "C-t /"   #'evilnc-comment-or-uncomment-lines)
 
-                                  ;; (func/keymap/save racket-repl-mode-map)
-                                  (func/keymap/define racket-repl-mode-map
-                                                      ;; "RET"         #'racket-repl-eval-or-newline-and-indent
-                                                      ;; "<backspace>" #'ignore
+      ;; (func/keymap/save racket-repl-mode-map)
+      (func/keymap/define racket-repl-mode-map
+        ;; "RET"         #'racket-repl-eval-or-newline-and-indent
+        ;; "<backspace>" #'ignore
 
-                                                      ;; "C-c C-c"     #'comint-interrupt-subjob
+        ;; "C-c C-c"     #'comint-interrupt-subjob
 
-                                                      "A-e" #'comint-next-input
-                                                      "A-i" #'comint-previous-input
-                                                      "A-n" #'backward-char
-                                                      "A-o" #'forward-char)
-                                  )
+        "A-e" #'comint-next-input
+        "A-i" #'comint-previous-input
+        "A-n" #'backward-char
+        "A-o" #'forward-char)
+      )
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'racket-mode-hook
-                                                 #'serika-f/racket//setup-buffer))))
+    ("hook")
+    (func/hook/add 'racket-mode-hook
+                   #'serika-f/racket//setup-buffer)))

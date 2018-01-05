@@ -36,13 +36,13 @@
   "Configure `org-cbt'."
   (serika-c/eg/add-install :type 'git
                            :name 'org-cbt
-                           :src  "https://github.com/mikae/org-cbt")
+                           :src  "https://github.com/shinkiley/org-cbt")
 
   (serika-c/eg/add-many-by-name 'org-cbt
-                                ("require org")
-                                (func/func/require 'org-cbt)
+    ("require org")
+    (func/func/require 'org-cbt)
 
-                                ("settings org")
-                                (lambda ()
-                                  (org-cbt-set-home (f-join org-directory
-                                                            "cbt")))))
+    ("settings org")
+    (progn
+      (org-cbt-set-home (f-join org-directory
+                                "cbt")))))

@@ -43,13 +43,8 @@
   "Configure ycmd"
   (serika-c/eg/add-install :type    'git
                            :name    'emacs-ycmd
-                           :src     "https://github.com/mikae/emacs-ycmd"
+                           :src     "https://github.com/shinkiley/emacs-ycmd"
                            :parents '("install ycmd"))
-
-  (serika-c/eg/add-install :type 'package
-                           :name 'emacs-ycmd
-                           :package-list '(request
-                                           request-deferred))
 
   (serika-c/eg/add-many-by-name 'ycmd
     ("require")
@@ -62,5 +57,4 @@
       (setq ycmd-server-command '("python" "/home/yui/git_other/ycmd/ycmd"))
       (setq ycmd-global-config  (f-join serika-conf-directory
                                         ".global_config.py"))
-      (setq ycmd-force-semantic-completion t)
-      )))
+      (setq ycmd-force-semantic-completion t))))

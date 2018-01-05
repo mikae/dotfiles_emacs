@@ -16,21 +16,18 @@
 ;; Init
 (defun init ()
   "Configure `aggressive-indent'."
-  (serika-c/eg/add-install :type 'package
+  (serika-c/eg/add-install :type 'git
                            :name 'aggressive-indent
-                           :package-list '(aggressive-indent))
+                           :src  "https://github.com/shinkiley/aggressive-indent-mode")
 
   (serika-c/eg/add-many-by-name 'aggressive-indent
-                                ("require")
-                                (lambda ()
-                                  (require 'aggressive-indent))
+    ("require")
+    (func/func/require 'aggressive-indent)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq aggressive-indent-dont-indent-if
-                                        (list 'custom-modifiers-mode)))
+    ("settings")
+    (setq aggressive-indent-dont-indent-if
+          (list 'custom-modifiers-mode))
 
-                                ("global-keymap")
-                                (lambda ()
-                                  (func/keymap/define-global "C-x t a" #'serika-f/aggressive-indent/toggle)))
-  )
+    ("global-keymap")
+    (func/keymap/define-global
+      "C-x t a" #'serika-f/aggressive-indent/toggle)))

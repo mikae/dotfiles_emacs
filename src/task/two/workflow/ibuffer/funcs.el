@@ -21,39 +21,39 @@
     (progn
       (func/keymap/save   ibuffer-mode-map)
       (func/keymap/create ibuffer-mode-map
-                          "A-e"        #'ibuffer-forward-line
-                          "A-i"        #'ibuffer-backward-line
-                          "A-E"        #'ibuffer-forward-filter-group
-                          "A-I"        #'ibuffer-backward-filter-group
+        "A-e"        #'ibuffer-forward-line
+        "A-i"        #'ibuffer-backward-line
+        "A-E"        #'ibuffer-forward-filter-group
+        "A-I"        #'ibuffer-backward-filter-group
 
-                          ;; arstd
+        ;; arstd
 
-                          ;; "a a"        #'serika-f/ibuffer/mark
-                          ;; "a A"        #'serika-f/ibuffer/mark-all
-                          ;; "a r"        #'serika-f/ibuffer/unmark
-                          "a R"        #'ibuffer-unmark-all
-                          "a s"        #'ibuffer-mark-unsaved-buffers
-                          "a S"        #'ibuffer-mark-read-only-buffers
-                          "a t"        #'ibuffer-mark-by-mode
-                          "a d"        #'ibuffer-mark-help-buffers
-                          "a D"        #'ibuffer-mark-dired-buffers
+        ;; "a a"        #'serika-f/ibuffer/mark
+        ;; "a A"        #'serika-f/ibuffer/mark-all
+        ;; "a r"        #'serika-f/ibuffer/unmark
+        "a R"        #'ibuffer-unmark-all
+        "a s"        #'ibuffer-mark-unsaved-buffers
+        "a S"        #'ibuffer-mark-read-only-buffers
+        "a t"        #'ibuffer-mark-by-mode
+        "a d"        #'ibuffer-mark-help-buffers
+        "a D"        #'ibuffer-mark-dired-buffers
 
-                          "r a"        #'ibuffer-do-delete
-                          "r A"        #'ibuffer-do-save
+        "r a"        #'ibuffer-do-delete
+        "r A"        #'ibuffer-do-save
 
-                          "s a"        #'ibuffer-do-sort-by-alphabetic
-                          "s f"        #'ibuffer-do-sort-by-filename/process
-                          "s i"        #'ibuffer-invert-sorting
-                          "s m"        #'ibuffer-do-sort-by-major-mode
-                          "s s"        #'ibuffer-do-sort-by-size
+        "s a"        #'ibuffer-do-sort-by-alphabetic
+        "s f"        #'ibuffer-do-sort-by-filename/process
+        "s i"        #'ibuffer-invert-sorting
+        "s m"        #'ibuffer-do-sort-by-major-mode
+        "s s"        #'ibuffer-do-sort-by-size
 
-                          ;; qwfpg
-                          "q"          #'ibuffer-find-file
+        ;; qwfpg
+        "q"          #'ibuffer-find-file
 
-                          "RET"        #'ibuffer-visit-buffer
-                          "<C-return>" #'ibuffer-visit-buffer-other-window)
+        "RET"        #'ibuffer-visit-buffer
+        "<C-return>" #'ibuffer-visit-buffer-other-window)
       (func/keymap/bind-digits ibuffer-mode-map #'digit-argument))
 
     ("global-keymap")
-    (progn
-      (func/keymap/define-global "C-x b l" 'ibuffer))))
+    (func/keymap/define-global
+      "C-x b l" 'ibuffer)))

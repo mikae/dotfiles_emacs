@@ -3,43 +3,35 @@
 ;;; Code:
 
 ;; Local
-(defun serika-l/xdefaults//evil ()
-  "Configure `evil' for `xdefaults'."
-  (evil-local-mode)
-  (evil-normal-state))
+(defun serika-f/xdefaults/setup-buffer ()
+  "Setup buffer in `xdefaults-mode'"
+  (when (eq major-mode
+            'conf-xdefaults-mode)
+    (func/var/ensure-local tab-width      4
+                           truncate-lines t)
 
-(defun serika-l/xdefaults//buffer-local-variables ()
-  "Configure interface for `xdefaults' buffers."
-  (setq tab-width        4)
-  (setq evil-shift-width 4)
-  (setq truncate-lines   t))
+    (serika-f/evil/activate :evil-shift-width 4
+                            :evil-state       'normal)
 
-(defun serika-l/xdefaults//buffer-local-mappings ()
-  "Configure interface for `xdefaults' buffers."
-  (evil-local-set-key 'normal (kbd "C-t =") 'evil-indent)
-  (evil-local-set-key 'normal (kbd "C-t /") 'evilnc-comment-or-uncomment-lines))
-
-(defun serika-l/xdefaults//interface ()
-  "Configure interface for `xdefaults' buffers."
-  (setq show-trailing-whitespace 1)
-
-  (rainbow-mode +1)
-  (serika-f/linum-relative/activate))
+    (serika-f/settings/show-trailing-whitespaces)
+    (serika-f/linum-relative/activate)
+    (serika-f/rainbow-delimiters/activate)
+    (serika-f/rainbow-mode/activate)
+    (serika-f/highlight-symbol/activate)))
 
 (defun init ()
   "Configure `xdefaults'."
   (serika-c/eg/add-many-by-name 'xdefaults
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'conf-xdefaults-mode "\\.Xresources\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'conf-xdefaults-mode "\\.Xresources\\'")
 
-                                ("hook")
-                                (lambda ()
-                                  (dolist (callback (list
-                                                     #'serika-l/xdefaults//evil
-                                                     #'serika-l/xdefaults//buffer-local-variables
-                                                     #'serika-l/xdefaults//buffer-local-mappings
+    ("keymap")
+    (progn
+      (func/keymap/create conf-xdefaults-mode-map)
+      (func/keymap/define conf-xdefaults-mode-map
+        "C-t =" 'evil-indent
+        "C-t /" 'evilnc-comment-or-uncomment-lines))
 
-                                                     #'serika-l/xdefaults//interface))
-                                    (func/hook/add 'conf-xdefaults-mode-hook
-                                                   callback)))))
+    ("hook")
+    (func/hook/add 'conf-xdefaults-mode-hook
+                   #'serika-f/xdefaults/setup-buffer)))

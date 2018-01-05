@@ -4,9 +4,12 @@
 
 (defun init ()
   "Configure `spaceline'."
-  (serika-c/eg/add-install :type 'package
-                           :name 'spaceline
-                           :package-list '(spaceline))
+  (dolist (--package '((powerline . "https://github.com/shinkiley/powerline")
+                       (spaceline . "https://github.com/shinkiley/spaceline")))
+    (serika-c/eg/add-install :type 'git
+                             :name (car --package)
+                             :src  (cdr --package)
+                             :parents '("install spaceline")))
 
   (serika-c/eg/add-many-by-name 'spaceline
     ("require")
@@ -14,7 +17,7 @@
                        'spaceline-segments)
 
     ("settings")
-    (lambda ()
+    (progn
       (set-face-background 'powerline-active1 "#444444")
       (set-face-background 'powerline-active2 "#333333")
       (set-face-foreground 'powerline-active1 "#aaaaaa")
@@ -60,7 +63,6 @@
                            anzu)
                          '(org-pomodoro
                            version-control
-                           projectile-root
                            major-mode))
       (setq-default mode-line-format
                     '("%e" (:eval (spaceline-ml-main)))))))

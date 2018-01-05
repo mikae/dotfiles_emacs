@@ -14,11 +14,7 @@
     (serika-f/aggressive-indent/activate)
     (serika-f/yasnippet/activate)
 
-    (serika-f/flycheck/activate :disabled-checkers '(emacs-lisp-checkdoc))
-
     (serika-f/eldoc/activate)
-    ;; (serika-f/ggtags/activate)
-    ;; (serika-f/projectile/try-activate)
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
@@ -30,11 +26,9 @@
 (defun init ()
   "Configure `lisp-mode'."
   (serika-c/eg/add-many-by-name 'lisp-mode
-                                ("settings")
-                                (lambda ()
-                                  (serika-f/settings/register-ft 'lisp-mode "\\.lsp\\'"))
+    ("settings")
+    (serika-f/settings/register-ft 'lisp-mode "\\.lsp\\'")
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'lisp-mode-hook
-                                                 #'serika-f/lisp/setup-buffer))))
+    ("hook")
+    (func/hook/add 'lisp-mode-hook
+                   #'serika-f/lisp/setup-buffer)))

@@ -10,10 +10,10 @@
 ;; Init
 (defun init ()
   "Configure `rainbow-delimiters'."
-  (serika-c/eg/add-install :package-list '(rainbow-delimiters)
-                           :name         'rainbow-delimiters)
+  (serika-c/eg/add-install :type    'git
+                           :name    'rainbow-delimiters
+                           :src     "https://github.com/shinkiley/rainbow-delimiters")
 
   (serika-c/eg/add-many-by-name 'rainbow-delimiters
-                        ("require")
-                        (lambda ()
-                          (require 'rainbow-delimiters))))
+    ("require")
+    (func/func/require 'rainbow-delimiters)))

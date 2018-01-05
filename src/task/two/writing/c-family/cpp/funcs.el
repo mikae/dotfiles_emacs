@@ -54,8 +54,6 @@
     (flycheck-ycmd-setup)
 
     (serika-f/eldoc/activate)
-    ;; (serika-f/ggtags/activate)
-    ;; (serika-f/projectile/try-activate)
 
     (serika-f/settings/show-trailing-whitespaces)
     (serika-f/linum-relative/activate)
@@ -66,35 +64,34 @@
 (defun init ()
   "Configure Emacs for editing c++-files."
   (serika-c/eg/add-many-by-name 'cpp
-                                ("settings")
-                                (serika-f/settings/register-ft 'c++-mode
-                                                               "\\.cpp$"
-                                                               "\\.h$")
+    ("settings")
+    (serika-f/settings/register-ft 'c++-mode
+                                   "\\.cpp$"
+                                   "\\.h$")
 
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'c++-mode "("    ")")
-                                  (sp-local-pair 'c++-mode "{"    "}")
-                                  (sp-local-pair 'c++-mode "["    "]")
-                                  (sp-local-pair 'c++-mode "\""   "\"")
-                                  (sp-local-pair 'c++-mode "'"    "'")
-                                  (sp-local-pair 'c++-mode "\\\"" "\\\"")
-                                  (sp-local-pair 'c++-mode "\\'"  "\\'"))
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'c++-mode "("    ")")
+      (sp-local-pair 'c++-mode "{"    "}")
+      (sp-local-pair 'c++-mode "["    "]")
+      (sp-local-pair 'c++-mode "\""   "\"")
+      (sp-local-pair 'c++-mode "'"    "'")
+      (sp-local-pair 'c++-mode "\\\"" "\\\"")
+      (sp-local-pair 'c++-mode "\\'"  "\\'"))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   c++-mode-map)
-                                  (func/keymap/create c++-mode-map
-                                                      "TAB" #'yas-expand
+    ("keymap")
+    (progn
+      (func/keymap/save   c++-mode-map)
+      (func/keymap/create c++-mode-map
+        "TAB" #'yas-expand
 
-                                                      "C-t =" #'evil-indent
-                                                      "C-t /" #'evilnc-comment-or-uncomment-lines
+        "C-t =" #'evil-indent
+        "C-t /" #'evilnc-comment-or-uncomment-lines
 
-                                                      "C-c a a" #'dumb-jump-go
-                                                      "C-c a A" #'dumb-jump-back
-                                                      "C-c a r" #'ff-find-other-file))
+        "C-c a a" #'dumb-jump-go
+        "C-c a A" #'dumb-jump-back
+        "C-c a r" #'ff-find-other-file))
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'c++-mode-hook
-                                                 #'serika-f/c++/setup-buffer))))
+    ("hook")
+    (func/hook/add 'c++-mode-hook
+                   #'serika-f/c++/setup-buffer)))

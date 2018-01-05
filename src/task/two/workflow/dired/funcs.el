@@ -229,12 +229,12 @@ If PATH is invalid return nil."
   "Configure `dired'."
   (serika-c/eg/add-install :type 'download
                            :name 'dired+
-                           :src "https://raw.githubusercontent.com/mikae/emacswiki.org/master/dired%2B.el"
+                           :src "https://raw.githubusercontent.com/shinkiley/emacswiki.org/master/dired%2B.el"
                            :parents '("install dired"))
 
   (serika-c/eg/add-install :type 'git
                            :name 'dired-helm-locations
-                           :src  "https://github.com/mikae/dired-helm-locations"
+                           :src  "https://github.com/shinkiley/dired-helm-locations"
                            :parents '("install dired"))
 
   (serika-c/eg/add-many-by-name 'dired

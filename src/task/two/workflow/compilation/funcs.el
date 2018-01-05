@@ -35,9 +35,8 @@
 (defun init ()
   "Configure `compilation-mode'."
   (serika-c/eg/add-many-by-name 'compilation
-                                ("require")
-                                (func/func/require 'compile)
+    ("require")
+    (func/func/require 'compile)
 
-                                ("settings")
-                                (lambda ()
-                                  (setq compilation-scroll-output t))))
+    ("settings")
+    (setq compilation-scroll-output t)))

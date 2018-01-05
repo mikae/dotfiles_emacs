@@ -56,7 +56,7 @@
   "Configure Emacs for NASM."
   (serika-c/eg/add-install :type 'git
                            :name 'nasm-mode
-                           :src  "https://github.com/mikae/nasm-mode")
+                           :src  "https://github.com/shinkiley/nasm-mode")
 
   (serika-c/eg/add-many-by-name 'nasm
     ("require")
@@ -70,11 +70,11 @@
     (progn
       (func/keymap/save nasm-mode-map)
       (func/keymap/create nasm-mode-map
-                          "TAB" #'yas-expand
+        "TAB" #'yas-expand
 
-                          "C-t =" #'evil-indent
-                          "C-t /" #'evilnc-comment-or-uncomment-lines
-                          ))
+        "C-t =" #'evil-indent
+        "C-t /" #'evilnc-comment-or-uncomment-lines
+        ))
 
     ("hook")
     (func/hook/add 'nasm-mode-hook

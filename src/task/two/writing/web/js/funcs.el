@@ -31,24 +31,24 @@
 (defun init ()
   "Configure `emacs-lisp-mode'."
   (serika-c/eg/add-many-by-name 'js
-                                ("settings smartparens")
-                                (lambda ()
-                                  (sp-local-pair 'js-mode "("    ")")
-                                  (sp-local-pair 'js-mode "{"    "}")
-                                  (sp-local-pair 'js-mode "["    "]")
-                                  (sp-local-pair 'js-mode "\""   "\"")
-                                  (sp-local-pair 'js-mode "'"    "'")
-                                  (sp-local-pair 'js-mode "\\\"" "\\\"")
-                                  (sp-local-pair 'js-mode "\\'"  "\\'"))
+    ("settings smartparens")
+    (progn
+      (sp-local-pair 'js-mode "("    ")")
+      (sp-local-pair 'js-mode "{"    "}")
+      (sp-local-pair 'js-mode "["    "]")
+      (sp-local-pair 'js-mode "\""   "\"")
+      (sp-local-pair 'js-mode "'"    "'")
+      (sp-local-pair 'js-mode "\\\"" "\\\"")
+      (sp-local-pair 'js-mode "\\'"  "\\'"))
 
-                                ("keymap")
-                                (lambda ()
-                                  (func/keymap/save   js-mode-map)
-                                  (func/keymap/create js-mode-map
-                                                      "C-t ="     #'evil-indent
-                                                      "C-t /"     #'evilnc-comment-or-uncomment-lines))
+    ("keymap")
+    (progn
+      (func/keymap/save   js-mode-map)
+      (func/keymap/create js-mode-map
+        "C-t ="     #'evil-indent
+        "C-t /"     #'evilnc-comment-or-uncomment-lines))
 
-                                ("hook")
-                                (lambda ()
-                                  (func/hook/add 'js-mode-hook
-                                                 #'serika-f/js/setup-buffer))))
+    ("hook")
+    (progn
+      (func/hook/add 'js-mode-hook
+                     #'serika-f/js/setup-buffer))))

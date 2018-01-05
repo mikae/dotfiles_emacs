@@ -6,13 +6,11 @@
   "Configure `help-fns+'."
   (serika-c/eg/add-install :type 'download
                            :name 'help-fns+
-                           :src  "https://raw.githubusercontent.com/mikae/emacswiki.org/master/help-fns%2B.el")
+                           :src  "https://raw.githubusercontent.com/shinkiley/emacswiki.org/master/help-fns%2B.el")
 
   (serika-c/eg/add-many-by-name 'help-fns+
-                        ("require")
-                        (lambda ()
-                          (require 'help-fns+))
+    ("require")
+    (func/func/require 'help-fns+)
 
-                        ("global-keymap")
-                        (lambda ()
-                          (global-set-key (kbd "C-x h K") 'describe-keymap))))
+    ("global-keymap")
+    (func/keymap/define-global "C-x h K" 'describe-keymap)))

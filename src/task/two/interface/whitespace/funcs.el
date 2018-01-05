@@ -14,14 +14,12 @@
 (defun init ()
   "Configure `whitespace'."
   (serika-c/eg/add-many-by-name 'whitespace
-                                ("require")
-                                (lambda ()
-                                  (require 'whitespace))
+    ("require")
+    (func/func/require 'whitespace)
+    ("settings")
+    (lambda ()
+      )
 
-                                ("settings")
-                                (lambda ()
-                                  )
-
-                                ("global-keymap")
-                                (lambda ()
-                                  (func/keymap/define-global "C-x t w" #'serika-f/whitespace/toggle))))
+    ("global-keymap")
+    (func/keymap/define-global
+      "C-x t w" #'serika-f/whitespace/toggle)))
