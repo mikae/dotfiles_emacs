@@ -31,7 +31,8 @@ install:
 	mkdir -p ~/.local-data/.virtualenvs
 
 	#curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-	cp -Rv src/* ~/.emacs.d
+	@cp -Rv src/.emacs.d   ~
+	@cp -Rv src/.serika.config ~
 
 test: test-all
 

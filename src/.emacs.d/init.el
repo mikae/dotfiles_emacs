@@ -4,6 +4,8 @@
 (defconst serika-emacs-min-version   "25.3.1"
   "Minimal version of Emacs.")
 
+(require 'cl-lib)
+
 (if (not (version<= serika-emacs-min-version emacs-version))
     (error (concat "Your version of Emacs (%s) is too old.\n"
                    "Serika requires Emacs version %s or above.")

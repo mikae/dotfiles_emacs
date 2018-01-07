@@ -65,9 +65,9 @@
   "Directory for asset files.")
 
 ;; Change load-path
-(let ((add-to-load-path (lambda (dir)
-                          (add-to-list 'load-path dir))))
-  (mapc add-to-load-path
+(cl-flet ((add-to-load-path (dir)
+                            (add-to-list 'load-path dir)))
+  (mapc #'add-to-load-path
         `(
           ,serika-core-directory
           ,serika-plugin-directory
@@ -83,6 +83,7 @@
         (when (and (file-directory-p name)
                    (not (equal f ".."))
                    (not (equal f ".")))
-          (funcall add-to-load-path name))))))
+          (add-to-load-path name))))))
+
 
 ;;; core-load-path.el ends here

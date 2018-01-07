@@ -88,8 +88,12 @@ setups `prettify-symbols-alist'."
   (serika-c/eg/add-many-by-name 'settings
     ("base configure")
     (progn
-      (setq gc-cons-threshold 50000000)
+      (setq gc-cons-threshold            50000000)
       (setq large-file-warning-threshold 100000000)
+
+      ;; User variables
+      (setq user-full-name    serika-user-full-name
+            user-mail-address serika-user-email)
 
       ;; Disable backup
       (setq make-backup-files        nil

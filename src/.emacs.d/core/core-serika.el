@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'cl-lib)
 (require 'core-execution)
 (require 'core-task)
 
@@ -10,16 +9,16 @@
   "Initialize `serika'."
   (serika-c/eg/create)
 
-  (serika-c/task/add "-inf")
-  (serika-c/task/add "zero")
-  (serika-c/task/add "one")
-  (serika-c/task/add "two")
-  (serika-c/task/add "inf")
+  (serika-c/task/add "-s(w)")
+  (serika-c/task/add "-w")
+  (serika-c/task/add "e")
+  (serika-c/task/add "s(e)")
+  (serika-c/task/add "s(s(e))")
+  (serika-c/task/add "w")
 
   (serika-c/task/execute-all)
 
-  (serika-c/eg/execute)
-  )
+  (serika-c/eg/execute))
 
 (provide 'core-serika)
 ;;; core-serika.el ends here

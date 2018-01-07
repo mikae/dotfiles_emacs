@@ -14,7 +14,8 @@
 
   (dolist (task '(
                   ;; pretasks
-                  "-inf"
+                  "-s(w)"
+                  "-w"
 
                   ;; zero tasks
                   "zero require"
@@ -54,8 +55,8 @@
                   "post"
                   "post activate"
 
-                  ;; end tasks
-                  "inf"))
+                  ;; post tasks
+                  "w"))
     (eg/create-path --serika-execution-graph task)))
 
 (cl-defun serika-c/eg/add (&key (parents nil)
