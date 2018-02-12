@@ -31,20 +31,16 @@
                                      "screen" "top" "less" "more" "lynx"
                                      "vi" "vim" "emacsclient" "emacs"))
 
-      (setq eshell-history-file-name
-            (f-join serika-tmp-directory
-                    "eshell"
-                    "history"))
+      (setq eshell-directory-name (f-join serika-conf-directory
+                                          "eshell")
+            eshell-history-file-name (f-join eshell-directory-name
+                                             "history")
 
-      (setq eshell-last-dir-ring-file-name
-            (f-join serika-tmp-directory
-                    "eshell"
-                    "lastdir"))
+            eshell-last-dir-ring-file-name (f-join eshell-directory-name
+                                                   "lastdir")
 
-      (setq eshell-aliases-file
-            (f-join serika-conf-directory
-                    "eshell"
-                    "aliases"))
+            eshell-aliases-file (f-join eshell-directory-name
+                                        "aliases"))
 
       (setq eshell-banner-message
             '(car (nthcdr

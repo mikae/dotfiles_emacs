@@ -9,11 +9,11 @@ love: --love usage
 	@echo "I love you too :3"
 
 usage:
-	@echo "Usage:\n\
-   --clean: wipe old configuration\n\
-   --install: install configuration files\n\
-   --all: wipe old configuration, then install plugin files, then install configuration files\n\
-   --test-all: run tests\n"
+	@echo "Usage:"
+	@echo "    clean: wipe old configuration"
+	@echo "    install: install configuration files"
+	@echo "    all: wipe old configuration, then install plugin files, then install configuration files"
+	@echo "    test: run tests"
 
 all:
 	clean
@@ -25,14 +25,12 @@ clean:
 install:
 	mkdir -p ~/.emacs.d
 	mkdir -p ~/.emacs.d/plugin
-	mkdir -p ~/.emacs.d/extension
-	mkdir -p ~/.emacs.d/lib
 	mkdir -p ~/.emacs.d/.save
 	mkdir -p ~/.local-data/.virtualenvs
 
 	#curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 	@cp -Rv src/.emacs.d   ~
-	@cp -Rv src/.serika.config ~
+	@cp -Rvn src/.serika.config ~
 
 test: test-all
 

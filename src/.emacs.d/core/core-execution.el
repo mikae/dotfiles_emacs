@@ -54,6 +54,7 @@
                   "hook"
                   "post"
                   "post activate"
+                  "post execute"
 
                   ;; post tasks
                   "w"))

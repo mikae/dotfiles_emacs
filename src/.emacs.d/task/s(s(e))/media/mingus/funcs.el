@@ -51,31 +51,31 @@
     ("settings spaceline")
     (progn
       (spaceline-define-segment mingus-title
-        "The current song name."
+        "The current song title."
         (or (serika-f/mingus/get-current-info Title)
             "Unknown title"))
 
       (spaceline-define-segment mingus-artist
-        "The current song name."
+        "The current song artist name."
         (or (serika-f/mingus/get-current-info Artist)
             "Unknown artist"))
 
       (spaceline-define-segment mingus-album
-        "The current song name."
+        "The current song album name."
         (or (serika-f/mingus/get-current-info Album)
             "Unknown album"))
 
       (spaceline-define-segment mingus-length
-        "The current song name."
+        "The current song length."
         (format "%s-%s"
                 (mingus-sec->min:sec (serika-f/mingus/get-current-pos))
                 (mingus-sec->min:sec (serika-f/mingus/get-current-info Time))))
 
-      (spaceline-compile 'mingus
-                         '(mingus-artist
-                           mingus-title
-                           mingus-length)
-                         '()))
+      (serika-f/spaceline/compile mingus
+        (mingus-artist
+         mingus-title
+         mingus-length)
+        ()))
 
     ("keymap")
     (progn

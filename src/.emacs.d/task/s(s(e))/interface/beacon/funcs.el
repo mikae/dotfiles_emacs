@@ -18,8 +18,7 @@
     (func/func/require 'beacon)
 
     ("settings")
-    (setq beacon-color                               "#917b55"
-          beacon-blink-when-window-changes           t
+    (setq beacon-blink-when-window-changes           t
           beacon-blink-when-window-scrolls           nil
           beacon-blink-when-point-moves-horizontally nil
           beacon-blink-when-point-moves-vertically   nil)

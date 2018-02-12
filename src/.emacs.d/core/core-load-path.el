@@ -42,11 +42,6 @@
                             (file-name-as-directory "layouts")))
   "Directory for various configuration files except `.el'.")
 
-(defconst serika-extension-directory
-  (expand-file-name (concat serika-start-directory
-                            (file-name-as-directory "extension")))
-  "Directory for lisp files.")
-
 (defconst serika-assets-directory
   (expand-file-name (concat serika-start-directory
                             (file-name-as-directory "assets")))
@@ -71,13 +66,11 @@
         `(
           ,serika-core-directory
           ,serika-plugin-directory
-          ,serika-extension-directory
           ,serika-lib-directory
           ,(concat serika-core-directory "func/")
           ))
 
-  (dolist (base (list serika-plugin-directory
-                      serika-extension-directory))
+  (dolist (base (list serika-plugin-directory))
     (dolist (f (directory-files base))
       (let ((name (concat base f)))
         (when (and (file-directory-p name)

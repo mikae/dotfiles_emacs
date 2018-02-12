@@ -57,6 +57,11 @@
     ("settings")
     (serika-f/settings/register-ft 'snippet-mode
                                    "\\.yasnippet\\'")
+    ("keymap")
+    (progn
+      (func/keymap/save snippet-mode-map)
+      (func/keymap/create snippet-mode-map
+        "TAB" #'yas-expand))
 
     ("hook")
     (func/hook/add 'snippet-mode-hook

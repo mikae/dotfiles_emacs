@@ -16,4 +16,7 @@
 
   (serika-c/eg/add-many-by-name 'rainbow-delimiters
     ("require")
-    (func/func/require 'rainbow-delimiters)))
+    (func/func/require 'rainbow-delimiters)
+
+    ("settings")
+    (setq rainbow-delimiters-max-face-count 20)))

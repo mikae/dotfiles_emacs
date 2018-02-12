@@ -78,7 +78,7 @@
                                    "\\.zsh\\'"
                                    "\\.zshrc\\'"
                                    "\\.zshenv\\'"
-                                   "\\.zshprofile\\'"
+                                   "\\.zprofile\\'"
                                    "\\.xinit\\'")
 
     ("settings multi-compile")
@@ -98,8 +98,8 @@
     (func/keymap/create sh-mode-map
       "TAB" #'yas-expand
 
-      "C-c a" #'serika-f/sh/execute
-      "C-c A" #'multi-compile-run
+      "C-c a" #'multi-compile-run
+      "C-c r" #'serika-f/sh/execute
 
       "C-t =" #'evil-indent
       "C-t /" #'evilnc-comment-or-uncomment-lines)

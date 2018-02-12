@@ -32,16 +32,23 @@
 ;;
 ;;; Code:
 
+;; (defun init ()
+;;   "Configure `md4rd'"
+;;   (serika-c/eg/add-install :type 'git
+;;                            :name 'md4rd
+;;                            :src "https://github.com/shinkiley/md4rd")
 
-(defun init ()
-  "Configure `help-fns+'."
-  (serika-c/eg/add-install :type 'download
-                           :name 'help-fns+
-                           :src  "https://raw.githubusercontent.com/shinkiley/emacswiki.org/master/help-fns%2B.el")
+;;   (serika-c/eg/add-many-by-name 'reddit
+;;     ("require")
+;;     (func/func/require 'md4rd)
 
-  (serika-c/eg/add-many-by-name 'help-fns+
-    ("require")
-    (func/func/require 'help-fns+)
+;;     ("settings")
+;;     ()
 
-    ("global-keymap")
-    (func/keymap/define-global "C-x h K" #'describe-keymap)))
+;;     ("keymap")
+;;     ()
+
+;;     ("hook")
+;;     ()))
+
+;;; funcs.el ends here

@@ -1,6 +1,6 @@
 ;; funcs.el --- 
 ;;
-;; Author: Minae Yui <minae.yui.sain@gmail.com>
+;; Author:  <yui@yui-pc>
 ;; Version: 0.1
 ;; URL: 
 ;; Keywords:
@@ -33,24 +33,16 @@
 ;;; Code:
 
 (defun init ()
-  "Configure window behaviour in Emacs."
-  (serika-c/eg/add-many-by-name 'windows
-    ("global-keymap create-new")
-    (func/keymap/define-global
-      ;; built-in
-      "C-x w a" #'split-window-right
-      "C-x w A" #'split-window-below
-      "C-x w r" #'delete-window
-      "C-x w R" #'delete-other-windows
+  "Configure theme."
+  (serika-c/eg/add-install :type 'git
+                           :name 'vilingai-theme
+                           :src  "https://github.com/shinkiley/emacs-vilingai-theme")
 
-      ;; `windmove'
-      "C-x w n" #'windmove-left
-      "C-x w e" #'windmove-down
-      "C-x w i" #'windmove-up
-      "C-x w o" #'windmove-right
+  (serika-c/eg/add-many-by-name 'vilingai-theme
+    ("require")
+    ()
+    (func/func/require 'vilingai)
 
-      ;; `buffer-move'
-      "C-x w N" #'buf-move-left
-      "C-x w E" #'buf-move-down
-      "C-x w I" #'buf-move-up
-      "C-x w O" #'buf-move-right)))
+    ("base interface")
+    (progn
+      (load-theme 'vilingai))))

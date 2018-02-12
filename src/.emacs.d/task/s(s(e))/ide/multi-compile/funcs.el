@@ -33,4 +33,6 @@
 
     ("settings")
     (setq multi-compile-alist             ()
-          multi-compile-completion-system 'helm)))
+          multi-compile-completion-system 'helm
+          multi-compile-history-file      (f-join serika-tmp-directory
+                                                  "multi-compile.cache"))))

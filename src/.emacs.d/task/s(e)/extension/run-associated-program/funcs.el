@@ -32,16 +32,23 @@
 ;;
 ;;; Code:
 
+(defvar serika-run-associated-program-alist
+  '(("mp4" . "smplayer")
+    ("mkv" . "smplayer"))
+  "Alist for `run-associated-program-alist'.")
 
 (defun init ()
-  "Configure `help-fns+'."
-  (serika-c/eg/add-install :type 'download
-                           :name 'help-fns+
-                           :src  "https://raw.githubusercontent.com/shinkiley/emacswiki.org/master/help-fns%2B.el")
+  "Configure `run-associated-program'."
+  (serika-c/eg/add-install :type 'git
+                           :name 'run-associated-program
+                           :src  "https://github.com/shinkiley/emacs-run-associated-program")
 
-  (serika-c/eg/add-many-by-name 'help-fns+
+  (serika-c/eg/add-many-by-name 'run-associated-program
     ("require")
-    (func/func/require 'help-fns+)
+    (func/func/require 'run-associated-program)
 
-    ("global-keymap")
-    (func/keymap/define-global "C-x h K" #'describe-keymap)))
+    ("settings")
+    (progn
+      (cl-loop for (ext . program) in serika-run-associated-program-alist
+               do
+               (run-associated-program-register ext program)))))

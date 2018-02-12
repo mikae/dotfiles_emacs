@@ -43,10 +43,6 @@
                        'company-quickhelp
                        'company-statistics)
 
-    ("interface theme")
-    (setq company-quickhelp-color-background "#282c34"
-          company-quickhelp-color-foreground "#bbc2cf")
-
     ("settings")
     (progn
       ;; company
@@ -63,7 +59,11 @@
       (setq company-show-numbers t)
 
       ;;company-quickhelp
-      (setq company-quickhelp-delay 0.1))
+      (setq company-quickhelp-delay 0.1)
+
+      ;; company-statistics
+      (setq company-statistics-file (f-join serika-tmp-directory
+                                            "company-statistics-cache.el")))
 
     ("keymap")
     (progn

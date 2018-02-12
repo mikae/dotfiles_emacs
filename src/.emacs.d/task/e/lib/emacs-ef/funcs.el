@@ -43,5 +43,6 @@
     ("zero lib require")
     (require 'emacs-ef)
 
-    ("zero post")
-    (ef-infect-language)))
+    ;; ("zero post")
+    ;; (ef-infect-language)
+    ))

@@ -160,20 +160,16 @@
 (defun init ()
   "Configure `org-mode'."
   (serika-c/eg/add-install :type       'git
-                           :name       'org
-                           :src        "git://orgmode.org/org-mode.git"
+                           :name       'org-mode
+                           :src        "https://code.orgmode.org/bzg/org-mode.git"
                            :parents    '("install org")
                            :extra-path '("lisp")
                            :post-hook  "make")
 
-  (serika-c/eg/add-install :type 'git
-                           :name 'org-pomodoro
-                           :src  "https://github.com/shinkiley/org-pomodoro"
-                           :parents '("install org"))
-
   (dolist (elem '((ob-rust      . "https://github.com/shinkiley/ob-rust")
                   (ob-fsharp    . "https://github.com/shinkiley/ob-fsharp")
                   (ob-racket    . "https://github.com/shinkiley/ob-racket")
+                  (ob-ipython   . "https://github.com/shinkiley/ob-ipython")
                   (org-kokoro   . "https://github.com/shinkiley/org-kokoro")
                   (org-pomodoro . "https://github.com/shinkiley/org-pomodoro")))
     (serika-c/eg/add-install :type 'git
@@ -212,6 +208,11 @@
             org-pomodoro-killed-sound-p       t
             org-pomodoro-killed-sound         (f-join serika-sounds-directory
                                                       "pomodoro-killed.wav"))
+
+      ;; `org-kokoro'
+      (setq org-kokoro-edit-src-aliases
+            '(("dot"     . graphviz-dot)
+              ("ipython" . python)))
 
       ;;`auto-mode-alist'
       (serika-f/settings/register-ft 'org-mode "\\.org\\'")
@@ -268,8 +269,8 @@
       ;; extra head
       (setq org-html-head-extra "")
 
-      ;; `inline-js'
-      (add-to-list 'org-src-lang-modes '("inline-js" . javascript))
+      ;; `org-src-lang-modes'
+      (setq org-src-lang-modes '(("inline-js" . javascript)))
 
       (defvar org-babel-default-header-args:inline-js
         '((:results . "html")
@@ -293,6 +294,7 @@
                                                                (emacs-lisp . t)
                                                                (js         . t)
                                                                (python     . t)
+                                                               ;; (ipython    . t)
                                                                (rust       . t)
                                                                (racket     . t)
                                                                (dot        . t)
@@ -484,8 +486,11 @@
         "e" #'org-agenda-next-item
         "i" #'org-agenda-previous-item
 
-        ;;arst
+        ;; arst
         "a" #'org-agenda-todo
+
+        ;; qwfpg
+        "q" #'org-agenda-exit
         ))
 
     ("hook")

@@ -331,8 +331,7 @@
 (defun serika-g/key//configure-input-decode-map ()
   "Configure `input-decode-map'."
   (define-key input-decode-map [?\C-m] [C-m])
-  (define-key input-decode-map [?\C-o] [C-o])
-  )
+  (define-key input-decode-map [?\C-o] [C-o]))
 
 (defun serika-g/key//configure-outline-mode-map ()
   "Configure `outline-mode-map'"
@@ -346,37 +345,62 @@
   (func/keymap/define-global "C-`" #'universal-argument)
 
   ;; save/kill
-  (func/keymap/define-global "C-x C-s"     #'save-buffer
-                             "C-x C-S-s"   #'func/tramp/sudo-write
-                             "C-x C-x C-s" #'func/buffer/invoke-save-function
-                             "C-x C-c"     #'func/buffer/kill
-                             "C-x C-q"     #'save-buffers-kill-terminal
-                             "C-x C-x C-c" #'func/buffer/kill
-                             "C-x C-h"     #'previous-buffer
-                             "C-x C-g"     #'revert-buffer)
+  (func/keymap/define-global
+    "C-x C-s"     #'save-buffer
+    "C-x C-S-s"   #'func/tramp/sudo-write
+    "C-x C-x C-s" #'func/buffer/invoke-save-function
+    "C-x C-c"     #'func/buffer/kill
+    "C-x C-q"     #'save-buffers-kill-terminal
+    "C-x C-x C-c" #'func/buffer/kill
+    "C-x C-h"     #'previous-buffer
+    "C-x C-g"     #'revert-buffer)
 
   ;; narrowing
   (func/keymap/define-global "C-x C-w"   #'widen)
 
   ;; toggles
-  (func/keymap/define-global "C-x t r"   #'read-only-mode
-                             "C-x t c"   #'serika-f/custom-modifiers/toggle)
+  (func/keymap/define-global
+    "C-x t r"   #'read-only-mode
+    "C-x t c"   #'serika-f/custom-modifiers/toggle)
 
-  (func/keymap/define-global "C-x C-t v" #'yank)
+  (func/keymap/define-global
+    "C-x C-t v" #'yank)
 
   ;; describes
-  (func/keymap/define-global "C-x h v"   #'describe-variable
-                             "C-x h f"   #'describe-function
-                             "C-x h k"   #'describe-key)
+  (func/keymap/define-global
+    "C-x h v"   #'describe-variable
+    "C-x h f"   #'describe-function
+    "C-x h k"   #'describe-key
+    "C-x h F"   #'describe-face)
 
   ;; macro
-  (func/keymap/define-global "<C-m> n"   #'kmacro-start-macro-or-insert-counter
-                             "<C-m> r"   #'kmacro-end-or-call-macro)
+  (func/keymap/define-global
+    "<C-m> n"   #'kmacro-start-macro-or-insert-counter
+    "<C-m> r"   #'kmacro-end-or-call-macro)
 
   ;; misc
   (func/keymap/define-global "C-g" #'keyboard-quit)
 
-  (func/keymap/define-global "M-r"       #'eval-expression)
+  (func/keymap/define-global "M-r" #'eval-expression)
+
+  ;; windows
+  (func/keymap/define-global
+    "C-x w a" #'split-window-right
+    "C-x w A" #'split-window-below
+    "C-x w r" #'delete-window
+    "C-x w R" #'delete-other-windows
+
+    ;; `windmove'
+    "C-x w n" #'windmove-left
+    "C-x w e" #'windmove-down
+    "C-x w i" #'windmove-up
+    "C-x w o" #'windmove-right
+
+    ;; `buffer-move'
+    "C-x w N" #'buf-move-left
+    "C-x w E" #'buf-move-down
+    "C-x w I" #'buf-move-up
+    "C-x w O" #'buf-move-right)
 
   ;; (cm-define-global "control-q" #'func/buffer/kill)
   )

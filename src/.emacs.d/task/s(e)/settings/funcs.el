@@ -100,10 +100,14 @@ setups `prettify-symbols-alist'."
             auto-save-list-file-name nil
             auto-save-default        nil)
 
-      (setq auto-save-list-file-prefix
-            (f-join serika-tmp-directory
-                    "auto-save-list"
-                    ".saves-"))
+      ;; Temporary files
+      (setq auto-save-list-file-prefix (f-join serika-tmp-directory
+                                               "auto-save-list"
+                                               ".saves-")
+            recentf-save-file (f-join serika-tmp-directory
+                                      "recentf.el")
+            bookmark-default-file (f-join serika-tmp-directory
+                                          "bookmarks.el"))
 
       ;; Disable all default mode selection.
       (setq auto-mode-alist ())

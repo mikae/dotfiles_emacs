@@ -11,10 +11,13 @@
                                                     "\\.\\.$")
   "Rules for omitted patterns.")
 
-(defvar --serika-dired-omit-mode-bits 0
+(defvar --serika-dired-omit-mode-bits 2
   "Bitmap for rule selection.
 0x - bit of hidden files;
 x0 - bit of omitted files.")
+
+(defvar serika-dired-helm-locations () 
+  "Locations for `dired-helm-locations'")
 
 ;; Private
 (defun serika-f/dired//apply-omit-rules ()
@@ -83,8 +86,7 @@ x0 - bit of omitted files.")
                         (max 0
                              (- (line-number-at-pos)
                                 (- (count-lines (point-min) (point-max))
-                                   (serika-f/dired/footer-length))
-                                ))))))
+                                   (serika-f/dired/footer-length))))))))
 
 (defun serika-f/dired/move-to-beginning ()
   "Move cursor to the beginning of actual content."
@@ -243,7 +245,8 @@ If PATH is invalid return nil."
                        'dired-x
                        'dired+
                        'dired-helm-locations
-                       'evil)
+                       'evil
+                       'run-associated-program-dired)
 
     ("settings")
     (progn
@@ -257,9 +260,7 @@ If PATH is invalid return nil."
             '(("\\.zip\\'" ".zip" "unzip")))
 
       ;; `dired-helm-locations'
-      (dired-helm-locations-add "home" (func/system/user-home)
-                                "org"  org-directory
-                                "wiki" org-wikinyan-location))
+      (eval `(dired-helm-locations-add ,@serika-dired-helm-locations)))
 
     ("settings evil")
     (evil-define-state dired
@@ -277,7 +278,9 @@ If PATH is invalid return nil."
 
     ("hook")
     (func/hook/add 'dired-mode-hook
-                   #'serika-l/dired//setup-buffer))
+                   #'serika-l/dired//setup-buffer)
+
+    )
 
   (serika-c/eg/add-many-by-parents ("keymap evil")
     'dired
@@ -337,7 +340,7 @@ If PATH is invalid return nil."
         "A-!"     #'evil-search-backward
 
         ;; ret
-        "RET"     #'dired-run-associated-program
+        "RET"     #'run-associated-program-run-dired
 
         ;; C-
         "C-q"     (lambda ()

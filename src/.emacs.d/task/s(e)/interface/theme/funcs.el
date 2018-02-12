@@ -32,16 +32,15 @@
 ;;
 ;;; Code:
 
-
 (defun init ()
-  "Configure `help-fns+'."
-  (serika-c/eg/add-install :type 'download
-                           :name 'help-fns+
-                           :src  "https://raw.githubusercontent.com/shinkiley/emacswiki.org/master/help-fns%2B.el")
+  "Configure theme."
+  (serika-c/eg/add-install :type 'git
+                           :name 'vilingai-theme
+                           :src  "https://github.com/shinkiley/emacs-vilingai-theme")
 
-  (serika-c/eg/add-many-by-name 'help-fns+
-    ("require")
-    (func/func/require 'help-fns+)
+  (serika-c/eg/add-many-by-name 'vilingai-theme
+    ("base require")
+    (func/func/require 'vilingai)
 
-    ("global-keymap")
-    (func/keymap/define-global "C-x h K" #'describe-keymap)))
+    ("base interface")
+    (load-theme 'virai t)))

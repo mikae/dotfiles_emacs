@@ -14,5 +14,5 @@
     (func/func/require 'buffer-move)
 
     ("settings")
-    (setq buffer-move-behavior 'move
+    (setq buffer-move-behavior        'move
           buffer-move-stay-after-swap nil)))

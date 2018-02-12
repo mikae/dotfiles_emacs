@@ -37,21 +37,23 @@
     (progn
       (func/keymap/save   helm-map)
       (func/keymap/create helm-map
-        "A-e" 'helm-next-line
-        "A-i" 'helm-previous-line
-        "A-E" 'helm-next-source
-        "A-I" 'helm-previous-source
+        "A-e" #'helm-next-line
+        "A-i" #'helm-previous-line
+        "A-E" #'helm-next-source
+        "A-I" #'helm-previous-source
 
-        "RET" 'helm-maybe-exit-minibuffer
-        "TAB" 'helm-select-action)
+        "C-g" #'helm-keyboard-quit
+
+        "RET" #'helm-maybe-exit-minibuffer
+        "TAB" #'helm-select-action)
 
       (func/keymap/save   helm-buffer-map)
       (func/keymap/create helm-buffer-map))
 
     ("global-keymap")
     (func/keymap/define-global
-      "M-a"   #'helm-M-x
-      "C-x f" #'helm-find-files
+      "M-a"     #'helm-M-x
+      "C-x f"   #'helm-find-files
       "C-x h y" #'helm-show-kill-ring)
 
     ("post activate")

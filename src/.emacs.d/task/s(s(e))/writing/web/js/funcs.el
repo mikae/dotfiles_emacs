@@ -45,6 +45,7 @@
     (progn
       (func/keymap/save   js-mode-map)
       (func/keymap/create js-mode-map
+        "TAB"       #'yas-expand
         "C-t ="     #'evil-indent
         "C-t /"     #'evilnc-comment-or-uncomment-lines))
 
